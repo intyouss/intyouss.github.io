@@ -6,7 +6,7 @@
   <link href="https://intyouss.github.io/atom.xml" rel="self"/>
   
   <link href="https://intyouss.github.io/"/>
-  <updated>2023-03-06T12:22:10.010Z</updated>
+  <updated>2023-03-06T16:45:49.765Z</updated>
   <id>https://intyouss.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>3月7日学习记录</title>
+    <link href="https://intyouss.github.io/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
+    <id>https://intyouss.github.io/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</id>
+    <published>2023-03-06T16:23:24.000Z</published>
+    <updated>2023-03-06T16:45:49.765Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr><h4 id="路由的两种写法"><a href="#路由的两种写法" class="headerlink" title="路由的两种写法"></a>路由的两种写法</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.add_url_rule(<span class="string">&#x27;/index&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, index)</span><br></pre></td></tr></table></figure></div><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/inddex&#x27;</span></span>)</span></span><br></pre></td></tr></table></figure></div><h4 id="路由加载源码的流程"><a href="#路由加载源码的流程" class="headerlink" title="路由加载源码的流程"></a>路由加载源码的流程</h4><ul><li><p>将URL和函数打包成为Rule对象</p></li><li><p>将Rule对象添加到map对象中</p></li><li><p>app_url_map &#x3D; map对象</p></li></ul><h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&lt;string:name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;name&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure></div><p>uuid类型 类似于xxxxx-xxxxxxx-xxxxxx-xxxxxx</p><h5 id="自定义路由"><a href="#自定义路由" class="headerlink" title="自定义路由"></a>自定义路由</h5><p>必须继承BaseConverter</p><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, regex</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>)</span><br><span class="line">        self.regex = regex</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_python</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">return</span> value</span><br></pre></td></tr></table></figure></div>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;路由系统&quot;&gt;&lt;a href=&quot;#路由系统&quot; class=&quot;headerlink&quot; title=&quot;路由系统&quot;&gt;&lt;/a&gt;路由系统&lt;/h3&gt;&lt;hr&gt;
+&lt;h4 id=&quot;路由的两种写法&quot;&gt;&lt;a href=&quot;#路由的两种写法&quot; class=&quot;headerlink&quot; title</summary>
+      
+    
+    
+    
+    
+    <category term="Flask Study" scheme="https://intyouss.github.io/tags/Flask-Study/"/>
+    
+  </entry>
   
   <entry>
     <title>3月6日 学习记录</title>
