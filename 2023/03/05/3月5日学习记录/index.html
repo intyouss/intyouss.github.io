@@ -9,18 +9,18 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-redefine.png">
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://intyouss.github.io/tags/study/"/>
+    <link rel="canonical" href="https://intyouss.github.io/2023/03/05/3月5日学习记录/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="IntYou&#39;s Blog">
+    <meta property="og:title" content="3月5日 学习记录">
     <meta property="og:description" content="IntYou&#39;s Blog">
-    <meta property="og:url" content="https://intyouss.github.iotags/Study/index.html">
+    <meta property="og:url" content="https://intyouss.github.io2023/03/05/3月5日学习记录/">
     <meta property="og:image" content="/images/avatar.jpg">
     <meta property="og:site_name" content="IntYou&#39;s Blog">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="IntYou&#39;s Blog">
+    <meta name="twitter:title" content="3月5日 学习记录">
     <meta name="twitter:description" content="IntYou&#39;s Blog">
     <meta name="twitter:image" content="/images/avatar.jpg">
     <!--- Icon Part-->
@@ -31,7 +31,7 @@
     
     <title>
         
-            Tag: Study -
+            3月5日 学习记录 -
         
         IntYou&#39;s Blog
     </title>
@@ -174,42 +174,181 @@
 
                 
                     <div class="fade-in-down-animation">
-    <div class="tag-container">
-        <div class="tag-name"><i class="fa-solid fa-tag"></i>&nbsp;Study
-        </div>
-        <div class="tag-post-list">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
             
-<div class="archive-list-container">
-    
-        <section class="archive-item">
-            <div class="archive-item-header">
-                <span class="archive-year">2023</span>
-                <span class="archive-year-post-count">[1]</span>
-            </div>
-            <ul class="article-list">
+            
+                <div class="article-title">
+                    <h1 class="article-title-regular">3月5日 学习记录</h1>
+                </div>
+            
                 
-                    <li class="article-item">
-                        <a class="article-title"
-                           href="/2023/03/05/Flask%E5%AD%A6%E4%B9%A0/"
-                        >3月5日 学习记录</a>
-                        <span class="article-date">03-05</span>
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/avatar.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">IntYou</span>
+                            
+                                <span class="author-label">lol</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="pc">2023-03-05 17:34:24</span>
+        <span class="mobile">2023-03-05 17:34</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="pc">2023-03-06 13:29:31</span>
+            <span class="mobile">2023-03-06 13:29</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Flask-Study/">Flask Study</a>&nbsp;
                     </li>
                 
             </ul>
-        </section>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
     
 </div>
 
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h4 id="flask中函数app-route-嵌套装饰器可能错误"><a href="#flask中函数app-route-嵌套装饰器可能错误" class="headerlink" title="flask中函数app.route()嵌套装饰器可能错误"></a>flask中函数app.route()嵌套装饰器可能错误</h4><hr>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">atuh1</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">atuh2</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner    </span><br><span class="line"></span><br><span class="line"><span class="meta">@auth1</span></span><br><span class="line"><span class="meta">@auth2</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;index&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>单装饰器装饰: 装饰器在装饰一个函数时，此函数将被装饰器内部函数替代，如果想暴露原本函数，可以使用装饰器@functools.wraps(func)</p>
+<p>多装饰器装饰: 优先使用内部装饰器，逐层向上</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/index&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;h&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/login&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;g&quot;</span></span><br></pre></td></tr></table></figure></div>
+<p>@app.route() endpoint默认为函数名  </p>
+<p>两个函数使用相同函数装饰auth, 在不使用@functools.warps(func)的情况下，两个初始函数被装饰后，都将变为inner的属性，形成别名重复错误:<br><code>AssertionError: View function mapping is ovwewriting an existing endpoint function: inner</code></p>
+<h4 id="flask蓝图"><a href="#flask蓝图" class="headerlink" title="flask蓝图"></a>flask蓝图</h4><hr>
+<p>flask蓝图主要功能就是分类(Blueprint)，不同功能函数放在不同文件中实现: </p>
+<ol>
+<li><p>创建蓝图</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx = Blueprint(<span class="string">&#x27;xxx&#x27;</span>, __name__)</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>在主进程中引用蓝图</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> <span class="string">&#x27;/path&#x27;</span> <span class="keyword">import</span> xxx</span><br><span class="line">app.register_blueprint(xxx, url_prefix=<span class="string">&#x27;/x&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+<p>url_prefix 添加前缀 使用: &#x2F;x&#x2F;xxx</p>
+</li>
+</ol>
+<h4 id="Django的路由映射和Flask的蓝图有什么区别"><a href="#Django的路由映射和Flask的蓝图有什么区别" class="headerlink" title="Django的路由映射和Flask的蓝图有什么区别"></a>Django的路由映射和Flask的蓝图有什么区别</h4><hr>
+<p>flask:</p>
+<ol>
+<li><p>flask是利用蓝图进行模块划分的，通过app装饰器注册模块蓝图，在主模块统一调用;</p>
+</li>
+<li><p>在flask中，路由是通过装饰器给每个视图函数提供的, 而且根据请求方式的不同可以一个url用于不同的作用。功能相似，但是底层实现不一样</p>
+</li>
+</ol>
+<p>Django:</p>
+<ol>
+<li>Django路由映射是通过路由正则匹配映射到每一个模块的</li>
+<li>在django中，路由是浏览器访问服务器时，先访问的项目中的url，再由项目中的url找到应用中url，这些url是放在一个列表里，遵从从前往后匹配的规则。</li>
+</ol>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：3月5日 学习记录</li>
+        <li>Post author：IntYou</li>
+        <li>Create time：2023-03-05 17:34:24</li>
+        <li>
+            Post link：https://intyou.netlify.app/2023/03/05/3月5日学习记录/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/Flask-Study/">#Flask Study</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/03/06/3%E6%9C%886%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">3月6日 学习记录</span>
+                                    <span class="post-nav-item">Prev posts</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                </div>
+            
+
+
+            
         </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">3月5日 学习记录</div>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#flask%E4%B8%AD%E5%87%BD%E6%95%B0app-route-%E5%B5%8C%E5%A5%97%E8%A3%85%E9%A5%B0%E5%99%A8%E5%8F%AF%E8%83%BD%E9%94%99%E8%AF%AF"><span class="nav-text">flask中函数app.route()嵌套装饰器可能错误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#flask%E8%93%9D%E5%9B%BE"><span class="nav-text">flask蓝图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Django%E7%9A%84%E8%B7%AF%E7%94%B1%E6%98%A0%E5%B0%84%E5%92%8CFlask%E7%9A%84%E8%93%9D%E5%9B%BE%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-text">Django的路由映射和Flask的蓝图有什么区别</span></a></li></ol>
+
     </div>
-
-    <div class="tag-paginator">
-        <div class="paginator">
-    
-
-    
 </div>
-
+            </div>
+        
     </div>
 </div>
 
@@ -288,6 +427,23 @@
         </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
     
 
     <div class="right-bottom-side-tools">
@@ -397,6 +553,8 @@
 
 
 <div class="post-scripts pjax">
+    
+        <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/tools/toc-toggle.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/libs/anime.min.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/layouts/toc.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/plugins/tabs.js"></script>
     
     
 </div>
