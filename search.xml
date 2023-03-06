@@ -54,11 +54,36 @@
 <h3 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h3><hr>
 <p>使用数据库连接池可以很好的解决链接数据库时，重复连接的问题</p>
 <p>可以将数据库连接封装成一个函数或者类，方便调用</p>
-<h3 id="With上下文管理-简"><a href="#With上下文管理-简" class="headerlink" title="With上下文管理(简)"></a>With上下文管理(简)</h3><hr>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__enter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">124</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__exit__</span>(<span class="params">self, exc_type, exc_val</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">obj = Foo()</span><br><span class="line"><span class="keyword">with</span> obj <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(f)</span><br></pre></td></tr></table></figure></div>
+<h4 id="With上下文管理-简"><a href="#With上下文管理-简" class="headerlink" title="With上下文管理(简)"></a>With上下文管理(简)</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__enter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">124</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__exit__</span>(<span class="params">self, exc_type, exc_val</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">obj = Foo()</span><br><span class="line"><span class="keyword">with</span> obj <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(f)</span><br></pre></td></tr></table></figure></div>
 
 <p>with一个对象会调用对象中的 属性__enter__ ，结束后调用属性__exit__。</p>
-<h3 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h3><ol>
+<p>使用上下文管理操控线程池的开关，可以实现线程自动化</p>
+<h3 id="引入静态文件"><a href="#引入静态文件" class="headerlink" title="引入静态文件"></a>引入静态文件</h3><hr>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;&#123;</span> <span class="attr">url_for</span>(&#x27;<span class="attr">static</span>&#x27;, <span class="attr">filename</span>=<span class="string">&#x27;mm.jpg&#x27;</span>) &#125;&#125; /&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>或</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#x27;/static/mm.jpg&#x27;</span> /&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>在使用static_url_path&#x3D;’&#x2F;xx’修改static文件夹路径时，前一个可以在不做修改下实现自动识别static路径。后者需要一个一个修改，不利于使用。</p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><hr>
+<p>使用函数加载配置文件:</p>
+<p><code>app.config.from_object(&#39;config.settings&#39;)</code></p>
+<p>使用配置文件:</p>
+<p><code>app.config[&#39;xx&#39;]</code></p>
+<ol>
+<li><p>可以使用localsettings在本地测试, 覆盖settings, 保护原始文件</p>
+<p>在settings添加:</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">from</span> localsettings <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">except</span> ImportError:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>        在上传服务器时，可以方便的在服务器和本地切换</p>
+<p>        使用.gitgnore控制上传文件，忽略不需要的文件</p>
+<ol start="2">
+<li><p>类配置文件</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dev</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Prod</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>        使用类隔离开发环境</p>
+<h3 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h3><hr>
+<ol>
 <li><p>进程是cpu中执行的最小单元，线程是cpu中资源调度的最小单元，一个进程内可以有多个线程</p>
 </li>
 <li><p>接口<br>其他语言 :<br>接口是以interface关键字开头，内部定义方法，但不具体实现，专门用于约束实现类<br>类中可以有多个接口继承  </p>
