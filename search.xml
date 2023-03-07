@@ -41,6 +41,67 @@
       </tags>
   </entry>
   <entry>
+    <title>3月6日 学习记录</title>
+    <url>/2023/03/06/3%E6%9C%886%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h3 id="唯一的URL-x2F-重定向行为"><a href="#唯一的URL-x2F-重定向行为" class="headerlink" title="唯一的URL&#x2F;重定向行为"></a>唯一的URL&#x2F;重定向行为</h3><hr>
+<p>route内的元素表示不同，将有不同的限制</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/projects/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">projects</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;a&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/about&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">about</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;b&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>如果使用没有斜杠的&#x2F;projects访问，Flask会自动帮助添加斜杠，因此中规中矩，却有两种访问方式。  </p>
+<p>如果使用有斜杠的&#x2F;about&#x2F;访问，将会返回一个404未找到错误，可以保证URL唯一性，并有助于搜索引擎重复索引同一个界面！</p>
+<h3 id="flask的session"><a href="#flask的session" class="headerlink" title="flask的session"></a>flask的session</h3><hr>
+<p>flask的session是以加密保存在浏览器上的，依赖于secret_key</p>
+<h3 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h3><hr>
+<p>使用数据库连接池可以很好的解决链接数据库时，重复连接的问题</p>
+<p>可以将数据库连接封装成一个函数或者类，方便调用</p>
+<h4 id="With上下文管理-简"><a href="#With上下文管理-简" class="headerlink" title="With上下文管理(简)"></a>With上下文管理(简)</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__enter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">124</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__exit__</span>(<span class="params">self, exc_type, exc_val</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">obj = Foo()</span><br><span class="line"><span class="keyword">with</span> obj <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(f)</span><br></pre></td></tr></table></figure></div>
+
+<p>with一个对象会调用对象中的 属性__enter__ ，结束后调用属性__exit__。</p>
+<p>使用上下文管理操控线程池的开关，可以实现线程自动化</p>
+<h3 id="引入静态文件"><a href="#引入静态文件" class="headerlink" title="引入静态文件"></a>引入静态文件</h3><hr>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;&#123;</span> <span class="attr">url_for</span>(&#x27;<span class="attr">static</span>&#x27;, <span class="attr">filename</span>=<span class="string">&#x27;mm.jpg&#x27;</span>) &#125;&#125; /&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>或</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#x27;/static/mm.jpg&#x27;</span> /&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>在使用static_url_path&#x3D;’&#x2F;xx’修改static文件夹路径时，前一个可以在不做修改下实现自动识别static路径。后者需要一个一个修改，不利于使用。</p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><hr>
+<p>使用函数加载配置文件:</p>
+<p><code>app.config.from_object(&#39;config.settings&#39;)</code></p>
+<p>使用配置文件:</p>
+<p><code>app.config[&#39;xx&#39;]</code></p>
+<ol>
+<li><p>可以使用localsettings在本地测试, 覆盖settings, 保护原始文件</p>
+<p>在settings添加:</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">from</span> localsettings <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">except</span> ImportError:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>        在上传服务器时，可以方便的在服务器和本地切换</p>
+<p>        使用.gitgnore控制上传文件，忽略不需要的文件</p>
+<ol start="2">
+<li><p>类配置文件</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dev</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Prod</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>        使用类隔离开发环境</p>
+<h3 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h3><hr>
+<ol>
+<li><p>进程是cpu中执行的最小单元，线程是cpu中资源调度的最小单元，一个进程内可以有多个线程</p>
+</li>
+<li><p>接口<br>其他语言 :<br>接口是以interface关键字开头，内部定义方法，但不具体实现，专门用于约束实现类<br>类中可以有多个接口继承  </p>
+<p>python :<br>无接口，可以多继承<br>但不能继承多个类</p>
+</li>
+<li><p>构造函数和析构函数<br>构造函数：用于创建对象的函数 class foo(obj)<br>析构函数：用于销毁对象的函数 del obj()</p>
+</li>
+<li><p>重写和重载的区别<br>重载：函数名相同而参数类型，个数，返回值不同<br>重写：在子类中，对父类的方法重写</p>
+</li>
+<li><p>抽象类和抽象方法<br>java :<br>抽象类中可以有抽象方法也可以有普通方法。<br>抽象类被继承后需要实现抽象方法</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Flask Study</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>3月7日学习记录</title>
     <url>/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
@@ -100,8 +161,7 @@
     <title>JavaScript+React</title>
     <url>/2023/03/07/JavaScript-React/</url>
     <content><![CDATA[<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><hr>
-<p>限制:</p>
-<ul>
+<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ul>
 <li><p>只有一个参数的函数 参数 &#x3D;&gt; 返回值</p>
 </li>
 <li><p>多个参数使用括号 (a,b) &#x3D;&gt; 返回值</p>
@@ -116,8 +176,7 @@
 <div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>隐含参数arguments-表示当前函数的实参 arguments.lenth 获取实参数。剩余参数…args</p>
 </div>
 
-<p>特性:</p>
-<ul>
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性:"></a>特性:</h4><ul>
 <li><p>箭头函数中没有arguments，可以使用…args</p>
 </li>
 <li><p>箭头函数的this总是看外层作用域的this</p>
@@ -131,8 +190,7 @@
 <div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>默认情况下，script标签中不能使用import语句，必须设置script的type属性为module</p>
 </div>
 
-<p>导出:</p>
-<ul>
+<h4 id="导出"><a href="#导出" class="headerlink" title="导出:"></a>导出:</h4><ul>
 <li><p>默认导出</p>
 <div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</span><br></pre></td></tr></table></figure></div></li>
 </ul>
@@ -141,8 +199,7 @@
 <li><p>命名导出</p>
 <div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b,c&#125;</span><br></pre></td></tr></table></figure></div></li>
 </ul>
-<p>导入:</p>
-<ul>
+<h4 id="导入"><a href="#导入" class="headerlink" title="导入:"></a>导入:</h4><ul>
 <li><p>默认导入</p>
 <div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
 </ul>
@@ -151,70 +208,75 @@
 <li><p>命名导入</p>
 <div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;a,b,c&#125; <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span></span><br></pre></td></tr></table></figure></div></li>
 </ul>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
+<li><p>构造函数</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>构造函数中，可以通过this来引用当前的对象</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
+<li><p>严格模式</p>
+<p>“use strict”</p>
+<ol>
+<li><p>类中的所有代码都会在严格模式下执行</p>
+</li>
+<li><p>函数的this不再是window,而是undefined</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> test = mc.<span class="property">fn</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+</ul>
+<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>以方法形式调用时, this就是当前的实例。以函数形式调用, this是undefined</p>
+</div>
+
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = <span class="variable language_">this</span>.<span class="property">fn</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>) <span class="comment">//将fn方法的this绑定为当前实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>可以限制this绑定在自身</p>
+<p>也可以使用箭头函数的形式调用，永远绑定为本身</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">   fn = <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>&#123;&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>在子类中重写父类构造函数时，应该在子类中第一时间调用父类构造函数，否则报错</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(name, age); <span class="comment">//调用父类构造函数，并且需要加入父类参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
+<li><p>动态属性</p>
+<p>需要首先new一个实例才能使用</p>
+</li>
+<li><p>静态属性</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> name = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="comment">// 静态方法this不是实例对象而是当前类对象</span></span><br><span class="line">    <span class="keyword">static</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>可以直接使用<code>MyClass.name</code></p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
+<ul>
+<li><p>map()</p>
+<ol>
+<li><p>可以根据原有的数组返回一个新数组</p>
+</li>
+<li><p>需要一个回调函数作为参数, 回调函数返回值会成为新数组中的元素</p>
+<p>用法:</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> result = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> item+<span class="number">2</span></span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 第一个参数 当前元素</span></span><br><span class="line"><span class="comment">// 第二个参数 当前元素索引</span></span><br><span class="line"><span class="comment">// 第三个参数 当前数组</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+<li><p>filter()</p>
+<p>过滤器</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">result = arr.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item % <span class="number">2</span> === <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>根据条件过滤元素</p>
+<ul>
+<li><p>find()</p>
+<p>找第一个被过滤条件通过的元素</p>
+</li>
+</ul>
+</li>
+<li><p>reduce()</p>
+<p>整合数组</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> &#123;&#125;, <span class="number">0</span>) </span><br><span class="line"><span class="comment">// 0的位置是定义第一次prev的值, prev 上一次合并后值, curr 当前值</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
 ]]></content>
       <tags>
         <tag>React Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>3月6日 学习记录</title>
-    <url>/2023/03/06/3%E6%9C%886%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h3 id="唯一的URL-x2F-重定向行为"><a href="#唯一的URL-x2F-重定向行为" class="headerlink" title="唯一的URL&#x2F;重定向行为"></a>唯一的URL&#x2F;重定向行为</h3><hr>
-<p>route内的元素表示不同，将有不同的限制</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/projects/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">projects</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;a&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/about&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">about</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;b&#x27;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>如果使用没有斜杠的&#x2F;projects访问，Flask会自动帮助添加斜杠，因此中规中矩，却有两种访问方式。  </p>
-<p>如果使用有斜杠的&#x2F;about&#x2F;访问，将会返回一个404未找到错误，可以保证URL唯一性，并有助于搜索引擎重复索引同一个界面！</p>
-<h3 id="flask的session"><a href="#flask的session" class="headerlink" title="flask的session"></a>flask的session</h3><hr>
-<p>flask的session是以加密保存在浏览器上的，依赖于secret_key</p>
-<h3 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h3><hr>
-<p>使用数据库连接池可以很好的解决链接数据库时，重复连接的问题</p>
-<p>可以将数据库连接封装成一个函数或者类，方便调用</p>
-<h4 id="With上下文管理-简"><a href="#With上下文管理-简" class="headerlink" title="With上下文管理(简)"></a>With上下文管理(简)</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__enter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">124</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__exit__</span>(<span class="params">self, exc_type, exc_val</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">obj = Foo()</span><br><span class="line"><span class="keyword">with</span> obj <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(f)</span><br></pre></td></tr></table></figure></div>
-
-<p>with一个对象会调用对象中的 属性__enter__ ，结束后调用属性__exit__。</p>
-<p>使用上下文管理操控线程池的开关，可以实现线程自动化</p>
-<h3 id="引入静态文件"><a href="#引入静态文件" class="headerlink" title="引入静态文件"></a>引入静态文件</h3><hr>
-<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;&#123;</span> <span class="attr">url_for</span>(&#x27;<span class="attr">static</span>&#x27;, <span class="attr">filename</span>=<span class="string">&#x27;mm.jpg&#x27;</span>) &#125;&#125; /&gt;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>或</p>
-<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#x27;/static/mm.jpg&#x27;</span> /&gt;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>在使用static_url_path&#x3D;’&#x2F;xx’修改static文件夹路径时，前一个可以在不做修改下实现自动识别static路径。后者需要一个一个修改，不利于使用。</p>
-<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><hr>
-<p>使用函数加载配置文件:</p>
-<p><code>app.config.from_object(&#39;config.settings&#39;)</code></p>
-<p>使用配置文件:</p>
-<p><code>app.config[&#39;xx&#39;]</code></p>
-<ol>
-<li><p>可以使用localsettings在本地测试, 覆盖settings, 保护原始文件</p>
-<p>在settings添加:</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">from</span> localsettings <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">except</span> ImportError:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-<p>        在上传服务器时，可以方便的在服务器和本地切换</p>
-<p>        使用.gitgnore控制上传文件，忽略不需要的文件</p>
-<ol start="2">
-<li><p>类配置文件</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dev</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Prod</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-<p>        使用类隔离开发环境</p>
-<h3 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h3><hr>
-<ol>
-<li><p>进程是cpu中执行的最小单元，线程是cpu中资源调度的最小单元，一个进程内可以有多个线程</p>
-</li>
-<li><p>接口<br>其他语言 :<br>接口是以interface关键字开头，内部定义方法，但不具体实现，专门用于约束实现类<br>类中可以有多个接口继承  </p>
-<p>python :<br>无接口，可以多继承<br>但不能继承多个类</p>
-</li>
-<li><p>构造函数和析构函数<br>构造函数：用于创建对象的函数 class foo(obj)<br>析构函数：用于销毁对象的函数 del obj()</p>
-</li>
-<li><p>重写和重载的区别<br>重载：函数名相同而参数类型，个数，返回值不同<br>重写：在子类中，对父类的方法重写</p>
-</li>
-<li><p>抽象类和抽象方法<br>java :<br>抽象类中可以有抽象方法也可以有普通方法。<br>抽象类被继承后需要实现抽象方法</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Flask Study</tag>
       </tags>
   </entry>
 </search>
