@@ -209,8 +209,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="pc">2023-03-08 18:16:11</span>
-            <span class="mobile">2023-03-08 18:16</span>
+            <span class="pc">2023-03-08 21:21:43</span>
+            <span class="mobile">2023-03-08 21:21</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -318,7 +318,8 @@
 <div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>需要使用<code>import ReactDOM from &#39;react-dom/client&#39;;</code>引入ReactDOM</p>
 </div>
 
-<hr>
+
+
 <p><code>npx react-scripts build</code>打包</p>
 <p><code>npx react-scripts start</code>开发时测试</p>
 <ul>
@@ -335,10 +336,7 @@
 <p>引入CSS<code>import &#39;./index.css&#39;</code></p>
 <h4 id="React组件"><a href="#React组件" class="headerlink" title="React组件"></a>React组件</h4><h5 id="函数组件-推荐"><a href="#函数组件-推荐" class="headerlink" title="函数组件(推荐)"></a>函数组件(推荐)</h5><div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>)&#123;<span class="comment">// 也可以使用箭头函数</span></span><br><span class="line">    retun &lt;div&gt;<span class="title class_">Hello</span>&lt;/div&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> root = <span class="title class_">ReactDOM</span>.<span class="title function_">createRoot</span>(<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;root&#x27;</span>))</span><br><span class="line">root.<span class="title function_">render</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">App</span>/&gt;</span></span>)<span class="comment">// 一般写在入口文件中</span></span><br></pre></td></tr></table></figure></div>
 
-<h5 id="类组件"><a href="#类组件" class="headerlink" title="类组件"></a>类组件</h5><p>必须继承React.Component</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">App</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span>&#123;</span><br><span class="line">    <span class="comment">// 类组件中，必须添加一个render()方法，且方法的返回值要是一个jsx</span></span><br><span class="line">    <span class="title function_">render</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>aaa<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><p>在React中事件需要通过元素的属性来设置，和原生Js不一样, 在React中事件的属性需要使用驼峰命名法</p>
+<h6 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h6><p>在React中事件需要通过元素的属性来设置，和原生Js不一样, 在React中事件的属性需要使用驼峰命名法</p>
 <p><code>onclick -&gt; onClick</code></p>
 <p><code>onchange -&gt; onChange</code></p>
 <p>属性值不能直接执行代码:</p>
@@ -352,28 +350,81 @@
 <li><p>React事件对象不是原生的事件对象，是经过React包装过的事件对象</p>
 </li>
 </ul>
+</li>
+</ul>
 <p>取消行为:</p>
 <div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">clickHandler</span> = (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">    event.<span class="title function_">preventDefault</span>(); </span><br><span class="line">    <span class="comment">//取消默认行为(PS: 若放在&lt;a href=&#x27;#&#x27;&gt;中，则取消跳转)</span></span><br><span class="line">    event.<span class="title function_">stopPropagation</span>()</span><br><span class="line">    <span class="comment">//取消冒泡</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-</li>
+
+<ul>
 <li><p>动态传参</p>
 <p>在组件间，父组件可以通过props(属性)向子组件传递数据(父传子)</p>
 <ul>
 <li>props(外部，父 -&gt; 子)是只读属性, 不能修改</li>
 </ul>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">LogItem</span> test=<span class="string">&#x27;123&#x27;</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">LogItem</span> = (<span class="params">props</span>) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 可以在函数组件的形参中定义一个props，props指定所有传递的参数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;props.test&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    <span class="comment">// 调用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 </li>
+</ul>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">LogItem</span> test=<span class="string">&#x27;123&#x27;</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">LogItem</span> = (<span class="params">props</span>) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 可以在函数组件的形参中定义一个props，props指定所有传递的参数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;props.test&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    <span class="comment">// 调用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
 <li><p>状态</p>
 <p>在React中，当组件渲染完毕后，在修改组件中的变量，不会使组件重新渲染。因此必须重新渲染。</p>
 <ul>
 <li><p>state(自身)</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">LogItem</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> [count, setCounter] = <span class="title function_">useState</span>(<span class="number">1</span>) </span><br><span class="line">    <span class="comment">// 该函数会返回一个数组，数组第一个元素是初始值，第二个是一个函数</span></span><br><span class="line">    <span class="comment">// 初始值只是用来显示，修改不会触发渲染</span></span><br><span class="line">    <span class="comment">// 函数通常命名为setXxxx, 使用函数可以修改count触发渲染</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
 <ol>
 <li><p>React会监控这个变量的变化，当state发生变化时，会自动触发组件的重新渲染</p>
 </li>
 <li><p>在函数组件中，我们需要通过钩子函数，获取state(useState)</p>
 </li>
+<li><p>State实际就是一个被React管理的变量</p>
+</li>
+<li><p>setXxxx只有在值与count不一样的时候才会渲染</p>
+</li>
+<li><p>当通过setState去修改一个state时，并不是修改当前state,是修改下一次渲染时的state时</p>
+</li>
+<li><p>setState()会触发组件的渲染，他是异步的，所以当调用setState需要用到旧值，可能出现错误。可以传递回调函数来修改state</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">setCounter</span>(<span class="function"><span class="params">prevCounter</span> =&gt;</span> prevCounter + <span class="number">1</span>)</span><br><span class="line"><span class="comment">// 回调函数执行时，React会将最新的state值作为参数</span></span><br></pre></td></tr></table></figure></div></li>
 </ol>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">LogItem</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> [count, setCounter] = <span class="title function_">useState</span>(<span class="number">1</span>) </span><br><span class="line">    <span class="comment">// 该函数会返回一个数组，数组第一个元素是初始值，第二个是一个函数</span></span><br><span class="line">    <span class="comment">// 初始值只是用来显示，修改不会触发渲染</span></span><br><span class="line">    <span class="comment">// 函数通常命名为setXxxx, 使用函数可以修改count触发渲染</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</li>
 </ul>
+</li>
+</ul>
+<div class="note-large notel-yellow"><div class="notel-title"><p>注意</p>
+</div><div class="notel-content"><p>当useState为一个对象时，如果直接修改旧的State对象，对象地址不会改变，所以不会被渲染。可以使用浅拷贝</p>
+ </div></div>
+
+<p>PS: <code>setXxxx(&#123;...user, name:&#39;aaa&#39;&#125;)</code></p>
+<ul>
+<li><p>useRef()钩子函数</p>
+<p>创建一个容器， 返回一个普通的JS对象，但是可以确保每次渲染都是同一个对象，减少对象的创建次数(当你需要一个对象不会因为渲染改变时使用)</p>
+</li>
+</ul>
+<h5 id="类组件"><a href="#类组件" class="headerlink" title="类组件"></a>类组件</h5><p>必须继承React.Component</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">App</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span>&#123;</span><br><span class="line">    <span class="comment">// 类组件中，必须添加一个render()方法，且方法的返回值要是一个jsx</span></span><br><span class="line">    <span class="title function_">render</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>aaa<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>类组件的props是存储在实例对象中，可以直接通过实例对象访问<code>this.props</code></p>
+</li>
+<li><p>类组件的state是存储在对象的state属性中，可以直接通过<code>this.state</code>访问</p>
+<ul>
+<li><p>通过<code>this.setState()对其进行修改</code></p>
+</li>
+<li><p>当我们通过this.setState()修改state时，只会修改设置的属性(只限于直接存储state的值)</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">state = &#123;</span><br><span class="line">    <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">    <span class="attr">test</span>: <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="attr">obj</span>: &#123;<span class="attr">name</span>: <span class="string">&#x27;aaa&#x27;</span>&#125; <span class="comment">// 没有直接存储在state，会被覆盖</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>在类组件中，响应函数是以类的方法定义的</li>
+</ul>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">clickHandler = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">setState</span>(<span class="function"><span class="params">prevState</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">count</span>: prevState + <span class="number">1</span>    </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>createRef钩子函数</p>
+<p>与useRef相同，都是创建一个不会变化的JS容器</p>
 </li>
 </ul>
 
@@ -442,7 +493,7 @@
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">JavaScript-React-2</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#React"><span class="nav-text">React</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7API"><span class="nav-text">三大API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSX"><span class="nav-text">JSX</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">注意事项:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%B9%E6%80%A7"><span class="nav-text">特性</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9FDOM"><span class="nav-text">虚拟DOM</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-%E9%A1%B9%E7%9B%AE"><span class="nav-text">React 项目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%87%86%E5%A4%87"><span class="nav-text">手动准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#React%E7%BB%84%E4%BB%B6"><span class="nav-text">React组件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%BB%84%E4%BB%B6-%E6%8E%A8%E8%8D%90"><span class="nav-text">函数组件(推荐)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E7%BB%84%E4%BB%B6"><span class="nav-text">类组件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6"><span class="nav-text">事件</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#React"><span class="nav-text">React</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7API"><span class="nav-text">三大API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSX"><span class="nav-text">JSX</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">注意事项:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%B9%E6%80%A7"><span class="nav-text">特性</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9FDOM"><span class="nav-text">虚拟DOM</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-%E9%A1%B9%E7%9B%AE"><span class="nav-text">React 项目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%87%86%E5%A4%87"><span class="nav-text">手动准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#React%E7%BB%84%E4%BB%B6"><span class="nav-text">React组件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%BB%84%E4%BB%B6-%E6%8E%A8%E8%8D%90"><span class="nav-text">函数组件(推荐)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6"><span class="nav-text">事件</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E7%BB%84%E4%BB%B6"><span class="nav-text">类组件</span></a></li></ol></li></ol></li></ol>
 
     </div>
 </div>
