@@ -9,18 +9,18 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-redefine.png">
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://intyouss.github.io/2023/03/07/3月7日学习记录/"/>
+    <link rel="canonical" href="https://intyouss.github.io/2023/03/09/3月9日项目问题/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="3月7日学习记录">
+    <meta property="og:title" content="3月9日项目问题">
     <meta property="og:description" content="IntYou&#39;s Blog">
-    <meta property="og:url" content="https://intyouss.github.io2023/03/07/3月7日学习记录/">
+    <meta property="og:url" content="https://intyouss.github.io2023/03/09/3月9日项目问题/">
     <meta property="og:image" content="/images/avatar.jpg">
     <meta property="og:site_name" content="IntYou&#39;s Blog">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="3月7日学习记录">
+    <meta name="twitter:title" content="3月9日项目问题">
     <meta name="twitter:description" content="IntYou&#39;s Blog">
     <meta name="twitter:image" content="/images/avatar.jpg">
     <!--- Icon Part-->
@@ -31,7 +31,7 @@
     
     <title>
         
-            3月7日学习记录 -
+            3月9日项目问题 -
         
         IntYou&#39;s Blog
     </title>
@@ -180,7 +180,7 @@
             
             
                 <div class="article-title">
-                    <h1 class="article-title-regular">3月7日学习记录</h1>
+                    <h1 class="article-title-regular">3月9日项目问题</h1>
                 </div>
             
                 
@@ -202,15 +202,15 @@
                             <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="pc">2023-03-07 00:23:24</span>
-        <span class="mobile">2023-03-07 00:23</span>
+        <span class="pc">2023-03-09 12:24:47</span>
+        <span class="mobile">2023-03-09 12:24</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="pc">2023-03-07 22:01:59</span>
-            <span class="mobile">2023-03-07 22:01</span>
+            <span class="pc">2023-03-10 21:25:34</span>
+            <span class="mobile">2023-03-10 21:25</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -222,7 +222,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/Flask-Study/">Flask Study</a>&nbsp;
+                        <a href="/tags/Project/">Project</a>&nbsp;
                     </li>
                 
             </ul>
@@ -245,54 +245,40 @@
             
 
             <div class="article-content markdown-body">
-                <h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
-<h4 id="路由的两种写法"><a href="#路由的两种写法" class="headerlink" title="路由的两种写法"></a>路由的两种写法</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.add_url_rule(<span class="string">&#x27;/index&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, index)</span><br></pre></td></tr></table></figure></div>
+                <h4 id="读取yaml"><a href="#读取yaml" class="headerlink" title="读取yaml"></a>读取yaml</h4><p>引用<code>from ruamel import yaml</code></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yaml.load(</span><br><span class="line">    Path(<span class="string">&#x27;C:\\Users\\Lenovo\\Desktop\\bot\\IntBot\\configs\\config.yaml&#x27;</span>).read_text(encoding=<span class="string">&#x27;utf-8&#x27;</span>),</span><br><span class="line">    Loader=yaml.Loader</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
 
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/inddex&#x27;</span></span>)</span></span><br></pre></td></tr></table></figure></div>
+<h4 id="pydantic"><a href="#pydantic" class="headerlink" title="pydantic"></a>pydantic</h4><p><code>extra=&#39;ignore&#39;</code>忽略额外属性</p>
+<h3 id="flask-migrate数据迁移"><a href="#flask-migrate数据迁移" class="headerlink" title="flask-migrate数据迁移"></a>flask-migrate数据迁移</h3><p>因为在开发中，由于数据表模型的改动，数据经常被清除，因此可以使用数据迁移，保存旧数据</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_sqlalchemy <span class="keyword">import</span> SQLAlchemy</span><br><span class="line"><span class="keyword">from</span> flask_migrate <span class="keyword">import</span> Migrate</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="comment"># 设置数据库连接地址</span></span><br><span class="line">DB_URI = <span class="string">&#x27;mysql+pymysql://root:123456@127.0.0.1:3306/web&#x27;</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_DATABASE_URI&#x27;</span>] = DB_URI</span><br><span class="line"><span class="comment"># 是否追踪数据库修改，一般不开启, 会影响性能</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_TRACK_MODIFICATIONS&#x27;</span>] = <span class="literal">False</span></span><br><span class="line"><span class="comment"># 是否显示底层执行的SQL语句</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_ECHO&#x27;</span>] = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化db,关联flask 项目</span></span><br><span class="line">db = SQLAlchemy(app)</span><br><span class="line"><span class="comment"># 迁移组件初始化</span></span><br><span class="line">Migrate(app, db)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Students</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;students&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">20</span>))</span><br><span class="line">    fullname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line">    nickname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Students(name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;, fullname=&#x27;<span class="subst">&#123;self.fullname&#125;</span>&#x27;, nickname=&#x27;<span class="subst">&#123;self.nickname&#125;</span>&#x27;)&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Users</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;user&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Users(id=&#x27;<span class="subst">&#123;self.<span class="built_in">id</span>&#125;</span>&#x27;, name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;)&gt;&quot;</span></span><br></pre></td></tr></table></figure></div>
 
-<h4 id="路由加载源码的流程"><a href="#路由加载源码的流程" class="headerlink" title="路由加载源码的流程"></a>路由加载源码的流程</h4><ul>
-<li><p>将URL和函数打包成为Rule对象</p>
+<p>执行迁移命令，先设置环境变量, 如果启动文件是app.py 这步可以省略。</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
+
+<p>windows用set设置环境变量，linux 用export 设置环境变量</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
+
+<p>执行相关命令</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">flask db init  <span class="comment"># 生成迁移文件夹  只执行一次</span></span><br><span class="line">flask db migrate  <span class="comment"># ⽣成迁移版本, 保存到迁移文件夹中</span></span><br><span class="line">flask db upgrade  <span class="comment"># 执行迁移</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="迁移命令"><a href="#迁移命令" class="headerlink" title="迁移命令"></a>迁移命令</h4><p>init 命令执行后，会生成migrations目录</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flask db init</span><br></pre></td></tr></table></figure></div>
+
+<p>migrate 命令生成迁移脚本，保存到迁移文件夹中versions目录</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flask db migrate</span><br></pre></td></tr></table></figure></div>
+
+<p>upgrade 命令执行迁移</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flask db upgrade</span><br></pre></td></tr></table></figure></div>
+
+<p>执行完upgrade 命令才会在数据库中生成表</p>
+<h3 id="虚拟环境直接复制迁移"><a href="#虚拟环境直接复制迁移" class="headerlink" title="虚拟环境直接复制迁移"></a>虚拟环境直接复制迁移</h3><ol>
+<li><p>迁移到新电脑，将 虚拟环境文件夹内的pyvenv.cfg文件中home参数，写成新电脑python的路径</p>
 </li>
-<li><p>将Rule对象添加到map对象中</p>
+<li><p>修改虚拟环境文件夹中Scripts中的activate内VIRTUAL_ENV参数修改成新电脑虚拟环境文件夹路径</p>
 </li>
-<li><p>app_url_map &#x3D; map对象</p>
-</li>
-</ul>
-<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&lt;string:name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;name&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>uuid类型 类似于xxxxx-xxxxxxx-xxxxxx-xxxxxx</p>
-<h5 id="自定义路由"><a href="#自定义路由" class="headerlink" title="自定义路由"></a>自定义路由</h5><p>必须继承BaseConverter</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, regex</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>)</span><br><span class="line">        self.regex = regex</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_python</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.url_map.converters[<span class="string">&#x27;regex&#x27;</span>] = RegexConverter</span><br></pre></td></tr></table></figure></div>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><hr>
-<h4 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span>, method=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="CBV"><a href="#CBV" class="headerlink" title="CBV"></a>CBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(views, MethodView):</span><br><span class="line">    method = [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span><br><span class="line">    decorators = [test1, test2] //CBV添加装饰器</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/user&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;user&#x27;</span>))</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="模板-jinja2"><a href="#模板-jinja2" class="headerlink" title="模板(jinja2)"></a>模板(jinja2)</h3><hr>
-<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>模板可继承</p>
-<ol>
-<li><p>被继承:</p>
-<p><code>&#123;% block content %&#125; ? &#123;% endbloack %&#125;</code>  </p>
-</li>
-<li><p>继承:</p>
-<p><code>&#123;% extends 'layout.html' %&#125;  &#123;% block content %&#125; ? &#123;% endbloack %&#125;</code></p>
-</li>
-<li><p>引入:</p>
-<p><code>&#123;% include 'from.html' %&#125;</code></p>
+<li><p>修改虚拟文件夹中Scripts中的activate.bat内set “VIRTUAL_ENV参数改成新电脑虚拟环境文件夹路径</p>
 </li>
 </ol>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dunc</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line">render_template(<span class="string">&#x27;md.html&#x27;</span>, nums=nums, f=func) //可以传递函数名</span><br></pre></td></tr></table></figure></div>
-
-<p>定义全局模板方法</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.template_glabol() //模板中全局使用 &#123;&#123; func(<span class="params"><span class="string">&#x27;haha&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.template_filter() //模板全局使用 &#123;&#123; <span class="string">&#x27;haha&#x27;</span>|f(<span class="params"><span class="string">&#x27;e&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">arg,h</span>):</span><br><span class="line">    <span class="keyword">return</span> arg + h</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/md/hg&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;md_hg.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>如果想要将一个方法限制为一个蓝图域中使用，只需将app修改即可</p>
-<h3 id="特殊装饰器"><a href="#特殊装饰器" class="headerlink" title="特殊装饰器"></a>特殊装饰器</h3><hr>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.before_request //视图函数运行前运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f1</span>():// 一旦返回值为真，则停止行为向下传播(判断用户登录等), 反之空，则继续</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request //视图函数运行结束后运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">response</span>): //视图函数有返回值，就必须返回一个Responce</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f2&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>或</p>
-<p><code>app.before_request(func)</code>不加装饰器使用</p>
 
             </div>
 
@@ -300,11 +286,11 @@
                 <div class="post-copyright-info">
                     <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：3月7日学习记录</li>
+        <li>Post title：3月9日项目问题</li>
         <li>Post author：IntYou</li>
-        <li>Create time：2023-03-07 00:23:24</li>
+        <li>Create time：2023-03-09 12:24:47</li>
         <li>
-            Post link：https://intyou.netlify.app/2023/03/07/3月7日学习记录/
+            Post link：https://intyou.netlify.app/2023/03/09/3月9日项目问题/
         </li>
         <li>
             Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
@@ -319,7 +305,7 @@
                 <ul class="post-tags-box">
                     
                         <li class="tag-item">
-                            <a href="/tags/Flask-Study/">#Flask Study</a>&nbsp;
+                            <a href="/tags/Project/">#Project</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -330,29 +316,14 @@
             
                 <div class="article-nav">
                     
-                        <div class="article-prev">
-                            <a class="prev"
-                            rel="prev"
-                            href="/2023/03/07/JavaScript-React-1/"
-                            >
-                                <span class="left arrow-icon flex-center">
-                                    <i class="fa-solid fa-chevron-left"></i>
-                                </span>
-                                <span class="title flex-center">
-                                    <span class="post-nav-title-item">JavaScript-React-1</span>
-                                    <span class="post-nav-item">Prev posts</span>
-                                </span>
-                            </a>
-                        </div>
-                    
                     
                         <div class="article-next">
                             <a class="next"
                             rel="next"
-                            href="/2023/03/06/3%E6%9C%886%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"
+                            href="/2023/03/09/poetry%E4%BD%BF%E7%94%A8/"
                             >
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">3月6日 学习记录</span>
+                                    <span class="post-nav-title-item">poetry使用</span>
                                     <span class="post-nav-item">Next posts</span>
                                 </span>
                                 <span class="right arrow-icon flex-center">
@@ -373,8 +344,8 @@
                 <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">On this page</div>
-        <div class="page-title">3月7日学习记录</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F"><span class="nav-text">路由系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95"><span class="nav-text">路由的两种写法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%8A%A0%E8%BD%BD%E6%BA%90%E7%A0%81%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-text">路由加载源码的流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1"><span class="nav-text">动态路由</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%B7%AF%E7%94%B1"><span class="nav-text">自定义路由</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE"><span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FBV"><span class="nav-text">FBV</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CBV"><span class="nav-text">CBV</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF-jinja2"><span class="nav-text">模板(jinja2)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-text">基本用法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-text">特殊装饰器</span></a></li></ol>
+        <div class="page-title">3月9日项目问题</div>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96yaml"><span class="nav-text">读取yaml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pydantic"><span class="nav-text">pydantic</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flask-migrate%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB"><span class="nav-text">flask-migrate数据迁移</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%81%E7%A7%BB%E5%91%BD%E4%BB%A4"><span class="nav-text">迁移命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E7%9B%B4%E6%8E%A5%E5%A4%8D%E5%88%B6%E8%BF%81%E7%A7%BB"><span class="nav-text">虚拟环境直接复制迁移</span></a>
 
     </div>
 </div>

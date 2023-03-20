@@ -195,7 +195,7 @@
                         <div class="author">
                             <span class="name">IntYou</span>
                             
-                                <span class="author-label">lol</span>
+                                <span class="author-label">(^_^)</span>
                             
                         </div>
                         <div class="meta-info">
@@ -209,8 +209,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="pc">2023-03-06 17:17:11</span>
-            <span class="mobile">2023-03-06 17:17</span>
+            <span class="pc">2023-03-09 11:33:54</span>
+            <span class="mobile">2023-03-09 11:33</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -251,6 +251,7 @@
 <p>单装饰器装饰: 装饰器在装饰一个函数时，此函数将被装饰器内部函数替代，如果想暴露原本函数，可以使用装饰器@functools.wraps(func)</p>
 <p>多装饰器装饰: 优先使用内部装饰器，逐层向上</p>
 <div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/index&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;h&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/login&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;g&quot;</span></span><br></pre></td></tr></table></figure></div>
+
 <p>@app.route() endpoint默认为函数名  </p>
 <p>两个函数使用相同函数装饰auth, 在不使用@functools.warps(func)的情况下，两个初始函数被装饰后，都将变为inner的属性，形成别名重复错误:<br><code>AssertionError: View function mapping is ovwewriting an existing endpoint function: inner</code></p>
 <h4 id="flask蓝图"><a href="#flask蓝图" class="headerlink" title="flask蓝图"></a>flask蓝图</h4><hr>
@@ -261,6 +262,7 @@
 </li>
 <li><p>在主进程中引用蓝图</p>
 <div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> <span class="string">&#x27;/path&#x27;</span> <span class="keyword">import</span> xxx</span><br><span class="line">app.register_blueprint(xxx, url_prefix=<span class="string">&#x27;/x&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
 <p>url_prefix 添加前缀 使用: &#x2F;x&#x2F;xxx</p>
 </li>
 </ol>
