@@ -9,18 +9,18 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-redefine.png">
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://intyouss.github.io/2023/03/07/3月7日学习记录/"/>
+    <link rel="canonical" href="https://intyouss.github.io/2023/03/20/linux/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="3月7日学习记录">
+    <meta property="og:title" content="Linux">
     <meta property="og:description" content="IntYou&#39;s Blog">
-    <meta property="og:url" content="https://intyouss.github.io2023/03/07/3月7日学习记录/">
+    <meta property="og:url" content="https://intyouss.github.io2023/03/20/Linux/">
     <meta property="og:image" content="/images/avatar.jpg">
     <meta property="og:site_name" content="IntYou&#39;s Blog">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="3月7日学习记录">
+    <meta name="twitter:title" content="Linux">
     <meta name="twitter:description" content="IntYou&#39;s Blog">
     <meta name="twitter:image" content="/images/avatar.jpg">
     <!--- Icon Part-->
@@ -31,7 +31,7 @@
     
     <title>
         
-            3月7日学习记录 -
+            Linux -
         
         IntYou&#39;s Blog
     </title>
@@ -180,7 +180,7 @@
             
             
                 <div class="article-title">
-                    <h1 class="article-title-regular">3月7日学习记录</h1>
+                    <h1 class="article-title-regular">Linux</h1>
                 </div>
             
                 
@@ -202,14 +202,14 @@
                             <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="pc">2023-03-07 00:23:24</span>
-        <span class="mobile">2023-03-07 00:23</span>
+        <span class="pc">2023-03-20 19:55:22</span>
+        <span class="mobile">2023-03-20 19:55</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="pc">2023-03-21 01:48:11</span>
+            <span class="pc">2023-03-21 01:48:21</span>
             <span class="mobile">2023-03-21 01:48</span>
             <span class="hover-info">Updated</span>
         </span>
@@ -222,7 +222,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/Flask-Study/">Flask Study</a>&nbsp;
+                        <a href="/tags/Linux-Study/">Linux Study</a>&nbsp;
                     </li>
                 
             </ul>
@@ -245,54 +245,211 @@
             
 
             <div class="article-content markdown-body">
-                <h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
-<h4 id="路由的两种写法"><a href="#路由的两种写法" class="headerlink" title="路由的两种写法"></a>路由的两种写法</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.add_url_rule(<span class="string">&#x27;/index&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, index)</span><br></pre></td></tr></table></figure></div>
-
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/inddex&#x27;</span></span>)</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="路由加载源码的流程"><a href="#路由加载源码的流程" class="headerlink" title="路由加载源码的流程"></a>路由加载源码的流程</h4><ul>
-<li><p>将URL和函数打包成为Rule对象</p>
-</li>
-<li><p>将Rule对象添加到map对象中</p>
-</li>
-<li><p>app_url_map &#x3D; map对象</p>
-</li>
-</ul>
-<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&lt;string:name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;name&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>uuid类型 类似于xxxxx-xxxxxxx-xxxxxx-xxxxxx</p>
-<h5 id="自定义路由"><a href="#自定义路由" class="headerlink" title="自定义路由"></a>自定义路由</h5><p>必须继承BaseConverter</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, regex</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>)</span><br><span class="line">        self.regex = regex</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_python</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.url_map.converters[<span class="string">&#x27;regex&#x27;</span>] = RegexConverter</span><br></pre></td></tr></table></figure></div>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><hr>
-<h4 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span>, method=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="CBV"><a href="#CBV" class="headerlink" title="CBV"></a>CBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(views, MethodView):</span><br><span class="line">    method = [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span><br><span class="line">    decorators = [test1, test2] //CBV添加装饰器</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/user&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;user&#x27;</span>))</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="模板-jinja2"><a href="#模板-jinja2" class="headerlink" title="模板(jinja2)"></a>模板(jinja2)</h3><hr>
-<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>模板可继承</p>
+                <h3 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h3><p>当前目录下的所有内容(文件或文件夹)</p>
+<p>默认目录home-家目录&#x2F;home&#x2F;‘username’</p>
 <ol>
-<li><p>被继承:</p>
-<p><code>&#123;% block content %&#125; ? &#123;% endbloack %&#125;</code>  </p>
-</li>
-<li><p>继承:</p>
-<p><code>&#123;% extends 'layout.html' %&#125;  &#123;% block content %&#125; ? &#123;% endbloack %&#125;</code></p>
-</li>
-<li><p>引入:</p>
-<p><code>&#123;% include 'from.html' %&#125;</code></p>
+<li><p>命令参数[-a -l -h]</p>
+<p>ls 目录 -查找目录下所有内容</p>
+<p>-a-all 显示所有当前目录下所有内容(包括隐藏内容.)</p>
+<p>-l-list 以列表方式加创建时间和权限组显示所有当前目录下所有内容</p>
+<p>选项可以复合-al同时应用两类功能</p>
+<p>-h 和-l混合使用 将内容容量以可读方式显示1KB,1MB等</p>
 </li>
 </ol>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dunc</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line">render_template(<span class="string">&#x27;md.html&#x27;</span>, nums=nums, f=func) //可以传递函数名</span><br></pre></td></tr></table></figure></div>
-
-<p>定义全局模板方法</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.template_glabol() //模板中全局使用 &#123;&#123; func(<span class="params"><span class="string">&#x27;haha&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.template_filter() //模板全局使用 &#123;&#123; <span class="string">&#x27;haha&#x27;</span>|f(<span class="params"><span class="string">&#x27;e&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">arg,h</span>):</span><br><span class="line">    <span class="keyword">return</span> arg + h</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/md/hg&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;md_hg.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>如果想要将一个方法限制为一个蓝图域中使用，只需将app修改即可</p>
-<h3 id="特殊装饰器"><a href="#特殊装饰器" class="headerlink" title="特殊装饰器"></a>特殊装饰器</h3><hr>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.before_request //视图函数运行前运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f1</span>():// 一旦返回值为真，则停止行为向下传播(判断用户登录等), 反之空，则继续</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request //视图函数运行结束后运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">response</span>): //视图函数有返回值，就必须返回一个Responce</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f2&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>或</p>
-<p><code>app.before_request(func)</code>不加装饰器使用</p>
+<h3 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h3><p>切换工作目录Change Directory</p>
+<p>cd [Linux路径] 无参数直接切换</p>
+<p>不指定路径，直接回到home目录</p>
+<h3 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h3><p>Print Work Directory</p>
+<p>直接使用pwd打印当前工作目录路径 显示&#x2F;home&#x2F;xxx</p>
+<h3 id="绝对路径"><a href="#绝对路径" class="headerlink" title="绝对路径"></a>绝对路径</h3><p>以根目录为起点，写出一个路径，以&#x2F;为起点</p>
+<h3 id="相对路径"><a href="#相对路径" class="headerlink" title="相对路径"></a>相对路径</h3><p>以当前目录为起点，写一个路径，不需要写&#x2F;</p>
+<h4 id="特殊路径符"><a href="#特殊路径符" class="headerlink" title="特殊路径符"></a>特殊路径符</h4><p>.  表示当前目录，比如 cd .&#x2F;Desktop表示切换到当前目录下的Desktop目录内</p>
+<p>.. 表示切换到上一级的某个目录</p>
+<p>~ 表示HOME目录,比如cd ~即可退回HOME</p>
+<h3 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h3><p>Make Directroy</p>
+<p>创建目录，可以使用相对路径和绝对路径</p>
+<p>makdir [-p] 路径</p>
+<p>-p表示自动创建不存在的父目录</p>
+<h3 id="ctrl-l"><a href="#ctrl-l" class="headerlink" title="ctrl+l"></a>ctrl+l</h3><p>清空屏幕</p>
+<h3 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h3><p>创建文件</p>
+<p>touch 路径</p>
+<h3 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h3><p>查看文件内内容(全部打印)</p>
+<p>cat 路径</p>
+<h3 id="more"><a href="#more" class="headerlink" title="more"></a>more</h3><p>查看文件内内容(可翻页–more–)</p>
+<p>more 路径</p>
+<p>退出翻页查看(键盘q)</p>
+<h3 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h3><p>copy</p>
+<p>复制文件和文件夹</p>
+<p>cp [-r] 参数1 参数2</p>
+<p>-r 用于复制文件夹用，不输入即复制文件</p>
+<p>参数1 表示被复制文件路径</p>
+<p>参数2 表示要复制去的路径</p>
+<h3 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h3><p>move</p>
+<p>移动文件夹和文件，改名</p>
+<p>mv 参数1 参数2</p>
+<p>参数与cp同</p>
+<h3 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h3><p>remove</p>
+<p>rm [-r -f] 参数1——n</p>
+<p>删除文件和文件夹</p>
+<p>-r 用于删除文件夹</p>
+<p>-f 表示force 强制删除(不会弹出提示确认信息)</p>
+<ul>
+<li>普通用户不会弹出，root用户会弹出</li>
+</ul>
+<p>参数表示要删除的文件或文件夹路径空格隔开，可一起删除</p>
+<h4 id="通配符"><a href="#通配符" class="headerlink" title="通配符*"></a>通配符*</h4><p>匹配任意内容</p>
+<p>test* 匹配任何test开头的内容</p>
+<p>*test * 匹配任何包含test的内容</p>
+<p>*test 匹配test结尾的内容</p>
+<p>rm -rf &#x2F;* 强制删除根目录下所有内容</p>
+<h3 id="which"><a href="#which" class="headerlink" title="which"></a>which</h3><p>查看命令的程序文件的路径</p>
+<p>which [命令]</p>
+<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>搜索指定文件</p>
+<p>find 起始路径 -name ‘查找文件名’</p>
+<p>root用户全盘搜索</p>
+<p>find 起始路径 -size +|-n [kMG]</p>
+<ul>
+<li><p>+,-表示大于和小于</p>
+</li>
+<li><p>n表示大小数字</p>
+</li>
+<li><p>kMG表示大小单位</p>
+</li>
+</ul>
+<p>find &#x2F; -size -10k</p>
+<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>从文件中通过关键字过滤文件行</p>
+<p>grep [-n] ’关键字‘ 文件路径</p>
+<h3 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h3><p>统计文件的行数</p>
+<p>wc [-c  -m -l -w] 文件路径(不加参数，显示行数，单词数，字节数，文件名)</p>
+<p>-c 统计bytes数</p>
+<p>-m 统计字符数</p>
+<p>-l 统计行数</p>
+<p>-w 统计单词数</p>
+<h3 id="管道符"><a href="#管道符" class="headerlink" title="管道符(|)"></a>管道符(|)</h3><p>将管道符左边的结果，作为右边的输入</p>
+<ul>
+<li><p>cat test.txt | grep x</p>
+</li>
+<li><p>ls -lh &#x2F;usr | wc -l</p>
+</li>
+<li><p>cat test.txt | grep x | grep xx</p>
+</li>
+</ul>
+<h3 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h3><p>在命令行中输出指定内容</p>
+<p>echo ‘输出的内容’</p>
+<p>echo &#96;&#96;(反引号内输入命令) 输出命令结果 </p>
+<h3 id="重定向符"><a href="#重定向符" class="headerlink" title="重定向符"></a>重定向符</h3><p>[&gt;] 将左侧命令的结果，覆盖写入到符号右侧</p>
+<ul>
+<li>echo ‘hello’ &gt; test.txt</li>
+</ul>
+<p>[&gt;&gt;] 将左侧命令的结果，追加写入符号右侧</p>
+<ul>
+<li>ls &#x2F; &gt; test.txt</li>
+</ul>
+<h3 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h3><p>可以查看文件尾部内容，跟踪文件最新更改</p>
+<p>tail [-f -num] 路径</p>
+<p>-f 表示持续跟踪</p>
+<p>-num 表示查看尾部多少行，不填默认10行</p>
+<ul>
+<li>tail -5 test.txt</li>
+</ul>
+<h3 id="vi-x2F-vim"><a href="#vi-x2F-vim" class="headerlink" title="vi&#x2F;vim"></a>vi&#x2F;vim</h3><p>Linux中最经典的文本编辑器</p>
+<p>vim是vi的加强版本，兼容vi的所有指令，不仅能编辑文本，还具有shell程序编辑的功能，可以不同颜色的字体来辨别语法的正确性</p>
+<ol>
+<li><p>命令模式 (Command mode)</p>
+<p>所敲的按键编辑器都理解成命令,此模式下,不能自由进行文本编辑</p>
+</li>
+<li><p>输入模式(Insert mode)</p>
+<p>此模式下，可以对文件内容进行自由编辑</p>
+</li>
+<li><p>底线命令模式(Last line mode)</p>
+<p>以:开始，通常用于文件的保存和退出</p>
+</li>
+</ol>
+<p>vim 文件路径</p>
+<ul>
+<li><p>如果文件存在打开，不存在则创建</p>
+</li>
+<li><p>从命令模式点击i进入输入模式</p>
+</li>
+<li><p>从输入模式使用esc退回命令模式</p>
+</li>
+<li><p>命令模式下按:进入底线命令模式</p>
+<ul>
+<li>wq w保存 q退出</li>
+</ul>
+</li>
+</ul>
+<p>命令模式命令</p>
+<blockquote>
+<p>$移动到行结尾</p>
+<p>0移动到行开头</p>
+<p>&#x2F;进入搜索模式</p>
+<p>n向下搜索</p>
+<p>N向上搜索</p>
+<p>yy复制当前行</p>
+<p>p粘贴</p>
+<p>dd删除当前行</p>
+<p>ndd删除当前行和下面的n行</p>
+<p>u撤销修改</p>
+<p>ctrl+r反向撤销修改</p>
+<p>gg跳到首行</p>
+<p>G跳到最后一行</p>
+<p>dG从当前行向下全部删除</p>
+<p>dgg向上全部删除</p>
+<p>d$从光标开始删除到本行行尾</p>
+<p>d0从光标开始删除到本行行首</p>
+</blockquote>
+<p>底线命令模式命令</p>
+<blockquote>
+<p>:wq 保存退出</p>
+<p>:q! 强制退出</p>
+<p>:set nu 显示行号</p>
+<p>:set paste设置粘贴模式</p>
+</blockquote>
+<h3 id="root-超级管理员"><a href="#root-超级管理员" class="headerlink" title="root(超级管理员)"></a>root(超级管理员)</h3><p>拥有最大的系统操作权限</p>
+<h4 id="su"><a href="#su" class="headerlink" title="su"></a>su</h4><p>su -  默认切换root</p>
+<p>su-root 密码 切换root管理员(-是为了在登录时加载环境变量)</p>
+<p>exit 回退</p>
+<p>root管理员切换其他账号不要密码</p>
+<h4 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h4><p>临时以root身份执行命令</p>
+<p>sudo 其他命令</p>
+<p>只有认证的用户才能使用</p>
+<ul>
+<li><p>为普通用户配置认证</p>
+<ul>
+<li><p>切换到root用户，执行visudo命令打开&#x2F;etc&#x2F;sudoers</p>
+</li>
+<li><p>在文件最后添加:</p>
+<p><code>intyou ALL=(ALL)     NOPASSWD:ALL</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="用户，用户组"><a href="#用户，用户组" class="headerlink" title="用户，用户组"></a>用户，用户组</h3><p>以下命令使用root用户执行</p>
+<h4 id="用户组管理"><a href="#用户组管理" class="headerlink" title="用户组管理"></a>用户组管理</h4><p>groupadd 用户组名 创建用户组</p>
+<p>groupdel 用户组名 删除用户组</p>
+<h4 id="用户管理-Ubuntu"><a href="#用户管理-Ubuntu" class="headerlink" title="用户管理(Ubuntu)"></a>用户管理(Ubuntu)</h4><p>useradd [-g -d] 用户名</p>
+<ul>
+<li><p>-g 指定用户的组，不指定，会创建同名组并自动加入，指定组需要已存在， 如已知存在同名组，必须使用-g</p>
+</li>
+<li><p>-d指定用户HOME路径， 不指定， HOME目录默认在: &#x2F;home&#x2F;用户名</p>
+</li>
+<li><p>-m创建家目录</p>
+</li>
+</ul>
+<p>userdel [-r] 用户名</p>
+<ul>
+<li>-r 删除用户的HOME目录，不使用, HOME目录保留</li>
+</ul>
+<p>id 用户名</p>
+<ul>
+<li>查看用户的用户组</li>
+</ul>
+<p>usermod -aG</p>
+<p>将指定用户加入指定用户组</p>
+<p>getent</p>
+<p>getent passwd 查看当前系统中有哪些用户</p>
+<p>getent group 查看当前系统中有哪些用户组</p>
 
             </div>
 
@@ -300,11 +457,11 @@
                 <div class="post-copyright-info">
                     <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：3月7日学习记录</li>
+        <li>Post title：Linux</li>
         <li>Post author：IntYou</li>
-        <li>Create time：2023-03-07 00:23:24</li>
+        <li>Create time：2023-03-20 19:55:22</li>
         <li>
-            Post link：https://intyou.netlify.app/2023/03/07/3月7日学习记录/
+            Post link：https://intyou.netlify.app/2023/03/20/Linux/
         </li>
         <li>
             Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
@@ -319,7 +476,7 @@
                 <ul class="post-tags-box">
                     
                         <li class="tag-item">
-                            <a href="/tags/Flask-Study/">#Flask Study</a>&nbsp;
+                            <a href="/tags/Linux-Study/">#Linux Study</a>&nbsp;
                         </li>
                     
                 </ul>
@@ -330,29 +487,14 @@
             
                 <div class="article-nav">
                     
-                        <div class="article-prev">
-                            <a class="prev"
-                            rel="prev"
-                            href="/2023/03/07/JavaScript-React-1/"
-                            >
-                                <span class="left arrow-icon flex-center">
-                                    <i class="fa-solid fa-chevron-left"></i>
-                                </span>
-                                <span class="title flex-center">
-                                    <span class="post-nav-title-item">JavaScript-React-1</span>
-                                    <span class="post-nav-item">Prev posts</span>
-                                </span>
-                            </a>
-                        </div>
-                    
                     
                         <div class="article-next">
                             <a class="next"
                             rel="next"
-                            href="/2023/03/06/3%E6%9C%886%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"
+                            href="/2023/03/09/3%E6%9C%889%E6%97%A5%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98/"
                             >
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">3月6日 学习记录</span>
+                                    <span class="post-nav-title-item">3月9日项目问题</span>
                                     <span class="post-nav-item">Next posts</span>
                                 </span>
                                 <span class="right arrow-icon flex-center">
@@ -373,8 +515,8 @@
                 <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">On this page</div>
-        <div class="page-title">3月7日学习记录</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%B3%BB%E7%BB%9F"><span class="nav-text">路由系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95"><span class="nav-text">路由的两种写法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%8A%A0%E8%BD%BD%E6%BA%90%E7%A0%81%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-text">路由加载源码的流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1"><span class="nav-text">动态路由</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%B7%AF%E7%94%B1"><span class="nav-text">自定义路由</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE"><span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FBV"><span class="nav-text">FBV</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CBV"><span class="nav-text">CBV</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF-jinja2"><span class="nav-text">模板(jinja2)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-text">基本用法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-text">特殊装饰器</span></a></li></ol>
+        <div class="page-title">Linux</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ls"><span class="nav-text">ls</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cd"><span class="nav-text">cd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pwd"><span class="nav-text">pwd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-text">绝对路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-text">相对路径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84%E7%AC%A6"><span class="nav-text">特殊路径符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mkdir"><span class="nav-text">mkdir</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ctrl-l"><span class="nav-text">ctrl+l</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#touch"><span class="nav-text">touch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cat"><span class="nav-text">cat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#more"><span class="nav-text">more</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cp"><span class="nav-text">cp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mv"><span class="nav-text">mv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rm"><span class="nav-text">rm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="nav-text">通配符*</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#which"><span class="nav-text">which</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grep"><span class="nav-text">grep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wc"><span class="nav-text">wc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%A1%E9%81%93%E7%AC%A6"><span class="nav-text">管道符(|)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#echo"><span class="nav-text">echo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E7%AC%A6"><span class="nav-text">重定向符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tail"><span class="nav-text">tail</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vi-x2F-vim"><span class="nav-text">vi&#x2F;vim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#root-%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98"><span class="nav-text">root(超级管理员)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#su"><span class="nav-text">su</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sudo"><span class="nav-text">sudo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%EF%BC%8C%E7%94%A8%E6%88%B7%E7%BB%84"><span class="nav-text">用户，用户组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86"><span class="nav-text">用户组管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86-Ubuntu"><span class="nav-text">用户管理(Ubuntu)</span></a></li></ol></li></ol>
 
     </div>
 </div>
