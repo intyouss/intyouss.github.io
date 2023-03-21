@@ -209,8 +209,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="pc">2023-03-21 01:48:21</span>
-            <span class="mobile">2023-03-21 01:48</span>
+            <span class="pc">2023-03-21 23:07:56</span>
+            <span class="mobile">2023-03-21 23:07</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -270,7 +270,7 @@
 <p>创建目录，可以使用相对路径和绝对路径</p>
 <p>makdir [-p] 路径</p>
 <p>-p表示自动创建不存在的父目录</p>
-<h3 id="ctrl-l"><a href="#ctrl-l" class="headerlink" title="ctrl+l"></a>ctrl+l</h3><p>清空屏幕</p>
+<h3 id="ctrl-l-and-clear"><a href="#ctrl-l-and-clear" class="headerlink" title="ctrl+l and clear"></a>ctrl+l and clear</h3><p>清空屏幕</p>
 <h3 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h3><p>创建文件</p>
 <p>touch 路径</p>
 <h3 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h3><p>查看文件内内容(全部打印)</p>
@@ -450,6 +450,159 @@
 <p>getent</p>
 <p>getent passwd 查看当前系统中有哪些用户</p>
 <p>getent group 查看当前系统中有哪些用户组</p>
+<h3 id="认知权限信息"><a href="#认知权限信息" class="headerlink" title="认知权限信息"></a>认知权限信息</h3><p>ls -l 输出的信息分析</p>
+<p>drwxr-xr-x  intyou intyou</p>
+<p>drwxr-xr-x - 表示权限管控细节</p>
+<p>-代表无</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-21-18-03-51-image.png"
+                     
+                ></p>
+<p>第一块 ‘-‘表示文件 ‘d’表示文件夹 ‘l’表示软链接</p>
+<p>除去第一块:</p>
+<ul>
+<li><p>前三块代表所属用户权限</p>
+</li>
+<li><p>中三块代表所属用户组权限</p>
+</li>
+<li><p>后三块代表其他用户权限</p>
+</li>
+</ul>
+<p>r 读权限</p>
+<p>w写权限</p>
+<p>x执行权限</p>
+<h3 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h3><p>修改文件，文件夹的权限信息</p>
+<p>只有文件文件夹的所属用户或root用户可以修改</p>
+<p>chmod [-R] 权限 文件和文件夹</p>
+<ul>
+<li>-R 对文件夹内的全部内容应用同样的操作</li>
+</ul>
+<p><code>chomd u=rwx,g=rx,o=x hello.txt</code>将文件权限修改为rwxr-x–x</p>
+<p>u表示所属用户权限，g表示group组权限，o表示other其他用户权限</p>
+<h4 id="快捷方式"><a href="#快捷方式" class="headerlink" title="快捷方式"></a>快捷方式</h4><p>权限的数字序号</p>
+<p>权限可以用三位数字来代表，第一位数字表示用户权限，第二位表示用户组权限，第三位表示其他用户权限</p>
+<p>命令从右到左依次增加</p>
+<p>0：— 1：–x 2：-w-3：-wx 4：r– 5：r-x 6：rw- 7：rwx</p>
+<h3 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h3><p>只能root用户执行</p>
+<p>修改文件和文件夹的所属用户和用户组</p>
+<p>chown [-R] [用户] [:] [用户组] 文件或文件夹</p>
+<p>chown root hello.txt 将hello.txt所属用户修改为root</p>
+<p>chown :root hello.txt 将hello.txt所属用户组修改为root</p>
+<h3 id="小技巧"><a href="#小技巧" class="headerlink" title="小技巧"></a>小技巧</h3><h4 id="ctrl-c-强制停止"><a href="#ctrl-c-强制停止" class="headerlink" title="ctrl+c 强制停止"></a>ctrl+c 强制停止</h4><h4 id="ctrl-d-退出或登录"><a href="#ctrl-d-退出或登录" class="headerlink" title="ctrl+d 退出或登录"></a>ctrl+d 退出或登录</h4><ul>
+<li>不能用于退出vi&#x2F;vim</li>
+</ul>
+<h4 id="历史命令搜索"><a href="#历史命令搜索" class="headerlink" title="历史命令搜索"></a>历史命令搜索</h4><ul>
+<li><p>history</p>
+<p>history | grep ‘xxx’</p>
+</li>
+<li><p>!命令前缀 自动执行上一次匹配前缀的命令</p>
+<p>python</p>
+<p>!p</p>
+</li>
+<li><p>ctrl+r 输入内容去匹配历史命令</p>
+</li>
+</ul>
+<h3 id="centos-下载包"><a href="#centos-下载包" class="headerlink" title="centos 下载包"></a>centos 下载包</h3><h4 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h4><p>yum [-y] [install | remove | search] 软件名称</p>
+<ul>
+<li><p>-y 自动确定， 无需手动确认安装或卸载过程</p>
+</li>
+<li><p>install 安装</p>
+</li>
+<li><p>remove 卸载</p>
+</li>
+<li><p>search 搜索</p>
+</li>
+</ul>
+<p>yum命令需要root指令</p>
+<h3 id="ubuntu下载包"><a href="#ubuntu下载包" class="headerlink" title="ubuntu下载包"></a>ubuntu下载包</h3><h4 id="apt"><a href="#apt" class="headerlink" title="apt"></a>apt</h4><p>apt [-y] [install | remove | search] 软件名称</p>
+<p>与centos相同</p>
+<h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><p>控制软件(内置或第三方)启动，停止，开机自启</p>
+<p>systemctl start | stop | status | enable | disable 服务名</p>
+<p>enable&#x2F;disable 打开、关闭开机自启</p>
+<h3 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h3><h4 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h4><p>在系统中创建软链接，可以将文件和文件夹链接到其他位置(快捷方式)</p>
+<p>ln -s 参数1 参数2</p>
+<p>-s 创建软链接</p>
+<p>参数1 被链接的文件或文件夹</p>
+<p>参数2 要链接去的目的地</p>
+<p><code>ln -s /etc/yum.conf ~/yum.conf</code></p>
+<h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>date [-d] [+格式化字符串]</p>
+<ul>
+<li><p>-d 按照给定的字符串显示日期，一般用于日期计算</p>
+<p>支持 year month day hour minute second</p>
+<p>date -d ‘+1 day’ ‘+%Y-%m-%d’</p>
+</li>
+<li><p>格式化字符串</p>
+<ul>
+<li><p>%Y 年</p>
+</li>
+<li><p>%y 年份后两位数字(00,99)</p>
+</li>
+<li><p>%m 月份</p>
+</li>
+<li><p>%d 日</p>
+</li>
+<li><p>%H 小时</p>
+</li>
+<li><p>%M 分钟</p>
+</li>
+<li><p>%S 秒</p>
+</li>
+<li><p>%s 自1970-01-01 00:00:00 到现在的秒数</p>
+</li>
+</ul>
+<p>date ‘+%Y-%m-%d %H:%M:%S’</p>
+</li>
+</ul>
+<h4 id="修改linux时区-东八区"><a href="#修改linux时区-东八区" class="headerlink" title="修改linux时区(东八区)"></a>修改linux时区(东八区)</h4><p>root权限</p>
+<p>rm -f &#x2F;etc&#x2F;localtime</p>
+<p>sudo ln -s &#x2F;user&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtime</p>
+<h4 id="ntp程序"><a href="#ntp程序" class="headerlink" title="ntp程序"></a>ntp程序</h4><p>联网自动校准系统时间</p>
+<p>需要使用apt下载</p>
+<p>使用systemctl enable ntp 开机自启</p>
+<p>手动校准 ntpdate -u ntp.aliyun.com</p>
+<h3 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h3><p>查看ip信息</p>
+<h3 id="hostname"><a href="#hostname" class="headerlink" title="hostname"></a>hostname</h3><p>查看主机名</p>
+<ul>
+<li>hostname set-hostname 名字 修改主机名</li>
+</ul>
+<h3 id="在linux中固定ip地址"><a href="#在linux中固定ip地址" class="headerlink" title="在linux中固定ip地址"></a>在linux中固定ip地址</h3><p>在ubuntu22.04中应找到&#x2F;etc&#x2F;netplan中的yaml文件修改</p>
+<blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/liujiaxin2018/p/16287463.html" >ubuntu 22.04如何配置静态IP、网关、DNS - 小鲨鱼2018 - 博客园 (cnblogs.com) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>&#96;</p>
+</blockquote>
+<h3 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h3><p>检测指定网络服务器是否可联通状态</p>
+<p>ping [-c num] ip或主机名</p>
+<p>-c 检查的次数 不使用，将无限次</p>
+<h3 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h3><p>可以在命令行内下载网络文件</p>
+<p>wget [-b] url</p>
+<p>-b 后台下载</p>
+<p>参数: url 下载链接</p>
+<p>不管成功下载或者不成功，都会创建文件</p>
+<h3 id="curl"><a href="#curl" class="headerlink" title="curl"></a>curl</h3><p>可以发送网络请求 下载文件 获取网站状态</p>
+<p>curl [-O] url</p>
+<p>-O 用于下载文件，当url是下载链接时，可以使用此选项保存文件</p>
+<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h3><h4 id="查看端口占用"><a href="#查看端口占用" class="headerlink" title="查看端口占用"></a>查看端口占用</h4><ul>
+<li><p>netstat</p>
+<p>需要apt安装</p>
+<p>netstat -anp|grep 端口号</p>
+</li>
+<li><p>nmap</p>
+<p>需要apt安装</p>
+<p>nmap 端口</p>
+</li>
+</ul>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><h4 id="查看进程"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程</h4><p>ps [-e -f]</p>
+<ul>
+<li><p>-e 显示全部的进程</p>
+</li>
+<li><p>-f 已完全格式化的形式展示信息</p>
+</li>
+</ul>
+<p>固定用法ps -ef 列出全部进程的全部信息</p>
+<p>例: ps -ef | grep tail</p>
+<h4 id="关闭进程"><a href="#关闭进程" class="headerlink" title="关闭进程"></a>关闭进程</h4><p>kill [-9] 进程ID</p>
+<p>-9 表示强制关闭进程</p>
 
             </div>
 
@@ -516,7 +669,7 @@
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">Linux</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ls"><span class="nav-text">ls</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cd"><span class="nav-text">cd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pwd"><span class="nav-text">pwd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-text">绝对路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-text">相对路径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84%E7%AC%A6"><span class="nav-text">特殊路径符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mkdir"><span class="nav-text">mkdir</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ctrl-l"><span class="nav-text">ctrl+l</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#touch"><span class="nav-text">touch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cat"><span class="nav-text">cat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#more"><span class="nav-text">more</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cp"><span class="nav-text">cp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mv"><span class="nav-text">mv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rm"><span class="nav-text">rm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="nav-text">通配符*</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#which"><span class="nav-text">which</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grep"><span class="nav-text">grep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wc"><span class="nav-text">wc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%A1%E9%81%93%E7%AC%A6"><span class="nav-text">管道符(|)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#echo"><span class="nav-text">echo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E7%AC%A6"><span class="nav-text">重定向符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tail"><span class="nav-text">tail</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vi-x2F-vim"><span class="nav-text">vi&#x2F;vim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#root-%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98"><span class="nav-text">root(超级管理员)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#su"><span class="nav-text">su</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sudo"><span class="nav-text">sudo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%EF%BC%8C%E7%94%A8%E6%88%B7%E7%BB%84"><span class="nav-text">用户，用户组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86"><span class="nav-text">用户组管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86-Ubuntu"><span class="nav-text">用户管理(Ubuntu)</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ls"><span class="nav-text">ls</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cd"><span class="nav-text">cd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pwd"><span class="nav-text">pwd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-text">绝对路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-text">相对路径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84%E7%AC%A6"><span class="nav-text">特殊路径符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mkdir"><span class="nav-text">mkdir</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ctrl-l-and-clear"><span class="nav-text">ctrl+l and clear</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#touch"><span class="nav-text">touch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cat"><span class="nav-text">cat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#more"><span class="nav-text">more</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cp"><span class="nav-text">cp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mv"><span class="nav-text">mv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rm"><span class="nav-text">rm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="nav-text">通配符*</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#which"><span class="nav-text">which</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grep"><span class="nav-text">grep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wc"><span class="nav-text">wc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%A1%E9%81%93%E7%AC%A6"><span class="nav-text">管道符(|)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#echo"><span class="nav-text">echo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E7%AC%A6"><span class="nav-text">重定向符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tail"><span class="nav-text">tail</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vi-x2F-vim"><span class="nav-text">vi&#x2F;vim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#root-%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98"><span class="nav-text">root(超级管理员)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#su"><span class="nav-text">su</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sudo"><span class="nav-text">sudo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%EF%BC%8C%E7%94%A8%E6%88%B7%E7%BB%84"><span class="nav-text">用户，用户组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86"><span class="nav-text">用户组管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86-Ubuntu"><span class="nav-text">用户管理(Ubuntu)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A4%E7%9F%A5%E6%9D%83%E9%99%90%E4%BF%A1%E6%81%AF"><span class="nav-text">认知权限信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chmod"><span class="nav-text">chmod</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F"><span class="nav-text">快捷方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chown"><span class="nav-text">chown</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="nav-text">小技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ctrl-c-%E5%BC%BA%E5%88%B6%E5%81%9C%E6%AD%A2"><span class="nav-text">ctrl+c 强制停止</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ctrl-d-%E9%80%80%E5%87%BA%E6%88%96%E7%99%BB%E5%BD%95"><span class="nav-text">ctrl+d 退出或登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%86%E5%8F%B2%E5%91%BD%E4%BB%A4%E6%90%9C%E7%B4%A2"><span class="nav-text">历史命令搜索</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#centos-%E4%B8%8B%E8%BD%BD%E5%8C%85"><span class="nav-text">centos 下载包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#yum"><span class="nav-text">yum</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ubuntu%E4%B8%8B%E8%BD%BD%E5%8C%85"><span class="nav-text">ubuntu下载包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#apt"><span class="nav-text">apt</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#systemctl"><span class="nav-text">systemctl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E9%93%BE%E6%8E%A5"><span class="nav-text">软链接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ln"><span class="nav-text">ln</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#date"><span class="nav-text">date</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9linux%E6%97%B6%E5%8C%BA-%E4%B8%9C%E5%85%AB%E5%8C%BA"><span class="nav-text">修改linux时区(东八区)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ntp%E7%A8%8B%E5%BA%8F"><span class="nav-text">ntp程序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ifconfig"><span class="nav-text">ifconfig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hostname"><span class="nav-text">hostname</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8linux%E4%B8%AD%E5%9B%BA%E5%AE%9Aip%E5%9C%B0%E5%9D%80"><span class="nav-text">在linux中固定ip地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping"><span class="nav-text">ping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wget"><span class="nav-text">wget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#curl"><span class="nav-text">curl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3"><span class="nav-text">端口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8"><span class="nav-text">查看端口占用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B"><span class="nav-text">查看进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E8%BF%9B%E7%A8%8B"><span class="nav-text">关闭进程</span></a></li></ol></li></ol>
 
     </div>
 </div>

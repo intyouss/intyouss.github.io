@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>3月5日 学习记录</title>
+    <url>/2023/03/05/3%E6%9C%885%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h4 id="flask中函数app-route-嵌套装饰器可能错误"><a href="#flask中函数app-route-嵌套装饰器可能错误" class="headerlink" title="flask中函数app.route()嵌套装饰器可能错误"></a>flask中函数app.route()嵌套装饰器可能错误</h4><hr>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">atuh1</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">atuh2</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner    </span><br><span class="line"></span><br><span class="line"><span class="meta">@auth1</span></span><br><span class="line"><span class="meta">@auth2</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;index&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>单装饰器装饰: 装饰器在装饰一个函数时，此函数将被装饰器内部函数替代，如果想暴露原本函数，可以使用装饰器@functools.wraps(func)</p>
+<p>多装饰器装饰: 优先使用内部装饰器，逐层向上</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/index&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;h&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/login&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;g&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>@app.route() endpoint默认为函数名  </p>
+<p>两个函数使用相同函数装饰auth, 在不使用@functools.warps(func)的情况下，两个初始函数被装饰后，都将变为inner的属性，形成别名重复错误:<br><code>AssertionError: View function mapping is ovwewriting an existing endpoint function: inner</code></p>
+<h4 id="flask蓝图"><a href="#flask蓝图" class="headerlink" title="flask蓝图"></a>flask蓝图</h4><hr>
+<p>flask蓝图主要功能就是分类(Blueprint)，不同功能函数放在不同文件中实现: </p>
+<ol>
+<li><p>创建蓝图</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">xxx = Blueprint(<span class="string">&#x27;xxx&#x27;</span>, __name__)</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>在主进程中引用蓝图</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> <span class="string">&#x27;/path&#x27;</span> <span class="keyword">import</span> xxx</span><br><span class="line">app.register_blueprint(xxx, url_prefix=<span class="string">&#x27;/x&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>url_prefix 添加前缀 使用: &#x2F;x&#x2F;xxx</p>
+</li>
+</ol>
+<h4 id="Django的路由映射和Flask的蓝图有什么区别"><a href="#Django的路由映射和Flask的蓝图有什么区别" class="headerlink" title="Django的路由映射和Flask的蓝图有什么区别"></a>Django的路由映射和Flask的蓝图有什么区别</h4><hr>
+<p>flask:</p>
+<ol>
+<li><p>flask是利用蓝图进行模块划分的，通过app装饰器注册模块蓝图，在主模块统一调用;</p>
+</li>
+<li><p>在flask中，路由是通过装饰器给每个视图函数提供的, 而且根据请求方式的不同可以一个url用于不同的作用。功能相似，但是底层实现不一样</p>
+</li>
+</ol>
+<p>Django:</p>
+<ol>
+<li>Django路由映射是通过路由正则匹配映射到每一个模块的</li>
+<li>在django中，路由是浏览器访问服务器时，先访问的项目中的url，再由项目中的url找到应用中url，这些url是放在一个列表里，遵从从前往后匹配的规则。</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Flask Study</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>3月7日学习记录</title>
     <url>/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
@@ -96,109 +138,6 @@
 ]]></content>
       <tags>
         <tag>Project</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>3月5日 学习记录</title>
-    <url>/2023/03/05/3%E6%9C%885%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h4 id="flask中函数app-route-嵌套装饰器可能错误"><a href="#flask中函数app-route-嵌套装饰器可能错误" class="headerlink" title="flask中函数app.route()嵌套装饰器可能错误"></a>flask中函数app.route()嵌套装饰器可能错误</h4><hr>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">atuh1</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">atuh2</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner    </span><br><span class="line"></span><br><span class="line"><span class="meta">@auth1</span></span><br><span class="line"><span class="meta">@auth2</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;index&quot;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>单装饰器装饰: 装饰器在装饰一个函数时，此函数将被装饰器内部函数替代，如果想暴露原本函数，可以使用装饰器@functools.wraps(func)</p>
-<p>多装饰器装饰: 优先使用内部装饰器，逐层向上</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/index&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;h&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/login&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;g&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>@app.route() endpoint默认为函数名  </p>
-<p>两个函数使用相同函数装饰auth, 在不使用@functools.warps(func)的情况下，两个初始函数被装饰后，都将变为inner的属性，形成别名重复错误:<br><code>AssertionError: View function mapping is ovwewriting an existing endpoint function: inner</code></p>
-<h4 id="flask蓝图"><a href="#flask蓝图" class="headerlink" title="flask蓝图"></a>flask蓝图</h4><hr>
-<p>flask蓝图主要功能就是分类(Blueprint)，不同功能函数放在不同文件中实现: </p>
-<ol>
-<li><p>创建蓝图</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">xxx = Blueprint(<span class="string">&#x27;xxx&#x27;</span>, __name__)</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>在主进程中引用蓝图</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> <span class="string">&#x27;/path&#x27;</span> <span class="keyword">import</span> xxx</span><br><span class="line">app.register_blueprint(xxx, url_prefix=<span class="string">&#x27;/x&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>url_prefix 添加前缀 使用: &#x2F;x&#x2F;xxx</p>
-</li>
-</ol>
-<h4 id="Django的路由映射和Flask的蓝图有什么区别"><a href="#Django的路由映射和Flask的蓝图有什么区别" class="headerlink" title="Django的路由映射和Flask的蓝图有什么区别"></a>Django的路由映射和Flask的蓝图有什么区别</h4><hr>
-<p>flask:</p>
-<ol>
-<li><p>flask是利用蓝图进行模块划分的，通过app装饰器注册模块蓝图，在主模块统一调用;</p>
-</li>
-<li><p>在flask中，路由是通过装饰器给每个视图函数提供的, 而且根据请求方式的不同可以一个url用于不同的作用。功能相似，但是底层实现不一样</p>
-</li>
-</ol>
-<p>Django:</p>
-<ol>
-<li>Django路由映射是通过路由正则匹配映射到每一个模块的</li>
-<li>在django中，路由是浏览器访问服务器时，先访问的项目中的url，再由项目中的url找到应用中url，这些url是放在一个列表里，遵从从前往后匹配的规则。</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Flask Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>3月6日 学习记录</title>
-    <url>/2023/03/06/3%E6%9C%886%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h3 id="唯一的URL-x2F-重定向行为"><a href="#唯一的URL-x2F-重定向行为" class="headerlink" title="唯一的URL&#x2F;重定向行为"></a>唯一的URL&#x2F;重定向行为</h3><hr>
-<p>route内的元素表示不同，将有不同的限制</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/projects/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">projects</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;a&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/about&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">about</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;b&#x27;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>如果使用没有斜杠的&#x2F;projects访问，Flask会自动帮助添加斜杠，因此中规中矩，却有两种访问方式。  </p>
-<p>如果使用有斜杠的&#x2F;about&#x2F;访问，将会返回一个404未找到错误，可以保证URL唯一性，并有助于搜索引擎重复索引同一个界面！</p>
-<h3 id="flask的session"><a href="#flask的session" class="headerlink" title="flask的session"></a>flask的session</h3><hr>
-<p>flask的session是以加密保存在浏览器上的，依赖于secret_key</p>
-<h3 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h3><hr>
-<p>使用数据库连接池可以很好的解决链接数据库时，重复连接的问题</p>
-<p>可以将数据库连接封装成一个函数或者类，方便调用</p>
-<h4 id="With上下文管理-简"><a href="#With上下文管理-简" class="headerlink" title="With上下文管理(简)"></a>With上下文管理(简)</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__enter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">124</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__exit__</span>(<span class="params">self, exc_type, exc_val</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">obj = Foo()</span><br><span class="line"><span class="keyword">with</span> obj <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(f)</span><br></pre></td></tr></table></figure></div>
-
-<p>with一个对象会调用对象中的 属性__enter__ ，结束后调用属性__exit__。</p>
-<p>使用上下文管理操控线程池的开关，可以实现线程自动化</p>
-<h3 id="引入静态文件"><a href="#引入静态文件" class="headerlink" title="引入静态文件"></a>引入静态文件</h3><hr>
-<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;&#123;</span> <span class="attr">url_for</span>(&#x27;<span class="attr">static</span>&#x27;, <span class="attr">filename</span>=<span class="string">&#x27;mm.jpg&#x27;</span>) &#125;&#125; /&gt;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>或</p>
-<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#x27;/static/mm.jpg&#x27;</span> /&gt;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>在使用static_url_path&#x3D;’&#x2F;xx’修改static文件夹路径时，前一个可以在不做修改下实现自动识别static路径。后者需要一个一个修改，不利于使用。</p>
-<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><hr>
-<p>使用函数加载配置文件:</p>
-<p><code>app.config.from_object(&#39;config.settings&#39;)</code></p>
-<p>使用配置文件:</p>
-<p><code>app.config[&#39;xx&#39;]</code></p>
-<ol>
-<li><p>可以使用localsettings在本地测试, 覆盖settings, 保护原始文件</p>
-<p>在settings添加:</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">from</span> localsettings <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">except</span> ImportError:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-<p>        在上传服务器时，可以方便的在服务器和本地切换</p>
-<p>        使用.gitgnore控制上传文件，忽略不需要的文件</p>
-<ol start="2">
-<li><p>类配置文件</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dev</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Prod</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-<p>        使用类隔离开发环境</p>
-<h3 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h3><hr>
-<ol>
-<li><p>进程是cpu中执行的最小单元，线程是cpu中资源调度的最小单元，一个进程内可以有多个线程</p>
-</li>
-<li><p>接口<br>其他语言 :<br>接口是以interface关键字开头，内部定义方法，但不具体实现，专门用于约束实现类<br>类中可以有多个接口继承  </p>
-<p>python :<br>无接口，可以多继承<br>但不能继承多个类</p>
-</li>
-<li><p>构造函数和析构函数<br>构造函数：用于创建对象的函数 class foo(obj)<br>析构函数：用于销毁对象的函数 del obj()</p>
-</li>
-<li><p>重写和重载的区别<br>重载：函数名相同而参数类型，个数，返回值不同<br>重写：在子类中，对父类的方法重写</p>
-</li>
-<li><p>抽象类和抽象方法<br>java :<br>抽象类中可以有抽象方法也可以有普通方法。<br>抽象类被继承后需要实现抽象方法</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Flask Study</tag>
       </tags>
   </entry>
   <entry>
@@ -321,6 +260,67 @@
 ]]></content>
       <tags>
         <tag>React Study</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>3月6日 学习记录</title>
+    <url>/2023/03/06/3%E6%9C%886%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h3 id="唯一的URL-x2F-重定向行为"><a href="#唯一的URL-x2F-重定向行为" class="headerlink" title="唯一的URL&#x2F;重定向行为"></a>唯一的URL&#x2F;重定向行为</h3><hr>
+<p>route内的元素表示不同，将有不同的限制</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/projects/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">projects</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;a&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/about&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">about</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;b&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>如果使用没有斜杠的&#x2F;projects访问，Flask会自动帮助添加斜杠，因此中规中矩，却有两种访问方式。  </p>
+<p>如果使用有斜杠的&#x2F;about&#x2F;访问，将会返回一个404未找到错误，可以保证URL唯一性，并有助于搜索引擎重复索引同一个界面！</p>
+<h3 id="flask的session"><a href="#flask的session" class="headerlink" title="flask的session"></a>flask的session</h3><hr>
+<p>flask的session是以加密保存在浏览器上的，依赖于secret_key</p>
+<h3 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h3><hr>
+<p>使用数据库连接池可以很好的解决链接数据库时，重复连接的问题</p>
+<p>可以将数据库连接封装成一个函数或者类，方便调用</p>
+<h4 id="With上下文管理-简"><a href="#With上下文管理-简" class="headerlink" title="With上下文管理(简)"></a>With上下文管理(简)</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__enter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">124</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__exit__</span>(<span class="params">self, exc_type, exc_val</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">obj = Foo()</span><br><span class="line"><span class="keyword">with</span> obj <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(f)</span><br></pre></td></tr></table></figure></div>
+
+<p>with一个对象会调用对象中的 属性__enter__ ，结束后调用属性__exit__。</p>
+<p>使用上下文管理操控线程池的开关，可以实现线程自动化</p>
+<h3 id="引入静态文件"><a href="#引入静态文件" class="headerlink" title="引入静态文件"></a>引入静态文件</h3><hr>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;&#123;</span> <span class="attr">url_for</span>(&#x27;<span class="attr">static</span>&#x27;, <span class="attr">filename</span>=<span class="string">&#x27;mm.jpg&#x27;</span>) &#125;&#125; /&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>或</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#x27;/static/mm.jpg&#x27;</span> /&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>在使用static_url_path&#x3D;’&#x2F;xx’修改static文件夹路径时，前一个可以在不做修改下实现自动识别static路径。后者需要一个一个修改，不利于使用。</p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><hr>
+<p>使用函数加载配置文件:</p>
+<p><code>app.config.from_object(&#39;config.settings&#39;)</code></p>
+<p>使用配置文件:</p>
+<p><code>app.config[&#39;xx&#39;]</code></p>
+<ol>
+<li><p>可以使用localsettings在本地测试, 覆盖settings, 保护原始文件</p>
+<p>在settings添加:</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">from</span> localsettings <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">except</span> ImportError:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>        在上传服务器时，可以方便的在服务器和本地切换</p>
+<p>        使用.gitgnore控制上传文件，忽略不需要的文件</p>
+<ol start="2">
+<li><p>类配置文件</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dev</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Prod</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>        使用类隔离开发环境</p>
+<h3 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h3><hr>
+<ol>
+<li><p>进程是cpu中执行的最小单元，线程是cpu中资源调度的最小单元，一个进程内可以有多个线程</p>
+</li>
+<li><p>接口<br>其他语言 :<br>接口是以interface关键字开头，内部定义方法，但不具体实现，专门用于约束实现类<br>类中可以有多个接口继承  </p>
+<p>python :<br>无接口，可以多继承<br>但不能继承多个类</p>
+</li>
+<li><p>构造函数和析构函数<br>构造函数：用于创建对象的函数 class foo(obj)<br>析构函数：用于销毁对象的函数 del obj()</p>
+</li>
+<li><p>重写和重载的区别<br>重载：函数名相同而参数类型，个数，返回值不同<br>重写：在子类中，对父类的方法重写</p>
+</li>
+<li><p>抽象类和抽象方法<br>java :<br>抽象类中可以有抽象方法也可以有普通方法。<br>抽象类被继承后需要实现抽象方法</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Flask Study</tag>
       </tags>
   </entry>
   <entry>
@@ -599,7 +599,7 @@
 <p>创建目录，可以使用相对路径和绝对路径</p>
 <p>makdir [-p] 路径</p>
 <p>-p表示自动创建不存在的父目录</p>
-<h3 id="ctrl-l"><a href="#ctrl-l" class="headerlink" title="ctrl+l"></a>ctrl+l</h3><p>清空屏幕</p>
+<h3 id="ctrl-l-and-clear"><a href="#ctrl-l-and-clear" class="headerlink" title="ctrl+l and clear"></a>ctrl+l and clear</h3><p>清空屏幕</p>
 <h3 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h3><p>创建文件</p>
 <p>touch 路径</p>
 <h3 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h3><p>查看文件内内容(全部打印)</p>
@@ -779,6 +779,159 @@
 <p>getent</p>
 <p>getent passwd 查看当前系统中有哪些用户</p>
 <p>getent group 查看当前系统中有哪些用户组</p>
+<h3 id="认知权限信息"><a href="#认知权限信息" class="headerlink" title="认知权限信息"></a>认知权限信息</h3><p>ls -l 输出的信息分析</p>
+<p>drwxr-xr-x  intyou intyou</p>
+<p>drwxr-xr-x - 表示权限管控细节</p>
+<p>-代表无</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-21-18-03-51-image.png"
+                     
+                ></p>
+<p>第一块 ‘-‘表示文件 ‘d’表示文件夹 ‘l’表示软链接</p>
+<p>除去第一块:</p>
+<ul>
+<li><p>前三块代表所属用户权限</p>
+</li>
+<li><p>中三块代表所属用户组权限</p>
+</li>
+<li><p>后三块代表其他用户权限</p>
+</li>
+</ul>
+<p>r 读权限</p>
+<p>w写权限</p>
+<p>x执行权限</p>
+<h3 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h3><p>修改文件，文件夹的权限信息</p>
+<p>只有文件文件夹的所属用户或root用户可以修改</p>
+<p>chmod [-R] 权限 文件和文件夹</p>
+<ul>
+<li>-R 对文件夹内的全部内容应用同样的操作</li>
+</ul>
+<p><code>chomd u=rwx,g=rx,o=x hello.txt</code>将文件权限修改为rwxr-x–x</p>
+<p>u表示所属用户权限，g表示group组权限，o表示other其他用户权限</p>
+<h4 id="快捷方式"><a href="#快捷方式" class="headerlink" title="快捷方式"></a>快捷方式</h4><p>权限的数字序号</p>
+<p>权限可以用三位数字来代表，第一位数字表示用户权限，第二位表示用户组权限，第三位表示其他用户权限</p>
+<p>命令从右到左依次增加</p>
+<p>0：— 1：–x 2：-w-3：-wx 4：r– 5：r-x 6：rw- 7：rwx</p>
+<h3 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h3><p>只能root用户执行</p>
+<p>修改文件和文件夹的所属用户和用户组</p>
+<p>chown [-R] [用户] [:] [用户组] 文件或文件夹</p>
+<p>chown root hello.txt 将hello.txt所属用户修改为root</p>
+<p>chown :root hello.txt 将hello.txt所属用户组修改为root</p>
+<h3 id="小技巧"><a href="#小技巧" class="headerlink" title="小技巧"></a>小技巧</h3><h4 id="ctrl-c-强制停止"><a href="#ctrl-c-强制停止" class="headerlink" title="ctrl+c 强制停止"></a>ctrl+c 强制停止</h4><h4 id="ctrl-d-退出或登录"><a href="#ctrl-d-退出或登录" class="headerlink" title="ctrl+d 退出或登录"></a>ctrl+d 退出或登录</h4><ul>
+<li>不能用于退出vi&#x2F;vim</li>
+</ul>
+<h4 id="历史命令搜索"><a href="#历史命令搜索" class="headerlink" title="历史命令搜索"></a>历史命令搜索</h4><ul>
+<li><p>history</p>
+<p>history | grep ‘xxx’</p>
+</li>
+<li><p>!命令前缀 自动执行上一次匹配前缀的命令</p>
+<p>python</p>
+<p>!p</p>
+</li>
+<li><p>ctrl+r 输入内容去匹配历史命令</p>
+</li>
+</ul>
+<h3 id="centos-下载包"><a href="#centos-下载包" class="headerlink" title="centos 下载包"></a>centos 下载包</h3><h4 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h4><p>yum [-y] [install | remove | search] 软件名称</p>
+<ul>
+<li><p>-y 自动确定， 无需手动确认安装或卸载过程</p>
+</li>
+<li><p>install 安装</p>
+</li>
+<li><p>remove 卸载</p>
+</li>
+<li><p>search 搜索</p>
+</li>
+</ul>
+<p>yum命令需要root指令</p>
+<h3 id="ubuntu下载包"><a href="#ubuntu下载包" class="headerlink" title="ubuntu下载包"></a>ubuntu下载包</h3><h4 id="apt"><a href="#apt" class="headerlink" title="apt"></a>apt</h4><p>apt [-y] [install | remove | search] 软件名称</p>
+<p>与centos相同</p>
+<h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><p>控制软件(内置或第三方)启动，停止，开机自启</p>
+<p>systemctl start | stop | status | enable | disable 服务名</p>
+<p>enable&#x2F;disable 打开、关闭开机自启</p>
+<h3 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h3><h4 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h4><p>在系统中创建软链接，可以将文件和文件夹链接到其他位置(快捷方式)</p>
+<p>ln -s 参数1 参数2</p>
+<p>-s 创建软链接</p>
+<p>参数1 被链接的文件或文件夹</p>
+<p>参数2 要链接去的目的地</p>
+<p><code>ln -s /etc/yum.conf ~/yum.conf</code></p>
+<h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>date [-d] [+格式化字符串]</p>
+<ul>
+<li><p>-d 按照给定的字符串显示日期，一般用于日期计算</p>
+<p>支持 year month day hour minute second</p>
+<p>date -d ‘+1 day’ ‘+%Y-%m-%d’</p>
+</li>
+<li><p>格式化字符串</p>
+<ul>
+<li><p>%Y 年</p>
+</li>
+<li><p>%y 年份后两位数字(00,99)</p>
+</li>
+<li><p>%m 月份</p>
+</li>
+<li><p>%d 日</p>
+</li>
+<li><p>%H 小时</p>
+</li>
+<li><p>%M 分钟</p>
+</li>
+<li><p>%S 秒</p>
+</li>
+<li><p>%s 自1970-01-01 00:00:00 到现在的秒数</p>
+</li>
+</ul>
+<p>date ‘+%Y-%m-%d %H:%M:%S’</p>
+</li>
+</ul>
+<h4 id="修改linux时区-东八区"><a href="#修改linux时区-东八区" class="headerlink" title="修改linux时区(东八区)"></a>修改linux时区(东八区)</h4><p>root权限</p>
+<p>rm -f &#x2F;etc&#x2F;localtime</p>
+<p>sudo ln -s &#x2F;user&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtime</p>
+<h4 id="ntp程序"><a href="#ntp程序" class="headerlink" title="ntp程序"></a>ntp程序</h4><p>联网自动校准系统时间</p>
+<p>需要使用apt下载</p>
+<p>使用systemctl enable ntp 开机自启</p>
+<p>手动校准 ntpdate -u ntp.aliyun.com</p>
+<h3 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h3><p>查看ip信息</p>
+<h3 id="hostname"><a href="#hostname" class="headerlink" title="hostname"></a>hostname</h3><p>查看主机名</p>
+<ul>
+<li>hostname set-hostname 名字 修改主机名</li>
+</ul>
+<h3 id="在linux中固定ip地址"><a href="#在linux中固定ip地址" class="headerlink" title="在linux中固定ip地址"></a>在linux中固定ip地址</h3><p>在ubuntu22.04中应找到&#x2F;etc&#x2F;netplan中的yaml文件修改</p>
+<blockquote>
+<p><a class="link"   href="https://www.cnblogs.com/liujiaxin2018/p/16287463.html" >ubuntu 22.04如何配置静态IP、网关、DNS - 小鲨鱼2018 - 博客园 (cnblogs.com) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>&#96;</p>
+</blockquote>
+<h3 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h3><p>检测指定网络服务器是否可联通状态</p>
+<p>ping [-c num] ip或主机名</p>
+<p>-c 检查的次数 不使用，将无限次</p>
+<h3 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h3><p>可以在命令行内下载网络文件</p>
+<p>wget [-b] url</p>
+<p>-b 后台下载</p>
+<p>参数: url 下载链接</p>
+<p>不管成功下载或者不成功，都会创建文件</p>
+<h3 id="curl"><a href="#curl" class="headerlink" title="curl"></a>curl</h3><p>可以发送网络请求 下载文件 获取网站状态</p>
+<p>curl [-O] url</p>
+<p>-O 用于下载文件，当url是下载链接时，可以使用此选项保存文件</p>
+<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h3><h4 id="查看端口占用"><a href="#查看端口占用" class="headerlink" title="查看端口占用"></a>查看端口占用</h4><ul>
+<li><p>netstat</p>
+<p>需要apt安装</p>
+<p>netstat -anp|grep 端口号</p>
+</li>
+<li><p>nmap</p>
+<p>需要apt安装</p>
+<p>nmap 端口</p>
+</li>
+</ul>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><h4 id="查看进程"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程</h4><p>ps [-e -f]</p>
+<ul>
+<li><p>-e 显示全部的进程</p>
+</li>
+<li><p>-f 已完全格式化的形式展示信息</p>
+</li>
+</ul>
+<p>固定用法ps -ef 列出全部进程的全部信息</p>
+<p>例: ps -ef | grep tail</p>
+<h4 id="关闭进程"><a href="#关闭进程" class="headerlink" title="关闭进程"></a>关闭进程</h4><p>kill [-9] 进程ID</p>
+<p>-9 表示强制关闭进程</p>
 ]]></content>
       <tags>
         <tag>Linux Study</tag>
