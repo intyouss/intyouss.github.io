@@ -209,8 +209,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="pc">2023-03-21 23:07:56</span>
-            <span class="mobile">2023-03-21 23:07</span>
+            <span class="pc">2023-03-22 20:46:05</span>
+            <span class="mobile">2023-03-22 20:46</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -603,6 +603,116 @@
 <p>例: ps -ef | grep tail</p>
 <h4 id="关闭进程"><a href="#关闭进程" class="headerlink" title="关闭进程"></a>关闭进程</h4><p>kill [-9] 进程ID</p>
 <p>-9 表示强制关闭进程</p>
+<h3 id="查看系统占用"><a href="#查看系统占用" class="headerlink" title="查看系统占用"></a>查看系统占用</h3><p>top 查看cpu占用</p>
+<ul>
+<li><p>第一行: 命令名称 当前系统时间 up 6 min: 启动了6分钟 2users: 2个用户登录 load average: 0.06 0.17 0.13   1 5 15分钟负载</p>
+</li>
+<li><p>第二行: Task 进程数  running: 正在运行进程数 sleeping: 进程睡眠数 stopped停止进程数  zombie 僵尸进程数</p>
+</li>
+<li><p>第三行: %cpu cpu使用率 us 用户cpu使用率 sy 系统cpu使用率  ni高优先级进程占用cpu时间百分比 id空闲cpu率  wa IO等待cpu占用率  hi  cpu硬件中断率  si CPU软件中断率   st 强制等待占用cpu率</p>
+</li>
+<li><p>第四行: kib Mem 物理内存  total总量  free空闲  used 使用  buff&#x2F;cache buff和cache占用 kibSwap  虚拟内存(交换空间)</p>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-26-29-image.png"
+                     
+                ></p>
+<p>选项:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-28-00-image.png"
+                     
+                ></p>
+<p>交互式选项:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-31-28-image.png"
+                     
+                ></p>
+<h3 id="磁盘信息监控"><a href="#磁盘信息监控" class="headerlink" title="磁盘信息监控"></a>磁盘信息监控</h3><p>查看硬盘使用情况</p>
+<p>df [-h]</p>
+<ul>
+<li>-h 以更加人性化的单位显示</li>
+</ul>
+<p>iostat [-x] [num1][num2]</p>
+<p>需要下载包</p>
+<ul>
+<li><p>-x 显示更多信息</p>
+</li>
+<li><p>num1 数字 刷新时间，num2 数字 刷新几次</p>
+</li>
+<li><p>tps 该设备每秒的传输次数，’一次传输’&#x3D;’一次I&#x2F;O请求’。多个逻辑请求可能会被合并为”一次I&#x2F;O请求”</p>
+</li>
+<li><p>rKB&#x2F;s 每秒发送到设备的读取请求数  wKB&#x2F;s 每秒发送到设备的写入请求数 %util 磁盘利用率</p>
+</li>
+</ul>
+<h3 id="网络状态监控"><a href="#网络状态监控" class="headerlink" title="网络状态监控"></a>网络状态监控</h3><p>sar -n DEV num1 num2</p>
+<p>需要下载包</p>
+<ul>
+<li><p>-n 查看网络</p>
+</li>
+<li><p>DEV 查看网络接口</p>
+</li>
+</ul>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p>简化程序执行路径</p>
+<p>env 查看当前系统中记录的环境变量</p>
+<h4 id="符号"><a href="#符号" class="headerlink" title="$符号"></a>$符号</h4><p>$获取变量的值</p>
+<blockquote>
+<p>echo $PATH</p>
+<p>echo ${PATH}ABC</p>
+</blockquote>
+<h4 id="自行设置环境变量"><a href="#自行设置环境变量" class="headerlink" title="自行设置环境变量"></a>自行设置环境变量</h4><ul>
+<li><p>临时设置 export 变量名 &#x3D; 变量值</p>
+</li>
+<li><p>永久生效</p>
+<ul>
+<li><p>针对当前用户生效，配置在当前用户的: ~&#x2F;.bashrc文件中</p>
+</li>
+<li><p>针对所有用户生效， 配置在系统的: &#x2F;etc&#x2F;profile文件中</p>
+</li>
+<li><p>并通过语法: source 配置文件, 进行立刻生效</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="自定义环境变量PATH"><a href="#自定义环境变量PATH" class="headerlink" title="自定义环境变量PATH"></a>自定义环境变量PATH</h4><p>export PATH&#x3D;$PATH: 路径</p>
+<h3 id="压缩、解压"><a href="#压缩、解压" class="headerlink" title="压缩、解压"></a>压缩、解压</h3><h5 id="tar-gz"><a href="#tar-gz" class="headerlink" title=".tar  .gz"></a>.tar  .gz</h5><p>gzip体积压缩格式.tar.gz</p>
+<p>tar [-c -v -x -f -z -C] 参数1—n</p>
+<ul>
+<li><p>-c 创建压缩文件</p>
+</li>
+<li><p>-v 显示压缩，解压过程</p>
+</li>
+<li><p>-x 解压模式</p>
+</li>
+<li><p>-f 要创建的文件，或要解压的文件，必须在所有选项中处于最后一个</p>
+</li>
+<li><p>-z gzip模式 不使用就是普通tarball格式 一般处于第一个</p>
+</li>
+<li><p>-C 选择解压的目的地, 单独使用</p>
+</li>
+</ul>
+<p>压缩:</p>
+<p>tar -cvf test.tar 1.txt 2.txt</p>
+<p>将1.txt 2.txt压缩到test.tar</p>
+<p>解压:</p>
+<p>tar -xvf test.tar -C 解压路径</p>
+<p>将test.tar 解压到解压路径</p>
+<h5 id="zip"><a href="#zip" class="headerlink" title=".zip"></a>.zip</h5><p>压缩:</p>
+<p>zip [-r] 参数1—n</p>
+<ul>
+<li>被压缩的包含文件夹的时候</li>
+</ul>
+<p>解压:</p>
+<p>unzip [-d] 参数</p>
+<ul>
+<li>-d 指定解压路径</li>
+</ul>
 
             </div>
 
@@ -640,6 +750,21 @@
             
                 <div class="article-nav">
                     
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/03/21/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">数据结构与算法</span>
+                                    <span class="post-nav-item">Prev posts</span>
+                                </span>
+                            </a>
+                        </div>
+                    
                     
                         <div class="article-next">
                             <a class="next"
@@ -669,7 +794,7 @@
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">Linux</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ls"><span class="nav-text">ls</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cd"><span class="nav-text">cd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pwd"><span class="nav-text">pwd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-text">绝对路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-text">相对路径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84%E7%AC%A6"><span class="nav-text">特殊路径符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mkdir"><span class="nav-text">mkdir</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ctrl-l-and-clear"><span class="nav-text">ctrl+l and clear</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#touch"><span class="nav-text">touch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cat"><span class="nav-text">cat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#more"><span class="nav-text">more</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cp"><span class="nav-text">cp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mv"><span class="nav-text">mv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rm"><span class="nav-text">rm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="nav-text">通配符*</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#which"><span class="nav-text">which</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grep"><span class="nav-text">grep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wc"><span class="nav-text">wc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%A1%E9%81%93%E7%AC%A6"><span class="nav-text">管道符(|)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#echo"><span class="nav-text">echo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E7%AC%A6"><span class="nav-text">重定向符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tail"><span class="nav-text">tail</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vi-x2F-vim"><span class="nav-text">vi&#x2F;vim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#root-%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98"><span class="nav-text">root(超级管理员)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#su"><span class="nav-text">su</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sudo"><span class="nav-text">sudo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%EF%BC%8C%E7%94%A8%E6%88%B7%E7%BB%84"><span class="nav-text">用户，用户组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86"><span class="nav-text">用户组管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86-Ubuntu"><span class="nav-text">用户管理(Ubuntu)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A4%E7%9F%A5%E6%9D%83%E9%99%90%E4%BF%A1%E6%81%AF"><span class="nav-text">认知权限信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chmod"><span class="nav-text">chmod</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F"><span class="nav-text">快捷方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chown"><span class="nav-text">chown</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="nav-text">小技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ctrl-c-%E5%BC%BA%E5%88%B6%E5%81%9C%E6%AD%A2"><span class="nav-text">ctrl+c 强制停止</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ctrl-d-%E9%80%80%E5%87%BA%E6%88%96%E7%99%BB%E5%BD%95"><span class="nav-text">ctrl+d 退出或登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%86%E5%8F%B2%E5%91%BD%E4%BB%A4%E6%90%9C%E7%B4%A2"><span class="nav-text">历史命令搜索</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#centos-%E4%B8%8B%E8%BD%BD%E5%8C%85"><span class="nav-text">centos 下载包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#yum"><span class="nav-text">yum</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ubuntu%E4%B8%8B%E8%BD%BD%E5%8C%85"><span class="nav-text">ubuntu下载包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#apt"><span class="nav-text">apt</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#systemctl"><span class="nav-text">systemctl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E9%93%BE%E6%8E%A5"><span class="nav-text">软链接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ln"><span class="nav-text">ln</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#date"><span class="nav-text">date</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9linux%E6%97%B6%E5%8C%BA-%E4%B8%9C%E5%85%AB%E5%8C%BA"><span class="nav-text">修改linux时区(东八区)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ntp%E7%A8%8B%E5%BA%8F"><span class="nav-text">ntp程序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ifconfig"><span class="nav-text">ifconfig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hostname"><span class="nav-text">hostname</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8linux%E4%B8%AD%E5%9B%BA%E5%AE%9Aip%E5%9C%B0%E5%9D%80"><span class="nav-text">在linux中固定ip地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping"><span class="nav-text">ping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wget"><span class="nav-text">wget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#curl"><span class="nav-text">curl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3"><span class="nav-text">端口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8"><span class="nav-text">查看端口占用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B"><span class="nav-text">查看进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E8%BF%9B%E7%A8%8B"><span class="nav-text">关闭进程</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ls"><span class="nav-text">ls</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cd"><span class="nav-text">cd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pwd"><span class="nav-text">pwd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-text">绝对路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-text">相对路径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84%E7%AC%A6"><span class="nav-text">特殊路径符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mkdir"><span class="nav-text">mkdir</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ctrl-l-and-clear"><span class="nav-text">ctrl+l and clear</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#touch"><span class="nav-text">touch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cat"><span class="nav-text">cat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#more"><span class="nav-text">more</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cp"><span class="nav-text">cp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mv"><span class="nav-text">mv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rm"><span class="nav-text">rm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="nav-text">通配符*</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#which"><span class="nav-text">which</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grep"><span class="nav-text">grep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wc"><span class="nav-text">wc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%A1%E9%81%93%E7%AC%A6"><span class="nav-text">管道符(|)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#echo"><span class="nav-text">echo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E7%AC%A6"><span class="nav-text">重定向符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tail"><span class="nav-text">tail</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vi-x2F-vim"><span class="nav-text">vi&#x2F;vim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#root-%E8%B6%85%E7%BA%A7%E7%AE%A1%E7%90%86%E5%91%98"><span class="nav-text">root(超级管理员)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#su"><span class="nav-text">su</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sudo"><span class="nav-text">sudo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%EF%BC%8C%E7%94%A8%E6%88%B7%E7%BB%84"><span class="nav-text">用户，用户组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86"><span class="nav-text">用户组管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86-Ubuntu"><span class="nav-text">用户管理(Ubuntu)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A4%E7%9F%A5%E6%9D%83%E9%99%90%E4%BF%A1%E6%81%AF"><span class="nav-text">认知权限信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chmod"><span class="nav-text">chmod</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F"><span class="nav-text">快捷方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chown"><span class="nav-text">chown</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="nav-text">小技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ctrl-c-%E5%BC%BA%E5%88%B6%E5%81%9C%E6%AD%A2"><span class="nav-text">ctrl+c 强制停止</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ctrl-d-%E9%80%80%E5%87%BA%E6%88%96%E7%99%BB%E5%BD%95"><span class="nav-text">ctrl+d 退出或登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%86%E5%8F%B2%E5%91%BD%E4%BB%A4%E6%90%9C%E7%B4%A2"><span class="nav-text">历史命令搜索</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#centos-%E4%B8%8B%E8%BD%BD%E5%8C%85"><span class="nav-text">centos 下载包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#yum"><span class="nav-text">yum</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ubuntu%E4%B8%8B%E8%BD%BD%E5%8C%85"><span class="nav-text">ubuntu下载包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#apt"><span class="nav-text">apt</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#systemctl"><span class="nav-text">systemctl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E9%93%BE%E6%8E%A5"><span class="nav-text">软链接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ln"><span class="nav-text">ln</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#date"><span class="nav-text">date</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9linux%E6%97%B6%E5%8C%BA-%E4%B8%9C%E5%85%AB%E5%8C%BA"><span class="nav-text">修改linux时区(东八区)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ntp%E7%A8%8B%E5%BA%8F"><span class="nav-text">ntp程序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ifconfig"><span class="nav-text">ifconfig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hostname"><span class="nav-text">hostname</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8linux%E4%B8%AD%E5%9B%BA%E5%AE%9Aip%E5%9C%B0%E5%9D%80"><span class="nav-text">在linux中固定ip地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping"><span class="nav-text">ping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wget"><span class="nav-text">wget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#curl"><span class="nav-text">curl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3"><span class="nav-text">端口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8"><span class="nav-text">查看端口占用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B"><span class="nav-text">查看进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E8%BF%9B%E7%A8%8B"><span class="nav-text">关闭进程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E5%8D%A0%E7%94%A8"><span class="nav-text">查看系统占用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E4%BF%A1%E6%81%AF%E7%9B%91%E6%8E%A7"><span class="nav-text">磁盘信息监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%8A%B6%E6%80%81%E7%9B%91%E6%8E%A7"><span class="nav-text">网络状态监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7"><span class="nav-text">$符号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E8%A1%8C%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">自行设置环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8FPATH"><span class="nav-text">自定义环境变量PATH</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E3%80%81%E8%A7%A3%E5%8E%8B"><span class="nav-text">压缩、解压</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#tar-gz"><span class="nav-text">.tar  .gz</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#zip"><span class="nav-text">.zip</span></a></li></ol></li></ol></li></ol>
 
     </div>
 </div>
