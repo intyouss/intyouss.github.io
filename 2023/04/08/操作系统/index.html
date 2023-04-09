@@ -4,58 +4,74 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="IntYou">
-    <meta name="description" content="IntYou&#39;s Blog">
-    <meta name="author" content="IntYou">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-redefine.png">
+    
+    <meta name="author" content="The Redefine Team">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://evan.beee.top" crossorigin>
+    
+        
+            <link rel="preconnect" href="https://unpkg.com" crossorigin>
+        
+    
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://intyouss.github.io/2023/04/08/操作系统problem/"/>
+    <link rel="canonical" href="https://intyouss.github.io/2023/04/08/操作系统/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="操作系统problem">
-    <meta property="og:description" content="IntYou&#39;s Blog">
-    <meta property="og:url" content="https://intyouss.github.io2023/04/08/操作系统problem/">
-    <meta property="og:image" content="/images/avatar.jpg">
-    <meta property="og:site_name" content="IntYou&#39;s Blog">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="操作系统problem">
-    <meta name="twitter:description" content="IntYou&#39;s Blog">
-    <meta name="twitter:image" content="/images/avatar.jpg">
+    
+        <meta name="description" content="操作系统  进程和线程之间有什么区别？  进程是运行中的程序，线程是进程的内部的一个执行序列进程是资源分配单元，线程是执行单元进程间切换代价大，线程间切换代价小进程拥有资源多，线程拥有资源少多个线程共享进程资源 进程为啥切换代价比线程要大？  物理地址就是真实的地址，这种寻址方式很容易破坏操作系统，而且使得操作系统中同时运行两个或以上的程序几乎是不可能的（第一个程序给物理内存地址赋值 10，第二个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统">
+<meta property="og:url" content="https://intyouss.github.io/2023/04/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="IntYou&#39;s Blog">
+<meta property="og:description" content="操作系统  进程和线程之间有什么区别？  进程是运行中的程序，线程是进程的内部的一个执行序列进程是资源分配单元，线程是执行单元进程间切换代价大，线程间切换代价小进程拥有资源多，线程拥有资源少多个线程共享进程资源 进程为啥切换代价比线程要大？  物理地址就是真实的地址，这种寻址方式很容易破坏操作系统，而且使得操作系统中同时运行两个或以上的程序几乎是不可能的（第一个程序给物理内存地址赋值 10，第二个">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-08T03:07:24.000Z">
+<meta property="article:modified_time" content="2023-04-09T12:57:52.306Z">
+<meta property="article:author" content="IntYou">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+    
     <!--- Icon Part-->
-    <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="192x192">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg">
-    <meta name="theme-color" content="#005080">
-    <link rel="shortcut icon" href="/images/avatar.jpg">
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
     
     <title>
         
-            操作系统problem -
+            操作系统 -
         
-        IntYou&#39;s Blog
+        Theme Redefine
     </title>
     
 <link rel="stylesheet" href="/css/style.css">
 
-    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/assets/fonts.css">
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/assets/fonts.css">
+    <!--- Font Part-->
     
     
     
     
-        <link rel="preconnect" href="https://evan.beee.top" crossorigin>
+
+    <!--- Inject Part-->
     
     <script id="hexo-configurations">
-    let REDEFINE = window.REDEFINE || {};
-    REDEFINE.hexo_config = {"hostname":"intyouss.github.io","root":"/","language":"en","path":"search.xml"};
-    REDEFINE.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#005080","avatar":"/images/avatar.jpg","favicon":"/images/avatar.jpg","article_img_align":"center","right_side_width":"210px","content_max_width":"1000px","nav_color":{"left":"#f78736","right":"#367df7","transparency":35},"hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_image":{"light":"https://evan.beee.top/img/wallhaven-wqery6-light.webp","dark":"https://evan.beee.top/img/wallhaven-wqery6-dark.webp"},"title_color":{"light":"#fff","dark":"#d1d1b6"},"description":"Change The World As You Know","custom_font":{"enable":false,"font_family":null,"font_url":null}},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":true},"code_block":{"copy":true,"style":"mac","custom_font":{"enable":false,"font_family":null,"font_url":null}},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"1.1.6","friend_links":{"columns":2},"home_article":{"date_format":"auto","category":{"enable":true,"limit":3},"tag":{"enable":true,"limit":3}},"plugins":{"aplayer":{"enable":false,"audio":[{"name":null,"artist":null,"url":null,"cover":null},{"name":null,"artist":null,"url":null,"cover":null}]}}};
-    REDEFINE.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"intyouss.github.io","root":"/","language":"en","path":"search.xml"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[""]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true},"home_banner":{"enable":true,"image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Theme Redefine","subtitle":{"text":[],"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}],"audio":[{"name":null,"artist":null,"url":null,"cover":null},{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.1.1","code_block":{"copy":true,"style":"mac","custom_font":{"enable":false,"font_family":null,"font_url":null}},"navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
   </script>
     
-    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/fontawesome/fontawesome.min.css">
-    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/fontawesome/brands.min.css">
-    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/fontawesome/solid.min.css">
-    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/fontawesome/regular.min.css">
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/fontawesome/regular.min.css">
     
     
     
@@ -66,8 +82,6 @@
 
 <body>
 <div class="progress-bar-container">
-    
-        <span class="scroll-progress-bar"></span>
     
 
     
@@ -83,28 +97,28 @@
 
     
 
-    <div class="page-main-content">
+    <div class="main-content-container">
 
-        <div class="page-main-content-top">
-            <header class="menu-wrapper">
+        <div class="main-content-header">
+            <header class="navbar-container">
     
-    <div class="menu-content">
+    <div class="navbar-content">
         <div class="left">
             
             <a class="logo-title" href="/">
                 
-                IntYou&#39;s Blog
+                Theme Redefine
                 
             </a>
         </div>
 
         <div class="right">
             <!-- PC -->
-            <div class="pc">
-                <ul class="menu-list">
+            <div class="desktop">
+                <ul class="navbar-list">
                     
                         
-                            <li class="menu-item">
+                            <li class="navbar-item">
                                 <!-- Menu -->
                                 <a class="" 
                                     href="/"  >
@@ -120,30 +134,24 @@
                             </li>
                     
                     
-                        <li class="menu-item search search-popup-trigger">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </li>
-                    
                 </ul>
             </div>
             <!-- Mobile -->
             <div class="mobile">
                 
-                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Mobile drawer -->
-    <div class="menu-drawer">
-        <ul class="drawer-menu-list">
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
             
                 
-                    <li class="drawer-menu-item flex-center">
+                    <li class="drawer-navbar-item flex-center">
                         <a class="" 
                         href="/"  >
                              
@@ -168,7 +176,9 @@
 
         </div>
 
-        <div class="page-main-content-middle">
+        <div class="main-content-body">
+
+            
 
             <div class="main-content">
 
@@ -180,7 +190,7 @@
             
             
                 <div class="article-title">
-                    <h1 class="article-title-regular">操作系统problem</h1>
+                    <h1 class="article-title-regular">操作系统</h1>
                 </div>
             
                 
@@ -189,28 +199,28 @@
             
                 <div class="article-header">
                     <div class="avatar">
-                        <img src="/images/avatar.jpg">
+                        <img src="/images/redefine-avatar.svg">
                     </div>
                     <div class="info">
                         <div class="author">
-                            <span class="name">IntYou</span>
+                            <span class="name">The Redefine Team</span>
                             
-                                <span class="author-label">(^_^)</span>
+                                <span class="author-label"></span>
                             
                         </div>
                         <div class="meta-info">
                             <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="pc">2023-04-08 11:07:24</span>
+        <span class="desktop">2023-04-08 11:07:24</span>
         <span class="mobile">2023-04-08 11:07</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="pc">2023-04-08 16:48:26</span>
-            <span class="mobile">2023-04-08 16:48</span>
+            <span class="desktop">2023-04-09 20:57:52</span>
+            <span class="mobile">2023-04-09 20:57</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -232,10 +242,6 @@
     
     
     
-    
-        <span class="article-pv article-meta-item">
-            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-        </span>
     
 </div>
 
@@ -395,6 +401,109 @@
 </ol>
 </blockquote>
 </li>
+<li><p>简述 LRU 算法及其实现方式</p>
+<blockquote>
+<p>Least Recently Used，最近最久未使用法，它是按照一个非常著名的计算机操作系统基础理论得来的：最近使用的页面数据会在未来一段时期内仍然被使用，已经很久没有使用的页面很有可能在未来较长的一段时间内仍然不会被使用。基于这个思想，会存在一种缓存淘汰机制，每次从内存中找到最久未使用的数据然后置换出来，从而存入新的数据！它的主要衡量指标是使用的时间，附加指标是使用的次数。在计算机中大量使用了这个机制，它的合理性在于优先筛选热点数据，所谓热点数据，就是最近最多使用的数据！因为，利用 LRU 我们可以解决很多实际开发中的问题，并且很符合业务。利用双向链表实现</p>
+</blockquote>
+</li>
+<li><p>线程间有哪些通信方式</p>
+<blockquote>
+<p>共享变量，共享内存，共享数据库，消息队列</p>
+</blockquote>
+</li>
+<li><p>简述同步与异步的区别，阻塞与非阻塞的区别</p>
+<blockquote>
+<ol>
+<li><p>同步和异步</p>
+<blockquote>
+<p>同步和异步通常用来描述消息传递或通信的方式。</p>
+<p>在同步通信中，发送方会等待接收方的响应，然后才继续发送下一条消息。相反，在异步通信中，发送方不会等待接收方的响应，而是继续发送下一条消息。</p>
+</blockquote>
+</li>
+<li><p>阻塞与非阻塞</p>
+<blockquote>
+<p>阻塞与非阻塞通常用来描述系统调用的行为。系统调用是应用程序请求操作系统内核提供服务的一种机制，例如读写文件，创建进程等。</p>
+<p>当一个应用程序发起一个阻塞的系统调用时，他会一直等待，直到该调用完成。相反，当一个应用程序发起一个非阻塞的系统调用时，如果该调用不能立即完成，他会立即返回。</p>
+</blockquote>
+</li>
+</ol>
+<p>总结</p>
+<blockquote>
+<p>同步：</p>
+<blockquote>
+<p>执行一个操作之后，等待结果，然后才继续执行后续的操作</p>
+</blockquote>
+<p>异步：</p>
+<blockquote>
+<p>执行一个操作之后，可以去执行其他的操作，然后等待通知再回来执行完的操作</p>
+</blockquote>
+<p>阻塞：</p>
+<blockquote>
+<p>进程给CPU传达一个任务之后，一直等待CPU处理完成，然后才执行后面的操作</p>
+</blockquote>
+<p>非阻塞：</p>
+<blockquote>
+<p>进程给CPU传达任务后，继续处理后续的操作，隔段时间再来询问之前的操作是否完成，这样的过程也叫轮询</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</li>
+<li><p>简述操作系统中的缺页中断</p>
+<blockquote>
+<p>虚拟内存实际上可以比物理内存大，当访问虚拟内存时，会访问MMU(内存管理单元)去匹配对应的物理地址，而如果虚拟内存的页并不存在于物理内存中，会产生缺页中断，从磁盘中取得缺的页放入内存中，如果内存已满，还会根据页的置换算法将磁盘中的页换出。</p>
+</blockquote>
+</li>
+<li><p>简述操作系统中 malloc 的实现原理</p>
+<blockquote>
+<p>malloc 基本的实现原理就是维护一个内存空闲链表，当申请内存空间时，搜索内存空闲链表，找到适配的空闲内存空间，然后将空间分割成两个内存块，一个变成分配块，一个变成新的空闲块。如果没有搜索到，那么就会用sbrk()推进brk指针来申请内存空间。</p>
+<p>搜索空闲块最常见的算法有：首次适配，下一次适配，最佳适配。</p>
+<p>首次适配：</p>
+<blockquote>
+<p>第一次找到足够大的内存块就分配，这种方法会产生很多内存碎片</p>
+</blockquote>
+<p>下一次适配：</p>
+<blockquote>
+<p>等第二次找到足够大的内存块就分配，这样会产生比较少的内存碎片</p>
+</blockquote>
+<p>最佳适配：</p>
+<blockquote>
+<p>对堆进行彻底的搜索，重投开始，遍历所有块，使用数据区大小大于size且差值最小的块作为此次分配的块</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>简述 Linux 的 IO模型</p>
+<blockquote>
+<p>在linux操作系统中，共有五种IO模型</p>
+<ul>
+<li><p>阻塞IO</p>
+<blockquote>
+<p>应用程序在进行系统调用时会被阻塞，直到数据准备好并复制到用户空间后才返回</p>
+</blockquote>
+</li>
+<li><p>非阻塞IO</p>
+<blockquote>
+<p>应用程序在进行系统调用时不会被阻塞，而是立即返回一个状态值。应用程序需要不断轮询内核以检查数据是否准备好</p>
+</blockquote>
+</li>
+<li><p>多路复用IO</p>
+<blockquote>
+<p>应用程序可以同时监视多个文件描述符，当某个文件描述符就绪时，对其进行处理</p>
+</blockquote>
+</li>
+<li><p>信号驱动IO</p>
+<blockquote>
+<p>应用程序向内核注册一个信号处理函数，当数据报准备好时，内核会向应用程序发送一个信号，应用程序对信号进行捕捉，并调用信号处理函数来获取数据报</p>
+</blockquote>
+</li>
+<li><p>异步IO</p>
+<blockquote>
+<p>应用程序发起系统调用后立即返回，当内核将数据准备好并复制完成后会给应用程序发送通知</p>
+</blockquote>
+</li>
+</ul>
+<p>这些模型区别在于应用程序和内核之间的交互方式以及数据准备和拷贝的过程</p>
+</blockquote>
+</li>
 </ol>
 
             </div>
@@ -403,14 +512,19 @@
                 <div class="post-copyright-info">
                     <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：操作系统problem</li>
-        <li>Post author：IntYou</li>
-        <li>Create time：2023-04-08 11:07:24</li>
+        <li><strong>Title:</strong> 操作系统</li>
+        <li><strong>Author:</strong> The Redefine Team</li>
+        <li><strong>Created at:</strong> 2023-04-08 11:07:24</li>
+        
+            <li>
+                <strong>Updated at:</strong> 2023-04-09 20:57:52
+            </li>
+        
         <li>
-            Post link：https://intyou.netlify.app/2023/04/08/操作系统problem/
+            <strong>Link:</strong> https://redefine.ohevan.com/2023/04/08/操作系统/
         </li>
         <li>
-            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+            <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
         </li>
     </ul>
 </div>
@@ -432,6 +546,21 @@
 
             
                 <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/04/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">计算机网络</span>
+                                    <span class="post-nav-item">Prev posts</span>
+                                </span>
+                            </a>
+                        </div>
                     
                     
                         <div class="article-next">
@@ -461,7 +590,7 @@
                 <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">On this page</div>
-        <div class="page-title">操作系统problem</div>
+        <div class="page-title">操作系统</div>
         <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-text">操作系统</span></a></li></ol>
 
     </div>
@@ -475,21 +604,21 @@
                 
 
             </div>
-
-
+            
+            
 
         </div>
 
-        <div class="page-main-content-bottom">
+        <div class="main-content-footer">
             <footer class="footer">
     <div class="info-container">
         <div class="copyright-info">
             &copy;
             
-              <span>2023</span>
+              <span>2022</span>
               -
             
-            2023&nbsp;&nbsp;<i class="fa-regular fa-computer-classic"></i>&nbsp;&nbsp;<a href="/">IntYou</a>
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">The Redefine Team</a>
         </div>
         
             <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -508,14 +637,14 @@
         
         <div class="theme-info info-item">
             <span class="powered-by-container">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a></span>
-                <br> 
-            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v1.1.6</a>
+                <br>
+            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.1.1</a>
         </div>
         
         
         
-            <div id="start_time_div" style="display:none">
-                2023/3/1 11:45:14
+            <div id="start_div" style="display:none">
+                2022/8/17 11:45:14
             </div>
             <div>
                 Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
@@ -549,7 +678,7 @@
     
         <div class="post-tools">
             <div class="post-tools-container">
-    <ul class="tools-list">
+    <ul class="article-tools-list">
         <!-- TOC aside toggle -->
         
             <li class="right-bottom-tools page-aside-toggle">
@@ -565,9 +694,9 @@
         </div>
     
 
-    <div class="right-bottom-side-tools">
+    <div class="right-side-tools-container">
         <div class="side-tools-container">
-    <ul class="unfolded-tools-list">
+    <ul class="hidden-tools-list">
         <li class="right-bottom-tools tool-font-adjust-plus flex-center">
             <i class="fa-regular fa-magnifying-glass-plus"></i>
         </li>
@@ -588,20 +717,22 @@
         
 
         
-            <li class="right-bottom-tools tool-scroll-to-top flex-center">
-                <i class="fa-regular fa-arrow-up"></i>
-            </li>
-        
 
         <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
             <i class="fa-regular fa-arrow-down"></i>
         </li>
     </ul>
 
-    <ul class="folded-tools-list">
-        <li class="right-bottom-tools tool-toggle-show flex-center">
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
             <i class="fa-regular fa-cog fa-spin"></i>
         </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
         
     </ul>
 </div>
@@ -614,79 +745,54 @@
 
 
     
-        <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-          <span class="search-input-field-pre">
-            <i class="fa-solid fa-keyboard"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="Search..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
-            </div>
-            <span class="popup-btn-close">
-                <i class="fa-solid fa-times"></i>
-            </span>
-        </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
-    </div>
-</div>
-
-    
 
 
 </main>
 
 
 
-<script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/utils.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/main.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/layouts/menu-shrink.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/tools/go-top-bottom.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/tools/dark-light-toggle.js"></script>
-
-
-    <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/tools/local-search.js"></script>
+<script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/utils.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/main.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/layouts/navbarShrink.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/scrollTopBottom.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/lightDarkSwitch.js"></script>
 
 
 
-    <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/tools/code-block.js"></script>
+
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/codeBlock.js"></script>
 
 
 
-    <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/layouts/lazyload.js"></script>
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/layouts/lazyload.js"></script>
 
 
 
-    <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/tools/runtime.js"></script>
-    <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/layouts/odometer.min.js"></script>
-    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/assets/odometer-theme-minimal.css">
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/runtime.js"></script>
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/layouts/odometer.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/libs/Typed.min.js"></script>
+  <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/plugins/typed.js"></script>
+
+
 
 
 
 
 <div class="post-scripts pjax">
     
-        <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/tools/toc-toggle.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/libs/anime.min.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/layouts/toc.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/plugins/tabs.js"></script>
-    
+        <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/tocToggle.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/libs/anime.min.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/layouts/toc.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/plugins/tabs.js"></script>
     
 </div>
 
 
-    <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/libs/pjax.min.js"></script>
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/libs/pjax.min.js"></script>
 <script>
     window.addEventListener('DOMContentLoaded', () => {
         window.pjax = new Pjax({
             selectors: [
                 'head title',
                 '.page-container',
-                '.pjax'
+                '.pjax',
             ],
             history: true,
             debug: false,
@@ -699,13 +805,13 @@
         });
 
         document.addEventListener('pjax:send', () => {
-            REDEFINE.utils.pjaxProgressBarStart();
+            Global.utils.pjaxProgressBarStart();
         });
 
         document.addEventListener('pjax:complete', () => {
-            REDEFINE.utils.pjaxProgressBarEnd();
+            Global.utils.pjaxProgressBarEnd();
             window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-            REDEFINE.refresh();
+            Global.refresh();
         });
     });
 </script>

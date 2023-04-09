@@ -4,58 +4,76 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="IntYou">
-    <meta name="description" content="IntYou&#39;s Blog">
-    <meta name="author" content="IntYou">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-redefine.png">
+    
+    <meta name="author" content="The Redefine Team">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://evan.beee.top" crossorigin>
+    
+        
+            <link rel="preconnect" href="https://unpkg.com" crossorigin>
+        
+    
     <!--- Seo Part-->
     
     <link rel="canonical" href="https://intyouss.github.io/2023/03/25/django/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="Django">
-    <meta property="og:description" content="IntYou&#39;s Blog">
-    <meta property="og:url" content="https://intyouss.github.io2023/03/25/Django/">
-    <meta property="og:image" content="/images/avatar.jpg">
-    <meta property="og:site_name" content="IntYou&#39;s Blog">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Django">
-    <meta name="twitter:description" content="IntYou&#39;s Blog">
-    <meta name="twitter:image" content="/images/avatar.jpg">
+    
+        <meta name="description" content="Django MVT 网站设计的三层架构  借鉴于Java的MVC(C: Controller)   M(Model数据模型: 数据层)V(View视图层: 控制层)T(Templete模板层(在MVC中为视图层))  创建Django工程文件django-admin startproject 文件名 内部生成文件  manage.py 内置django命令  settings 配置文件  url">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django">
+<meta property="og:url" content="https://intyouss.github.io/2023/03/25/Django/index.html">
+<meta property="og:site_name" content="IntYou&#39;s Blog">
+<meta property="og:description" content="Django MVT 网站设计的三层架构  借鉴于Java的MVC(C: Controller)   M(Model数据模型: 数据层)V(View视图层: 控制层)T(Templete模板层(在MVC中为视图层))  创建Django工程文件django-admin startproject 文件名 内部生成文件  manage.py 内置django命令  settings 配置文件  url">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-03-25-12-39-38-image.png">
+<meta property="article:published_time" content="2023-03-25T04:37:08.000Z">
+<meta property="article:modified_time" content="2023-04-08T14:50:07.837Z">
+<meta property="article:author" content="IntYou">
+<meta property="article:tag" content="Django Study">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-03-25-12-39-38-image.png">
+    
     <!--- Icon Part-->
-    <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="192x192">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg">
-    <meta name="theme-color" content="#005080">
-    <link rel="shortcut icon" href="/images/avatar.jpg">
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
     
     <title>
         
             Django -
         
-        IntYou&#39;s Blog
+        Theme Redefine
     </title>
     
 <link rel="stylesheet" href="/css/style.css">
 
-    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/assets/fonts.css">
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/assets/fonts.css">
+    <!--- Font Part-->
     
     
     
     
-        <link rel="preconnect" href="https://evan.beee.top" crossorigin>
+
+    <!--- Inject Part-->
     
     <script id="hexo-configurations">
-    let REDEFINE = window.REDEFINE || {};
-    REDEFINE.hexo_config = {"hostname":"intyouss.github.io","root":"/","language":"en","path":"search.xml"};
-    REDEFINE.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#005080","avatar":"/images/avatar.jpg","favicon":"/images/avatar.jpg","article_img_align":"center","right_side_width":"210px","content_max_width":"1000px","nav_color":{"left":"#f78736","right":"#367df7","transparency":35},"hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_image":{"light":"https://evan.beee.top/img/wallhaven-wqery6-light.webp","dark":"https://evan.beee.top/img/wallhaven-wqery6-dark.webp"},"title_color":{"light":"#fff","dark":"#d1d1b6"},"description":"Change The World As You Know","custom_font":{"enable":false,"font_family":null,"font_url":null}},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":true},"code_block":{"copy":true,"style":"mac","custom_font":{"enable":false,"font_family":null,"font_url":null}},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"1.1.6","friend_links":{"columns":2},"home_article":{"date_format":"auto","category":{"enable":true,"limit":3},"tag":{"enable":true,"limit":3}},"plugins":{"aplayer":{"enable":false,"audio":[{"name":null,"artist":null,"url":null,"cover":null},{"name":null,"artist":null,"url":null,"cover":null}]}}};
-    REDEFINE.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"intyouss.github.io","root":"/","language":"en","path":"search.xml"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[""]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true},"home_banner":{"enable":true,"image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Theme Redefine","subtitle":{"text":[],"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}],"audio":[{"name":null,"artist":null,"url":null,"cover":null},{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.1.1","code_block":{"copy":true,"style":"mac","custom_font":{"enable":false,"font_family":null,"font_url":null}},"navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
   </script>
     
-    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/fontawesome/fontawesome.min.css">
-    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/fontawesome/brands.min.css">
-    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/fontawesome/solid.min.css">
-    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/fontawesome/regular.min.css">
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/fontawesome/regular.min.css">
     
     
     
@@ -66,8 +84,6 @@
 
 <body>
 <div class="progress-bar-container">
-    
-        <span class="scroll-progress-bar"></span>
     
 
     
@@ -83,28 +99,28 @@
 
     
 
-    <div class="page-main-content">
+    <div class="main-content-container">
 
-        <div class="page-main-content-top">
-            <header class="menu-wrapper">
+        <div class="main-content-header">
+            <header class="navbar-container">
     
-    <div class="menu-content">
+    <div class="navbar-content">
         <div class="left">
             
             <a class="logo-title" href="/">
                 
-                IntYou&#39;s Blog
+                Theme Redefine
                 
             </a>
         </div>
 
         <div class="right">
             <!-- PC -->
-            <div class="pc">
-                <ul class="menu-list">
+            <div class="desktop">
+                <ul class="navbar-list">
                     
                         
-                            <li class="menu-item">
+                            <li class="navbar-item">
                                 <!-- Menu -->
                                 <a class="" 
                                     href="/"  >
@@ -120,30 +136,24 @@
                             </li>
                     
                     
-                        <li class="menu-item search search-popup-trigger">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </li>
-                    
                 </ul>
             </div>
             <!-- Mobile -->
             <div class="mobile">
                 
-                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Mobile drawer -->
-    <div class="menu-drawer">
-        <ul class="drawer-menu-list">
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
             
                 
-                    <li class="drawer-menu-item flex-center">
+                    <li class="drawer-navbar-item flex-center">
                         <a class="" 
                         href="/"  >
                              
@@ -168,7 +178,9 @@
 
         </div>
 
-        <div class="page-main-content-middle">
+        <div class="main-content-body">
+
+            
 
             <div class="main-content">
 
@@ -189,28 +201,28 @@
             
                 <div class="article-header">
                     <div class="avatar">
-                        <img src="/images/avatar.jpg">
+                        <img src="/images/redefine-avatar.svg">
                     </div>
                     <div class="info">
                         <div class="author">
-                            <span class="name">IntYou</span>
+                            <span class="name">The Redefine Team</span>
                             
-                                <span class="author-label">(^_^)</span>
+                                <span class="author-label"></span>
                             
                         </div>
                         <div class="meta-info">
                             <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="pc">2023-03-25 12:37:08</span>
+        <span class="desktop">2023-03-25 12:37:08</span>
         <span class="mobile">2023-03-25 12:37</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="pc">2023-04-08 16:44:59</span>
-            <span class="mobile">2023-04-08 16:44</span>
+            <span class="desktop">2023-04-08 22:50:07</span>
+            <span class="mobile">2023-04-08 22:50</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -232,10 +244,6 @@
     
     
     
-    
-        <span class="article-pv article-meta-item">
-            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-        </span>
     
 </div>
 
@@ -318,14 +326,27 @@
 </ul>
 <h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><ul>
 <li><p>适用</p>
-<ul>
-<li>内部系统，传统企业级，规模可控的环境</li>
-</ul>
+<p>内部系统，传统企业级，规模可控的环境</p>
 </li>
 <li><p>不适用</p>
-<ul>
-<li>规模不可控的环境, 数量大</li>
+<p>规模不可控的环境, 数量大</p>
+</li>
 </ul>
+<p>on_delete:</p>
+<ul>
+<li><p>models.SET_NULL<br>置空模式，删除时，外键字段被设置为空，前提就是blank&#x3D;True, null&#x3D;True,定义该字段时，允许为空。理解：删除关联数据（子表），与之关联的值设置默认值为null（父表中），这个前提需要父表中的字段可以为空。<br>PS:外键写在多处，且写外键只能是主键，如没设置主键，django会自动帮你创</p>
+</li>
+<li><p>None：<br>删除关联表的数据时，当前表与关联表的filed的行为。</p>
+</li>
+<li><p>models.CASCADE：<br>表示级联删除，当关联表（子表）中的数据删除时，与其相对应的外键（父表）中的数据也删除。</p>
+</li>
+<li><p>models.DO_NOTHING:<br>你删你的，父亲（外键）不想管你</p>
+</li>
+<li><p>models.PROTECT:<br>保护模式，如采用这个方法，在删除关联数据时会抛出ProtectError错误</p>
+</li>
+<li><p>models.SET_DEFAULT:<br>设置默认值，删除子表字段时，外键字段设置为默认值，所以定义外键的时候注意加上一个默认值。</p>
+</li>
+<li><p>on_delete &#x3D; models.SET（值）:<br>删除关联数据时，自定义一个值，该值只能是对应指定的实体</p>
 </li>
 </ul>
 <h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><ol>
@@ -412,6 +433,139 @@
 <li><p>注册绑定类<code>admin.site.register(模型名，admin模型名)</code></p>
 </li>
 </ol>
+<h3 id="模型类的查询方法"><a href="#模型类的查询方法" class="headerlink" title="模型类的查询方法"></a>模型类的查询方法</h3><h4 id="精确查询"><a href="#精确查询" class="headerlink" title="精确查询"></a>精确查询</h4><ul>
+<li><p>get方法: 查询一条数据</p>
+<p>查询id为1的数据</p>
+<p><code>NewsType.object.get(id=1)</code></p>
+<p>特点: 只能查询唯一满足条件的数据</p>
+<blockquote>
+<p>没有找到符合条件的数据，直接报错(DoesNotExist)</p>
+<p>查询出多条符合条件数据，也会报错(MultipleObjectReturned)</p>
+</blockquote>
+</li>
+<li><p>filter方法: 根据条件过滤查询</p>
+<blockquote>
+<p>返回的值是一个quertSet对象(查询集)</p>
+</blockquote>
+</li>
+<li><p>all方法: 返回模块类对应的表中所有数据</p>
+<blockquote>
+<p>返回的值是一个querSet对象(查询集)</p>
+</blockquote>
+</li>
+<li><p>exclude方法: 查询不符合条件的数据</p>
+<p>查询name不是实时政治的</p>
+<p><code>NewsType.object.exclude(name=&#39;实时政治&#39;)</code></p>
+</li>
+<li><p>order_by: 排序方法</p>
+<p>根据新闻的阅读量进行排序(升序)</p>
+<p><code>NewsInfo.object.all().order_by(&#39;read&#39;)</code></p>
+<p>(降序)</p>
+<p><code>NewsInfo.object.all().order_by(&#39;-read&#39;)</code></p>
+<ul>
+<li><p>排序规则:</p>
+<blockquote>
+<p>默认是从小到大(升序)</p>
+<p>降序排序在字段前面加一个’-‘</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>查询集:</p>
+<ul>
+<li><p>支持索引取值</p>
+</li>
+<li><p>支持切片</p>
+</li>
+<li><p>支持再次调用查询方法</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h4><p>条件语法格式:</p>
+<ul>
+<li>模型类.object.filter(模型类属性名__条件名&#x3D;值)</li>
+</ul>
+<blockquote>
+<ul>
+<li>包含: contains</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询名称里包含&#x27;娱乐&#x27;的新闻类别</span></span><br><span class="line">NewsInfo.objects.<span class="built_in">filter</span>(new_type__contains=<span class="string">&#x27;娱乐&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>开头: startswith</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询以&#x27;国&#x27;开头的新闻类别</span></span><br><span class="line">NewsInfo.objects.<span class="built_in">filter</span>(new_type__startswith=<span class="string">&#x27;国&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>结尾: endswith</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询以&#x27;资讯&#x27;结尾的新闻类别</span></span><br><span class="line">NewsInfo.objects.<span class="built_in">filter</span>(new_type__endswith=<span class="string">&#x27;资讯&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>范围查询: in</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询id为1或3或5的新闻类别</span></span><br><span class="line">NewsInfo.objects.<span class="built_in">filter</span>(id__in=[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>])</span><br></pre></td></tr></table></figure></div>
+</blockquote>
+<blockquote>
+<p>比较查询</p>
+<ul>
+<li><p>大于: gt</p>
+</li>
+<li><p>小于: lt</p>
+</li>
+<li><p>大于等于: gte</p>
+</li>
+<li><p>小于等于: lte</p>
+</li>
+<li><p>字段值是否为Null: isnull</p>
+<p>查询name不为空的字段</p>
+<p><code>NewsType.objects.filter(name__isnull=False)</code></p>
+</li>
+</ul>
+</blockquote>
+<h4 id="F对象和Q对象"><a href="#F对象和Q对象" class="headerlink" title="F对象和Q对象"></a>F对象和Q对象</h4><ol>
+<li><p>F对象: 用来比较查询数据的两个属性</p>
+<blockquote>
+<p>导入: <code>from django.db.models import F</code></p>
+<p>查询 ‘阅读量’ 大于 ‘评论数量’两倍的新闻</p>
+<p><code>NewsInfo.objects.filter(read__gt=F(&#39;comment&#39;)*2)</code></p>
+<p>F对象查询结果可以直接进行算数运算</p>
+</blockquote>
+</li>
+<li><p>Q对象: 逻辑查询(与或非)</p>
+<blockquote>
+<p>导入: <code>from django.db.models import Q</code></p>
+<ol>
+<li><p>逻辑与:</p>
+<p>不使用Q对象:</p>
+<p>查询阅读数量大于40，评论数量大于35的数据</p>
+<p><code>NewsInfo.objects.filter(read__gt=40,comment__gt=35)</code></p>
+<p>使用Q对象:</p>
+<p><code>NewsInfo.objects.filter(Q(read__gt=40) &amp; Q(comment__gt=35))</code></p>
+</li>
+<li><p>逻辑或:</p>
+<p><code>NewsInfo.objects.filter(Q(read__gt=40) | Q(comment__gt=35))</code></p>
+</li>
+<li><p>逻辑非:</p>
+<p>通过 exclude查询:</p>
+<p><code>NewsType.object.exclude(name=&#39;实时政治&#39;)</code></p>
+<p>通过Q对象:</p>
+<p><code>NewsType.object.exclude(~Q(name=&#39;实时政治&#39;))</code></p>
+</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<h4 id="模型类关联查询"><a href="#模型类关联查询" class="headerlink" title="模型类关联查询"></a>模型类关联查询</h4><ol>
+<li><p>通过对象进行关联查询</p>
+<p><code>单一查询.模型类名_set.操作()</code></p>
+<p>由一到多的查询:</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b = BookInfo.objects.get(<span class="built_in">id</span>=<span class="number">1</span>)</span><br><span class="line">b.hero_set.<span class="built_in">all</span>()</span><br></pre></td></tr></table></figure></div>
+
+<p>由多到一的查询:</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b = BookInfo.objects.get(<span class="built_in">id</span>=<span class="number">1</span>)</span><br><span class="line">b.book <span class="comment"># 属性名</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
 
             </div>
 
@@ -419,14 +573,19 @@
                 <div class="post-copyright-info">
                     <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：Django</li>
-        <li>Post author：IntYou</li>
-        <li>Create time：2023-03-25 12:37:08</li>
+        <li><strong>Title:</strong> Django</li>
+        <li><strong>Author:</strong> The Redefine Team</li>
+        <li><strong>Created at:</strong> 2023-03-25 12:37:08</li>
+        
+            <li>
+                <strong>Updated at:</strong> 2023-04-08 22:50:07
+            </li>
+        
         <li>
-            Post link：https://intyou.netlify.app/2023/03/25/Django/
+            <strong>Link:</strong> https://redefine.ohevan.com/2023/03/25/Django/
         </li>
         <li>
-            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+            <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
         </li>
     </ul>
 </div>
@@ -452,13 +611,13 @@
                         <div class="article-prev">
                             <a class="prev"
                             rel="prev"
-                            href="/2023/04/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9Fproblem/"
+                            href="/2023/04/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"
                             >
                                 <span class="left arrow-icon flex-center">
                                     <i class="fa-solid fa-chevron-left"></i>
                                 </span>
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">操作系统problem</span>
+                                    <span class="post-nav-title-item">操作系统</span>
                                     <span class="post-nav-item">Prev posts</span>
                                 </span>
                             </a>
@@ -493,7 +652,7 @@
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">Django</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Django-MVT"><span class="nav-text">Django MVT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BADjango%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6"><span class="nav-text">创建Django工程文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8CDjango%E5%B7%A5%E7%A8%8B"><span class="nav-text">运行Django工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%90%E5%BA%94%E7%94%A8"><span class="nav-text">创建子应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setting%E9%85%8D%E7%BD%AE"><span class="nav-text">Setting配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%94%AE%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-text">外键的优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-text">优点:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-text">缺点:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">应用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE"><span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E4%BD%BF%E7%94%A8%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-text">视图使用的流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#admin-Django%E9%BB%98%E8%AE%A4%E5%90%8E%E5%8F%B0"><span class="nav-text">admin Django默认后台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF"><span class="nav-text">模板</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%9A%84%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="nav-text">模板的配置和使用步骤:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%BAMySQL"><span class="nav-text">修改数据库为MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%9E%8B"><span class="nav-text">创建模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%A1%A8%E8%BF%81%E7%A7%BB"><span class="nav-text">模型表迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89admin%E5%90%8E%E5%8F%B0"><span class="nav-text">自定义admin后台</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Django-MVT"><span class="nav-text">Django MVT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BADjango%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6"><span class="nav-text">创建Django工程文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8CDjango%E5%B7%A5%E7%A8%8B"><span class="nav-text">运行Django工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%90%E5%BA%94%E7%94%A8"><span class="nav-text">创建子应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setting%E9%85%8D%E7%BD%AE"><span class="nav-text">Setting配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%94%AE%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-text">外键的优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE"><span class="nav-text">视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#admin-Django%E9%BB%98%E8%AE%A4%E5%90%8E%E5%8F%B0"><span class="nav-text">admin Django默认后台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF"><span class="nav-text">模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%BAMySQL"><span class="nav-text">修改数据库为MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%9E%8B"><span class="nav-text">创建模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%A1%A8%E8%BF%81%E7%A7%BB"><span class="nav-text">模型表迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89admin%E5%90%8E%E5%8F%B0"><span class="nav-text">自定义admin后台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%B1%BB%E7%9A%84%E6%9F%A5%E8%AF%A2%E6%96%B9%E6%B3%95"><span class="nav-text">模型类的查询方法</span></a></li></ol>
 
     </div>
 </div>
@@ -506,21 +665,21 @@
                 
 
             </div>
-
-
+            
+            
 
         </div>
 
-        <div class="page-main-content-bottom">
+        <div class="main-content-footer">
             <footer class="footer">
     <div class="info-container">
         <div class="copyright-info">
             &copy;
             
-              <span>2023</span>
+              <span>2022</span>
               -
             
-            2023&nbsp;&nbsp;<i class="fa-regular fa-computer-classic"></i>&nbsp;&nbsp;<a href="/">IntYou</a>
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">The Redefine Team</a>
         </div>
         
             <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -539,14 +698,14 @@
         
         <div class="theme-info info-item">
             <span class="powered-by-container">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a></span>
-                <br> 
-            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v1.1.6</a>
+                <br>
+            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.1.1</a>
         </div>
         
         
         
-            <div id="start_time_div" style="display:none">
-                2023/3/1 11:45:14
+            <div id="start_div" style="display:none">
+                2022/8/17 11:45:14
             </div>
             <div>
                 Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
@@ -580,7 +739,7 @@
     
         <div class="post-tools">
             <div class="post-tools-container">
-    <ul class="tools-list">
+    <ul class="article-tools-list">
         <!-- TOC aside toggle -->
         
             <li class="right-bottom-tools page-aside-toggle">
@@ -596,9 +755,9 @@
         </div>
     
 
-    <div class="right-bottom-side-tools">
+    <div class="right-side-tools-container">
         <div class="side-tools-container">
-    <ul class="unfolded-tools-list">
+    <ul class="hidden-tools-list">
         <li class="right-bottom-tools tool-font-adjust-plus flex-center">
             <i class="fa-regular fa-magnifying-glass-plus"></i>
         </li>
@@ -619,20 +778,22 @@
         
 
         
-            <li class="right-bottom-tools tool-scroll-to-top flex-center">
-                <i class="fa-regular fa-arrow-up"></i>
-            </li>
-        
 
         <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
             <i class="fa-regular fa-arrow-down"></i>
         </li>
     </ul>
 
-    <ul class="folded-tools-list">
-        <li class="right-bottom-tools tool-toggle-show flex-center">
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
             <i class="fa-regular fa-cog fa-spin"></i>
         </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
         
     </ul>
 </div>
@@ -645,79 +806,54 @@
 
 
     
-        <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-          <span class="search-input-field-pre">
-            <i class="fa-solid fa-keyboard"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="Search..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
-            </div>
-            <span class="popup-btn-close">
-                <i class="fa-solid fa-times"></i>
-            </span>
-        </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
-    </div>
-</div>
-
-    
 
 
 </main>
 
 
 
-<script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/utils.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/main.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/layouts/menu-shrink.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/tools/go-top-bottom.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/tools/dark-light-toggle.js"></script>
-
-
-    <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/tools/local-search.js"></script>
+<script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/utils.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/main.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/layouts/navbarShrink.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/scrollTopBottom.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/lightDarkSwitch.js"></script>
 
 
 
-    <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/tools/code-block.js"></script>
+
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/codeBlock.js"></script>
 
 
 
-    <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/layouts/lazyload.js"></script>
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/layouts/lazyload.js"></script>
 
 
 
-    <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/tools/runtime.js"></script>
-    <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/layouts/odometer.min.js"></script>
-    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/assets/odometer-theme-minimal.css">
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/runtime.js"></script>
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/layouts/odometer.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/libs/Typed.min.js"></script>
+  <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/plugins/typed.js"></script>
+
+
 
 
 
 
 <div class="post-scripts pjax">
     
-        <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/tools/toc-toggle.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/libs/anime.min.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/layouts/toc.js"></script><script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/plugins/tabs.js"></script>
-    
+        <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/tocToggle.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/libs/anime.min.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/layouts/toc.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/plugins/tabs.js"></script>
     
 </div>
 
 
-    <script src="//evan.beee.top/projects/hexo-theme-redefine/v1.1.6/source/js/libs/pjax.min.js"></script>
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/libs/pjax.min.js"></script>
 <script>
     window.addEventListener('DOMContentLoaded', () => {
         window.pjax = new Pjax({
             selectors: [
                 'head title',
                 '.page-container',
-                '.pjax'
+                '.pjax',
             ],
             history: true,
             debug: false,
@@ -730,13 +866,13 @@
         });
 
         document.addEventListener('pjax:send', () => {
-            REDEFINE.utils.pjaxProgressBarStart();
+            Global.utils.pjaxProgressBarStart();
         });
 
         document.addEventListener('pjax:complete', () => {
-            REDEFINE.utils.pjaxProgressBarEnd();
+            Global.utils.pjaxProgressBarEnd();
             window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-            REDEFINE.refresh();
+            Global.refresh();
         });
     });
 </script>

@@ -104,128 +104,6 @@
       </tags>
   </entry>
   <entry>
-    <title>JavaScript-React-1</title>
-    <url>/2023/03/07/JavaScript-React-1/</url>
-    <content><![CDATA[<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><hr>
-<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ul>
-<li><p>只有一个参数的函数 参数 &#x3D;&gt; 返回值</p>
-</li>
-<li><p>多个参数使用括号 (a,b) &#x3D;&gt; 返回值</p>
-</li>
-<li><p>返回值必须是一个表达式</p>
-</li>
-<li><p>返回值是对象必须带括号</p>
-</li>
-<li><p>如需写语句，在后添加代码块</p>
-</li>
-</ul>
-<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>隐含参数arguments-表示当前函数的实参 arguments.lenth 获取实参数。剩余参数…args</p>
-</div>
-
-<h4 id="特性"><a href="#特性" class="headerlink" title="特性:"></a>特性:</h4><ul>
-<li><p>箭头函数中没有arguments，可以使用…args</p>
-</li>
-<li><p>箭头函数的this总是看外层作用域的this</p>
-</li>
-<li><p>箭头函数中的this无法通过call(), apply(), bind()修改</p>
-</li>
-<li><p>箭头函数无法作为构造函数，无法new</p>
-</li>
-</ul>
-<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><hr>
-<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>默认情况下，script标签中不能使用import语句，必须设置script的type属性为module</p>
-</div>
-
-<h4 id="导出"><a href="#导出" class="headerlink" title="导出:"></a>导出:</h4><ul>
-<li><p>默认导出</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>一个模块里只有一个默认导出</p>
-<ul>
-<li><p>命名导出</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b,c&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h4 id="导入"><a href="#导入" class="headerlink" title="导入:"></a>导入:</h4><ul>
-<li><p>默认导入</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>导入默认模块时，变量名可以自主制定，无需使用模块中的变量名</p>
-<ul>
-<li><p>命名导入</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;a,b,c&#125; <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span></span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
-<li><p>构造函数</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>构造函数中，可以通过this来引用当前的对象</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
-<li><p>严格模式</p>
-<p>“use strict”</p>
-<ol>
-<li><p>类中的所有代码都会在严格模式下执行</p>
-</li>
-<li><p>函数的this不再是window,而是undefined</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> test = mc.<span class="property">fn</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-</ul>
-<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>以方法形式调用时, this就是当前的实例。以函数形式调用, this是undefined</p>
-</div>
-
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = <span class="variable language_">this</span>.<span class="property">fn</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>) <span class="comment">//将fn方法的this绑定为当前实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>可以限制this绑定在自身</p>
-<p>也可以使用箭头函数的形式调用，永远绑定为本身</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">   fn = <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>&#123;&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>在子类中重写父类构造函数时，应该在子类中第一时间调用父类构造函数，否则报错</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(name, age); <span class="comment">//调用父类构造函数，并且需要加入父类参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
-<li><p>动态属性</p>
-<p>需要首先new一个实例才能使用</p>
-</li>
-<li><p>静态属性</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> name = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="comment">// 静态方法this不是实例对象而是当前类对象</span></span><br><span class="line">    <span class="keyword">static</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>可以直接使用<code>MyClass.name</code></p>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
-<ul>
-<li><p>map()</p>
-<ol>
-<li><p>可以根据原有的数组返回一个新数组</p>
-</li>
-<li><p>需要一个回调函数作为参数, 回调函数返回值会成为新数组中的元素</p>
-<p>用法:</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> result = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> item+<span class="number">2</span></span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 第一个参数 当前元素</span></span><br><span class="line"><span class="comment">// 第二个参数 当前元素索引</span></span><br><span class="line"><span class="comment">// 第三个参数 当前数组</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-<li><p>filter()</p>
-<p>过滤器</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">result = arr.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item % <span class="number">2</span> === <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>根据条件过滤元素</p>
-<ul>
-<li><p>find()</p>
-<p>找第一个被过滤条件通过的元素</p>
-</li>
-</ul>
-</li>
-<li><p>reduce()</p>
-<p>整合数组</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> &#123;&#125;, <span class="number">0</span>) </span><br><span class="line"><span class="comment">// 0的位置是定义第一次prev的值, prev 上一次合并后值, curr 当前值</span></span><br></pre></td></tr></table></figure></div></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>React Study</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>3月7日学习记录</title>
     <url>/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
@@ -399,14 +277,27 @@
 </ul>
 <h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><ul>
 <li><p>适用</p>
-<ul>
-<li>内部系统，传统企业级，规模可控的环境</li>
-</ul>
+<p>内部系统，传统企业级，规模可控的环境</p>
 </li>
 <li><p>不适用</p>
-<ul>
-<li>规模不可控的环境, 数量大</li>
+<p>规模不可控的环境, 数量大</p>
+</li>
 </ul>
+<p>on_delete:</p>
+<ul>
+<li><p>models.SET_NULL<br>置空模式，删除时，外键字段被设置为空，前提就是blank&#x3D;True, null&#x3D;True,定义该字段时，允许为空。理解：删除关联数据（子表），与之关联的值设置默认值为null（父表中），这个前提需要父表中的字段可以为空。<br>PS:外键写在多处，且写外键只能是主键，如没设置主键，django会自动帮你创</p>
+</li>
+<li><p>None：<br>删除关联表的数据时，当前表与关联表的filed的行为。</p>
+</li>
+<li><p>models.CASCADE：<br>表示级联删除，当关联表（子表）中的数据删除时，与其相对应的外键（父表）中的数据也删除。</p>
+</li>
+<li><p>models.DO_NOTHING:<br>你删你的，父亲（外键）不想管你</p>
+</li>
+<li><p>models.PROTECT:<br>保护模式，如采用这个方法，在删除关联数据时会抛出ProtectError错误</p>
+</li>
+<li><p>models.SET_DEFAULT:<br>设置默认值，删除子表字段时，外键字段设置为默认值，所以定义外键的时候注意加上一个默认值。</p>
+</li>
+<li><p>on_delete &#x3D; models.SET（值）:<br>删除关联数据时，自定义一个值，该值只能是对应指定的实体</p>
 </li>
 </ul>
 <h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><ol>
@@ -492,6 +383,139 @@
 </li>
 <li><p>注册绑定类<code>admin.site.register(模型名，admin模型名)</code></p>
 </li>
+</ol>
+<h3 id="模型类的查询方法"><a href="#模型类的查询方法" class="headerlink" title="模型类的查询方法"></a>模型类的查询方法</h3><h4 id="精确查询"><a href="#精确查询" class="headerlink" title="精确查询"></a>精确查询</h4><ul>
+<li><p>get方法: 查询一条数据</p>
+<p>查询id为1的数据</p>
+<p><code>NewsType.object.get(id=1)</code></p>
+<p>特点: 只能查询唯一满足条件的数据</p>
+<blockquote>
+<p>没有找到符合条件的数据，直接报错(DoesNotExist)</p>
+<p>查询出多条符合条件数据，也会报错(MultipleObjectReturned)</p>
+</blockquote>
+</li>
+<li><p>filter方法: 根据条件过滤查询</p>
+<blockquote>
+<p>返回的值是一个quertSet对象(查询集)</p>
+</blockquote>
+</li>
+<li><p>all方法: 返回模块类对应的表中所有数据</p>
+<blockquote>
+<p>返回的值是一个querSet对象(查询集)</p>
+</blockquote>
+</li>
+<li><p>exclude方法: 查询不符合条件的数据</p>
+<p>查询name不是实时政治的</p>
+<p><code>NewsType.object.exclude(name=&#39;实时政治&#39;)</code></p>
+</li>
+<li><p>order_by: 排序方法</p>
+<p>根据新闻的阅读量进行排序(升序)</p>
+<p><code>NewsInfo.object.all().order_by(&#39;read&#39;)</code></p>
+<p>(降序)</p>
+<p><code>NewsInfo.object.all().order_by(&#39;-read&#39;)</code></p>
+<ul>
+<li><p>排序规则:</p>
+<blockquote>
+<p>默认是从小到大(升序)</p>
+<p>降序排序在字段前面加一个’-‘</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>查询集:</p>
+<ul>
+<li><p>支持索引取值</p>
+</li>
+<li><p>支持切片</p>
+</li>
+<li><p>支持再次调用查询方法</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h4><p>条件语法格式:</p>
+<ul>
+<li>模型类.object.filter(模型类属性名__条件名&#x3D;值)</li>
+</ul>
+<blockquote>
+<ul>
+<li>包含: contains</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查询名称里包含&#x27;娱乐&#x27;的新闻类别</span></span><br><span class="line">NewsInfo.objects.<span class="built_in">filter</span>(new_type__contains=<span class="string">&#x27;娱乐&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>开头: startswith</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查询以&#x27;国&#x27;开头的新闻类别</span></span><br><span class="line">NewsInfo.objects.<span class="built_in">filter</span>(new_type__startswith=<span class="string">&#x27;国&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>结尾: endswith</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查询以&#x27;资讯&#x27;结尾的新闻类别</span></span><br><span class="line">NewsInfo.objects.<span class="built_in">filter</span>(new_type__endswith=<span class="string">&#x27;资讯&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>范围查询: in</li>
+</ul>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查询id为1或3或5的新闻类别</span></span><br><span class="line">NewsInfo.objects.<span class="built_in">filter</span>(id__in=[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>])</span><br></pre></td></tr></table></figure></div>
+</blockquote>
+<blockquote>
+<p>比较查询</p>
+<ul>
+<li><p>大于: gt</p>
+</li>
+<li><p>小于: lt</p>
+</li>
+<li><p>大于等于: gte</p>
+</li>
+<li><p>小于等于: lte</p>
+</li>
+<li><p>字段值是否为Null: isnull</p>
+<p>查询name不为空的字段</p>
+<p><code>NewsType.objects.filter(name__isnull=False)</code></p>
+</li>
+</ul>
+</blockquote>
+<h4 id="F对象和Q对象"><a href="#F对象和Q对象" class="headerlink" title="F对象和Q对象"></a>F对象和Q对象</h4><ol>
+<li><p>F对象: 用来比较查询数据的两个属性</p>
+<blockquote>
+<p>导入: <code>from django.db.models import F</code></p>
+<p>查询 ‘阅读量’ 大于 ‘评论数量’两倍的新闻</p>
+<p><code>NewsInfo.objects.filter(read__gt=F(&#39;comment&#39;)*2)</code></p>
+<p>F对象查询结果可以直接进行算数运算</p>
+</blockquote>
+</li>
+<li><p>Q对象: 逻辑查询(与或非)</p>
+<blockquote>
+<p>导入: <code>from django.db.models import Q</code></p>
+<ol>
+<li><p>逻辑与:</p>
+<p>不使用Q对象:</p>
+<p>查询阅读数量大于40，评论数量大于35的数据</p>
+<p><code>NewsInfo.objects.filter(read__gt=40,comment__gt=35)</code></p>
+<p>使用Q对象:</p>
+<p><code>NewsInfo.objects.filter(Q(read__gt=40) &amp; Q(comment__gt=35))</code></p>
+</li>
+<li><p>逻辑或:</p>
+<p><code>NewsInfo.objects.filter(Q(read__gt=40) | Q(comment__gt=35))</code></p>
+</li>
+<li><p>逻辑非:</p>
+<p>通过 exclude查询:</p>
+<p><code>NewsType.object.exclude(name=&#39;实时政治&#39;)</code></p>
+<p>通过Q对象:</p>
+<p><code>NewsType.object.exclude(~Q(name=&#39;实时政治&#39;))</code></p>
+</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<h4 id="模型类关联查询"><a href="#模型类关联查询" class="headerlink" title="模型类关联查询"></a>模型类关联查询</h4><ol>
+<li><p>通过对象进行关联查询</p>
+<p><code>单一查询.模型类名_set.操作()</code></p>
+<p>由一到多的查询:</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">b = BookInfo.objects.get(<span class="built_in">id</span>=<span class="number">1</span>)</span><br><span class="line">b.hero_set.<span class="built_in">all</span>()</span><br></pre></td></tr></table></figure></div>
+
+<p>由多到一的查询:</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">b = BookInfo.objects.get(<span class="built_in">id</span>=<span class="number">1</span>)</span><br><span class="line">b.book <span class="comment"># 属性名</span></span><br></pre></td></tr></table></figure></div></li>
 </ol>
 ]]></content>
       <tags>
@@ -689,61 +713,125 @@
       </tags>
   </entry>
   <entry>
-    <title>JavaScript-React-3</title>
-    <url>/2023/03/09/JavaScript-React-3/</url>
-    <content><![CDATA[<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><hr>
-<p>父组件传递属性，需要在子组件获取才能使用:</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;div className=&#123;<span class="string">`card <span class="subst">$&#123;props.className&#125;</span>`</span>&#125;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></div>
+    <title>JavaScript-React-1</title>
+    <url>/2023/03/07/JavaScript-React-1/</url>
+    <content><![CDATA[<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><hr>
+<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ul>
+<li><p>只有一个参数的函数 参数 &#x3D;&gt; 返回值</p>
+</li>
+<li><p>多个参数使用括号 (a,b) &#x3D;&gt; 返回值</p>
+</li>
+<li><p>返回值必须是一个表达式</p>
+</li>
+<li><p>返回值是对象必须带括号</p>
+</li>
+<li><p>如需写语句，在后添加代码块</p>
+</li>
+</ul>
+<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>隐含参数arguments-表示当前函数的实参 arguments.lenth 获取实参数。剩余参数…args</p>
+</div>
 
-<p>props.children 表示组件的标签体</p>
-<p>useRef().current 表示当前的DOM</p>
-<p>事件对象:</p>
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性:"></a>特性:</h4><ul>
+<li><p>箭头函数中没有arguments，可以使用…args</p>
+</li>
+<li><p>箭头函数的this总是看外层作用域的this</p>
+</li>
+<li><p>箭头函数中的this无法通过call(), apply(), bind()修改</p>
+</li>
+<li><p>箭头函数无法作为构造函数，无法new</p>
+</li>
+</ul>
+<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><hr>
+<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>默认情况下，script标签中不能使用import语句，必须设置script的type属性为module</p>
+</div>
+
+<h4 id="导出"><a href="#导出" class="headerlink" title="导出:"></a>导出:</h4><ul>
+<li><p>默认导出</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>一个模块里只有一个默认导出</p>
 <ul>
-<li><p>event包含所有触发事件对象信息</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">descChangeHandler</span> = (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">target</span>.<span class="property">value</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+<li><p>命名导出</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b,c&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="导入"><a href="#导入" class="headerlink" title="导入:"></a>导入:</h4><ul>
+<li><p>默认导入</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>导入默认模块时，变量名可以自主制定，无需使用模块中的变量名</p>
+<ul>
+<li><p>命名导入</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;a,b,c&#125; <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
+<li><p>构造函数</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>构造函数中，可以通过this来引用当前的对象</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
+<li><p>严格模式</p>
+<p>“use strict”</p>
+<ol>
+<li><p>类中的所有代码都会在严格模式下执行</p>
+</li>
+<li><p>函数的this不再是window,而是undefined</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> test = mc.<span class="property">fn</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+</ul>
+<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>以方法形式调用时, this就是当前的实例。以函数形式调用, this是undefined</p>
+</div>
+
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = <span class="variable language_">this</span>.<span class="property">fn</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>) <span class="comment">//将fn方法的this绑定为当前实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>可以限制this绑定在自身</p>
+<p>也可以使用箭头函数的形式调用，永远绑定为本身</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">   fn = <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>&#123;&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>在子类中重写父类构造函数时，应该在子类中第一时间调用父类构造函数，否则报错</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(name, age); <span class="comment">//调用父类构造函数，并且需要加入父类参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
+<li><p>动态属性</p>
+<p>需要首先new一个实例才能使用</p>
+</li>
+<li><p>静态属性</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> name = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="comment">// 静态方法this不是实例对象而是当前类对象</span></span><br><span class="line">    <span class="keyword">static</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>可以直接使用<code>MyClass.name</code></p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
+<ul>
+<li><p>map()</p>
+<ol>
+<li><p>可以根据原有的数组返回一个新数组</p>
+</li>
+<li><p>需要一个回调函数作为参数, 回调函数返回值会成为新数组中的元素</p>
+<p>用法:</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> result = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> item+<span class="number">2</span></span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 第一个参数 当前元素</span></span><br><span class="line"><span class="comment">// 第二个参数 当前元素索引</span></span><br><span class="line"><span class="comment">// 第三个参数 当前数组</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+<li><p>filter()</p>
+<p>过滤器</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">result = arr.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item % <span class="number">2</span> === <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>根据条件过滤元素</p>
+<ul>
+<li><p>find()</p>
+<p>找第一个被过滤条件通过的元素</p>
+</li>
+</ul>
+</li>
+<li><p>reduce()</p>
+<p>整合数组</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> &#123;&#125;, <span class="number">0</span>) </span><br><span class="line"><span class="comment">// 0的位置是定义第一次prev的值, prev 上一次合并后值, curr 当前值</span></span><br></pre></td></tr></table></figure></div></li>
 </ul>
 ]]></content>
-  </entry>
-  <entry>
-    <title>poetry使用</title>
-    <url>/2023/03/09/poetry%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<h3 id="Poetry"><a href="#Poetry" class="headerlink" title="Poetry"></a>Poetry</h3><hr>
-<p>使用pyproject.toml管理整个项目的依赖</p>
-<h4 id="安装poetry"><a href="#安装poetry" class="headerlink" title="安装poetry"></a>安装poetry</h4><ol>
-<li><p>安装pipx为每个包自动创建隔离环境，方便管理</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pip install pipx</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>安装poetry</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipx install poetry</span><br></pre></td></tr></table></figure></div></li>
-</ol>
-<h4 id="项目中使用portry"><a href="#项目中使用portry" class="headerlink" title="项目中使用portry"></a>项目中使用portry</h4><ol>
-<li><p>初始化pyproject.toml</p>
-<p>在项目路径中使用:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry init</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>创建项目虚拟环境</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry <span class="built_in">env</span> use python</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>进入虚拟环境</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry shell</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>添加新依赖</p>
-<p>在pyproject.toml文件中添加如下内容:</p>
-<div class="highlight-container" data-rel="Toml"><figure class="iseeu highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[[tool.poetry.source]]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;aliyun&quot;</span></span><br><span class="line"><span class="attr">url</span> = <span class="string">&quot;https://mirrors.aliyun.com/pypi/simple&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>添加普通依赖:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt;</span><br></pre></td></tr></table></figure></div>
-
-<p>添加开发依赖:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt; -D</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>测试</p>
-<p>使用pytest</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry run pytest</span><br></pre></td></tr></table></figure></div></li>
-</ol>
-]]></content>
       <tags>
-        <tag>poetry</tag>
+        <tag>React Study</tag>
       </tags>
   </entry>
   <entry>
@@ -1233,8 +1321,118 @@
       </tags>
   </entry>
   <entry>
-    <title>操作系统problem</title>
-    <url>/2023/04/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9Fproblem/</url>
+    <title>poetry使用</title>
+    <url>/2023/03/09/poetry%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h3 id="Poetry"><a href="#Poetry" class="headerlink" title="Poetry"></a>Poetry</h3><hr>
+<p>使用pyproject.toml管理整个项目的依赖</p>
+<h4 id="安装poetry"><a href="#安装poetry" class="headerlink" title="安装poetry"></a>安装poetry</h4><ol>
+<li><p>安装pipx为每个包自动创建隔离环境，方便管理</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pip install pipx</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>安装poetry</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipx install poetry</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<h4 id="项目中使用portry"><a href="#项目中使用portry" class="headerlink" title="项目中使用portry"></a>项目中使用portry</h4><ol>
+<li><p>初始化pyproject.toml</p>
+<p>在项目路径中使用:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry init</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>创建项目虚拟环境</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry <span class="built_in">env</span> use python</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>进入虚拟环境</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry shell</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>添加新依赖</p>
+<p>在pyproject.toml文件中添加如下内容:</p>
+<div class="highlight-container" data-rel="Toml"><figure class="iseeu highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[[tool.poetry.source]]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;aliyun&quot;</span></span><br><span class="line"><span class="attr">url</span> = <span class="string">&quot;https://mirrors.aliyun.com/pypi/simple&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>添加普通依赖:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>添加开发依赖:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt; -D</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>测试</p>
+<p>使用pytest</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry run pytest</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>poetry</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript-React-3</title>
+    <url>/2023/03/09/JavaScript-React-3/</url>
+    <content><![CDATA[<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><hr>
+<p>父组件传递属性，需要在子组件获取才能使用:</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;div className=&#123;<span class="string">`card <span class="subst">$&#123;props.className&#125;</span>`</span>&#125;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>props.children 表示组件的标签体</p>
+<p>useRef().current 表示当前的DOM</p>
+<p>事件对象:</p>
+<ul>
+<li><p>event包含所有触发事件对象信息</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">descChangeHandler</span> = (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">target</span>.<span class="property">value</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>计算机网络</title>
+    <url>/2023/04/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
+    <content><![CDATA[<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><ol>
+<li><p>简述 TCP 三次握手以及四次挥手的流程。为什么需要三次握手以及四次挥手?</p>
+<blockquote>
+<ul>
+<li><p>三次握手</p>
+<blockquote>
+<p>指建立一个TCP连接时，需要客户端和服务器总共发送3个包</p>
+<ol>
+<li><p>客户端发送一个SYN包到服务器，并进入SYN-SEND状态</p>
+</li>
+<li><p>服务器收到SYN包后，回复一个SYN-ACK包，确认收到客户端的SYN包，并进入SYN-RECV状态</p>
+</li>
+<li><p>客户端收到服务器的SYN+ACK包后，发送一个ACK包给服务器，确认收到服务器的SYN+ACK包，此时连接建立成功</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>四次挥手</p>
+<blockquote>
+<p>指断开一个TCP连接时，需要客户端和服务器总共发送4个包</p>
+<ol>
+<li><p>客户端发送一个FIN包到服务器，表示客户端不在发送数据，并进入FIN-WAIT-1状态</p>
+</li>
+<li><p>服务器收到FIN包后，回复一个ACK包，确认收到客户端的FIN包，并进入CLOSE-WAIT状态</p>
+</li>
+<li><p>服务器再次发送一个FIN包给客户端，表示服务器不再发送数据，并进入LAST-ACK状态</p>
+</li>
+<li><p>客户端收到服务器的FIN包后，回复一个ACK包给服务器，确认收到服务器的FIN包，并进入TIME-WAIT状态。此时连接断开成功，而TIME-WAIT状态在等待2MSL后返回CLOSED状态</p>
+</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<p>三次握手是为了防止已失效的连接请求报文突然又传送到了服务端。</p>
+<p>四次挥手是为了确保数据能够完整传输。</p>
+<p>为什么TIME-WAIT状态还需要等待2MSL后才能返回到CLOSED状态?</p>
+<blockquote>
+<ol>
+<li>无法保证最后发送的ACK报文会一定被对方收到</li>
+</ol>
+</blockquote>
+</blockquote>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统</title>
+    <url>/2023/04/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><hr>
 <ol>
 <li><p>进程和线程之间有什么区别？</p>
@@ -1383,6 +1581,109 @@
 <li><p>外围设备的中断，当外围设备完成用户的请求操作后，会像CPU发出中断信号，此时，CPU 就会暂停执行下一条即将要执行的指令，转而去执行中断信号对应的处理程序，如果先前执行的指令是在用户态下，则自然就发生从用户态到内核态的转换。</p>
 </li>
 </ol>
+</blockquote>
+</li>
+<li><p>简述 LRU 算法及其实现方式</p>
+<blockquote>
+<p>Least Recently Used，最近最久未使用法，它是按照一个非常著名的计算机操作系统基础理论得来的：最近使用的页面数据会在未来一段时期内仍然被使用，已经很久没有使用的页面很有可能在未来较长的一段时间内仍然不会被使用。基于这个思想，会存在一种缓存淘汰机制，每次从内存中找到最久未使用的数据然后置换出来，从而存入新的数据！它的主要衡量指标是使用的时间，附加指标是使用的次数。在计算机中大量使用了这个机制，它的合理性在于优先筛选热点数据，所谓热点数据，就是最近最多使用的数据！因为，利用 LRU 我们可以解决很多实际开发中的问题，并且很符合业务。利用双向链表实现</p>
+</blockquote>
+</li>
+<li><p>线程间有哪些通信方式</p>
+<blockquote>
+<p>共享变量，共享内存，共享数据库，消息队列</p>
+</blockquote>
+</li>
+<li><p>简述同步与异步的区别，阻塞与非阻塞的区别</p>
+<blockquote>
+<ol>
+<li><p>同步和异步</p>
+<blockquote>
+<p>同步和异步通常用来描述消息传递或通信的方式。</p>
+<p>在同步通信中，发送方会等待接收方的响应，然后才继续发送下一条消息。相反，在异步通信中，发送方不会等待接收方的响应，而是继续发送下一条消息。</p>
+</blockquote>
+</li>
+<li><p>阻塞与非阻塞</p>
+<blockquote>
+<p>阻塞与非阻塞通常用来描述系统调用的行为。系统调用是应用程序请求操作系统内核提供服务的一种机制，例如读写文件，创建进程等。</p>
+<p>当一个应用程序发起一个阻塞的系统调用时，他会一直等待，直到该调用完成。相反，当一个应用程序发起一个非阻塞的系统调用时，如果该调用不能立即完成，他会立即返回。</p>
+</blockquote>
+</li>
+</ol>
+<p>总结</p>
+<blockquote>
+<p>同步：</p>
+<blockquote>
+<p>执行一个操作之后，等待结果，然后才继续执行后续的操作</p>
+</blockquote>
+<p>异步：</p>
+<blockquote>
+<p>执行一个操作之后，可以去执行其他的操作，然后等待通知再回来执行完的操作</p>
+</blockquote>
+<p>阻塞：</p>
+<blockquote>
+<p>进程给CPU传达一个任务之后，一直等待CPU处理完成，然后才执行后面的操作</p>
+</blockquote>
+<p>非阻塞：</p>
+<blockquote>
+<p>进程给CPU传达任务后，继续处理后续的操作，隔段时间再来询问之前的操作是否完成，这样的过程也叫轮询</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</li>
+<li><p>简述操作系统中的缺页中断</p>
+<blockquote>
+<p>虚拟内存实际上可以比物理内存大，当访问虚拟内存时，会访问MMU(内存管理单元)去匹配对应的物理地址，而如果虚拟内存的页并不存在于物理内存中，会产生缺页中断，从磁盘中取得缺的页放入内存中，如果内存已满，还会根据页的置换算法将磁盘中的页换出。</p>
+</blockquote>
+</li>
+<li><p>简述操作系统中 malloc 的实现原理</p>
+<blockquote>
+<p>malloc 基本的实现原理就是维护一个内存空闲链表，当申请内存空间时，搜索内存空闲链表，找到适配的空闲内存空间，然后将空间分割成两个内存块，一个变成分配块，一个变成新的空闲块。如果没有搜索到，那么就会用sbrk()推进brk指针来申请内存空间。</p>
+<p>搜索空闲块最常见的算法有：首次适配，下一次适配，最佳适配。</p>
+<p>首次适配：</p>
+<blockquote>
+<p>第一次找到足够大的内存块就分配，这种方法会产生很多内存碎片</p>
+</blockquote>
+<p>下一次适配：</p>
+<blockquote>
+<p>等第二次找到足够大的内存块就分配，这样会产生比较少的内存碎片</p>
+</blockquote>
+<p>最佳适配：</p>
+<blockquote>
+<p>对堆进行彻底的搜索，重投开始，遍历所有块，使用数据区大小大于size且差值最小的块作为此次分配的块</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>简述 Linux 的 IO模型</p>
+<blockquote>
+<p>在linux操作系统中，共有五种IO模型</p>
+<ul>
+<li><p>阻塞IO</p>
+<blockquote>
+<p>应用程序在进行系统调用时会被阻塞，直到数据准备好并复制到用户空间后才返回</p>
+</blockquote>
+</li>
+<li><p>非阻塞IO</p>
+<blockquote>
+<p>应用程序在进行系统调用时不会被阻塞，而是立即返回一个状态值。应用程序需要不断轮询内核以检查数据是否准备好</p>
+</blockquote>
+</li>
+<li><p>多路复用IO</p>
+<blockquote>
+<p>应用程序可以同时监视多个文件描述符，当某个文件描述符就绪时，对其进行处理</p>
+</blockquote>
+</li>
+<li><p>信号驱动IO</p>
+<blockquote>
+<p>应用程序向内核注册一个信号处理函数，当数据报准备好时，内核会向应用程序发送一个信号，应用程序对信号进行捕捉，并调用信号处理函数来获取数据报</p>
+</blockquote>
+</li>
+<li><p>异步IO</p>
+<blockquote>
+<p>应用程序发起系统调用后立即返回，当内核将数据准备好并复制完成后会给应用程序发送通知</p>
+</blockquote>
+</li>
+</ul>
+<p>这些模型区别在于应用程序和内核之间的交互方式以及数据准备和拷贝的过程</p>
 </blockquote>
 </li>
 </ol>

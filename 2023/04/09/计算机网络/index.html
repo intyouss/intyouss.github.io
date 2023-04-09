@@ -17,20 +17,22 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://intyouss.github.io/archives/2023/04/"/>
+    <link rel="canonical" href="https://intyouss.github.io/2023/04/09/计算机网络/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="IntYou&#39;s Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="IntYou&#39;s Blog">
-<meta property="og:url" content="https://intyouss.github.io/archives/2023/04/index.html">
+        <meta name="description" content="计算机网络 简述 TCP 三次握手以及四次挥手的流程。为什么需要三次握手以及四次挥手?   三次握手  指建立一个TCP连接时，需要客户端和服务器总共发送3个包  客户端发送一个SYN包到服务器，并进入SYN-SEND状态  服务器收到SYN包后，回复一个SYN-ACK包，确认收到客户端的SYN包，并进入SYN-RECV状态  客户端收到服务器的SYN+ACK包后，发送一个ACK包给服务器，确认收">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络">
+<meta property="og:url" content="https://intyouss.github.io/2023/04/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
 <meta property="og:site_name" content="IntYou&#39;s Blog">
-<meta property="og:description" content="IntYou&#39;s Blog">
+<meta property="og:description" content="计算机网络 简述 TCP 三次握手以及四次挥手的流程。为什么需要三次握手以及四次挥手?   三次握手  指建立一个TCP连接时，需要客户端和服务器总共发送3个包  客户端发送一个SYN包到服务器，并进入SYN-SEND状态  服务器收到SYN包后，回复一个SYN-ACK包，确认收到客户端的SYN包，并进入SYN-RECV状态  客户端收到服务器的SYN+ACK包后，发送一个ACK包给服务器，确认收">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-09T12:59:00.000Z">
+<meta property="article:modified_time" content="2023-04-09T13:46:55.762Z">
 <meta property="article:author" content="IntYou">
-<meta property="article:tag" content="IntYou">
+<meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
     
     <!--- Icon Part-->
@@ -42,7 +44,7 @@
     
     <title>
         
-            Archive: 2023/4 -
+            计算机网络 -
         
         Theme Redefine
     </title>
@@ -182,96 +184,197 @@
 
                 
                     <div class="fade-in-down-animation">
-    <div class="archive-container ">
-        
-<div class="archive-list-container">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            
+            
+                <div class="article-title">
+                    <h1 class="article-title-regular">计算机网络</h1>
+                </div>
+            
+                
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/redefine-avatar.svg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">The Redefine Team</span>
+                            
+                                <span class="author-label"></span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-04-09 20:59</span>
+        <span class="mobile">2023-04-09 20:59</span>
+        <span class="hover-info">Created</span>
+    </span>
     
-        <section class="archive-item">
-            <div class="archive-item-header">
-                <span class="archive-year">2023</span>
-                <span class="archive-year-post-count">[12]</span>
-            </div>
-            <ul class="article-list">
-              
-              <li class="article-item" date-is='04-09'>
-                <a href="/2023/04/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
-                  <span class="article-title">计算机网络</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='04-08'>
-                <a href="/2023/04/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
-                  <span class="article-title">操作系统</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='03-25'>
-                <a href="/2023/03/25/Django/">
-                  <span class="article-title">Django</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='03-20'>
-                <a href="/2023/03/20/Linux/">
-                  <span class="article-title">Linux</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='03-09'>
-                <a href="/2023/03/09/3%E6%9C%889%E6%97%A5%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98/">
-                  <span class="article-title">3月9日项目问题</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='03-09'>
-                <a href="/2023/03/09/poetry%E4%BD%BF%E7%94%A8/">
-                  <span class="article-title">poetry使用</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='03-09'>
-                <a href="/2023/03/09/JavaScript-React-3/">
-                  <span class="article-title">JavaScript-React-3</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='03-08'>
-                <a href="/2023/03/08/JavaScript-React-2/">
-                  <span class="article-title">JavaScript-React-2</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='03-07'>
-                <a href="/2023/03/07/JavaScript-React-1/">
-                  <span class="article-title">JavaScript-React-1</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='03-07'>
-                <a href="/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
-                  <span class="article-title">3月7日学习记录</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='03-06'>
-                <a href="/2023/03/06/3%E6%9C%886%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
-                  <span class="article-title">3月6日 学习记录</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='03-05'>
-                <a href="/2023/03/05/3%E6%9C%885%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
-                  <span class="article-title">3月5日 学习记录</span>
-                </a>
-              </li>
-              
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-04-09 21:46:55</span>
+            <span class="mobile">2023-04-09 21:46</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                    </li>
+                
             </ul>
-        </section>
+        </span>
+    
+
+    
+    
+    
     
 </div>
 
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><ol>
+<li><p>简述 TCP 三次握手以及四次挥手的流程。为什么需要三次握手以及四次挥手?</p>
+<blockquote>
+<ul>
+<li><p>三次握手</p>
+<blockquote>
+<p>指建立一个TCP连接时，需要客户端和服务器总共发送3个包</p>
+<ol>
+<li><p>客户端发送一个SYN包到服务器，并进入SYN-SEND状态</p>
+</li>
+<li><p>服务器收到SYN包后，回复一个SYN-ACK包，确认收到客户端的SYN包，并进入SYN-RECV状态</p>
+</li>
+<li><p>客户端收到服务器的SYN+ACK包后，发送一个ACK包给服务器，确认收到服务器的SYN+ACK包，此时连接建立成功</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>四次挥手</p>
+<blockquote>
+<p>指断开一个TCP连接时，需要客户端和服务器总共发送4个包</p>
+<ol>
+<li><p>客户端发送一个FIN包到服务器，表示客户端不在发送数据，并进入FIN-WAIT-1状态</p>
+</li>
+<li><p>服务器收到FIN包后，回复一个ACK包，确认收到客户端的FIN包，并进入CLOSE-WAIT状态</p>
+</li>
+<li><p>服务器再次发送一个FIN包给客户端，表示服务器不再发送数据，并进入LAST-ACK状态</p>
+</li>
+<li><p>客户端收到服务器的FIN包后，回复一个ACK包给服务器，确认收到服务器的FIN包，并进入TIME-WAIT状态。此时连接断开成功，而TIME-WAIT状态在等待2MSL后返回CLOSED状态</p>
+</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<p>三次握手是为了防止已失效的连接请求报文突然又传送到了服务端。</p>
+<p>四次挥手是为了确保数据能够完整传输。</p>
+<p>为什么TIME-WAIT状态还需要等待2MSL后才能返回到CLOSED状态?</p>
+<blockquote>
+<ol>
+<li>无法保证最后发送的ACK报文会一定被对方收到</li>
+</ol>
+</blockquote>
+</blockquote>
+</li>
+</ol>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 计算机网络</li>
+        <li><strong>Author:</strong> The Redefine Team</li>
+        <li><strong>Created at:</strong> 2023-04-09 20:59:00</li>
+        
+            <li>
+                <strong>Updated at:</strong> 2023-04-09 21:46:55
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2023/04/09/计算机网络/
+        </li>
+        <li>
+            <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/%E9%9D%A2%E8%AF%95/">#面试</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/04/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">操作系统</span>
+                                    <span class="post-nav-item">Next posts</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">计算机网络</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="nav-text">计算机网络</span></a></li></ol>
+
     </div>
 </div>
+            </div>
+        
+    </div>
+</div>
+
 
                 
 
@@ -347,6 +450,23 @@
         </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
     
 
     <div class="right-side-tools-container">
@@ -434,6 +554,8 @@
 
 
 <div class="post-scripts pjax">
+    
+        <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/tocToggle.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/libs/anime.min.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/layouts/toc.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/plugins/tabs.js"></script>
     
 </div>
 
