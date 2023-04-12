@@ -30,7 +30,7 @@
 <meta property="og:description" content="SQL  结构化查询语言，用于存取，查询，更新数据以及管理关系型数据库系统   在不同的数据库产品中遵循SQL的通用规范，但是也对SQL有一些不同的改进，形成了一些数据库的专有指令  MySQL: limit  SQLServer: top  Oracle: rownum     SQL分类 根据SQL指令完成的数据库操作的不同，可以将SQL指令分类   DDL Data Definition L">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-12T03:42:33.000Z">
-<meta property="article:modified_time" content="2023-04-12T07:21:13.213Z">
+<meta property="article:modified_time" content="2023-04-12T10:33:01.641Z">
 <meta property="article:author" content="IntYou">
 <meta property="article:tag" content="MySQL Study">
 <meta name="twitter:card" content="summary">
@@ -225,8 +225,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-12 15:21:13</span>
-            <span class="mobile">2023-04-12 15:21</span>
+            <span class="desktop">2023-04-12 18:33:01</span>
+            <span class="mobile">2023-04-12 18:33</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -440,13 +440,122 @@
 <li><p>外键约束：建立不同表之间的关联关系</p>
 </li>
 </ul>
-<h4 id="DML"><a href="#DML" class="headerlink" title="DML"></a>DML</h4><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> (</span><br><span class="line"> T_num <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">primary</span> key,</span><br><span class="line"> T_name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line"> T_gender <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line"> T_age <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line"> T_tel <span class="type">char</span>(<span class="number">11</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">unique</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+<h4 id="DML"><a href="#DML" class="headerlink" title="DML"></a>DML</h4><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> T(</span><br><span class="line"> T_num <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">primary</span> key,</span><br><span class="line"> T_name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line"> T_gender <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line"> T_age <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line"> T_tel <span class="type">char</span>(<span class="number">11</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">unique</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
 
 <h5 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h5><ul>
 <li><p>语法</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>(columnName, columnName ...) <span class="keyword">value</span> (value1, value2 ...);</span><br></pre></td></tr></table></figure></div></li>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## 像数据表中指定的列添加数据(不允许为空的列必须提供数据)</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>(columnName, columnName ...) </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">value</span> (value1, value2 ...);</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">## 数据表名后的字段名列表顺序可以不与表中一致</span><br><span class="line">## 但是<span class="keyword">value</span>中值的顺序必须与表名后的字段名顺序对应</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> T(T_num, T_name, T_gender, T_age, T_tel) </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">values</span>(<span class="string">&#x27;12&#x27;</span>, <span class="string">&#x27;1234&#x27;</span>, <span class="string">&#x27;12&#x27;</span>, <span class="number">8</span>, <span class="string">&#x27;123&#x27;</span>);</span><br><span class="line"></span><br><span class="line">## 当要向表中的所有列添加数据时，数据表名后面的字段列表可以省略，</span><br><span class="line">## 但是<span class="keyword">value</span>中的值的顺序要与数据表定义的字段顺序保持一致</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> T <span class="keyword">values</span>(<span class="string">&#x27;12&#x27;</span>, <span class="string">&#x27;1234&#x27;</span>, <span class="string">&#x27;12&#x27;</span>, <span class="number">8</span>, <span class="string">&#x27;123&#x27;</span>);</span><br></pre></td></tr></table></figure></div></li>
 </ul>
-<h5 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h5><h5 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h5><p>·</p>
+<h5 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h5><blockquote>
+<p>从数据表中删除满足特定条件(所有)的数据</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> [<span class="keyword">where</span> conditions];</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h5 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h5><blockquote>
+<p>对数据表中以及添加的记录进行修改</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">set</span> columnName<span class="operator">=</span><span class="keyword">value</span>, columnName1<span class="operator">=</span>value2...</span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> [<span class="keyword">where</span> conditions]</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="DQL"><a href="#DQL" class="headerlink" title="DQL"></a>DQL</h4><blockquote>
+<p>从数据表中提取满足特定条件的记录</p>
+<ul>
+<li><p>单表查询</p>
+</li>
+<li><p>多表联合查询</p>
+</li>
+</ul>
+</blockquote>
+<h5 id="查询基础"><a href="#查询基础" class="headerlink" title="查询基础"></a>查询基础</h5><ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## <span class="keyword">select</span> 关键字后指定要显示查询到的记录的那些列</span><br><span class="line"><span class="keyword">select</span> columnName1[,columnName2,...] <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 查询所有列</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>; # 不建议使用</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h5 id="where-子句"><a href="#where-子句" class="headerlink" title="where 子句"></a>where 子句</h5><blockquote>
+<p>在删除，修改及查询的语句后都可以添加where子句(条件)，用于筛选满足条件的数据进行操作</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> conditions</span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">set</span> ... <span class="keyword">where</span> conditions</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> ... <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> conditions</span><br></pre></td></tr></table></figure></div>
+
+<h5 id="多条件查询"><a href="#多条件查询" class="headerlink" title="多条件查询"></a>多条件查询</h5><blockquote>
+<p>在 where 子句中，可以将多个条件通过逻辑预算符进行连接，通过多个条件来筛选要操作的数据</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">## <span class="keyword">and</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;=</span><span class="keyword">value</span> <span class="keyword">and</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;=</span><span class="keyword">value</span></span><br><span class="line"></span><br><span class="line">## <span class="keyword">or</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;=</span><span class="keyword">value</span> <span class="keyword">or</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;=</span><span class="keyword">value</span></span><br><span class="line"></span><br><span class="line">## <span class="keyword">not</span> <span class="keyword">between</span> ... <span class="keyword">and</span> ...</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">not</span> <span class="keyword">between</span> a <span class="keyword">and</span> b</span><br></pre></td></tr></table></figure></div>
+
+<h5 id="LIKE-子句"><a href="#LIKE-子句" class="headerlink" title="LIKE 子句"></a>LIKE 子句</h5><blockquote>
+<p>在 where 子句的条件中，我们可以使用like关键字来实现模糊查询</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">like</span> <span class="string">&#x27;reg&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>在like关键字后的reg表达式中，为正则表达式的使用</p>
+<ul>
+<li><p>% 表示任意多个字符【%o%包含字母o】</p>
+</li>
+<li><p>_表示任意一个字符 【_o% 第二个字母为o】</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="对查询结果的处理"><a href="#对查询结果的处理" class="headerlink" title="对查询结果的处理"></a>对查询结果的处理</h5><h6 id="设置查询的列"><a href="#设置查询的列" class="headerlink" title="设置查询的列"></a>设置查询的列</h6><blockquote>
+<p>声明显示查询结果的指定列</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> columnName1,columnName2... </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="operator">&gt;</span> <span class="number">20</span></span><br></pre></td></tr></table></figure></div>
+
+<h6 id="计算列"><a href="#计算列" class="headerlink" title="计算列"></a>计算列</h6><blockquote>
+<p>对从数据表中查询的记录的列进行运算之后显示出来</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> columnName1,x <span class="operator">-</span> columnName2... <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<h6 id="字段别名"><a href="#字段别名" class="headerlink" title="字段别名"></a>字段别名</h6><blockquote>
+<p>我们可以为查询结果的列名，去一个语义性更强的别名</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">as</span> <span class="operator">&lt;</span>xxx<span class="operator">&gt;</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<h6 id="消除重复行"><a href="#消除重复行" class="headerlink" title="消除重复行"></a>消除重复行</h6><blockquote>
+<p>从查询的结果中将重复的记录消除</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> # 关键字<span class="keyword">distinct</span></span><br></pre></td></tr></table></figure></div>
+
+<h6 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h6><blockquote>
+<p>将查询到的结果按照一定规则升序&#x2F;降序排列</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## 单字段排序</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> conditions </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">order</span> <span class="keyword">by</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">asc</span><span class="operator">|</span><span class="keyword">desc</span> # 关键字段 <span class="keyword">order</span> <span class="keyword">by</span> ... <span class="keyword">asc</span><span class="operator">|</span><span class="keyword">desc</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>order by columnName 表示将查询结果按照指定的列排序(置于where条件后)</p>
+</li>
+<li><p>asc 升序(默认)</p>
+</li>
+<li><p>desc 降序</p>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 多字段排序，先满足第一个排序规则，后满足下一个</span><br><span class="line">... <span class="keyword">by</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">asc</span>, <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">desc</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h5 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h5><blockquote>
+<p>SQL 中提供了一些可以对查询记录的列进行计算的函数</p>
+</blockquote>
+<ul>
+<li><p><code>count()</code> 统计函数，统计满足条件的指定字段值的个数(记录数)</p>
+</li>
+<li><p><code>max()</code> 获取最大值</p>
+</li>
+<li><p><code>min()</code> 获取最小值</p>
+</li>
+<li><p><code>sum()</code> 计算和，指定列的总和</p>
+</li>
+<li><p><code>avg()</code> 求平均值</p>
+</li>
+</ul>
 
             </div>
 
@@ -459,7 +568,7 @@
         <li><strong>创建于:</strong> 2023-04-12 11:42:33</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-12 15:21:13
+                <strong>更新于:</strong> 2023-04-12 18:33:01
             </li>
         
         <li>

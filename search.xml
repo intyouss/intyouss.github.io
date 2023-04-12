@@ -1,56 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>3月7日学习记录</title>
-    <url>/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
-<h4 id="路由的两种写法"><a href="#路由的两种写法" class="headerlink" title="路由的两种写法"></a>路由的两种写法</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">app.add_url_rule(<span class="string">&#x27;/index&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, index)</span><br></pre></td></tr></table></figure></div>
+    <title>3月5日 学习记录</title>
+    <url>/2023/03/05/3%E6%9C%885%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h4 id="flask中函数app-route-嵌套装饰器可能错误"><a href="#flask中函数app-route-嵌套装饰器可能错误" class="headerlink" title="flask中函数app.route()嵌套装饰器可能错误"></a>flask中函数app.route()嵌套装饰器可能错误</h4><hr>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">atuh1</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">atuh2</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner    </span><br><span class="line"></span><br><span class="line"><span class="meta">@auth1</span></span><br><span class="line"><span class="meta">@auth2</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;index&quot;</span>)</span><br></pre></td></tr></table></figure></div>
 
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/inddex&#x27;</span></span>)</span></span><br></pre></td></tr></table></figure></div>
+<p>单装饰器装饰: 装饰器在装饰一个函数时，此函数将被装饰器内部函数替代，如果想暴露原本函数，可以使用装饰器@functools.wraps(func)</p>
+<p>多装饰器装饰: 优先使用内部装饰器，逐层向上</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/index&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;h&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/login&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;g&quot;</span></span><br></pre></td></tr></table></figure></div>
 
-<h4 id="路由加载源码的流程"><a href="#路由加载源码的流程" class="headerlink" title="路由加载源码的流程"></a>路由加载源码的流程</h4><ul>
-<li><p>将URL和函数打包成为Rule对象</p>
-</li>
-<li><p>将Rule对象添加到map对象中</p>
-</li>
-<li><p>app_url_map &#x3D; map对象</p>
-</li>
-</ul>
-<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&lt;string:name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;name&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>uuid类型 类似于xxxxx-xxxxxxx-xxxxxx-xxxxxx</p>
-<h5 id="自定义路由"><a href="#自定义路由" class="headerlink" title="自定义路由"></a>自定义路由</h5><p>必须继承BaseConverter</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, regex</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>)</span><br><span class="line">        self.regex = regex</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_python</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.url_map.converters[<span class="string">&#x27;regex&#x27;</span>] = RegexConverter</span><br></pre></td></tr></table></figure></div>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><hr>
-<h4 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span>, method=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="CBV"><a href="#CBV" class="headerlink" title="CBV"></a>CBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(views, MethodView):</span><br><span class="line">    method = [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span><br><span class="line">    decorators = [test1, test2] //CBV添加装饰器</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/user&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;user&#x27;</span>))</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="模板-jinja2"><a href="#模板-jinja2" class="headerlink" title="模板(jinja2)"></a>模板(jinja2)</h3><hr>
-<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>模板可继承</p>
+<p>@app.route() endpoint默认为函数名  </p>
+<p>两个函数使用相同函数装饰auth, 在不使用@functools.warps(func)的情况下，两个初始函数被装饰后，都将变为inner的属性，形成别名重复错误:<br><code>AssertionError: View function mapping is ovwewriting an existing endpoint function: inner</code></p>
+<h4 id="flask蓝图"><a href="#flask蓝图" class="headerlink" title="flask蓝图"></a>flask蓝图</h4><hr>
+<p>flask蓝图主要功能就是分类(Blueprint)，不同功能函数放在不同文件中实现: </p>
 <ol>
-<li><p>被继承:</p>
-<p><code>&#123;% block content %&#125; ? &#123;% endbloack %&#125;</code>  </p>
+<li><p>创建蓝图</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">xxx = Blueprint(<span class="string">&#x27;xxx&#x27;</span>, __name__)</span><br></pre></td></tr></table></figure></div>
 </li>
-<li><p>继承:</p>
-<p><code>&#123;% extends 'layout.html' %&#125;  &#123;% block content %&#125; ? &#123;% endbloack %&#125;</code></p>
-</li>
-<li><p>引入:</p>
-<p><code>&#123;% include 'from.html' %&#125;</code></p>
+<li><p>在主进程中引用蓝图</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> <span class="string">&#x27;/path&#x27;</span> <span class="keyword">import</span> xxx</span><br><span class="line">app.register_blueprint(xxx, url_prefix=<span class="string">&#x27;/x&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>url_prefix 添加前缀 使用: &#x2F;x&#x2F;xxx</p>
 </li>
 </ol>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dunc</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line">render_template(<span class="string">&#x27;md.html&#x27;</span>, nums=nums, f=func) //可以传递函数名</span><br></pre></td></tr></table></figure></div>
-
-<p>定义全局模板方法</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.template_glabol() //模板中全局使用 &#123;&#123; func(<span class="params"><span class="string">&#x27;haha&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.template_filter() //模板全局使用 &#123;&#123; <span class="string">&#x27;haha&#x27;</span>|f(<span class="params"><span class="string">&#x27;e&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">arg,h</span>):</span><br><span class="line">    <span class="keyword">return</span> arg + h</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/md/hg&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;md_hg.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>如果想要将一个方法限制为一个蓝图域中使用，只需将app修改即可</p>
-<h3 id="特殊装饰器"><a href="#特殊装饰器" class="headerlink" title="特殊装饰器"></a>特殊装饰器</h3><hr>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.before_request //视图函数运行前运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f1</span>():// 一旦返回值为真，则停止行为向下传播(判断用户登录等), 反之空，则继续</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request //视图函数运行结束后运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">response</span>): //视图函数有返回值，就必须返回一个Responce</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f2&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>或</p>
-<p><code>app.before_request(func)</code>不加装饰器使用</p>
+<h4 id="Django的路由映射和Flask的蓝图有什么区别"><a href="#Django的路由映射和Flask的蓝图有什么区别" class="headerlink" title="Django的路由映射和Flask的蓝图有什么区别"></a>Django的路由映射和Flask的蓝图有什么区别</h4><hr>
+<p>flask:</p>
+<ol>
+<li><p>flask是利用蓝图进行模块划分的，通过app装饰器注册模块蓝图，在主模块统一调用;</p>
+</li>
+<li><p>在flask中，路由是通过装饰器给每个视图函数提供的, 而且根据请求方式的不同可以一个url用于不同的作用。功能相似，但是底层实现不一样</p>
+</li>
+</ol>
+<p>Django:</p>
+<ol>
+<li>Django路由映射是通过路由正则匹配映射到每一个模块的</li>
+<li>在django中，路由是浏览器访问服务器时，先访问的项目中的url，再由项目中的url找到应用中url，这些url是放在一个列表里，遵从从前往后匹配的规则。</li>
+</ol>
 ]]></content>
       <tags>
         <tag>Flask Study</tag>
@@ -118,45 +104,101 @@
       </tags>
   </entry>
   <entry>
-    <title>3月5日 学习记录</title>
-    <url>/2023/03/05/3%E6%9C%885%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h4 id="flask中函数app-route-嵌套装饰器可能错误"><a href="#flask中函数app-route-嵌套装饰器可能错误" class="headerlink" title="flask中函数app.route()嵌套装饰器可能错误"></a>flask中函数app.route()嵌套装饰器可能错误</h4><hr>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">atuh1</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">atuh2</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner    </span><br><span class="line"></span><br><span class="line"><span class="meta">@auth1</span></span><br><span class="line"><span class="meta">@auth2</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;index&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+    <title>3月7日学习记录</title>
+    <url>/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
+<h4 id="路由的两种写法"><a href="#路由的两种写法" class="headerlink" title="路由的两种写法"></a>路由的两种写法</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">app.add_url_rule(<span class="string">&#x27;/index&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, index)</span><br></pre></td></tr></table></figure></div>
 
-<p>单装饰器装饰: 装饰器在装饰一个函数时，此函数将被装饰器内部函数替代，如果想暴露原本函数，可以使用装饰器@functools.wraps(func)</p>
-<p>多装饰器装饰: 优先使用内部装饰器，逐层向上</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/index&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;h&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/login&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;g&quot;</span></span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/inddex&#x27;</span></span>)</span></span><br></pre></td></tr></table></figure></div>
 
-<p>@app.route() endpoint默认为函数名  </p>
-<p>两个函数使用相同函数装饰auth, 在不使用@functools.warps(func)的情况下，两个初始函数被装饰后，都将变为inner的属性，形成别名重复错误:<br><code>AssertionError: View function mapping is ovwewriting an existing endpoint function: inner</code></p>
-<h4 id="flask蓝图"><a href="#flask蓝图" class="headerlink" title="flask蓝图"></a>flask蓝图</h4><hr>
-<p>flask蓝图主要功能就是分类(Blueprint)，不同功能函数放在不同文件中实现: </p>
-<ol>
-<li><p>创建蓝图</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">xxx = Blueprint(<span class="string">&#x27;xxx&#x27;</span>, __name__)</span><br></pre></td></tr></table></figure></div>
+<h4 id="路由加载源码的流程"><a href="#路由加载源码的流程" class="headerlink" title="路由加载源码的流程"></a>路由加载源码的流程</h4><ul>
+<li><p>将URL和函数打包成为Rule对象</p>
 </li>
-<li><p>在主进程中引用蓝图</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> <span class="string">&#x27;/path&#x27;</span> <span class="keyword">import</span> xxx</span><br><span class="line">app.register_blueprint(xxx, url_prefix=<span class="string">&#x27;/x&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+<li><p>将Rule对象添加到map对象中</p>
+</li>
+<li><p>app_url_map &#x3D; map对象</p>
+</li>
+</ul>
+<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&lt;string:name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;name&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure></div>
 
-<p>url_prefix 添加前缀 使用: &#x2F;x&#x2F;xxx</p>
+<p>uuid类型 类似于xxxxx-xxxxxxx-xxxxxx-xxxxxx</p>
+<h5 id="自定义路由"><a href="#自定义路由" class="headerlink" title="自定义路由"></a>自定义路由</h5><p>必须继承BaseConverter</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, regex</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>)</span><br><span class="line">        self.regex = regex</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_python</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.url_map.converters[<span class="string">&#x27;regex&#x27;</span>] = RegexConverter</span><br></pre></td></tr></table></figure></div>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><hr>
+<h4 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span>, method=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="CBV"><a href="#CBV" class="headerlink" title="CBV"></a>CBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(views, MethodView):</span><br><span class="line">    method = [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span><br><span class="line">    decorators = [test1, test2] //CBV添加装饰器</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/user&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;user&#x27;</span>))</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="模板-jinja2"><a href="#模板-jinja2" class="headerlink" title="模板(jinja2)"></a>模板(jinja2)</h3><hr>
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>模板可继承</p>
+<ol>
+<li><p>被继承:</p>
+<p><code>&#123;% block content %&#125; ? &#123;% endbloack %&#125;</code>  </p>
+</li>
+<li><p>继承:</p>
+<p><code>&#123;% extends 'layout.html' %&#125;  &#123;% block content %&#125; ? &#123;% endbloack %&#125;</code></p>
+</li>
+<li><p>引入:</p>
+<p><code>&#123;% include 'from.html' %&#125;</code></p>
 </li>
 </ol>
-<h4 id="Django的路由映射和Flask的蓝图有什么区别"><a href="#Django的路由映射和Flask的蓝图有什么区别" class="headerlink" title="Django的路由映射和Flask的蓝图有什么区别"></a>Django的路由映射和Flask的蓝图有什么区别</h4><hr>
-<p>flask:</p>
-<ol>
-<li><p>flask是利用蓝图进行模块划分的，通过app装饰器注册模块蓝图，在主模块统一调用;</p>
-</li>
-<li><p>在flask中，路由是通过装饰器给每个视图函数提供的, 而且根据请求方式的不同可以一个url用于不同的作用。功能相似，但是底层实现不一样</p>
-</li>
-</ol>
-<p>Django:</p>
-<ol>
-<li>Django路由映射是通过路由正则匹配映射到每一个模块的</li>
-<li>在django中，路由是浏览器访问服务器时，先访问的项目中的url，再由项目中的url找到应用中url，这些url是放在一个列表里，遵从从前往后匹配的规则。</li>
-</ol>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dunc</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line">render_template(<span class="string">&#x27;md.html&#x27;</span>, nums=nums, f=func) //可以传递函数名</span><br></pre></td></tr></table></figure></div>
+
+<p>定义全局模板方法</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.template_glabol() //模板中全局使用 &#123;&#123; func(<span class="params"><span class="string">&#x27;haha&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.template_filter() //模板全局使用 &#123;&#123; <span class="string">&#x27;haha&#x27;</span>|f(<span class="params"><span class="string">&#x27;e&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">arg,h</span>):</span><br><span class="line">    <span class="keyword">return</span> arg + h</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/md/hg&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;md_hg.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>如果想要将一个方法限制为一个蓝图域中使用，只需将app修改即可</p>
+<h3 id="特殊装饰器"><a href="#特殊装饰器" class="headerlink" title="特殊装饰器"></a>特殊装饰器</h3><hr>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.before_request //视图函数运行前运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f1</span>():// 一旦返回值为真，则停止行为向下传播(判断用户登录等), 反之空，则继续</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request //视图函数运行结束后运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">response</span>): //视图函数有返回值，就必须返回一个Responce</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f2&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>或</p>
+<p><code>app.before_request(func)</code>不加装饰器使用</p>
 ]]></content>
       <tags>
         <tag>Flask Study</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>3月9日项目问题</title>
+    <url>/2023/03/09/3%E6%9C%889%E6%97%A5%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h4 id="读取yaml"><a href="#读取yaml" class="headerlink" title="读取yaml"></a>读取yaml</h4><p>引用<code>from ruamel import yaml</code></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">yaml.load(</span><br><span class="line">    Path(<span class="string">&#x27;C:\\Users\\Lenovo\\Desktop\\bot\\IntBot\\configs\\config.yaml&#x27;</span>).read_text(encoding=<span class="string">&#x27;utf-8&#x27;</span>),</span><br><span class="line">    Loader=yaml.Loader</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="pydantic"><a href="#pydantic" class="headerlink" title="pydantic"></a>pydantic</h4><p><code>extra=&#39;ignore&#39;</code>忽略额外属性</p>
+<h3 id="flask-migrate数据迁移"><a href="#flask-migrate数据迁移" class="headerlink" title="flask-migrate数据迁移"></a>flask-migrate数据迁移</h3><p>因为在开发中，由于数据表模型的改动，数据经常被清除，因此可以使用数据迁移，保存旧数据</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_sqlalchemy <span class="keyword">import</span> SQLAlchemy</span><br><span class="line"><span class="keyword">from</span> flask_migrate <span class="keyword">import</span> Migrate</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="comment"># 设置数据库连接地址</span></span><br><span class="line">DB_URI = <span class="string">&#x27;mysql+pymysql://root:123456@127.0.0.1:3306/web&#x27;</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_DATABASE_URI&#x27;</span>] = DB_URI</span><br><span class="line"><span class="comment"># 是否追踪数据库修改，一般不开启, 会影响性能</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_TRACK_MODIFICATIONS&#x27;</span>] = <span class="literal">False</span></span><br><span class="line"><span class="comment"># 是否显示底层执行的SQL语句</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_ECHO&#x27;</span>] = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化db,关联flask 项目</span></span><br><span class="line">db = SQLAlchemy(app)</span><br><span class="line"><span class="comment"># 迁移组件初始化</span></span><br><span class="line">Migrate(app, db)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Students</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;students&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">20</span>))</span><br><span class="line">    fullname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line">    nickname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Students(name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;, fullname=&#x27;<span class="subst">&#123;self.fullname&#125;</span>&#x27;, nickname=&#x27;<span class="subst">&#123;self.nickname&#125;</span>&#x27;)&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Users</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;user&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Users(id=&#x27;<span class="subst">&#123;self.<span class="built_in">id</span>&#125;</span>&#x27;, name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;)&gt;&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>执行迁移命令，先设置环境变量, 如果启动文件是app.py 这步可以省略。</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
+
+<p>windows用set设置环境变量，linux 用export 设置环境变量</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
+
+<p>执行相关命令</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db init  <span class="comment"># 生成迁移文件夹  只执行一次</span></span><br><span class="line">flask db migrate  <span class="comment"># ⽣成迁移版本, 保存到迁移文件夹中</span></span><br><span class="line">flask db upgrade  <span class="comment"># 执行迁移</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="迁移命令"><a href="#迁移命令" class="headerlink" title="迁移命令"></a>迁移命令</h4><p>init 命令执行后，会生成migrations目录</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db init</span><br></pre></td></tr></table></figure></div>
+
+<p>migrate 命令生成迁移脚本，保存到迁移文件夹中versions目录</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db migrate</span><br></pre></td></tr></table></figure></div>
+
+<p>upgrade 命令执行迁移</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db upgrade</span><br></pre></td></tr></table></figure></div>
+
+<p>执行完upgrade 命令才会在数据库中生成表</p>
+<h3 id="虚拟环境直接复制迁移"><a href="#虚拟环境直接复制迁移" class="headerlink" title="虚拟环境直接复制迁移"></a>虚拟环境直接复制迁移</h3><ol>
+<li><p>迁移到新电脑，将 虚拟环境文件夹内的pyvenv.cfg文件中home参数，写成新电脑python的路径</p>
+</li>
+<li><p>修改虚拟环境文件夹中Scripts中的activate内VIRTUAL_ENV参数修改成新电脑虚拟环境文件夹路径</p>
+</li>
+<li><p>修改虚拟文件夹中Scripts中的activate.bat内set “VIRTUAL_ENV参数改成新电脑虚拟环境文件夹路径</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Project</tag>
       </tags>
   </entry>
   <entry>
@@ -481,6 +523,128 @@
       </tags>
   </entry>
   <entry>
+    <title>JavaScript-React-1</title>
+    <url>/2023/03/07/JavaScript-React-1/</url>
+    <content><![CDATA[<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><hr>
+<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ul>
+<li><p>只有一个参数的函数 参数 &#x3D;&gt; 返回值</p>
+</li>
+<li><p>多个参数使用括号 (a,b) &#x3D;&gt; 返回值</p>
+</li>
+<li><p>返回值必须是一个表达式</p>
+</li>
+<li><p>返回值是对象必须带括号</p>
+</li>
+<li><p>如需写语句，在后添加代码块</p>
+</li>
+</ul>
+<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>隐含参数arguments-表示当前函数的实参 arguments.lenth 获取实参数。剩余参数…args</p>
+</div>
+
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性:"></a>特性:</h4><ul>
+<li><p>箭头函数中没有arguments，可以使用…args</p>
+</li>
+<li><p>箭头函数的this总是看外层作用域的this</p>
+</li>
+<li><p>箭头函数中的this无法通过call(), apply(), bind()修改</p>
+</li>
+<li><p>箭头函数无法作为构造函数，无法new</p>
+</li>
+</ul>
+<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><hr>
+<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>默认情况下，script标签中不能使用import语句，必须设置script的type属性为module</p>
+</div>
+
+<h4 id="导出"><a href="#导出" class="headerlink" title="导出:"></a>导出:</h4><ul>
+<li><p>默认导出</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>一个模块里只有一个默认导出</p>
+<ul>
+<li><p>命名导出</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b,c&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="导入"><a href="#导入" class="headerlink" title="导入:"></a>导入:</h4><ul>
+<li><p>默认导入</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>导入默认模块时，变量名可以自主制定，无需使用模块中的变量名</p>
+<ul>
+<li><p>命名导入</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;a,b,c&#125; <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
+<li><p>构造函数</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>构造函数中，可以通过this来引用当前的对象</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
+<li><p>严格模式</p>
+<p>“use strict”</p>
+<ol>
+<li><p>类中的所有代码都会在严格模式下执行</p>
+</li>
+<li><p>函数的this不再是window,而是undefined</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> test = mc.<span class="property">fn</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+</ul>
+<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>以方法形式调用时, this就是当前的实例。以函数形式调用, this是undefined</p>
+</div>
+
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = <span class="variable language_">this</span>.<span class="property">fn</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>) <span class="comment">//将fn方法的this绑定为当前实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>可以限制this绑定在自身</p>
+<p>也可以使用箭头函数的形式调用，永远绑定为本身</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">   fn = <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>&#123;&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>在子类中重写父类构造函数时，应该在子类中第一时间调用父类构造函数，否则报错</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(name, age); <span class="comment">//调用父类构造函数，并且需要加入父类参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
+<li><p>动态属性</p>
+<p>需要首先new一个实例才能使用</p>
+</li>
+<li><p>静态属性</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> name = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="comment">// 静态方法this不是实例对象而是当前类对象</span></span><br><span class="line">    <span class="keyword">static</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>可以直接使用<code>MyClass.name</code></p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
+<ul>
+<li><p>map()</p>
+<ol>
+<li><p>可以根据原有的数组返回一个新数组</p>
+</li>
+<li><p>需要一个回调函数作为参数, 回调函数返回值会成为新数组中的元素</p>
+<p>用法:</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> result = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> item+<span class="number">2</span></span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 第一个参数 当前元素</span></span><br><span class="line"><span class="comment">// 第二个参数 当前元素索引</span></span><br><span class="line"><span class="comment">// 第三个参数 当前数组</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+<li><p>filter()</p>
+<p>过滤器</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">result = arr.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item % <span class="number">2</span> === <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>根据条件过滤元素</p>
+<ul>
+<li><p>find()</p>
+<p>找第一个被过滤条件通过的元素</p>
+</li>
+</ul>
+</li>
+<li><p>reduce()</p>
+<p>整合数组</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> &#123;&#125;, <span class="number">0</span>) </span><br><span class="line"><span class="comment">// 0的位置是定义第一次prev的值, prev 上一次合并后值, curr 当前值</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>React Study</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript-React-2</title>
     <url>/2023/03/08/JavaScript-React-2/</url>
     <content><![CDATA[<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><hr>
@@ -671,170 +835,6 @@
       </tags>
   </entry>
   <entry>
-    <title>JavaScript-React-1</title>
-    <url>/2023/03/07/JavaScript-React-1/</url>
-    <content><![CDATA[<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><hr>
-<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ul>
-<li><p>只有一个参数的函数 参数 &#x3D;&gt; 返回值</p>
-</li>
-<li><p>多个参数使用括号 (a,b) &#x3D;&gt; 返回值</p>
-</li>
-<li><p>返回值必须是一个表达式</p>
-</li>
-<li><p>返回值是对象必须带括号</p>
-</li>
-<li><p>如需写语句，在后添加代码块</p>
-</li>
-</ul>
-<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>隐含参数arguments-表示当前函数的实参 arguments.lenth 获取实参数。剩余参数…args</p>
-</div>
-
-<h4 id="特性"><a href="#特性" class="headerlink" title="特性:"></a>特性:</h4><ul>
-<li><p>箭头函数中没有arguments，可以使用…args</p>
-</li>
-<li><p>箭头函数的this总是看外层作用域的this</p>
-</li>
-<li><p>箭头函数中的this无法通过call(), apply(), bind()修改</p>
-</li>
-<li><p>箭头函数无法作为构造函数，无法new</p>
-</li>
-</ul>
-<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><hr>
-<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>默认情况下，script标签中不能使用import语句，必须设置script的type属性为module</p>
-</div>
-
-<h4 id="导出"><a href="#导出" class="headerlink" title="导出:"></a>导出:</h4><ul>
-<li><p>默认导出</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>一个模块里只有一个默认导出</p>
-<ul>
-<li><p>命名导出</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b,c&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h4 id="导入"><a href="#导入" class="headerlink" title="导入:"></a>导入:</h4><ul>
-<li><p>默认导入</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>导入默认模块时，变量名可以自主制定，无需使用模块中的变量名</p>
-<ul>
-<li><p>命名导入</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;a,b,c&#125; <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span></span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
-<li><p>构造函数</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>构造函数中，可以通过this来引用当前的对象</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
-<li><p>严格模式</p>
-<p>“use strict”</p>
-<ol>
-<li><p>类中的所有代码都会在严格模式下执行</p>
-</li>
-<li><p>函数的this不再是window,而是undefined</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> test = mc.<span class="property">fn</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-</ul>
-<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>以方法形式调用时, this就是当前的实例。以函数形式调用, this是undefined</p>
-</div>
-
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = <span class="variable language_">this</span>.<span class="property">fn</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>) <span class="comment">//将fn方法的this绑定为当前实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>可以限制this绑定在自身</p>
-<p>也可以使用箭头函数的形式调用，永远绑定为本身</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">   fn = <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>&#123;&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>在子类中重写父类构造函数时，应该在子类中第一时间调用父类构造函数，否则报错</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(name, age); <span class="comment">//调用父类构造函数，并且需要加入父类参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
-<li><p>动态属性</p>
-<p>需要首先new一个实例才能使用</p>
-</li>
-<li><p>静态属性</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> name = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="comment">// 静态方法this不是实例对象而是当前类对象</span></span><br><span class="line">    <span class="keyword">static</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>可以直接使用<code>MyClass.name</code></p>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
-<ul>
-<li><p>map()</p>
-<ol>
-<li><p>可以根据原有的数组返回一个新数组</p>
-</li>
-<li><p>需要一个回调函数作为参数, 回调函数返回值会成为新数组中的元素</p>
-<p>用法:</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> result = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> item+<span class="number">2</span></span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 第一个参数 当前元素</span></span><br><span class="line"><span class="comment">// 第二个参数 当前元素索引</span></span><br><span class="line"><span class="comment">// 第三个参数 当前数组</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-<li><p>filter()</p>
-<p>过滤器</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">result = arr.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item % <span class="number">2</span> === <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>根据条件过滤元素</p>
-<ul>
-<li><p>find()</p>
-<p>找第一个被过滤条件通过的元素</p>
-</li>
-</ul>
-</li>
-<li><p>reduce()</p>
-<p>整合数组</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> &#123;&#125;, <span class="number">0</span>) </span><br><span class="line"><span class="comment">// 0的位置是定义第一次prev的值, prev 上一次合并后值, curr 当前值</span></span><br></pre></td></tr></table></figure></div></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>React Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>3月9日项目问题</title>
-    <url>/2023/03/09/3%E6%9C%889%E6%97%A5%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h4 id="读取yaml"><a href="#读取yaml" class="headerlink" title="读取yaml"></a>读取yaml</h4><p>引用<code>from ruamel import yaml</code></p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">yaml.load(</span><br><span class="line">    Path(<span class="string">&#x27;C:\\Users\\Lenovo\\Desktop\\bot\\IntBot\\configs\\config.yaml&#x27;</span>).read_text(encoding=<span class="string">&#x27;utf-8&#x27;</span>),</span><br><span class="line">    Loader=yaml.Loader</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="pydantic"><a href="#pydantic" class="headerlink" title="pydantic"></a>pydantic</h4><p><code>extra=&#39;ignore&#39;</code>忽略额外属性</p>
-<h3 id="flask-migrate数据迁移"><a href="#flask-migrate数据迁移" class="headerlink" title="flask-migrate数据迁移"></a>flask-migrate数据迁移</h3><p>因为在开发中，由于数据表模型的改动，数据经常被清除，因此可以使用数据迁移，保存旧数据</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_sqlalchemy <span class="keyword">import</span> SQLAlchemy</span><br><span class="line"><span class="keyword">from</span> flask_migrate <span class="keyword">import</span> Migrate</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="comment"># 设置数据库连接地址</span></span><br><span class="line">DB_URI = <span class="string">&#x27;mysql+pymysql://root:123456@127.0.0.1:3306/web&#x27;</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_DATABASE_URI&#x27;</span>] = DB_URI</span><br><span class="line"><span class="comment"># 是否追踪数据库修改，一般不开启, 会影响性能</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_TRACK_MODIFICATIONS&#x27;</span>] = <span class="literal">False</span></span><br><span class="line"><span class="comment"># 是否显示底层执行的SQL语句</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_ECHO&#x27;</span>] = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化db,关联flask 项目</span></span><br><span class="line">db = SQLAlchemy(app)</span><br><span class="line"><span class="comment"># 迁移组件初始化</span></span><br><span class="line">Migrate(app, db)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Students</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;students&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">20</span>))</span><br><span class="line">    fullname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line">    nickname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Students(name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;, fullname=&#x27;<span class="subst">&#123;self.fullname&#125;</span>&#x27;, nickname=&#x27;<span class="subst">&#123;self.nickname&#125;</span>&#x27;)&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Users</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;user&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Users(id=&#x27;<span class="subst">&#123;self.<span class="built_in">id</span>&#125;</span>&#x27;, name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;)&gt;&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>执行迁移命令，先设置环境变量, 如果启动文件是app.py 这步可以省略。</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
-
-<p>windows用set设置环境变量，linux 用export 设置环境变量</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
-
-<p>执行相关命令</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db init  <span class="comment"># 生成迁移文件夹  只执行一次</span></span><br><span class="line">flask db migrate  <span class="comment"># ⽣成迁移版本, 保存到迁移文件夹中</span></span><br><span class="line">flask db upgrade  <span class="comment"># 执行迁移</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="迁移命令"><a href="#迁移命令" class="headerlink" title="迁移命令"></a>迁移命令</h4><p>init 命令执行后，会生成migrations目录</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db init</span><br></pre></td></tr></table></figure></div>
-
-<p>migrate 命令生成迁移脚本，保存到迁移文件夹中versions目录</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db migrate</span><br></pre></td></tr></table></figure></div>
-
-<p>upgrade 命令执行迁移</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db upgrade</span><br></pre></td></tr></table></figure></div>
-
-<p>执行完upgrade 命令才会在数据库中生成表</p>
-<h3 id="虚拟环境直接复制迁移"><a href="#虚拟环境直接复制迁移" class="headerlink" title="虚拟环境直接复制迁移"></a>虚拟环境直接复制迁移</h3><ol>
-<li><p>迁移到新电脑，将 虚拟环境文件夹内的pyvenv.cfg文件中home参数，写成新电脑python的路径</p>
-</li>
-<li><p>修改虚拟环境文件夹中Scripts中的activate内VIRTUAL_ENV参数修改成新电脑虚拟环境文件夹路径</p>
-</li>
-<li><p>修改虚拟文件夹中Scripts中的activate.bat内set “VIRTUAL_ENV参数改成新电脑虚拟环境文件夹路径</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Project</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript-React-3</title>
     <url>/2023/03/09/JavaScript-React-3/</url>
     <content><![CDATA[<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><hr>
@@ -849,214 +849,6 @@
 <div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">descChangeHandler</span> = (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">target</span>.<span class="property">value</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
 </ul>
 ]]></content>
-  </entry>
-  <entry>
-    <title>MySQL</title>
-    <url>/2023/04/12/MySQL/</url>
-    <content><![CDATA[<h3 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h3><hr>
-<blockquote>
-<p>结构化查询语言，用于存取，查询，更新数据以及管理关系型数据库系统</p>
-</blockquote>
-<ul>
-<li><p>在不同的数据库产品中遵循SQL的通用规范，但是也对SQL有一些不同的改进，形成了一些数据库的专有指令</p>
-<ul>
-<li><p>MySQL: limit</p>
-</li>
-<li><p>SQLServer: top</p>
-</li>
-<li><p>Oracle: rownum</p>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="SQL分类"><a href="#SQL分类" class="headerlink" title="SQL分类"></a>SQL分类</h4><blockquote>
-<p>根据SQL指令完成的数据库操作的不同，可以将SQL指令分类</p>
-</blockquote>
-<ul>
-<li><p>DDL Data Definition Language 数据定义语言</p>
-<ul>
-<li>用于完成对数据库对象(数据库，数据表，视图，索引等)的创建，删除，修改</li>
-</ul>
-</li>
-<li><p>DML Data Manipulation Language 数据操作语言</p>
-<ul>
-<li>用于完成对数据表中的数据的添加，删除，修改操作</li>
-</ul>
-</li>
-<li><p>DQL Data Query Language 数据查询语言</p>
-<ul>
-<li>用于将数据表中的数据查询出来</li>
-</ul>
-</li>
-<li><p>DCL Data Control Language 数据控制语言</p>
-<ul>
-<li>用于完成事务管理等控制性操作</li>
-</ul>
-</li>
-</ul>
-<h4 id="SQL基本语法"><a href="#SQL基本语法" class="headerlink" title="SQL基本语法"></a>SQL基本语法</h4><blockquote>
-<p>在MySQL Command Line Client 或者 navicat 等工具中都能编写SQL指令</p>
-</blockquote>
-<ul>
-<li><p>SQL 指令不区分大小写</p>
-</li>
-<li><p>每条SQL表达式结束之久都以<code>;</code>结束</p>
-</li>
-<li><p>SQL 关键字之间以空格进行分割</p>
-</li>
-<li><p>SQL 之间可以不限制换行(可以有空格的地方就可以换行)</p>
-</li>
-</ul>
-<h4 id="DDL"><a href="#DDL" class="headerlink" title="DDL"></a>DDL</h4><h5 id="DDL-数据库操作"><a href="#DDL-数据库操作" class="headerlink" title="DDL-数据库操作"></a>DDL-数据库操作</h5><blockquote>
-<p>使用DDL语句可以创建，查询，修改，删除数据库</p>
-</blockquote>
-<h6 id="查询数据库"><a href="#查询数据库" class="headerlink" title="查询数据库"></a>查询数据库</h6><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 显示当前数据库列表</span><br><span class="line"><span class="keyword">show</span> databases;</span><br><span class="line"></span><br><span class="line">## 显示此数据库创建<span class="keyword">SQL</span>指令</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> database <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div>
-
-<h6 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h6><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 创建数据库 dbName表示创建的数据库名称</span><br><span class="line"><span class="keyword">create</span> database <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 创建数据库，防止数据库存在报错,当不存在时创建</span><br><span class="line"><span class="keyword">create</span> database if <span class="keyword">not</span> <span class="keyword">exists</span> <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 在创建数据库的同时指定数据库的字符集(编码格式,utf8可选)</span><br><span class="line"><span class="keyword">create</span> database <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span> <span class="type">character</span> <span class="keyword">set</span> <span class="operator">&lt;</span>utf8<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div>
-
-<h6 id="修改数据库"><a href="#修改数据库" class="headerlink" title="修改数据库"></a>修改数据库</h6><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 修改数据库的字符集</span><br><span class="line"><span class="keyword">alter</span> database <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span> <span class="type">character</span> <span class="keyword">set</span> <span class="operator">&lt;</span>utf8<span class="operator">&gt;</span>; # utf8 gbk</span><br></pre></td></tr></table></figure></div>
-
-<h6 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h6><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 删除数据库,防止数据库不存在报错</span><br><span class="line"><span class="keyword">drop</span> database if <span class="keyword">exists</span> <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div>
-
-<h6 id="使用-x2F-切换数据库"><a href="#使用-x2F-切换数据库" class="headerlink" title="使用&#x2F;切换数据库"></a>使用&#x2F;切换数据库</h6><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">use <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li><p>创建数据表</p>
-<blockquote>
-<p>数据表实际上就是一个二位的表格，是由多列组成，表格的每一列时表格的一个字段</p>
-</blockquote>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="operator">&lt;</span>dbTableName<span class="operator">&gt;</span>(</span><br><span class="line">    <span class="operator">&lt;</span>TableName<span class="operator">&gt;</span> <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">unique</span>, # 格式，下为例子</span><br><span class="line">    T_name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    T_gender <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    T_age <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    T_tel <span class="type">char</span>(<span class="number">11</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">unique</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>查询数据表列</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> tables; </span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>查询表结构</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">desc</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>删除数据表</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 删除数据表</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 当数据表存在时删除数据表</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> if <span class="keyword">exists</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>修改数据表</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 修改表名</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> rename <span class="keyword">to</span> <span class="operator">&lt;</span>newTableName<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 数据表也是有字符集的，默认字符集与数据库一致</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="type">character</span> <span class="keyword">set</span> <span class="operator">&lt;</span>utf8<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 添加字段</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">add</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="type">varchar</span>(<span class="number">200</span>);</span><br><span class="line"></span><br><span class="line">## 修改字段的列表和类型</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> change <span class="operator">&lt;</span>oldColumnName<span class="operator">&gt;</span> <span class="operator">&lt;</span>newColumnName<span class="operator">&gt;</span> <span class="operator">&lt;</span>type<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 只修改字段类型</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> modify <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="operator">&lt;</span>newType<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 删除字段</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">drop</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h4 id="MySQL-数据类型"><a href="#MySQL-数据类型" class="headerlink" title="MySQL 数据类型"></a>MySQL 数据类型</h4><ul>
-<li><p>数值类型</p>
-<blockquote>
-<p>tinyint smallint mediumint int&#x2F;integer bigint float double decimal</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> books(</span><br><span class="line">  stock tinyint  </span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
-</blockquote>
-</li>
-<li><p>字符类型</p>
-</li>
-<li><p>日期类型</p>
-<blockquote>
-<p>在MySQL数据库中，我们可以使用字符串来存储时间，但是如果我们需要基于时间字段进行查询操作(查询在某个时间段内的数据)就不变于查询实现</p>
-</blockquote>
-</li>
-</ul>
-<h4 id="字段约束"><a href="#字段约束" class="headerlink" title="字段约束"></a>字段约束</h4><blockquote>
-<p>在创建数据表的时候，指定的对数据表的列的数据限制性的要求(对表的列中的数据进行限制)</p>
-</blockquote>
-<ul>
-<li><p>保证数据有效性</p>
-</li>
-<li><p>保证数据完整性</p>
-</li>
-<li><p>保证数据正确性</p>
-</li>
-</ul>
-<h5 id="字段常见的约束"><a href="#字段常见的约束" class="headerlink" title="字段常见的约束"></a>字段常见的约束</h5><ul>
-<li><p>非空约束</p>
-<blockquote>
-<p>限制此列的值必须提供，不能null</p>
-</blockquote>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> books(</span><br><span class="line">    a <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span> # 添加<span class="keyword">not</span> <span class="keyword">null</span>字段</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>唯一约束</p>
-<blockquote>
-<p>在表中的多条数据，此列的值不能重复</p>
-</blockquote>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> books(</span><br><span class="line">    a <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">unique</span> # 添加<span class="keyword">unique</span>字段</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>主键约束</p>
-<blockquote>
-<p>非空+唯一，能够唯一标识数据表中的一条数据</p>
-<p>主键 ——数据表中记录的唯一标识，在一张表中只能有一个主键(主键可以是一列，也可以是多个列的集合)</p>
-<p>当一个字段声明为主键之后，添加数据时</p>
-<ul>
-<li><p>此字段数据不能为空</p>
-</li>
-<li><p>此字段数据不能重复</p>
-</li>
-</ul>
-</blockquote>
-<ul>
-<li><p>创建表时添加主键约束</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> books(</span><br><span class="line">    a <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">primary</span> key # 添加<span class="keyword">primary</span> key字段</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
-
-<p>或</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> books(</span><br><span class="line">    a <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    b <span class="type">int</span>,</span><br><span class="line">    <span class="keyword">primary</span> key(a) # 最后定义</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>删除数据表主键约束</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">drop</span> <span class="keyword">primary</span> key;</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>创建表之后添加主键约束</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> modify <span class="operator">&lt;</span>cloumnName<span class="operator">&gt;</span> <span class="operator">&lt;</span>type<span class="operator">&gt;</span> <span class="keyword">primary</span> key</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>主键自增长</p>
-<blockquote>
-<p>在我们创建一张数据表时，如果数据表中有列可以作为主键(例如: 学生表的学号)我们可以直接使这个列为主键；当有些数据表中没有合适的列作为主键时，我们可以额外定义一个与记录本身无关的列(ID)作为主键，此列无具体含义主要用于表示一条记录，在MySQL中我们可以将此列定义为int，同时设置自动增长，当我们向数据表中新增一条记录时，无需提供ID列的值，它会自动生成</p>
-</blockquote>
-<ul>
-<li><p>定义主键自动增长</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> types(</span><br><span class="line">    # 关键词添加 auto_increment,一定要在主键中，字段名自定义</span><br><span class="line">    <span class="operator">&lt;</span>type_id<span class="operator">&gt;</span> <span class="type">int</span> <span class="keyword">primary</span> key auto_increment,</span><br><span class="line">    type_name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    type_remark <span class="type">varchar</span>(<span class="number">100</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
-
-<p>注意：自动增长从1开始，每添加一条记录，自动的增长的列会自+1，当我们把某条记录删除之后再添加数据，自动增长的数据也不会重复生成(自动增长只保证唯一性，不保证连续性)</p>
-</li>
-</ul>
-</li>
-<li><p>联合主键</p>
-<blockquote>
-<p>将数据表中的多列组合在一起设置为表的主键</p>
-</blockquote>
-<ul>
-<li><p>定义联合主键</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> grades(</span><br><span class="line">    stu_num <span class="type">char</span>(<span class="number">8</span>),</span><br><span class="line">    course_id <span class="type">int</span>,</span><br><span class="line">    score <span class="type">int</span>,</span><br><span class="line">    <span class="keyword">primary</span> key(stu_num, course_id) # 添加联合主键</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
-
-<p>注意：在实际企业项目的数据库设计中，联合主键使用的频率并不高；当一个数据表中没有明确的字段可以作为主键时，我们可以额外添加一个ID字段作为主键</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>外键约束：建立不同表之间的关联关系</p>
-</li>
-</ul>
-<h4 id="DML"><a href="#DML" class="headerlink" title="DML"></a>DML</h4><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> (</span><br><span class="line"> T_num <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">primary</span> key,</span><br><span class="line"> T_name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line"> T_gender <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line"> T_age <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line"> T_tel <span class="type">char</span>(<span class="number">11</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">unique</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
-
-<h5 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h5><ul>
-<li><p>语法</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>(columnName, columnName ...) <span class="keyword">value</span> (value1, value2 ...);</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h5 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h5><h5 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h5><p>·</p>
-]]></content>
-      <tags>
-        <tag>MySQL Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据库</title>
-    <url>/2023/04/12/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<ol>
-<li><p>MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？</p>
-<blockquote>
-</blockquote>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>面试</tag>
-      </tags>
   </entry>
   <entry>
     <title>poetry使用</title>
@@ -1098,267 +890,6 @@
 ]]></content>
       <tags>
         <tag>poetry</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>操作系统</title>
-    <url>/2023/04/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
-    <content><![CDATA[<ol>
-<li><p>进程和线程之间有什么区别？</p>
-<blockquote>
-<p>进程是运行中的程序，线程是进程的内部的一个执行序列<br>进程是资源分配单元，线程是执行单元<br>进程间切换代价大，线程间切换代价小<br>进程拥有资源多，线程拥有资源少<br>多个线程共享进程资源</p>
-<p>进程为啥切换代价比线程要大？</p>
-<blockquote>
-<p>物理地址就是真实的地址，这种寻址方式很容易破坏操作系统，而且使得操作系统中同时运行两个或以上的程序几乎是不可能的（第一个程序给物理内存地址赋值 10，第二个程序也同样给这个地址赋值为 100，那么第二个程序的赋值会覆盖掉第一个程序所赋的值，这会造成两个程序同时崩溃）。</p>
-<p>当然，也不是完全不可能，有一种方式可以实现比较粗糙的并发。就是说，我们将空闲的进程存储在磁盘上，这样当它们不运行时就不会占用内存，当进程需要运行的时候再从磁盘上转到内存上来，不过很显然这种方式比较浪费时间。</p>
-<p>于是，我们考虑，把所有进程对应的内存一直留在物理内存中，给每个进程分别划分各自的区域，这样，发生上下文切换的时候就切换到特定的区域<br>那问题还是很明显的，就是仍然没法避免破坏操作系统，因为各个进程之间可以随意读取、写入内容。</p>
-<p>所以，我们需要一种机制对每个进程使用的地址进行保护，因此操作系统创造了一个新的内存模型，那就是虚拟地址空间, 就是说，每个进程都拥有一个自己的虚拟地址空间，并且独立于其他进程的地址空间，然后每个进程包含的栈、堆、代码段这些都会从这个地址空间中被分配一个地址，这个地址就被称为虚拟地址。底层指令写入的地址也是虚拟地址。</p>
-<p>有了虚拟地址空间后，CPU 就可以通过虚拟地址转换成物理地址这样一个过程，来间接访问物理内存了。</p>
-<p>地址转换需要两个东西，一个是 CPU 上的内存管理单元 MMU，另一个是内存中的页表，页表中存的虚拟地址到物理地址的映射。</p>
-<p>但是呢，每次访问内存，都需要进行虚拟地址到物理地址的转换，对吧，这样的话，页表就会被频繁地访问，而页表又是存在于内存中的。所以说，访问页表（内存）次数太多导致其成为了操作系统地一个性能瓶颈。</p>
-<p>于是，引入了转换检测缓冲区 TLB，也就是快表，其实就是一个缓存，把经常访问到的内存地址映射存在 TLB 中，因为 TLB 是在 CPU 的 MMU 中的嘛，所以访问起来非常快。</p>
-<p>然后，正是因为 TLB 这个东西，导致了进程切换比线程切换慢。</p>
-<p>由于进程切换会涉及到虚拟地址空间的切换，这就导致内存中的页表也需要进行切换，一个进程对应一个页表是不假，但是 CPU 中的 TLB 只有一个，页表切换后这个 TLB 就失效了。这样，TLB 在一段时间内肯定是无法被命中的，操作系统就必须去访问内存，那么虚拟地址转换为物理地址就会变慢，表现出来的就是程序运行会变慢。</p>
-<p>而线程切换呢，由于不涉及虚拟地址空间的切换，所以也就不存在这个问题了。</p>
-</blockquote>
-</blockquote>
-</li>
-<li><p>进程间有哪些通信方式？</p>
-<ol>
-<li><p>管道:</p>
-<blockquote>
-<p>管道是一种半双工的通信方式，数据只能单向流动，而且只能在具有关联的进程间使用，进程的关系通常是指父子进程关系。</p>
-</blockquote>
-</li>
-<li><p>消息队列通信:</p>
-<blockquote>
-<p>消息队列是由消息的链表存放在内核中并由消息队列标识符标识。消息队列克服了信号传递信息少，管道只能承载无格式字节流以及缓冲区大小受限等缺点。</p>
-</blockquote>
-</li>
-<li><p>信号量:</p>
-<blockquote>
-<p>信号量是一个计数器，可以用来控制多个进程对共享资源的访问。它常作为一种锁机制，防止某进程正在访问共享资源时，其他进程也访问该资源。因此，主要作为进程间以及同一进程内不同线程之间的同步手段。</p>
-</blockquote>
-</li>
-<li><p>信号:</p>
-<blockquote>
-<p>信号是一种比较复杂的通信方式，用于通知接收进程某个事件以及发生。</p>
-</blockquote>
-</li>
-<li><p>共享内存通信:</p>
-<blockquote>
-<p>共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个远程创建，但多个进程都可以访问。共享内存是最快的IPC方式，它是针对其他进程间简单通信方式运行效率低而专门设计的。它往往与其他通信机制，如信号量，配合使用，来实现进程间的同步和通信。</p>
-</blockquote>
-</li>
-<li><p>socket:</p>
-<blockquote>
-<p>套接字机制与其他机制不同的是，它可用于不同机器间的进程通信。</p>
-</blockquote>
-</li>
-</ol>
-</li>
-<li><p>简述 socket 中 select 与 epoll 的使用场景以及区别?</p>
-<blockquote>
-<p>两个网络模型本质上都是IO多路复用的</p>
-<p>select 需要不断的去轮询数据，时间复杂度为O(n)，性能比较低，并且它的文件描述符也是有限制的。像常见的服务器软件 apache 用的就是这种网络类型。</p>
-<p>而 epoll 则不一样，他不会去轮询，而是会注册一个监听事件，每当数据有变化的时候，就会通知，像 nginx 底层的网络模型就是用的 epoll ，这个也是为啥nginx 能处理高并发的主要原因。</p>
-<p>表面上看 epoll 的性能最好，但是在连接数少并且连接都十分活跃的情况下，select 和 poll 的性能可能比 epoll 好，毕竟 epoll 的通知机制需要很多函数回调。</p>
-<p>select 低效是因为每次它都需要轮询，但低效也是相对的，是情况而定，也可以通过良好的设计改善。</p>
-</blockquote>
-</li>
-<li><p>epoll 中水平触发以及边缘触发有什么不同?</p>
-<ul>
-<li><p>Level_triggered(水平触发):</p>
-<blockquote>
-<p>当被监控的文件描述符上有可读写事件发生时，epoll_wait() 会通知处理程序去读写，如果这次没有把数据一次性全部读写完(如读写缓冲区太小)，那么下次调用 epoll_wait() 时，它还会通知你在没读写完的文件描述符上继续读写，当然如果你一直不去读写，它会一直通知你！！！如果系统中有大量的你不需要读写的就绪文件描述符，而他们每次都会返回，这样会大大降低处理程序检索自己关心的就绪文件描述符的效率！！！</p>
-</blockquote>
-</li>
-<li><p>Edge_triggered(边缘触发):</p>
-<blockquote>
-<p>当被监控的文件描述符上有可读写事件发生时，epoll_wait() 会通知程序去读写。如果这次没有把数据全部读写完(如读写缓冲区太小)，那么下次调用 epoll_wait() 时，它不会通知你，也就是它只会通知一次，知道该文件描述符上出现第二次可读写事件才会通知你！！！这种模式比水平触发效率高，系统不会充斥大量你不关心的就绪文件描述符！！！</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>Linux 进程调度中有哪些常见算法以及策略?</p>
-<blockquote>
-<ol>
-<li><p>先来先服务和短作业(进程)优先调度算法</p>
-</li>
-<li><p>高优先权优先调度算法</p>
-<ul>
-<li><p>非抢占式优先权算法</p>
-</li>
-<li><p>抢占式优先权调度算法</p>
-</li>
-</ul>
-</li>
-</ol>
-</blockquote>
-</li>
-</ol>
-<blockquote>
-<p>进程的状态有哪几种?</p>
-<ol>
-<li><p>运行态:</p>
-<blockquote>
-<p>该状态表明进程在实际占用CPU。</p>
-</blockquote>
-</li>
-<li><p>就绪态:</p>
-<blockquote>
-<p>该状态下进程可以运行，但因为其他进程正在运行而暂时停止。</p>
-</blockquote>
-</li>
-<li><p>阻塞态:</p>
-<blockquote>
-<p>该状态下进程不能运行，除非某种外部事件的发送。</p>
-</blockquote>
-</li>
-</ol>
-<p>运行态 –&gt; 等待态</p>
-<blockquote>
-<p>往往是由于等待外设，等待主存等资源分配或等待人工干预而引起的</p>
-</blockquote>
-<p>等待态 –&gt; 就绪态</p>
-<blockquote>
-<p>则是等待的条件已满足，只需分配到处理器后就能运行</p>
-</blockquote>
-<p>运行态 –&gt; 就绪态</p>
-<blockquote>
-<p>不是由于自身原因，而是由外界原因使运行状态的进程让出处理器，这时候就变成就绪态。例如时间片用完，或有更高优先级的进程来抢占处理器等</p>
-</blockquote>
-<p>就绪态 –&gt; 运行态</p>
-<blockquote>
-<p>系统按某种策略选中就绪队列中的一个进程占用处理器，此时就变成了运行态</p>
-</blockquote>
-</blockquote>
-<ol start="6">
-<li><p>操作系统如何申请以及管理内存的?</p>
-<blockquote>
-<p>虚拟内存是现代操作系统普遍使用的一项技术，很多情况下，现有内存无法满足仅仅一个大进程的内存要求(比如很多游戏都是10G+的级别)。在早期的操作系统曾使用覆盖(overlays)来解决这个问题，将一个程序分为多个块，基本思想是先将块0加入内存，块0执行完成后，将块1加入内存。以此往复，这个解决方案最大的问题是需要程序员去程序进行分块，这是一个费时费力的过程。后来这个解决方案的修正版就是虚拟内存。</p>
-<p>虚拟内存的基本思想是，每个进程有独立的逻辑地址空间，内存被分为大小相等的多个快，称为页。每个页都是一段连续的地址。对于进程来看，逻辑上貌似有很多内存空间，其中一部分对应物理内存的一块(称为页框，通常页和页框大小相等)，还有一些没加载在内存中的对应在硬盘上。</p>
-</blockquote>
-</li>
-<li><p>简述 Linux 系统态与用户态，什么时候会进入系统态？</p>
-<blockquote>
-<ol>
-<li><p>系统调用</p>
-</li>
-<li><p>发生异常，当 cpu 正在执行运行在用户的程序的时候，突然发生某些预先不可知的异常事件，这个时候就会触发从当前用户态执行的进程转向内核执行相关的异常事件，典型的如缺页异常。</p>
-</li>
-<li><p>外围设备的中断，当外围设备完成用户的请求操作后，会像CPU发出中断信号，此时，CPU 就会暂停执行下一条即将要执行的指令，转而去执行中断信号对应的处理程序，如果先前执行的指令是在用户态下，则自然就发生从用户态到内核态的转换。</p>
-</li>
-</ol>
-</blockquote>
-</li>
-<li><p>简述 LRU 算法及其实现方式</p>
-<blockquote>
-<p>Least Recently Used，最近最久未使用法，它是按照一个非常著名的计算机操作系统基础理论得来的：最近使用的页面数据会在未来一段时期内仍然被使用，已经很久没有使用的页面很有可能在未来较长的一段时间内仍然不会被使用。基于这个思想，会存在一种缓存淘汰机制，每次从内存中找到最久未使用的数据然后置换出来，从而存入新的数据！它的主要衡量指标是使用的时间，附加指标是使用的次数。在计算机中大量使用了这个机制，它的合理性在于优先筛选热点数据，所谓热点数据，就是最近最多使用的数据！因为，利用 LRU 我们可以解决很多实际开发中的问题，并且很符合业务。利用双向链表实现</p>
-</blockquote>
-</li>
-<li><p>线程间有哪些通信方式</p>
-<blockquote>
-<p>共享变量，共享内存，共享数据库，消息队列</p>
-</blockquote>
-</li>
-<li><p>简述同步与异步的区别，阻塞与非阻塞的区别</p>
-<blockquote>
-<ol>
-<li><p>同步和异步</p>
-<blockquote>
-<p>同步和异步通常用来描述消息传递或通信的方式。</p>
-<p>在同步通信中，发送方会等待接收方的响应，然后才继续发送下一条消息。相反，在异步通信中，发送方不会等待接收方的响应，而是继续发送下一条消息。</p>
-</blockquote>
-</li>
-<li><p>阻塞与非阻塞</p>
-<blockquote>
-<p>阻塞与非阻塞通常用来描述系统调用的行为。系统调用是应用程序请求操作系统内核提供服务的一种机制，例如读写文件，创建进程等。</p>
-<p>当一个应用程序发起一个阻塞的系统调用时，他会一直等待，直到该调用完成。相反，当一个应用程序发起一个非阻塞的系统调用时，如果该调用不能立即完成，他会立即返回。</p>
-</blockquote>
-</li>
-</ol>
-<p>总结</p>
-<blockquote>
-<p>同步：</p>
-<blockquote>
-<p>执行一个操作之后，等待结果，然后才继续执行后续的操作</p>
-</blockquote>
-<p>异步：</p>
-<blockquote>
-<p>执行一个操作之后，可以去执行其他的操作，然后等待通知再回来执行完的操作</p>
-</blockquote>
-<p>阻塞：</p>
-<blockquote>
-<p>进程给CPU传达一个任务之后，一直等待CPU处理完成，然后才执行后面的操作</p>
-</blockquote>
-<p>非阻塞：</p>
-<blockquote>
-<p>进程给CPU传达任务后，继续处理后续的操作，隔段时间再来询问之前的操作是否完成，这样的过程也叫轮询</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</li>
-<li><p>简述操作系统中的缺页中断</p>
-<blockquote>
-<p>虚拟内存实际上可以比物理内存大，当访问虚拟内存时，会访问MMU(内存管理单元)去匹配对应的物理地址，而如果虚拟内存的页并不存在于物理内存中，会产生缺页中断，从磁盘中取得缺的页放入内存中，如果内存已满，还会根据页的置换算法将磁盘中的页换出。</p>
-</blockquote>
-</li>
-<li><p>简述操作系统中 malloc 的实现原理</p>
-<blockquote>
-<p>malloc 基本的实现原理就是维护一个内存空闲链表，当申请内存空间时，搜索内存空闲链表，找到适配的空闲内存空间，然后将空间分割成两个内存块，一个变成分配块，一个变成新的空闲块。如果没有搜索到，那么就会用sbrk()推进brk指针来申请内存空间。</p>
-<p>搜索空闲块最常见的算法有：首次适配，下一次适配，最佳适配。</p>
-<p>首次适配：</p>
-<blockquote>
-<p>第一次找到足够大的内存块就分配，这种方法会产生很多内存碎片</p>
-</blockquote>
-<p>下一次适配：</p>
-<blockquote>
-<p>等第二次找到足够大的内存块就分配，这样会产生比较少的内存碎片</p>
-</blockquote>
-<p>最佳适配：</p>
-<blockquote>
-<p>对堆进行彻底的搜索，重投开始，遍历所有块，使用数据区大小大于size且差值最小的块作为此次分配的块</p>
-</blockquote>
-</blockquote>
-</li>
-<li><p>简述 Linux 的 IO模型</p>
-<blockquote>
-<p>在linux操作系统中，共有五种IO模型</p>
-<ul>
-<li><p>阻塞IO</p>
-<blockquote>
-<p>应用程序在进行系统调用时会被阻塞，直到数据准备好并复制到用户空间后才返回</p>
-</blockquote>
-</li>
-<li><p>非阻塞IO</p>
-<blockquote>
-<p>应用程序在进行系统调用时不会被阻塞，而是立即返回一个状态值。应用程序需要不断轮询内核以检查数据是否准备好</p>
-</blockquote>
-</li>
-<li><p>多路复用IO</p>
-<blockquote>
-<p>应用程序可以同时监视多个文件描述符，当某个文件描述符就绪时，对其进行处理</p>
-</blockquote>
-</li>
-<li><p>信号驱动IO</p>
-<blockquote>
-<p>应用程序向内核注册一个信号处理函数，当数据报准备好时，内核会向应用程序发送一个信号，应用程序对信号进行捕捉，并调用信号处理函数来获取数据报</p>
-</blockquote>
-</li>
-<li><p>异步IO</p>
-<blockquote>
-<p>应用程序发起系统调用后立即返回，当内核将数据准备好并复制完成后会给应用程序发送通知</p>
-</blockquote>
-</li>
-</ul>
-<p>这些模型区别在于应用程序和内核之间的交互方式以及数据准备和拷贝的过程</p>
-</blockquote>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
@@ -1845,6 +1376,584 @@
 ]]></content>
       <tags>
         <tag>Linux Study</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL</title>
+    <url>/2023/04/12/MySQL/</url>
+    <content><![CDATA[<h3 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h3><hr>
+<blockquote>
+<p>结构化查询语言，用于存取，查询，更新数据以及管理关系型数据库系统</p>
+</blockquote>
+<ul>
+<li><p>在不同的数据库产品中遵循SQL的通用规范，但是也对SQL有一些不同的改进，形成了一些数据库的专有指令</p>
+<ul>
+<li><p>MySQL: limit</p>
+</li>
+<li><p>SQLServer: top</p>
+</li>
+<li><p>Oracle: rownum</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="SQL分类"><a href="#SQL分类" class="headerlink" title="SQL分类"></a>SQL分类</h4><blockquote>
+<p>根据SQL指令完成的数据库操作的不同，可以将SQL指令分类</p>
+</blockquote>
+<ul>
+<li><p>DDL Data Definition Language 数据定义语言</p>
+<ul>
+<li>用于完成对数据库对象(数据库，数据表，视图，索引等)的创建，删除，修改</li>
+</ul>
+</li>
+<li><p>DML Data Manipulation Language 数据操作语言</p>
+<ul>
+<li>用于完成对数据表中的数据的添加，删除，修改操作</li>
+</ul>
+</li>
+<li><p>DQL Data Query Language 数据查询语言</p>
+<ul>
+<li>用于将数据表中的数据查询出来</li>
+</ul>
+</li>
+<li><p>DCL Data Control Language 数据控制语言</p>
+<ul>
+<li>用于完成事务管理等控制性操作</li>
+</ul>
+</li>
+</ul>
+<h4 id="SQL基本语法"><a href="#SQL基本语法" class="headerlink" title="SQL基本语法"></a>SQL基本语法</h4><blockquote>
+<p>在MySQL Command Line Client 或者 navicat 等工具中都能编写SQL指令</p>
+</blockquote>
+<ul>
+<li><p>SQL 指令不区分大小写</p>
+</li>
+<li><p>每条SQL表达式结束之久都以<code>;</code>结束</p>
+</li>
+<li><p>SQL 关键字之间以空格进行分割</p>
+</li>
+<li><p>SQL 之间可以不限制换行(可以有空格的地方就可以换行)</p>
+</li>
+</ul>
+<h4 id="DDL"><a href="#DDL" class="headerlink" title="DDL"></a>DDL</h4><h5 id="DDL-数据库操作"><a href="#DDL-数据库操作" class="headerlink" title="DDL-数据库操作"></a>DDL-数据库操作</h5><blockquote>
+<p>使用DDL语句可以创建，查询，修改，删除数据库</p>
+</blockquote>
+<h6 id="查询数据库"><a href="#查询数据库" class="headerlink" title="查询数据库"></a>查询数据库</h6><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 显示当前数据库列表</span><br><span class="line"><span class="keyword">show</span> databases;</span><br><span class="line"></span><br><span class="line">## 显示此数据库创建<span class="keyword">SQL</span>指令</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> database <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<h6 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h6><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 创建数据库 dbName表示创建的数据库名称</span><br><span class="line"><span class="keyword">create</span> database <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 创建数据库，防止数据库存在报错,当不存在时创建</span><br><span class="line"><span class="keyword">create</span> database if <span class="keyword">not</span> <span class="keyword">exists</span> <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 在创建数据库的同时指定数据库的字符集(编码格式,utf8可选)</span><br><span class="line"><span class="keyword">create</span> database <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span> <span class="type">character</span> <span class="keyword">set</span> <span class="operator">&lt;</span>utf8<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<h6 id="修改数据库"><a href="#修改数据库" class="headerlink" title="修改数据库"></a>修改数据库</h6><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 修改数据库的字符集</span><br><span class="line"><span class="keyword">alter</span> database <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span> <span class="type">character</span> <span class="keyword">set</span> <span class="operator">&lt;</span>utf8<span class="operator">&gt;</span>; # utf8 gbk</span><br></pre></td></tr></table></figure></div>
+
+<h6 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h6><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 删除数据库,防止数据库不存在报错</span><br><span class="line"><span class="keyword">drop</span> database if <span class="keyword">exists</span> <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<h6 id="使用-x2F-切换数据库"><a href="#使用-x2F-切换数据库" class="headerlink" title="使用&#x2F;切换数据库"></a>使用&#x2F;切换数据库</h6><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">use <span class="operator">&lt;</span>dbName<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>创建数据表</p>
+<blockquote>
+<p>数据表实际上就是一个二位的表格，是由多列组成，表格的每一列时表格的一个字段</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="operator">&lt;</span>dbTableName<span class="operator">&gt;</span>(</span><br><span class="line">    <span class="operator">&lt;</span>TableName<span class="operator">&gt;</span> <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">unique</span>, # 格式，下为例子</span><br><span class="line">    T_name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    T_gender <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    T_age <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    T_tel <span class="type">char</span>(<span class="number">11</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">unique</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>查询数据表列</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> tables; </span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>查询表结构</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">desc</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>删除数据表</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 删除数据表</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 当数据表存在时删除数据表</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> if <span class="keyword">exists</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>修改数据表</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 修改表名</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> rename <span class="keyword">to</span> <span class="operator">&lt;</span>newTableName<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 数据表也是有字符集的，默认字符集与数据库一致</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="type">character</span> <span class="keyword">set</span> <span class="operator">&lt;</span>utf8<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 添加字段</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">add</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="type">varchar</span>(<span class="number">200</span>);</span><br><span class="line"></span><br><span class="line">## 修改字段的列表和类型</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> change <span class="operator">&lt;</span>oldColumnName<span class="operator">&gt;</span> <span class="operator">&lt;</span>newColumnName<span class="operator">&gt;</span> <span class="operator">&lt;</span>type<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 只修改字段类型</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> modify <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="operator">&lt;</span>newType<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 删除字段</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">drop</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="MySQL-数据类型"><a href="#MySQL-数据类型" class="headerlink" title="MySQL 数据类型"></a>MySQL 数据类型</h4><ul>
+<li><p>数值类型</p>
+<blockquote>
+<p>tinyint smallint mediumint int&#x2F;integer bigint float double decimal</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> books(</span><br><span class="line">  stock tinyint  </span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+</blockquote>
+</li>
+<li><p>字符类型</p>
+</li>
+<li><p>日期类型</p>
+<blockquote>
+<p>在MySQL数据库中，我们可以使用字符串来存储时间，但是如果我们需要基于时间字段进行查询操作(查询在某个时间段内的数据)就不变于查询实现</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="字段约束"><a href="#字段约束" class="headerlink" title="字段约束"></a>字段约束</h4><blockquote>
+<p>在创建数据表的时候，指定的对数据表的列的数据限制性的要求(对表的列中的数据进行限制)</p>
+</blockquote>
+<ul>
+<li><p>保证数据有效性</p>
+</li>
+<li><p>保证数据完整性</p>
+</li>
+<li><p>保证数据正确性</p>
+</li>
+</ul>
+<h5 id="字段常见的约束"><a href="#字段常见的约束" class="headerlink" title="字段常见的约束"></a>字段常见的约束</h5><ul>
+<li><p>非空约束</p>
+<blockquote>
+<p>限制此列的值必须提供，不能null</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> books(</span><br><span class="line">    a <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span> # 添加<span class="keyword">not</span> <span class="keyword">null</span>字段</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>唯一约束</p>
+<blockquote>
+<p>在表中的多条数据，此列的值不能重复</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> books(</span><br><span class="line">    a <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">unique</span> # 添加<span class="keyword">unique</span>字段</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>主键约束</p>
+<blockquote>
+<p>非空+唯一，能够唯一标识数据表中的一条数据</p>
+<p>主键 ——数据表中记录的唯一标识，在一张表中只能有一个主键(主键可以是一列，也可以是多个列的集合)</p>
+<p>当一个字段声明为主键之后，添加数据时</p>
+<ul>
+<li><p>此字段数据不能为空</p>
+</li>
+<li><p>此字段数据不能重复</p>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>创建表时添加主键约束</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> books(</span><br><span class="line">    a <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">primary</span> key # 添加<span class="keyword">primary</span> key字段</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+
+<p>或</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> books(</span><br><span class="line">    a <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    b <span class="type">int</span>,</span><br><span class="line">    <span class="keyword">primary</span> key(a) # 最后定义</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>删除数据表主键约束</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">drop</span> <span class="keyword">primary</span> key;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>创建表之后添加主键约束</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> modify <span class="operator">&lt;</span>cloumnName<span class="operator">&gt;</span> <span class="operator">&lt;</span>type<span class="operator">&gt;</span> <span class="keyword">primary</span> key</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>主键自增长</p>
+<blockquote>
+<p>在我们创建一张数据表时，如果数据表中有列可以作为主键(例如: 学生表的学号)我们可以直接使这个列为主键；当有些数据表中没有合适的列作为主键时，我们可以额外定义一个与记录本身无关的列(ID)作为主键，此列无具体含义主要用于表示一条记录，在MySQL中我们可以将此列定义为int，同时设置自动增长，当我们向数据表中新增一条记录时，无需提供ID列的值，它会自动生成</p>
+</blockquote>
+<ul>
+<li><p>定义主键自动增长</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> types(</span><br><span class="line">    # 关键词添加 auto_increment,一定要在主键中，字段名自定义</span><br><span class="line">    <span class="operator">&lt;</span>type_id<span class="operator">&gt;</span> <span class="type">int</span> <span class="keyword">primary</span> key auto_increment,</span><br><span class="line">    type_name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    type_remark <span class="type">varchar</span>(<span class="number">100</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+
+<p>注意：自动增长从1开始，每添加一条记录，自动的增长的列会自+1，当我们把某条记录删除之后再添加数据，自动增长的数据也不会重复生成(自动增长只保证唯一性，不保证连续性)</p>
+</li>
+</ul>
+</li>
+<li><p>联合主键</p>
+<blockquote>
+<p>将数据表中的多列组合在一起设置为表的主键</p>
+</blockquote>
+<ul>
+<li><p>定义联合主键</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> grades(</span><br><span class="line">    stu_num <span class="type">char</span>(<span class="number">8</span>),</span><br><span class="line">    course_id <span class="type">int</span>,</span><br><span class="line">    score <span class="type">int</span>,</span><br><span class="line">    <span class="keyword">primary</span> key(stu_num, course_id) # 添加联合主键</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+
+<p>注意：在实际企业项目的数据库设计中，联合主键使用的频率并不高；当一个数据表中没有明确的字段可以作为主键时，我们可以额外添加一个ID字段作为主键</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>外键约束：建立不同表之间的关联关系</p>
+</li>
+</ul>
+<h4 id="DML"><a href="#DML" class="headerlink" title="DML"></a>DML</h4><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> T(</span><br><span class="line"> T_num <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">primary</span> key,</span><br><span class="line"> T_name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line"> T_gender <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line"> T_age <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line"> T_tel <span class="type">char</span>(<span class="number">11</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">unique</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+
+<h5 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h5><ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 像数据表中指定的列添加数据(不允许为空的列必须提供数据)</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>(columnName, columnName ...) </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">value</span> (value1, value2 ...);</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 数据表名后的字段名列表顺序可以不与表中一致</span><br><span class="line">## 但是<span class="keyword">value</span>中值的顺序必须与表名后的字段名顺序对应</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> T(T_num, T_name, T_gender, T_age, T_tel) </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">values</span>(<span class="string">&#x27;12&#x27;</span>, <span class="string">&#x27;1234&#x27;</span>, <span class="string">&#x27;12&#x27;</span>, <span class="number">8</span>, <span class="string">&#x27;123&#x27;</span>);</span><br><span class="line"></span><br><span class="line">## 当要向表中的所有列添加数据时，数据表名后面的字段列表可以省略，</span><br><span class="line">## 但是<span class="keyword">value</span>中的值的顺序要与数据表定义的字段顺序保持一致</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> T <span class="keyword">values</span>(<span class="string">&#x27;12&#x27;</span>, <span class="string">&#x27;1234&#x27;</span>, <span class="string">&#x27;12&#x27;</span>, <span class="number">8</span>, <span class="string">&#x27;123&#x27;</span>);</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h5 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h5><blockquote>
+<p>从数据表中删除满足特定条件(所有)的数据</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> [<span class="keyword">where</span> conditions];</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h5 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h5><blockquote>
+<p>对数据表中以及添加的记录进行修改</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">update</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">set</span> columnName<span class="operator">=</span><span class="keyword">value</span>, columnName1<span class="operator">=</span>value2...</span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> [<span class="keyword">where</span> conditions]</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="DQL"><a href="#DQL" class="headerlink" title="DQL"></a>DQL</h4><blockquote>
+<p>从数据表中提取满足特定条件的记录</p>
+<ul>
+<li><p>单表查询</p>
+</li>
+<li><p>多表联合查询</p>
+</li>
+</ul>
+</blockquote>
+<h5 id="查询基础"><a href="#查询基础" class="headerlink" title="查询基础"></a>查询基础</h5><ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## <span class="keyword">select</span> 关键字后指定要显示查询到的记录的那些列</span><br><span class="line"><span class="keyword">select</span> columnName1[,columnName2,...] <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line">## 查询所有列</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span>; # 不建议使用</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h5 id="where-子句"><a href="#where-子句" class="headerlink" title="where 子句"></a>where 子句</h5><blockquote>
+<p>在删除，修改及查询的语句后都可以添加where子句(条件)，用于筛选满足条件的数据进行操作</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> conditions</span><br><span class="line"></span><br><span class="line"><span class="keyword">update</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">set</span> ... <span class="keyword">where</span> conditions</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> ... <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> conditions</span><br></pre></td></tr></table></figure></div>
+
+<h5 id="多条件查询"><a href="#多条件查询" class="headerlink" title="多条件查询"></a>多条件查询</h5><blockquote>
+<p>在 where 子句中，可以将多个条件通过逻辑预算符进行连接，通过多个条件来筛选要操作的数据</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## <span class="keyword">and</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;=</span><span class="keyword">value</span> <span class="keyword">and</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;=</span><span class="keyword">value</span></span><br><span class="line"></span><br><span class="line">## <span class="keyword">or</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;=</span><span class="keyword">value</span> <span class="keyword">or</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;=</span><span class="keyword">value</span></span><br><span class="line"></span><br><span class="line">## <span class="keyword">not</span> <span class="keyword">between</span> ... <span class="keyword">and</span> ...</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">not</span> <span class="keyword">between</span> a <span class="keyword">and</span> b</span><br></pre></td></tr></table></figure></div>
+
+<h5 id="LIKE-子句"><a href="#LIKE-子句" class="headerlink" title="LIKE 子句"></a>LIKE 子句</h5><blockquote>
+<p>在 where 子句的条件中，我们可以使用like关键字来实现模糊查询</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">like</span> <span class="string">&#x27;reg&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>在like关键字后的reg表达式中，为正则表达式的使用</p>
+<ul>
+<li><p>% 表示任意多个字符【%o%包含字母o】</p>
+</li>
+<li><p>_表示任意一个字符 【_o% 第二个字母为o】</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="对查询结果的处理"><a href="#对查询结果的处理" class="headerlink" title="对查询结果的处理"></a>对查询结果的处理</h5><h6 id="设置查询的列"><a href="#设置查询的列" class="headerlink" title="设置查询的列"></a>设置查询的列</h6><blockquote>
+<p>声明显示查询结果的指定列</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> columnName1,columnName2... </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="operator">&gt;</span> <span class="number">20</span></span><br></pre></td></tr></table></figure></div>
+
+<h6 id="计算列"><a href="#计算列" class="headerlink" title="计算列"></a>计算列</h6><blockquote>
+<p>对从数据表中查询的记录的列进行运算之后显示出来</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> columnName1,x <span class="operator">-</span> columnName2... <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<h6 id="字段别名"><a href="#字段别名" class="headerlink" title="字段别名"></a>字段别名</h6><blockquote>
+<p>我们可以为查询结果的列名，去一个语义性更强的别名</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">as</span> <span class="operator">&lt;</span>xxx<span class="operator">&gt;</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<h6 id="消除重复行"><a href="#消除重复行" class="headerlink" title="消除重复行"></a>消除重复行</h6><blockquote>
+<p>从查询的结果中将重复的记录消除</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> # 关键字<span class="keyword">distinct</span></span><br></pre></td></tr></table></figure></div>
+
+<h6 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h6><blockquote>
+<p>将查询到的结果按照一定规则升序&#x2F;降序排列</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 单字段排序</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> <span class="keyword">where</span> conditions </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">order</span> <span class="keyword">by</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">asc</span><span class="operator">|</span><span class="keyword">desc</span> # 关键字段 <span class="keyword">order</span> <span class="keyword">by</span> ... <span class="keyword">asc</span><span class="operator">|</span><span class="keyword">desc</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>order by columnName 表示将查询结果按照指定的列排序(置于where条件后)</p>
+</li>
+<li><p>asc 升序(默认)</p>
+</li>
+<li><p>desc 降序</p>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 多字段排序，先满足第一个排序规则，后满足下一个</span><br><span class="line">... <span class="keyword">by</span> <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">asc</span>, <span class="operator">&lt;</span>columnName<span class="operator">&gt;</span> <span class="keyword">desc</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h5 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h5><blockquote>
+<p>SQL 中提供了一些可以对查询记录的列进行计算的函数</p>
+</blockquote>
+<ul>
+<li><p><code>count()</code> 统计函数，统计满足条件的指定字段值的个数(记录数)</p>
+</li>
+<li><p><code>max()</code> 获取最大值</p>
+</li>
+<li><p><code>min()</code> 获取最小值</p>
+</li>
+<li><p><code>sum()</code> 计算和，指定列的总和</p>
+</li>
+<li><p><code>avg()</code> 求平均值</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>MySQL Study</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统</title>
+    <url>/2023/04/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<ol>
+<li><p>进程和线程之间有什么区别？</p>
+<blockquote>
+<p>进程是运行中的程序，线程是进程的内部的一个执行序列<br>进程是资源分配单元，线程是执行单元<br>进程间切换代价大，线程间切换代价小<br>进程拥有资源多，线程拥有资源少<br>多个线程共享进程资源</p>
+<p>进程为啥切换代价比线程要大？</p>
+<blockquote>
+<p>物理地址就是真实的地址，这种寻址方式很容易破坏操作系统，而且使得操作系统中同时运行两个或以上的程序几乎是不可能的（第一个程序给物理内存地址赋值 10，第二个程序也同样给这个地址赋值为 100，那么第二个程序的赋值会覆盖掉第一个程序所赋的值，这会造成两个程序同时崩溃）。</p>
+<p>当然，也不是完全不可能，有一种方式可以实现比较粗糙的并发。就是说，我们将空闲的进程存储在磁盘上，这样当它们不运行时就不会占用内存，当进程需要运行的时候再从磁盘上转到内存上来，不过很显然这种方式比较浪费时间。</p>
+<p>于是，我们考虑，把所有进程对应的内存一直留在物理内存中，给每个进程分别划分各自的区域，这样，发生上下文切换的时候就切换到特定的区域<br>那问题还是很明显的，就是仍然没法避免破坏操作系统，因为各个进程之间可以随意读取、写入内容。</p>
+<p>所以，我们需要一种机制对每个进程使用的地址进行保护，因此操作系统创造了一个新的内存模型，那就是虚拟地址空间, 就是说，每个进程都拥有一个自己的虚拟地址空间，并且独立于其他进程的地址空间，然后每个进程包含的栈、堆、代码段这些都会从这个地址空间中被分配一个地址，这个地址就被称为虚拟地址。底层指令写入的地址也是虚拟地址。</p>
+<p>有了虚拟地址空间后，CPU 就可以通过虚拟地址转换成物理地址这样一个过程，来间接访问物理内存了。</p>
+<p>地址转换需要两个东西，一个是 CPU 上的内存管理单元 MMU，另一个是内存中的页表，页表中存的虚拟地址到物理地址的映射。</p>
+<p>但是呢，每次访问内存，都需要进行虚拟地址到物理地址的转换，对吧，这样的话，页表就会被频繁地访问，而页表又是存在于内存中的。所以说，访问页表（内存）次数太多导致其成为了操作系统地一个性能瓶颈。</p>
+<p>于是，引入了转换检测缓冲区 TLB，也就是快表，其实就是一个缓存，把经常访问到的内存地址映射存在 TLB 中，因为 TLB 是在 CPU 的 MMU 中的嘛，所以访问起来非常快。</p>
+<p>然后，正是因为 TLB 这个东西，导致了进程切换比线程切换慢。</p>
+<p>由于进程切换会涉及到虚拟地址空间的切换，这就导致内存中的页表也需要进行切换，一个进程对应一个页表是不假，但是 CPU 中的 TLB 只有一个，页表切换后这个 TLB 就失效了。这样，TLB 在一段时间内肯定是无法被命中的，操作系统就必须去访问内存，那么虚拟地址转换为物理地址就会变慢，表现出来的就是程序运行会变慢。</p>
+<p>而线程切换呢，由于不涉及虚拟地址空间的切换，所以也就不存在这个问题了。</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>进程间有哪些通信方式？</p>
+<ol>
+<li><p>管道:</p>
+<blockquote>
+<p>管道是一种半双工的通信方式，数据只能单向流动，而且只能在具有关联的进程间使用，进程的关系通常是指父子进程关系。</p>
+</blockquote>
+</li>
+<li><p>消息队列通信:</p>
+<blockquote>
+<p>消息队列是由消息的链表存放在内核中并由消息队列标识符标识。消息队列克服了信号传递信息少，管道只能承载无格式字节流以及缓冲区大小受限等缺点。</p>
+</blockquote>
+</li>
+<li><p>信号量:</p>
+<blockquote>
+<p>信号量是一个计数器，可以用来控制多个进程对共享资源的访问。它常作为一种锁机制，防止某进程正在访问共享资源时，其他进程也访问该资源。因此，主要作为进程间以及同一进程内不同线程之间的同步手段。</p>
+</blockquote>
+</li>
+<li><p>信号:</p>
+<blockquote>
+<p>信号是一种比较复杂的通信方式，用于通知接收进程某个事件以及发生。</p>
+</blockquote>
+</li>
+<li><p>共享内存通信:</p>
+<blockquote>
+<p>共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个远程创建，但多个进程都可以访问。共享内存是最快的IPC方式，它是针对其他进程间简单通信方式运行效率低而专门设计的。它往往与其他通信机制，如信号量，配合使用，来实现进程间的同步和通信。</p>
+</blockquote>
+</li>
+<li><p>socket:</p>
+<blockquote>
+<p>套接字机制与其他机制不同的是，它可用于不同机器间的进程通信。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p>简述 socket 中 select 与 epoll 的使用场景以及区别?</p>
+<blockquote>
+<p>两个网络模型本质上都是IO多路复用的</p>
+<p>select 需要不断的去轮询数据，时间复杂度为O(n)，性能比较低，并且它的文件描述符也是有限制的。像常见的服务器软件 apache 用的就是这种网络类型。</p>
+<p>而 epoll 则不一样，他不会去轮询，而是会注册一个监听事件，每当数据有变化的时候，就会通知，像 nginx 底层的网络模型就是用的 epoll ，这个也是为啥nginx 能处理高并发的主要原因。</p>
+<p>表面上看 epoll 的性能最好，但是在连接数少并且连接都十分活跃的情况下，select 和 poll 的性能可能比 epoll 好，毕竟 epoll 的通知机制需要很多函数回调。</p>
+<p>select 低效是因为每次它都需要轮询，但低效也是相对的，是情况而定，也可以通过良好的设计改善。</p>
+</blockquote>
+</li>
+<li><p>epoll 中水平触发以及边缘触发有什么不同?</p>
+<ul>
+<li><p>Level_triggered(水平触发):</p>
+<blockquote>
+<p>当被监控的文件描述符上有可读写事件发生时，epoll_wait() 会通知处理程序去读写，如果这次没有把数据一次性全部读写完(如读写缓冲区太小)，那么下次调用 epoll_wait() 时，它还会通知你在没读写完的文件描述符上继续读写，当然如果你一直不去读写，它会一直通知你！！！如果系统中有大量的你不需要读写的就绪文件描述符，而他们每次都会返回，这样会大大降低处理程序检索自己关心的就绪文件描述符的效率！！！</p>
+</blockquote>
+</li>
+<li><p>Edge_triggered(边缘触发):</p>
+<blockquote>
+<p>当被监控的文件描述符上有可读写事件发生时，epoll_wait() 会通知程序去读写。如果这次没有把数据全部读写完(如读写缓冲区太小)，那么下次调用 epoll_wait() 时，它不会通知你，也就是它只会通知一次，知道该文件描述符上出现第二次可读写事件才会通知你！！！这种模式比水平触发效率高，系统不会充斥大量你不关心的就绪文件描述符！！！</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Linux 进程调度中有哪些常见算法以及策略?</p>
+<blockquote>
+<ol>
+<li><p>先来先服务和短作业(进程)优先调度算法</p>
+</li>
+<li><p>高优先权优先调度算法</p>
+<ul>
+<li><p>非抢占式优先权算法</p>
+</li>
+<li><p>抢占式优先权调度算法</p>
+</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>进程的状态有哪几种?</p>
+<ol>
+<li><p>运行态:</p>
+<blockquote>
+<p>该状态表明进程在实际占用CPU。</p>
+</blockquote>
+</li>
+<li><p>就绪态:</p>
+<blockquote>
+<p>该状态下进程可以运行，但因为其他进程正在运行而暂时停止。</p>
+</blockquote>
+</li>
+<li><p>阻塞态:</p>
+<blockquote>
+<p>该状态下进程不能运行，除非某种外部事件的发送。</p>
+</blockquote>
+</li>
+</ol>
+<p>运行态 –&gt; 等待态</p>
+<blockquote>
+<p>往往是由于等待外设，等待主存等资源分配或等待人工干预而引起的</p>
+</blockquote>
+<p>等待态 –&gt; 就绪态</p>
+<blockquote>
+<p>则是等待的条件已满足，只需分配到处理器后就能运行</p>
+</blockquote>
+<p>运行态 –&gt; 就绪态</p>
+<blockquote>
+<p>不是由于自身原因，而是由外界原因使运行状态的进程让出处理器，这时候就变成就绪态。例如时间片用完，或有更高优先级的进程来抢占处理器等</p>
+</blockquote>
+<p>就绪态 –&gt; 运行态</p>
+<blockquote>
+<p>系统按某种策略选中就绪队列中的一个进程占用处理器，此时就变成了运行态</p>
+</blockquote>
+</blockquote>
+<ol start="6">
+<li><p>操作系统如何申请以及管理内存的?</p>
+<blockquote>
+<p>虚拟内存是现代操作系统普遍使用的一项技术，很多情况下，现有内存无法满足仅仅一个大进程的内存要求(比如很多游戏都是10G+的级别)。在早期的操作系统曾使用覆盖(overlays)来解决这个问题，将一个程序分为多个块，基本思想是先将块0加入内存，块0执行完成后，将块1加入内存。以此往复，这个解决方案最大的问题是需要程序员去程序进行分块，这是一个费时费力的过程。后来这个解决方案的修正版就是虚拟内存。</p>
+<p>虚拟内存的基本思想是，每个进程有独立的逻辑地址空间，内存被分为大小相等的多个快，称为页。每个页都是一段连续的地址。对于进程来看，逻辑上貌似有很多内存空间，其中一部分对应物理内存的一块(称为页框，通常页和页框大小相等)，还有一些没加载在内存中的对应在硬盘上。</p>
+</blockquote>
+</li>
+<li><p>简述 Linux 系统态与用户态，什么时候会进入系统态？</p>
+<blockquote>
+<ol>
+<li><p>系统调用</p>
+</li>
+<li><p>发生异常，当 cpu 正在执行运行在用户的程序的时候，突然发生某些预先不可知的异常事件，这个时候就会触发从当前用户态执行的进程转向内核执行相关的异常事件，典型的如缺页异常。</p>
+</li>
+<li><p>外围设备的中断，当外围设备完成用户的请求操作后，会像CPU发出中断信号，此时，CPU 就会暂停执行下一条即将要执行的指令，转而去执行中断信号对应的处理程序，如果先前执行的指令是在用户态下，则自然就发生从用户态到内核态的转换。</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>简述 LRU 算法及其实现方式</p>
+<blockquote>
+<p>Least Recently Used，最近最久未使用法，它是按照一个非常著名的计算机操作系统基础理论得来的：最近使用的页面数据会在未来一段时期内仍然被使用，已经很久没有使用的页面很有可能在未来较长的一段时间内仍然不会被使用。基于这个思想，会存在一种缓存淘汰机制，每次从内存中找到最久未使用的数据然后置换出来，从而存入新的数据！它的主要衡量指标是使用的时间，附加指标是使用的次数。在计算机中大量使用了这个机制，它的合理性在于优先筛选热点数据，所谓热点数据，就是最近最多使用的数据！因为，利用 LRU 我们可以解决很多实际开发中的问题，并且很符合业务。利用双向链表实现</p>
+</blockquote>
+</li>
+<li><p>线程间有哪些通信方式</p>
+<blockquote>
+<p>共享变量，共享内存，共享数据库，消息队列</p>
+</blockquote>
+</li>
+<li><p>简述同步与异步的区别，阻塞与非阻塞的区别</p>
+<blockquote>
+<ol>
+<li><p>同步和异步</p>
+<blockquote>
+<p>同步和异步通常用来描述消息传递或通信的方式。</p>
+<p>在同步通信中，发送方会等待接收方的响应，然后才继续发送下一条消息。相反，在异步通信中，发送方不会等待接收方的响应，而是继续发送下一条消息。</p>
+</blockquote>
+</li>
+<li><p>阻塞与非阻塞</p>
+<blockquote>
+<p>阻塞与非阻塞通常用来描述系统调用的行为。系统调用是应用程序请求操作系统内核提供服务的一种机制，例如读写文件，创建进程等。</p>
+<p>当一个应用程序发起一个阻塞的系统调用时，他会一直等待，直到该调用完成。相反，当一个应用程序发起一个非阻塞的系统调用时，如果该调用不能立即完成，他会立即返回。</p>
+</blockquote>
+</li>
+</ol>
+<p>总结</p>
+<blockquote>
+<p>同步：</p>
+<blockquote>
+<p>执行一个操作之后，等待结果，然后才继续执行后续的操作</p>
+</blockquote>
+<p>异步：</p>
+<blockquote>
+<p>执行一个操作之后，可以去执行其他的操作，然后等待通知再回来执行完的操作</p>
+</blockquote>
+<p>阻塞：</p>
+<blockquote>
+<p>进程给CPU传达一个任务之后，一直等待CPU处理完成，然后才执行后面的操作</p>
+</blockquote>
+<p>非阻塞：</p>
+<blockquote>
+<p>进程给CPU传达任务后，继续处理后续的操作，隔段时间再来询问之前的操作是否完成，这样的过程也叫轮询</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</li>
+<li><p>简述操作系统中的缺页中断</p>
+<blockquote>
+<p>虚拟内存实际上可以比物理内存大，当访问虚拟内存时，会访问MMU(内存管理单元)去匹配对应的物理地址，而如果虚拟内存的页并不存在于物理内存中，会产生缺页中断，从磁盘中取得缺的页放入内存中，如果内存已满，还会根据页的置换算法将磁盘中的页换出。</p>
+</blockquote>
+</li>
+<li><p>简述操作系统中 malloc 的实现原理</p>
+<blockquote>
+<p>malloc 基本的实现原理就是维护一个内存空闲链表，当申请内存空间时，搜索内存空闲链表，找到适配的空闲内存空间，然后将空间分割成两个内存块，一个变成分配块，一个变成新的空闲块。如果没有搜索到，那么就会用sbrk()推进brk指针来申请内存空间。</p>
+<p>搜索空闲块最常见的算法有：首次适配，下一次适配，最佳适配。</p>
+<p>首次适配：</p>
+<blockquote>
+<p>第一次找到足够大的内存块就分配，这种方法会产生很多内存碎片</p>
+</blockquote>
+<p>下一次适配：</p>
+<blockquote>
+<p>等第二次找到足够大的内存块就分配，这样会产生比较少的内存碎片</p>
+</blockquote>
+<p>最佳适配：</p>
+<blockquote>
+<p>对堆进行彻底的搜索，重投开始，遍历所有块，使用数据区大小大于size且差值最小的块作为此次分配的块</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>简述 Linux 的 IO模型</p>
+<blockquote>
+<p>在linux操作系统中，共有五种IO模型</p>
+<ul>
+<li><p>阻塞IO</p>
+<blockquote>
+<p>应用程序在进行系统调用时会被阻塞，直到数据准备好并复制到用户空间后才返回</p>
+</blockquote>
+</li>
+<li><p>非阻塞IO</p>
+<blockquote>
+<p>应用程序在进行系统调用时不会被阻塞，而是立即返回一个状态值。应用程序需要不断轮询内核以检查数据是否准备好</p>
+</blockquote>
+</li>
+<li><p>多路复用IO</p>
+<blockquote>
+<p>应用程序可以同时监视多个文件描述符，当某个文件描述符就绪时，对其进行处理</p>
+</blockquote>
+</li>
+<li><p>信号驱动IO</p>
+<blockquote>
+<p>应用程序向内核注册一个信号处理函数，当数据报准备好时，内核会向应用程序发送一个信号，应用程序对信号进行捕捉，并调用信号处理函数来获取数据报</p>
+</blockquote>
+</li>
+<li><p>异步IO</p>
+<blockquote>
+<p>应用程序发起系统调用后立即返回，当内核将数据准备好并复制完成后会给应用程序发送通知</p>
+</blockquote>
+</li>
+</ul>
+<p>这些模型区别在于应用程序和内核之间的交互方式以及数据准备和拷贝的过程</p>
+</blockquote>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库</title>
+    <url>/2023/04/12/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<ol>
+<li><p>MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？</p>
+<blockquote>
+</blockquote>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
