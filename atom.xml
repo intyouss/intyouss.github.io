@@ -6,7 +6,7 @@
   <link href="https://intyouss.github.io/atom.xml" rel="self"/>
   
   <link href="https://intyouss.github.io/"/>
-  <updated>2023-04-12T03:28:52.770Z</updated>
+  <updated>2023-04-12T04:22:49.699Z</updated>
   <id>https://intyouss.github.io/</id>
   
   <author>
@@ -17,12 +17,50 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>MySQL</title>
+    <link href="https://intyouss.github.io/2023/04/12/MySQL/"/>
+    <id>https://intyouss.github.io/2023/04/12/MySQL/</id>
+    <published>2023-04-12T03:42:33.000Z</published>
+    <updated>2023-04-12T04:22:49.699Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h3><hr><blockquote><p>结构化查询语言，用于存取，查询，更新数据以及管理关系型数据库系统</p></blockquote><ul><li><p>在不同的数据库产品中遵循SQL的通用规范，但是也对SQL有一些不同的改进，形成了一些数据库的专有指令</p><ul><li><p>MySQL: limit</p></li><li><p>SQLServer: top</p></li><li><p>Oracle: rownum</p></li></ul></li></ul><h4 id="SQL分类"><a href="#SQL分类" class="headerlink" title="SQL分类"></a>SQL分类</h4><blockquote><p>根据SQL指令完成的数据库操作的不同，可以将SQL指令分类</p></blockquote><ul><li><p>DDL Data Definition Language 数据定义语言</p><ul><li>用于完成对数据库对象(数据库，数据表，视图，索引等)的创建，删除，修改</li></ul></li><li><p>DML Data Manipulation Language 数据操作语言</p><ul><li>用于完成对数据表中的数据的添加，删除，修改操作</li></ul></li><li><p>DQL Data Query Language 数据查询语言</p><ul><li>用于将数据表中的数据查询出来</li></ul></li><li><p>DCL Data Control Language 数据控制语言</p><ul><li>用于完成事务管理等控制性操作</li></ul></li></ul><h4 id="SQL基本语法"><a href="#SQL基本语法" class="headerlink" title="SQL基本语法"></a>SQL基本语法</h4><blockquote><p>在MySQL Command Line Client 或者 navicat 等工具中都能编写SQL指令</p></blockquote><ul><li><p>SQL 指令不区分大小写</p></li><li><p>每条SQL表达式结束之久都以<code>;</code>结束</p></li><li><p>SQL 关键字之间以空格进行分割</p></li><li><p>SQL 之间可以不限制换行(可以有空格的地方就可以换行)</p></li></ul><h4 id="DDL"><a href="#DDL" class="headerlink" title="DDL"></a>DDL</h4><ul><li><p>DDL-数据库操作</p><blockquote><p>使用DDL语句可以创建，查询，修改，删除数据库</p></blockquote><ul><li><p>查询数据库</p><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## 显示当前数据库列表</span><br><span class="line"><span class="keyword">show</span> databases;</span><br><span class="line"></span><br><span class="line">## 显示此数据库创建<span class="keyword">SQL</span>指令</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> database dbName;</span><br></pre></td></tr></table></figure></div></li><li><p>创建数据库</p><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">## 创建数据库 dbName表示创建的数据库名称</span><br><span class="line"><span class="keyword">create</span> database dbName;</span><br><span class="line"></span><br><span class="line">## 创建数据库，防止数据库存在报错,当不存在时创建</span><br><span class="line"><span class="keyword">create</span> database if <span class="keyword">not</span> <span class="keyword">exists</span> dbName;</span><br><span class="line"></span><br><span class="line">## 在创建数据库的同时指定数据库的字符集(编码格式,utf8可选)</span><br><span class="line"><span class="keyword">create</span> database dbName <span class="type">character</span> <span class="keyword">set</span> utf8;</span><br></pre></td></tr></table></figure></div></li><li><p>修改数据库</p><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 修改数据库的字符集</span><br><span class="line"><span class="keyword">alter</span> database dbName <span class="type">character</span> <span class="keyword">set</span> utf8; # utf8 gbk</span><br></pre></td></tr></table></figure></div></li><li><p>删除数据库</p><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## 删除数据库,防止数据库不存在报错</span><br><span class="line"><span class="keyword">drop</span> database if <span class="keyword">exists</span> dbName;</span><br></pre></td></tr></table></figure></div></li><li><p>使用&#x2F;切换数据库</p><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use dbName;</span><br></pre></td></tr></table></figure></div><ul><li><p>创建数据表</p><blockquote><p>数据表实际上就是一个二位的表格，是由多列组成，表格的每一列时表格的一个字段</p></blockquote><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> dbTableName(</span><br><span class="line">    TableName <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">unique</span>, # 格式，下为例子</span><br><span class="line">    T_name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    T_gender <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    T_age <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    T_tel <span class="type">char</span>(<span class="number">11</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">unique</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></div></li><li><p>查询数据表列</p><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> tables; </span><br></pre></td></tr></table></figure></div></li><li><p>查询表结构</p><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">desc</span> tableName;</span><br></pre></td></tr></table></figure></div></li><li><p>删除数据表</p><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## 删除数据表</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> tableName;</span><br><span class="line"></span><br><span class="line">## 当数据表存在时删除数据表</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> if <span class="keyword">exists</span> tableName;</span><br></pre></td></tr></table></figure></div></li></ul></li></ul></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;SQL&quot;&gt;&lt;a href=&quot;#SQL&quot; class=&quot;headerlink&quot; title=&quot;SQL&quot;&gt;&lt;/a&gt;SQL&lt;/h3&gt;&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;结构化查询语言，用于存取，查询，更新数据以及管理关系型数据库系统&lt;/p&gt;
+&lt;/blockquot</summary>
+      
+    
+    
+    
+    
+    <category term="MySQL Study" scheme="https://intyouss.github.io/tags/MySQL-Study/"/>
+    
+  </entry>
+  
+  <entry>
     <title>数据库</title>
     <link href="https://intyouss.github.io/2023/04/12/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     <id>https://intyouss.github.io/2023/04/12/%E6%95%B0%E6%8D%AE%E5%BA%93/</id>
     <published>2023-04-12T03:26:11.000Z</published>
-    <updated>2023-04-12T03:28:52.770Z</updated>
+    <updated>2023-04-12T03:43:07.838Z</updated>
     
+    <content type="html"><![CDATA[<ol><li><p>MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？</p><blockquote></blockquote></li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</summary>
+      
     
     
     
