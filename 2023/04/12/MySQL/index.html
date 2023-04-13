@@ -30,7 +30,7 @@
 <meta property="og:description" content="SQL  结构化查询语言，用于存取，查询，更新数据以及管理关系型数据库系统   在不同的数据库产品中遵循SQL的通用规范，但是也对SQL有一些不同的改进，形成了一些数据库的专有指令  MySQL: limit  SQLServer: top  Oracle: rownum     SQL分类 根据SQL指令完成的数据库操作的不同，可以将SQL指令分类   DDL Data Definition L">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-12T03:42:33.000Z">
-<meta property="article:modified_time" content="2023-04-12T10:33:01.641Z">
+<meta property="article:modified_time" content="2023-04-13T05:50:11.620Z">
 <meta property="article:author" content="IntYou">
 <meta property="article:tag" content="MySQL Study">
 <meta name="twitter:card" content="summary">
@@ -225,8 +225,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-12 18:33:01</span>
-            <span class="mobile">2023-04-12 18:33</span>
+            <span class="desktop">2023-04-13 13:50:11</span>
+            <span class="mobile">2023-04-13 13:50</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -556,6 +556,136 @@
 <li><p><code>avg()</code> 求平均值</p>
 </li>
 </ul>
+<h5 id="日期函数-和-字符串函数"><a href="#日期函数-和-字符串函数" class="headerlink" title="日期函数  和 字符串函数"></a>日期函数  和 字符串函数</h5><h6 id="日期函数"><a href="#日期函数" class="headerlink" title="日期函数"></a>日期函数</h6><blockquote>
+<p>当我们向日期类型的列表添加数据时，可以通过字符串类型赋值(字符串的格式必须为yyyy-MM-dd hh:mm:ss)</p>
+<p>如果我们想要获取当前系统时间到日期类型的列，可以使用<code>now()</code>或<code>sysdate()</code></p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> T <span class="keyword">values</span>(<span class="string">&#x27;1&#x27;</span>,<span class="string">&#x27;2&#x27;</span>,now());</span><br></pre></td></tr></table></figure></div>
+
+<h6 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h6><blockquote>
+<p>通过SQL指令对字符串进行处理</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">## 拼接字符串 concat</span><br><span class="line"><span class="keyword">select</span> concat(xxx,<span class="string">&#x27;-&#x27;</span>,aaa) <span class="keyword">from</span> T;</span><br><span class="line"></span><br><span class="line">## 将字段的值转换成大写</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">upper</span>(xxx) <span class="keyword">from</span> T;</span><br><span class="line"></span><br><span class="line">## 将字段的值转换为小写</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">lower</span>(xxx) <span class="keyword">from</span> T;</span><br><span class="line"></span><br><span class="line">## 从指定列中截取部分显示 <span class="keyword">start</span>从<span class="number">1</span>开始,len是长度</span><br><span class="line"><span class="keyword">select</span> xxx, <span class="built_in">substring</span>(xxxx,<span class="keyword">start</span>,len) <span class="keyword">from</span> T;</span><br></pre></td></tr></table></figure></div>
+
+<h5 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h5><blockquote>
+<p>将数据表中的列记录按照指定的列进行分组</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> 分组字段<span class="operator">/</span>聚合函数 <span class="keyword">from</span> 表名 [<span class="keyword">where</span> 条件] </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">group</span> <span class="keyword">by</span> 分组字段 [<span class="keyword">having</span> 条件] [<span class="keyword">order</span> <span class="keyword">by</span> 排序字段]</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>select 后通常显示分组字段和聚合函数</p>
+</li>
+<li><p>语句执行顺序：</p>
+<ol>
+<li><p>先根据where条件从数据库查询记录</p>
+</li>
+<li><p>group by对查询记录进行分组</p>
+</li>
+<li><p>执行having对分组后的数据进行筛选</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h5><blockquote>
+<p>当数据表中的记录比较多的时候，如果一次性全部查询出来显示给用户，用户的可读性、体验性就不太好，因此我们可以将这些数据分页进行展示</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> ... <span class="keyword">from</span> ... <span class="keyword">where</span> ... limit param1,param2</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>param1 int 表示获取查询语句的结果中的第一条数据的索引(索引从0开始)</p>
+</li>
+<li><p>param2 int 表示获取的查询记录的条数(如果剩下的数据条数&lt;param2,则返回剩下的条目)</p>
+</li>
+</ul>
+</li>
+<li><p>案例：对数据表中的学生信息进行分页显示，总共有10条数据，我们每页显示3条</p>
+<blockquote>
+<p>总记录数 count 10</p>
+<p>每页显示 pageSize 3</p>
+<p>总页数 pageCount &#x3D; count%pageSize&#x3D;&#x3D;0? count&#x2F;pageSize + 1</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">## 查询第一页</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> T limit <span class="number">0</span>,<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">## 通用表达式</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> [<span class="keyword">where</span> ...] </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> limit (pageNum<span class="number">-1</span>)<span class="operator">*</span>pageSize,pageSize;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="数据表的关联关系"><a href="#数据表的关联关系" class="headerlink" title="数据表的关联关系"></a>数据表的关联关系</h4><h5 id="关联关系介绍"><a href="#关联关系介绍" class="headerlink" title="关联关系介绍"></a>关联关系介绍</h5><blockquote>
+<p>MySQL是一个关系型数据库，不仅可以存储数据，还可以维护数据与数据之间的关系——通过在数据表中添加字段建立外键约束</p>
+</blockquote>
+<ul>
+<li><p>数据与数据之间的关系</p>
+<ul>
+<li><p>一对一关联</p>
+</li>
+<li><p>一对多关联</p>
+</li>
+<li><p>多对一关联</p>
+</li>
+<li><p>多对多关联</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="一对一关联"><a href="#一对一关联" class="headerlink" title="一对一关联"></a>一对一关联</h5><blockquote>
+<p>一个实体对应另一个实体</p>
+</blockquote>
+<ul>
+<li><p>方案一 主键关联——两张数据表中主键相同的数据为相互对应的数据</p>
+</li>
+<li><p>方案二 唯一外键——在任意一张表中添加一个字段外键约束与另一张表主键关联，并且将外键添加唯一约束</p>
+</li>
+</ul>
+<h5 id="一对多-与-多对一-关联"><a href="#一对多-与-多对一-关联" class="headerlink" title="一对多 与 多对一 关联"></a>一对多 与 多对一 关联</h5><blockquote>
+<p>一个实体对应多个实体</p>
+</blockquote>
+<ul>
+<li>方案 在多的一段添加外键，与一的一端主键进行关联</li>
+</ul>
+<h5 id="多对多关联"><a href="#多对多关联" class="headerlink" title="多对多关联"></a>多对多关联</h5><blockquote>
+<p>多个实体对应其他多个实体</p>
+</blockquote>
+<ul>
+<li>方案 额外创建一张关系表来维护多对多关联——在关系表中定义两个外键，分别与两个数据表的主键进行关联</li>
+</ul>
+<h5 id="外键约束"><a href="#外键约束" class="headerlink" title="外键约束"></a>外键约束</h5><blockquote>
+<p>将一个列添加外键约束与另一张表的主键(唯一列)进行关联之后，这个外键约束的列添加的数据必须要在关联的主键字段中存在</p>
+</blockquote>
+<ul>
+<li><p>案例：学生表 与 班级表 (在学生表中添加外键与班级表的主键进行关联)</p>
+<blockquote>
+<ol>
+<li><p>先创建班级表</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> classes(</span><br><span class="line">  class_id <span class="type">int</span> <span class="keyword">primary</span> key auto_increment,</span><br><span class="line">  class_name <span class="type">varchar</span>(<span class="number">40</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">unique</span>,</span><br><span class="line">  class_remark <span class="type">varchar</span>(<span class="number">200</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>创建学生表(在学生表中添加外键与班级表中的主键进行关联)</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">## 方式一</span><br><span class="line">## 在创建表的时候，添加外键约束</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> students(</span><br><span class="line">  stu_num <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">primary</span> key,</span><br><span class="line">  stu_name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">  stu_gender <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">  stu_age <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">  cid <span class="type">int</span>,</span><br><span class="line">  <span class="keyword">constraint</span> FK_STUDENTS_CLASSES <span class="keyword">foreign</span> key(cid) <span class="keyword">references</span> </span><br><span class="line">  classes(class_id) ## 添加外键约束</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">## 方式二</span><br><span class="line">## 在创建表之后，为cid添加外键约束</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> students(</span><br><span class="line">  stu_num <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">primary</span> key,</span><br><span class="line">  stu_name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">  stu_gender <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">  stu_age <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">  cid <span class="type">int</span>,</span><br><span class="line">);</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> students <span class="keyword">add</span> <span class="keyword">constraint</span> FK_STUDENTS_CLASSES </span><br><span class="line">  <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">foreign</span> key(cid) <span class="keyword">references</span> classes(class_id);</span><br><span class="line"></span><br><span class="line">#删除外键约束</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> students <span class="keyword">drop</span> <span class="keyword">foreign</span> key FK_STUDENTS_CLASSES;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>向班级表添加班级信息</p>
+</li>
+<li><p>向学生表中添加学生信息</p>
+<blockquote>
+<p>添加学生的时候，设置给cid外键列的值必须在其关联的主表classes的class_id列存在</p>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>当学生表中存在学生信息关联班级表的某条记录时，就不能对班级表的这条记录进行修改，删除。</p>
+<p>如果一定要修改，需：</p>
+<ol>
+<li><p>将被引用的记录内外键cid设置为null</p>
+</li>
+<li><p>再修改原记录内的主键class_id</p>
+</li>
+<li><p>将cid中设置为null的记录重新修改关联为你所需要的新的class_id</p>
+</li>
+</ol>
+</blockquote>
 
             </div>
 
@@ -568,7 +698,7 @@
         <li><strong>创建于:</strong> 2023-04-12 11:42:33</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-12 18:33:01
+                <strong>更新于:</strong> 2023-04-13 13:50:11
             </li>
         
         <li>

@@ -202,6 +202,128 @@
       </tags>
   </entry>
   <entry>
+    <title>JavaScript-React-1</title>
+    <url>/2023/03/07/JavaScript-React-1/</url>
+    <content><![CDATA[<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><hr>
+<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ul>
+<li><p>只有一个参数的函数 参数 &#x3D;&gt; 返回值</p>
+</li>
+<li><p>多个参数使用括号 (a,b) &#x3D;&gt; 返回值</p>
+</li>
+<li><p>返回值必须是一个表达式</p>
+</li>
+<li><p>返回值是对象必须带括号</p>
+</li>
+<li><p>如需写语句，在后添加代码块</p>
+</li>
+</ul>
+<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>隐含参数arguments-表示当前函数的实参 arguments.lenth 获取实参数。剩余参数…args</p>
+</div>
+
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性:"></a>特性:</h4><ul>
+<li><p>箭头函数中没有arguments，可以使用…args</p>
+</li>
+<li><p>箭头函数的this总是看外层作用域的this</p>
+</li>
+<li><p>箭头函数中的this无法通过call(), apply(), bind()修改</p>
+</li>
+<li><p>箭头函数无法作为构造函数，无法new</p>
+</li>
+</ul>
+<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><hr>
+<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>默认情况下，script标签中不能使用import语句，必须设置script的type属性为module</p>
+</div>
+
+<h4 id="导出"><a href="#导出" class="headerlink" title="导出:"></a>导出:</h4><ul>
+<li><p>默认导出</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>一个模块里只有一个默认导出</p>
+<ul>
+<li><p>命名导出</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b,c&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="导入"><a href="#导入" class="headerlink" title="导入:"></a>导入:</h4><ul>
+<li><p>默认导入</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>导入默认模块时，变量名可以自主制定，无需使用模块中的变量名</p>
+<ul>
+<li><p>命名导入</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;a,b,c&#125; <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
+<li><p>构造函数</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>构造函数中，可以通过this来引用当前的对象</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
+<li><p>严格模式</p>
+<p>“use strict”</p>
+<ol>
+<li><p>类中的所有代码都会在严格模式下执行</p>
+</li>
+<li><p>函数的this不再是window,而是undefined</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> test = mc.<span class="property">fn</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+</ul>
+<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>以方法形式调用时, this就是当前的实例。以函数形式调用, this是undefined</p>
+</div>
+
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = <span class="variable language_">this</span>.<span class="property">fn</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>) <span class="comment">//将fn方法的this绑定为当前实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>可以限制this绑定在自身</p>
+<p>也可以使用箭头函数的形式调用，永远绑定为本身</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">   fn = <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>&#123;&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>在子类中重写父类构造函数时，应该在子类中第一时间调用父类构造函数，否则报错</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(name, age); <span class="comment">//调用父类构造函数，并且需要加入父类参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
+<li><p>动态属性</p>
+<p>需要首先new一个实例才能使用</p>
+</li>
+<li><p>静态属性</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> name = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="comment">// 静态方法this不是实例对象而是当前类对象</span></span><br><span class="line">    <span class="keyword">static</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>可以直接使用<code>MyClass.name</code></p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
+<ul>
+<li><p>map()</p>
+<ol>
+<li><p>可以根据原有的数组返回一个新数组</p>
+</li>
+<li><p>需要一个回调函数作为参数, 回调函数返回值会成为新数组中的元素</p>
+<p>用法:</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> result = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> item+<span class="number">2</span></span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 第一个参数 当前元素</span></span><br><span class="line"><span class="comment">// 第二个参数 当前元素索引</span></span><br><span class="line"><span class="comment">// 第三个参数 当前数组</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+<li><p>filter()</p>
+<p>过滤器</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">result = arr.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item % <span class="number">2</span> === <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>根据条件过滤元素</p>
+<ul>
+<li><p>find()</p>
+<p>找第一个被过滤条件通过的元素</p>
+</li>
+</ul>
+</li>
+<li><p>reduce()</p>
+<p>整合数组</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> &#123;&#125;, <span class="number">0</span>) </span><br><span class="line"><span class="comment">// 0的位置是定义第一次prev的值, prev 上一次合并后值, curr 当前值</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>React Study</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Django</title>
     <url>/2023/03/25/Django/</url>
     <content><![CDATA[<h3 id="Django-MVT"><a href="#Django-MVT" class="headerlink" title="Django MVT"></a>Django MVT</h3><ul>
@@ -523,128 +645,6 @@
       </tags>
   </entry>
   <entry>
-    <title>JavaScript-React-1</title>
-    <url>/2023/03/07/JavaScript-React-1/</url>
-    <content><![CDATA[<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><hr>
-<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ul>
-<li><p>只有一个参数的函数 参数 &#x3D;&gt; 返回值</p>
-</li>
-<li><p>多个参数使用括号 (a,b) &#x3D;&gt; 返回值</p>
-</li>
-<li><p>返回值必须是一个表达式</p>
-</li>
-<li><p>返回值是对象必须带括号</p>
-</li>
-<li><p>如需写语句，在后添加代码块</p>
-</li>
-</ul>
-<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>隐含参数arguments-表示当前函数的实参 arguments.lenth 获取实参数。剩余参数…args</p>
-</div>
-
-<h4 id="特性"><a href="#特性" class="headerlink" title="特性:"></a>特性:</h4><ul>
-<li><p>箭头函数中没有arguments，可以使用…args</p>
-</li>
-<li><p>箭头函数的this总是看外层作用域的this</p>
-</li>
-<li><p>箭头函数中的this无法通过call(), apply(), bind()修改</p>
-</li>
-<li><p>箭头函数无法作为构造函数，无法new</p>
-</li>
-</ul>
-<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><hr>
-<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>默认情况下，script标签中不能使用import语句，必须设置script的type属性为module</p>
-</div>
-
-<h4 id="导出"><a href="#导出" class="headerlink" title="导出:"></a>导出:</h4><ul>
-<li><p>默认导出</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>一个模块里只有一个默认导出</p>
-<ul>
-<li><p>命名导出</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b,c&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h4 id="导入"><a href="#导入" class="headerlink" title="导入:"></a>导入:</h4><ul>
-<li><p>默认导入</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>导入默认模块时，变量名可以自主制定，无需使用模块中的变量名</p>
-<ul>
-<li><p>命名导入</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;a,b,c&#125; <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span></span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
-<li><p>构造函数</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>构造函数中，可以通过this来引用当前的对象</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
-<li><p>严格模式</p>
-<p>“use strict”</p>
-<ol>
-<li><p>类中的所有代码都会在严格模式下执行</p>
-</li>
-<li><p>函数的this不再是window,而是undefined</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> test = mc.<span class="property">fn</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-</ul>
-<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>以方法形式调用时, this就是当前的实例。以函数形式调用, this是undefined</p>
-</div>
-
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = <span class="variable language_">this</span>.<span class="property">fn</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>) <span class="comment">//将fn方法的this绑定为当前实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>可以限制this绑定在自身</p>
-<p>也可以使用箭头函数的形式调用，永远绑定为本身</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">   fn = <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>&#123;&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>在子类中重写父类构造函数时，应该在子类中第一时间调用父类构造函数，否则报错</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(name, age); <span class="comment">//调用父类构造函数，并且需要加入父类参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
-<li><p>动态属性</p>
-<p>需要首先new一个实例才能使用</p>
-</li>
-<li><p>静态属性</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> name = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="comment">// 静态方法this不是实例对象而是当前类对象</span></span><br><span class="line">    <span class="keyword">static</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>可以直接使用<code>MyClass.name</code></p>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
-<ul>
-<li><p>map()</p>
-<ol>
-<li><p>可以根据原有的数组返回一个新数组</p>
-</li>
-<li><p>需要一个回调函数作为参数, 回调函数返回值会成为新数组中的元素</p>
-<p>用法:</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> result = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> item+<span class="number">2</span></span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 第一个参数 当前元素</span></span><br><span class="line"><span class="comment">// 第二个参数 当前元素索引</span></span><br><span class="line"><span class="comment">// 第三个参数 当前数组</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-<li><p>filter()</p>
-<p>过滤器</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">result = arr.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item % <span class="number">2</span> === <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>根据条件过滤元素</p>
-<ul>
-<li><p>find()</p>
-<p>找第一个被过滤条件通过的元素</p>
-</li>
-</ul>
-</li>
-<li><p>reduce()</p>
-<p>整合数组</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> &#123;&#125;, <span class="number">0</span>) </span><br><span class="line"><span class="comment">// 0的位置是定义第一次prev的值, prev 上一次合并后值, curr 当前值</span></span><br></pre></td></tr></table></figure></div></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>React Study</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript-React-2</title>
     <url>/2023/03/08/JavaScript-React-2/</url>
     <content><![CDATA[<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><hr>
@@ -849,48 +849,6 @@
 <div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">descChangeHandler</span> = (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">target</span>.<span class="property">value</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
 </ul>
 ]]></content>
-  </entry>
-  <entry>
-    <title>poetry使用</title>
-    <url>/2023/03/09/poetry%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<h3 id="Poetry"><a href="#Poetry" class="headerlink" title="Poetry"></a>Poetry</h3><hr>
-<p>使用pyproject.toml管理整个项目的依赖</p>
-<h4 id="安装poetry"><a href="#安装poetry" class="headerlink" title="安装poetry"></a>安装poetry</h4><ol>
-<li><p>安装pipx为每个包自动创建隔离环境，方便管理</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pip install pipx</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>安装poetry</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipx install poetry</span><br></pre></td></tr></table></figure></div></li>
-</ol>
-<h4 id="项目中使用portry"><a href="#项目中使用portry" class="headerlink" title="项目中使用portry"></a>项目中使用portry</h4><ol>
-<li><p>初始化pyproject.toml</p>
-<p>在项目路径中使用:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry init</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>创建项目虚拟环境</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry <span class="built_in">env</span> use python</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>进入虚拟环境</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry shell</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>添加新依赖</p>
-<p>在pyproject.toml文件中添加如下内容:</p>
-<div class="highlight-container" data-rel="Toml"><figure class="iseeu highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[[tool.poetry.source]]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;aliyun&quot;</span></span><br><span class="line"><span class="attr">url</span> = <span class="string">&quot;https://mirrors.aliyun.com/pypi/simple&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>添加普通依赖:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt;</span><br></pre></td></tr></table></figure></div>
-
-<p>添加开发依赖:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt; -D</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>测试</p>
-<p>使用pytest</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry run pytest</span><br></pre></td></tr></table></figure></div></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>poetry</tag>
-      </tags>
   </entry>
   <entry>
     <title>Linux</title>
@@ -1379,6 +1337,48 @@
       </tags>
   </entry>
   <entry>
+    <title>poetry使用</title>
+    <url>/2023/03/09/poetry%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h3 id="Poetry"><a href="#Poetry" class="headerlink" title="Poetry"></a>Poetry</h3><hr>
+<p>使用pyproject.toml管理整个项目的依赖</p>
+<h4 id="安装poetry"><a href="#安装poetry" class="headerlink" title="安装poetry"></a>安装poetry</h4><ol>
+<li><p>安装pipx为每个包自动创建隔离环境，方便管理</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pip install pipx</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>安装poetry</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipx install poetry</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<h4 id="项目中使用portry"><a href="#项目中使用portry" class="headerlink" title="项目中使用portry"></a>项目中使用portry</h4><ol>
+<li><p>初始化pyproject.toml</p>
+<p>在项目路径中使用:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry init</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>创建项目虚拟环境</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry <span class="built_in">env</span> use python</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>进入虚拟环境</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry shell</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>添加新依赖</p>
+<p>在pyproject.toml文件中添加如下内容:</p>
+<div class="highlight-container" data-rel="Toml"><figure class="iseeu highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[[tool.poetry.source]]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;aliyun&quot;</span></span><br><span class="line"><span class="attr">url</span> = <span class="string">&quot;https://mirrors.aliyun.com/pypi/simple&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>添加普通依赖:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>添加开发依赖:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt; -D</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>测试</p>
+<p>使用pytest</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry run pytest</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>poetry</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL</title>
     <url>/2023/04/12/MySQL/</url>
     <content><![CDATA[<h3 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h3><hr>
@@ -1676,6 +1676,136 @@
 <li><p><code>avg()</code> 求平均值</p>
 </li>
 </ul>
+<h5 id="日期函数-和-字符串函数"><a href="#日期函数-和-字符串函数" class="headerlink" title="日期函数  和 字符串函数"></a>日期函数  和 字符串函数</h5><h6 id="日期函数"><a href="#日期函数" class="headerlink" title="日期函数"></a>日期函数</h6><blockquote>
+<p>当我们向日期类型的列表添加数据时，可以通过字符串类型赋值(字符串的格式必须为yyyy-MM-dd hh:mm:ss)</p>
+<p>如果我们想要获取当前系统时间到日期类型的列，可以使用<code>now()</code>或<code>sysdate()</code></p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> T <span class="keyword">values</span>(<span class="string">&#x27;1&#x27;</span>,<span class="string">&#x27;2&#x27;</span>,now());</span><br></pre></td></tr></table></figure></div>
+
+<h6 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h6><blockquote>
+<p>通过SQL指令对字符串进行处理</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 拼接字符串 concat</span><br><span class="line"><span class="keyword">select</span> concat(xxx,<span class="string">&#x27;-&#x27;</span>,aaa) <span class="keyword">from</span> T;</span><br><span class="line"></span><br><span class="line">## 将字段的值转换成大写</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">upper</span>(xxx) <span class="keyword">from</span> T;</span><br><span class="line"></span><br><span class="line">## 将字段的值转换为小写</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">lower</span>(xxx) <span class="keyword">from</span> T;</span><br><span class="line"></span><br><span class="line">## 从指定列中截取部分显示 <span class="keyword">start</span>从<span class="number">1</span>开始,len是长度</span><br><span class="line"><span class="keyword">select</span> xxx, <span class="built_in">substring</span>(xxxx,<span class="keyword">start</span>,len) <span class="keyword">from</span> T;</span><br></pre></td></tr></table></figure></div>
+
+<h5 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h5><blockquote>
+<p>将数据表中的列记录按照指定的列进行分组</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> 分组字段<span class="operator">/</span>聚合函数 <span class="keyword">from</span> 表名 [<span class="keyword">where</span> 条件] </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">group</span> <span class="keyword">by</span> 分组字段 [<span class="keyword">having</span> 条件] [<span class="keyword">order</span> <span class="keyword">by</span> 排序字段]</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>select 后通常显示分组字段和聚合函数</p>
+</li>
+<li><p>语句执行顺序：</p>
+<ol>
+<li><p>先根据where条件从数据库查询记录</p>
+</li>
+<li><p>group by对查询记录进行分组</p>
+</li>
+<li><p>执行having对分组后的数据进行筛选</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h5><blockquote>
+<p>当数据表中的记录比较多的时候，如果一次性全部查询出来显示给用户，用户的可读性、体验性就不太好，因此我们可以将这些数据分页进行展示</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> ... <span class="keyword">from</span> ... <span class="keyword">where</span> ... limit param1,param2</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>param1 int 表示获取查询语句的结果中的第一条数据的索引(索引从0开始)</p>
+</li>
+<li><p>param2 int 表示获取的查询记录的条数(如果剩下的数据条数&lt;param2,则返回剩下的条目)</p>
+</li>
+</ul>
+</li>
+<li><p>案例：对数据表中的学生信息进行分页显示，总共有10条数据，我们每页显示3条</p>
+<blockquote>
+<p>总记录数 count 10</p>
+<p>每页显示 pageSize 3</p>
+<p>总页数 pageCount &#x3D; count%pageSize&#x3D;&#x3D;0? count&#x2F;pageSize + 1</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 查询第一页</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> T limit <span class="number">0</span>,<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">## 通用表达式</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span> [<span class="keyword">where</span> ...] </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> limit (pageNum<span class="number">-1</span>)<span class="operator">*</span>pageSize,pageSize;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="数据表的关联关系"><a href="#数据表的关联关系" class="headerlink" title="数据表的关联关系"></a>数据表的关联关系</h4><h5 id="关联关系介绍"><a href="#关联关系介绍" class="headerlink" title="关联关系介绍"></a>关联关系介绍</h5><blockquote>
+<p>MySQL是一个关系型数据库，不仅可以存储数据，还可以维护数据与数据之间的关系——通过在数据表中添加字段建立外键约束</p>
+</blockquote>
+<ul>
+<li><p>数据与数据之间的关系</p>
+<ul>
+<li><p>一对一关联</p>
+</li>
+<li><p>一对多关联</p>
+</li>
+<li><p>多对一关联</p>
+</li>
+<li><p>多对多关联</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="一对一关联"><a href="#一对一关联" class="headerlink" title="一对一关联"></a>一对一关联</h5><blockquote>
+<p>一个实体对应另一个实体</p>
+</blockquote>
+<ul>
+<li><p>方案一 主键关联——两张数据表中主键相同的数据为相互对应的数据</p>
+</li>
+<li><p>方案二 唯一外键——在任意一张表中添加一个字段外键约束与另一张表主键关联，并且将外键添加唯一约束</p>
+</li>
+</ul>
+<h5 id="一对多-与-多对一-关联"><a href="#一对多-与-多对一-关联" class="headerlink" title="一对多 与 多对一 关联"></a>一对多 与 多对一 关联</h5><blockquote>
+<p>一个实体对应多个实体</p>
+</blockquote>
+<ul>
+<li>方案 在多的一段添加外键，与一的一端主键进行关联</li>
+</ul>
+<h5 id="多对多关联"><a href="#多对多关联" class="headerlink" title="多对多关联"></a>多对多关联</h5><blockquote>
+<p>多个实体对应其他多个实体</p>
+</blockquote>
+<ul>
+<li>方案 额外创建一张关系表来维护多对多关联——在关系表中定义两个外键，分别与两个数据表的主键进行关联</li>
+</ul>
+<h5 id="外键约束"><a href="#外键约束" class="headerlink" title="外键约束"></a>外键约束</h5><blockquote>
+<p>将一个列添加外键约束与另一张表的主键(唯一列)进行关联之后，这个外键约束的列添加的数据必须要在关联的主键字段中存在</p>
+</blockquote>
+<ul>
+<li><p>案例：学生表 与 班级表 (在学生表中添加外键与班级表的主键进行关联)</p>
+<blockquote>
+<ol>
+<li><p>先创建班级表</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> classes(</span><br><span class="line">  class_id <span class="type">int</span> <span class="keyword">primary</span> key auto_increment,</span><br><span class="line">  class_name <span class="type">varchar</span>(<span class="number">40</span>) <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">unique</span>,</span><br><span class="line">  class_remark <span class="type">varchar</span>(<span class="number">200</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>创建学生表(在学生表中添加外键与班级表中的主键进行关联)</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 方式一</span><br><span class="line">## 在创建表的时候，添加外键约束</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> students(</span><br><span class="line">  stu_num <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">primary</span> key,</span><br><span class="line">  stu_name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">  stu_gender <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">  stu_age <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">  cid <span class="type">int</span>,</span><br><span class="line">  <span class="keyword">constraint</span> FK_STUDENTS_CLASSES <span class="keyword">foreign</span> key(cid) <span class="keyword">references</span> </span><br><span class="line">  classes(class_id) ## 添加外键约束</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">## 方式二</span><br><span class="line">## 在创建表之后，为cid添加外键约束</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> students(</span><br><span class="line">  stu_num <span class="type">char</span>(<span class="number">8</span>) <span class="keyword">primary</span> key,</span><br><span class="line">  stu_name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">  stu_gender <span class="type">char</span>(<span class="number">2</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">  stu_age <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">  cid <span class="type">int</span>,</span><br><span class="line">);</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> students <span class="keyword">add</span> <span class="keyword">constraint</span> FK_STUDENTS_CLASSES </span><br><span class="line">  <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">foreign</span> key(cid) <span class="keyword">references</span> classes(class_id);</span><br><span class="line"></span><br><span class="line">#删除外键约束</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> students <span class="keyword">drop</span> <span class="keyword">foreign</span> key FK_STUDENTS_CLASSES;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>向班级表添加班级信息</p>
+</li>
+<li><p>向学生表中添加学生信息</p>
+<blockquote>
+<p>添加学生的时候，设置给cid外键列的值必须在其关联的主表classes的class_id列存在</p>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>当学生表中存在学生信息关联班级表的某条记录时，就不能对班级表的这条记录进行修改，删除。</p>
+<p>如果一定要修改，需：</p>
+<ol>
+<li><p>将被引用的记录内外键cid设置为null</p>
+</li>
+<li><p>再修改原记录内的主键class_id</p>
+</li>
+<li><p>将cid中设置为null的记录重新修改关联为你所需要的新的class_id</p>
+</li>
+</ol>
+</blockquote>
 ]]></content>
       <tags>
         <tag>MySQL Study</tag>
