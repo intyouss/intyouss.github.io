@@ -30,7 +30,7 @@
 <meta property="og:description" content="SQL  结构化查询语言，用于存取，查询，更新数据以及管理关系型数据库系统   在不同的数据库产品中遵循SQL的通用规范，但是也对SQL有一些不同的改进，形成了一些数据库的专有指令  MySQL: limit  SQLServer: top  Oracle: rownum     SQL分类 根据SQL指令完成的数据库操作的不同，可以将SQL指令分类   DDL Data Definition L">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-12T03:42:33.000Z">
-<meta property="article:modified_time" content="2023-04-13T05:50:11.620Z">
+<meta property="article:modified_time" content="2023-04-13T12:37:39.616Z">
 <meta property="article:author" content="IntYou">
 <meta property="article:tag" content="MySQL Study">
 <meta name="twitter:card" content="summary">
@@ -225,8 +225,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-13 13:50:11</span>
-            <span class="mobile">2023-04-13 13:50</span>
+            <span class="desktop">2023-04-13 20:37:39</span>
+            <span class="mobile">2023-04-13 20:37</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -674,7 +674,7 @@
 </blockquote>
 </li>
 </ul>
-<blockquote>
+<h6 id="级联"><a href="#级联" class="headerlink" title="级联"></a>级联</h6><blockquote>
 <p>当学生表中存在学生信息关联班级表的某条记录时，就不能对班级表的这条记录进行修改，删除。</p>
 <p>如果一定要修改，需：</p>
 <ol>
@@ -686,6 +686,85 @@
 </li>
 </ol>
 </blockquote>
+<blockquote>
+<p>我们可以使用级联操作来实现：</p>
+<ol>
+<li><p>在添加外键时，设置 <em>级联修改</em> 和 <em>级联删除</em> </p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">## 删除原有的外键</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> students <span class="keyword">drop</span> <span class="keyword">foreign</span> key FK_STUDENTS_CLASSES;</span><br><span class="line"></span><br><span class="line">## 重新添加外键，并设置级联修改和级联删除</span><br><span class="line">## <span class="keyword">ON</span> <span class="keyword">UPDATE</span> 级联修改 <span class="keyword">ON</span> <span class="keyword">DELETE</span> 级联修改</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> students <span class="keyword">add</span> <span class="keyword">constraint</span> FK_STUDENTS_CLASSES </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">foreign</span> key(cid) <span class="keyword">references</span> classes(class_id)</span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">ON</span> <span class="keyword">UPDATE</span> CASCADE <span class="keyword">ON</span> <span class="keyword">DELETE</span> CASCADE;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>删除class_id 的班级信息，学生表引用此班级信息的记录也会被同步删除</p>
+</li>
+</ol>
+</blockquote>
+<h4 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h4><blockquote>
+<p>通过连接查询从多张数据表提取数据</p>
+<p>再MySQL中可以使用join实现多表的联合查询——连接查询，join按照其功能不同分为三个操作：</p>
+<ul>
+<li><p>inner join 内连接</p>
+</li>
+<li><p>left join 左连接</p>
+</li>
+<li><p>right join 又连接</p>
+</li>
+</ul>
+</blockquote>
+<h5 id="内连接-INNER-JOIN"><a href="#内连接-INNER-JOIN" class="headerlink" title="内连接 INNER JOIN"></a>内连接 INNER JOIN</h5><ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> ... <span class="keyword">from</span> tableName1 <span class="keyword">inner</span> <span class="keyword">join</span> tableName2</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>笛卡尔积</p>
+<blockquote>
+<p>笛卡尔积(A集合&amp;B集合)：使用A中的每个记录一次关联B中每个记录，笛卡尔积&#x3D;A总数*B总数</p>
+<p>如果直接执行，会获取两种数据表中的数据集合的笛卡尔积(一次使用tableName1 表中的每一条记录去匹配tableName2中的每一条数据)</p>
+</blockquote>
+</li>
+<li><p>内连接条件</p>
+<blockquote>
+<p>两张表用inner join连接查询之后生成的笛卡尔积数据中很多都是无意义的，我们需要消除这个缺点</p>
+</blockquote>
+<ul>
+<li><p>使用 <code>on</code> 设置两张表连接查询的匹配条件</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 使用where设置过滤条件：先生成笛卡尔积再从笛卡尔积中过滤数据(效率很低)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>  students <span class="keyword">INNER</span> <span class="keyword">JOIN</span> classes </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">where</span> students.cid <span class="operator">=</span> classes.class_id;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 使用ON设置连接查询条件：先判断连接条件是否成立，如果成立两张表的数据进行</span></span><br><span class="line"><span class="comment">-- 组合生成一条结果记录</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> students <span class="keyword">INNER</span> <span class="keyword">JOIN</span> classes </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">ON</span> students.cid <span class="operator">=</span> classes.class_id;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>结果：只获取两种表中匹配条件成立的数据，任何一张表再另一张表如果没有找到对应匹配则不会出现在查询结果中</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="左连接-LEFT-JOIN"><a href="#左连接-LEFT-JOIN" class="headerlink" title="左连接 LEFT JOIN"></a>左连接 LEFT JOIN</h5><blockquote>
+<p>显示左表中的所有数据，如果再右表中存在与左表记录满足匹配条件的数据，则进行匹配，如果左表不存在匹配数据，则显示为NULL</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> lefttable <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> righttable </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">ON</span> 匹配条件 [<span class="keyword">where</span> 条件];</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h5 id="右连接-RIGHT-JOIN"><a href="#右连接-RIGHT-JOIN" class="headerlink" title="右连接 RIGHT JOIN"></a>右连接 RIGHT JOIN</h5><blockquote>
+<p>显示右表中的所有数据，如果再左表中存在与右表记录满足匹配条件的数据，则进行匹配，如果右表不存在匹配数据，则显示为NULL</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> lefttable <span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> righttable </span><br><span class="line">    <span class="operator">-</span><span class="operator">&gt;</span> <span class="keyword">ON</span> 匹配条件 [<span class="keyword">where</span> 条件];</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h5 id="数据表别名"><a href="#数据表别名" class="headerlink" title="数据表别名"></a>数据表别名</h5><blockquote>
+<p>如果在连接查询的多张表中存在相同名字的字段，我们可以使用<code>表名，字段名</code> 来进行区分，如果表名太长则不便于SQL语句的编写，我们可以使用数据表别名</p>
+</blockquote>
+<ul>
+<li><p>示例</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> s.<span class="operator">*</span>,c.class_name</span><br><span class="line"><span class="keyword">from</span> students s</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> classes c ## 空格<span class="operator">+</span>别名</span><br><span class="line"><span class="keyword">ON</span> s.cid <span class="operator">=</span> c.class_id;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h5 id="子查询-x2F-嵌套查询"><a href="#子查询-x2F-嵌套查询" class="headerlink" title="子查询 &#x2F; 嵌套查询"></a>子查询 &#x2F; 嵌套查询</h5><blockquote>
+<p>先进行一次查询，第一次查询的结果作为第二次查询的源条件</p>
+</blockquote>
+<ul>
+<li><p>示例一</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">## 先查询括号里面的</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>  students <span class="keyword">where</span> cid <span class="operator">=</span> (</span><br><span class="line"><span class="keyword">select</span> class_id <span class="keyword">from</span> classes <span class="keyword">where</span> class_name<span class="operator">=</span><span class="string">&#x27;Java2105&#x27;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>示例二</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 如果子查询返回的结果时多个值(单列多行)，条件使用IN</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>  students <span class="keyword">where</span> cid </span><br><span class="line"><span class="keyword">IN</span> (<span class="keyword">select</span> class_id <span class="keyword">from</span> classes <span class="keyword">where</span> class_name <span class="keyword">LIKE</span> <span class="string">&#x27;Java%&#x27;</span>);</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>示例三</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- (多行多列)先查询cid=1班级中的所有学生信息，将这些信息作为一个整体虚拟表</span></span><br><span class="line"><span class="comment">-- 在基于这个虚拟表查询性别为男的学生信息(&#x27;虚拟表&#x27;需要别名)</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> students <span class="keyword">where</span> cid<span class="operator">=</span><span class="number">1</span>) t </span><br><span class="line"><span class="keyword">where</span> t.stu_gender<span class="operator">=</span><span class="string">&#x27;男&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
 
             </div>
 
@@ -698,7 +777,7 @@
         <li><strong>创建于:</strong> 2023-04-12 11:42:33</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-13 13:50:11
+                <strong>更新于:</strong> 2023-04-13 20:37:39
             </li>
         
         <li>
