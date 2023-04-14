@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>3月7日学习记录</title>
+    <url>/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
+<h4 id="路由的两种写法"><a href="#路由的两种写法" class="headerlink" title="路由的两种写法"></a>路由的两种写法</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">app.add_url_rule(<span class="string">&#x27;/index&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, index)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/inddex&#x27;</span></span>)</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="路由加载源码的流程"><a href="#路由加载源码的流程" class="headerlink" title="路由加载源码的流程"></a>路由加载源码的流程</h4><ul>
+<li><p>将URL和函数打包成为Rule对象</p>
+</li>
+<li><p>将Rule对象添加到map对象中</p>
+</li>
+<li><p>app_url_map &#x3D; map对象</p>
+</li>
+</ul>
+<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&lt;string:name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;name&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>uuid类型 类似于xxxxx-xxxxxxx-xxxxxx-xxxxxx</p>
+<h5 id="自定义路由"><a href="#自定义路由" class="headerlink" title="自定义路由"></a>自定义路由</h5><p>必须继承BaseConverter</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, regex</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>)</span><br><span class="line">        self.regex = regex</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_python</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.url_map.converters[<span class="string">&#x27;regex&#x27;</span>] = RegexConverter</span><br></pre></td></tr></table></figure></div>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><hr>
+<h4 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span>, method=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="CBV"><a href="#CBV" class="headerlink" title="CBV"></a>CBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(views, MethodView):</span><br><span class="line">    method = [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span><br><span class="line">    decorators = [test1, test2] //CBV添加装饰器</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/user&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;user&#x27;</span>))</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="模板-jinja2"><a href="#模板-jinja2" class="headerlink" title="模板(jinja2)"></a>模板(jinja2)</h3><hr>
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>模板可继承</p>
+<ol>
+<li><p>被继承:</p>
+<p><code>&#123;% block content %&#125; ? &#123;% endbloack %&#125;</code>  </p>
+</li>
+<li><p>继承:</p>
+<p><code>&#123;% extends 'layout.html' %&#125;  &#123;% block content %&#125; ? &#123;% endbloack %&#125;</code></p>
+</li>
+<li><p>引入:</p>
+<p><code>&#123;% include 'from.html' %&#125;</code></p>
+</li>
+</ol>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dunc</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line">render_template(<span class="string">&#x27;md.html&#x27;</span>, nums=nums, f=func) //可以传递函数名</span><br></pre></td></tr></table></figure></div>
+
+<p>定义全局模板方法</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.template_glabol() //模板中全局使用 &#123;&#123; func(<span class="params"><span class="string">&#x27;haha&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.template_filter() //模板全局使用 &#123;&#123; <span class="string">&#x27;haha&#x27;</span>|f(<span class="params"><span class="string">&#x27;e&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">arg,h</span>):</span><br><span class="line">    <span class="keyword">return</span> arg + h</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/md/hg&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;md_hg.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>如果想要将一个方法限制为一个蓝图域中使用，只需将app修改即可</p>
+<h3 id="特殊装饰器"><a href="#特殊装饰器" class="headerlink" title="特殊装饰器"></a>特殊装饰器</h3><hr>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.before_request //视图函数运行前运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f1</span>():// 一旦返回值为真，则停止行为向下传播(判断用户登录等), 反之空，则继续</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request //视图函数运行结束后运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">response</span>): //视图函数有返回值，就必须返回一个Responce</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f2&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>或</p>
+<p><code>app.before_request(func)</code>不加装饰器使用</p>
+]]></content>
+      <tags>
+        <tag>Flask Study</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>3月6日 学习记录</title>
     <url>/2023/03/06/3%E6%9C%886%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h3 id="唯一的URL-x2F-重定向行为"><a href="#唯一的URL-x2F-重定向行为" class="headerlink" title="唯一的URL&#x2F;重定向行为"></a>唯一的URL&#x2F;重定向行为</h3><hr>
@@ -62,62 +118,6 @@
       </tags>
   </entry>
   <entry>
-    <title>3月7日学习记录</title>
-    <url>/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
-<h4 id="路由的两种写法"><a href="#路由的两种写法" class="headerlink" title="路由的两种写法"></a>路由的两种写法</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">app.add_url_rule(<span class="string">&#x27;/index&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, index)</span><br></pre></td></tr></table></figure></div>
-
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/inddex&#x27;</span></span>)</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="路由加载源码的流程"><a href="#路由加载源码的流程" class="headerlink" title="路由加载源码的流程"></a>路由加载源码的流程</h4><ul>
-<li><p>将URL和函数打包成为Rule对象</p>
-</li>
-<li><p>将Rule对象添加到map对象中</p>
-</li>
-<li><p>app_url_map &#x3D; map对象</p>
-</li>
-</ul>
-<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&lt;string:name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;name&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>uuid类型 类似于xxxxx-xxxxxxx-xxxxxx-xxxxxx</p>
-<h5 id="自定义路由"><a href="#自定义路由" class="headerlink" title="自定义路由"></a>自定义路由</h5><p>必须继承BaseConverter</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, regex</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>)</span><br><span class="line">        self.regex = regex</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_python</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.url_map.converters[<span class="string">&#x27;regex&#x27;</span>] = RegexConverter</span><br></pre></td></tr></table></figure></div>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><hr>
-<h4 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span>, method=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="CBV"><a href="#CBV" class="headerlink" title="CBV"></a>CBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(views, MethodView):</span><br><span class="line">    method = [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span><br><span class="line">    decorators = [test1, test2] //CBV添加装饰器</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/user&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;user&#x27;</span>))</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="模板-jinja2"><a href="#模板-jinja2" class="headerlink" title="模板(jinja2)"></a>模板(jinja2)</h3><hr>
-<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>模板可继承</p>
-<ol>
-<li><p>被继承:</p>
-<p><code>&#123;% block content %&#125; ? &#123;% endbloack %&#125;</code>  </p>
-</li>
-<li><p>继承:</p>
-<p><code>&#123;% extends 'layout.html' %&#125;  &#123;% block content %&#125; ? &#123;% endbloack %&#125;</code></p>
-</li>
-<li><p>引入:</p>
-<p><code>&#123;% include 'from.html' %&#125;</code></p>
-</li>
-</ol>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dunc</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line">render_template(<span class="string">&#x27;md.html&#x27;</span>, nums=nums, f=func) //可以传递函数名</span><br></pre></td></tr></table></figure></div>
-
-<p>定义全局模板方法</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.template_glabol() //模板中全局使用 &#123;&#123; func(<span class="params"><span class="string">&#x27;haha&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.template_filter() //模板全局使用 &#123;&#123; <span class="string">&#x27;haha&#x27;</span>|f(<span class="params"><span class="string">&#x27;e&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">arg,h</span>):</span><br><span class="line">    <span class="keyword">return</span> arg + h</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/md/hg&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;md_hg.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>如果想要将一个方法限制为一个蓝图域中使用，只需将app修改即可</p>
-<h3 id="特殊装饰器"><a href="#特殊装饰器" class="headerlink" title="特殊装饰器"></a>特殊装饰器</h3><hr>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.before_request //视图函数运行前运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f1</span>():// 一旦返回值为真，则停止行为向下传播(判断用户登录等), 反之空，则继续</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request //视图函数运行结束后运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">response</span>): //视图函数有返回值，就必须返回一个Responce</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f2&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>或</p>
-<p><code>app.before_request(func)</code>不加装饰器使用</p>
-]]></content>
-      <tags>
-        <tag>Flask Study</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>3月5日 学习记录</title>
     <url>/2023/03/05/3%E6%9C%885%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h4 id="flask中函数app-route-嵌套装饰器可能错误"><a href="#flask中函数app-route-嵌套装饰器可能错误" class="headerlink" title="flask中函数app.route()嵌套装饰器可能错误"></a>flask中函数app.route()嵌套装饰器可能错误</h4><hr>
@@ -157,48 +157,6 @@
 ]]></content>
       <tags>
         <tag>Flask Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>3月9日项目问题</title>
-    <url>/2023/03/09/3%E6%9C%889%E6%97%A5%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h4 id="读取yaml"><a href="#读取yaml" class="headerlink" title="读取yaml"></a>读取yaml</h4><p>引用<code>from ruamel import yaml</code></p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">yaml.load(</span><br><span class="line">    Path(<span class="string">&#x27;C:\\Users\\Lenovo\\Desktop\\bot\\IntBot\\configs\\config.yaml&#x27;</span>).read_text(encoding=<span class="string">&#x27;utf-8&#x27;</span>),</span><br><span class="line">    Loader=yaml.Loader</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="pydantic"><a href="#pydantic" class="headerlink" title="pydantic"></a>pydantic</h4><p><code>extra=&#39;ignore&#39;</code>忽略额外属性</p>
-<h3 id="flask-migrate数据迁移"><a href="#flask-migrate数据迁移" class="headerlink" title="flask-migrate数据迁移"></a>flask-migrate数据迁移</h3><p>因为在开发中，由于数据表模型的改动，数据经常被清除，因此可以使用数据迁移，保存旧数据</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_sqlalchemy <span class="keyword">import</span> SQLAlchemy</span><br><span class="line"><span class="keyword">from</span> flask_migrate <span class="keyword">import</span> Migrate</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="comment"># 设置数据库连接地址</span></span><br><span class="line">DB_URI = <span class="string">&#x27;mysql+pymysql://root:123456@127.0.0.1:3306/web&#x27;</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_DATABASE_URI&#x27;</span>] = DB_URI</span><br><span class="line"><span class="comment"># 是否追踪数据库修改，一般不开启, 会影响性能</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_TRACK_MODIFICATIONS&#x27;</span>] = <span class="literal">False</span></span><br><span class="line"><span class="comment"># 是否显示底层执行的SQL语句</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_ECHO&#x27;</span>] = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化db,关联flask 项目</span></span><br><span class="line">db = SQLAlchemy(app)</span><br><span class="line"><span class="comment"># 迁移组件初始化</span></span><br><span class="line">Migrate(app, db)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Students</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;students&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">20</span>))</span><br><span class="line">    fullname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line">    nickname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Students(name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;, fullname=&#x27;<span class="subst">&#123;self.fullname&#125;</span>&#x27;, nickname=&#x27;<span class="subst">&#123;self.nickname&#125;</span>&#x27;)&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Users</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;user&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Users(id=&#x27;<span class="subst">&#123;self.<span class="built_in">id</span>&#125;</span>&#x27;, name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;)&gt;&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>执行迁移命令，先设置环境变量, 如果启动文件是app.py 这步可以省略。</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
-
-<p>windows用set设置环境变量，linux 用export 设置环境变量</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
-
-<p>执行相关命令</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db init  <span class="comment"># 生成迁移文件夹  只执行一次</span></span><br><span class="line">flask db migrate  <span class="comment"># ⽣成迁移版本, 保存到迁移文件夹中</span></span><br><span class="line">flask db upgrade  <span class="comment"># 执行迁移</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="迁移命令"><a href="#迁移命令" class="headerlink" title="迁移命令"></a>迁移命令</h4><p>init 命令执行后，会生成migrations目录</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db init</span><br></pre></td></tr></table></figure></div>
-
-<p>migrate 命令生成迁移脚本，保存到迁移文件夹中versions目录</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db migrate</span><br></pre></td></tr></table></figure></div>
-
-<p>upgrade 命令执行迁移</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db upgrade</span><br></pre></td></tr></table></figure></div>
-
-<p>执行完upgrade 命令才会在数据库中生成表</p>
-<h3 id="虚拟环境直接复制迁移"><a href="#虚拟环境直接复制迁移" class="headerlink" title="虚拟环境直接复制迁移"></a>虚拟环境直接复制迁移</h3><ol>
-<li><p>迁移到新电脑，将 虚拟环境文件夹内的pyvenv.cfg文件中home参数，写成新电脑python的路径</p>
-</li>
-<li><p>修改虚拟环境文件夹中Scripts中的activate内VIRTUAL_ENV参数修改成新电脑虚拟环境文件夹路径</p>
-</li>
-<li><p>修改虚拟文件夹中Scripts中的activate.bat内set “VIRTUAL_ENV参数改成新电脑虚拟环境文件夹路径</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Project</tag>
       </tags>
   </entry>
   <entry>
@@ -523,6 +481,170 @@
       </tags>
   </entry>
   <entry>
+    <title>3月9日项目问题</title>
+    <url>/2023/03/09/3%E6%9C%889%E6%97%A5%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h4 id="读取yaml"><a href="#读取yaml" class="headerlink" title="读取yaml"></a>读取yaml</h4><p>引用<code>from ruamel import yaml</code></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">yaml.load(</span><br><span class="line">    Path(<span class="string">&#x27;C:\\Users\\Lenovo\\Desktop\\bot\\IntBot\\configs\\config.yaml&#x27;</span>).read_text(encoding=<span class="string">&#x27;utf-8&#x27;</span>),</span><br><span class="line">    Loader=yaml.Loader</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="pydantic"><a href="#pydantic" class="headerlink" title="pydantic"></a>pydantic</h4><p><code>extra=&#39;ignore&#39;</code>忽略额外属性</p>
+<h3 id="flask-migrate数据迁移"><a href="#flask-migrate数据迁移" class="headerlink" title="flask-migrate数据迁移"></a>flask-migrate数据迁移</h3><p>因为在开发中，由于数据表模型的改动，数据经常被清除，因此可以使用数据迁移，保存旧数据</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_sqlalchemy <span class="keyword">import</span> SQLAlchemy</span><br><span class="line"><span class="keyword">from</span> flask_migrate <span class="keyword">import</span> Migrate</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="comment"># 设置数据库连接地址</span></span><br><span class="line">DB_URI = <span class="string">&#x27;mysql+pymysql://root:123456@127.0.0.1:3306/web&#x27;</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_DATABASE_URI&#x27;</span>] = DB_URI</span><br><span class="line"><span class="comment"># 是否追踪数据库修改，一般不开启, 会影响性能</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_TRACK_MODIFICATIONS&#x27;</span>] = <span class="literal">False</span></span><br><span class="line"><span class="comment"># 是否显示底层执行的SQL语句</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_ECHO&#x27;</span>] = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化db,关联flask 项目</span></span><br><span class="line">db = SQLAlchemy(app)</span><br><span class="line"><span class="comment"># 迁移组件初始化</span></span><br><span class="line">Migrate(app, db)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Students</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;students&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">20</span>))</span><br><span class="line">    fullname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line">    nickname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Students(name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;, fullname=&#x27;<span class="subst">&#123;self.fullname&#125;</span>&#x27;, nickname=&#x27;<span class="subst">&#123;self.nickname&#125;</span>&#x27;)&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Users</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;user&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Users(id=&#x27;<span class="subst">&#123;self.<span class="built_in">id</span>&#125;</span>&#x27;, name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;)&gt;&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>执行迁移命令，先设置环境变量, 如果启动文件是app.py 这步可以省略。</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
+
+<p>windows用set设置环境变量，linux 用export 设置环境变量</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
+
+<p>执行相关命令</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db init  <span class="comment"># 生成迁移文件夹  只执行一次</span></span><br><span class="line">flask db migrate  <span class="comment"># ⽣成迁移版本, 保存到迁移文件夹中</span></span><br><span class="line">flask db upgrade  <span class="comment"># 执行迁移</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="迁移命令"><a href="#迁移命令" class="headerlink" title="迁移命令"></a>迁移命令</h4><p>init 命令执行后，会生成migrations目录</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db init</span><br></pre></td></tr></table></figure></div>
+
+<p>migrate 命令生成迁移脚本，保存到迁移文件夹中versions目录</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db migrate</span><br></pre></td></tr></table></figure></div>
+
+<p>upgrade 命令执行迁移</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db upgrade</span><br></pre></td></tr></table></figure></div>
+
+<p>执行完upgrade 命令才会在数据库中生成表</p>
+<h3 id="虚拟环境直接复制迁移"><a href="#虚拟环境直接复制迁移" class="headerlink" title="虚拟环境直接复制迁移"></a>虚拟环境直接复制迁移</h3><ol>
+<li><p>迁移到新电脑，将 虚拟环境文件夹内的pyvenv.cfg文件中home参数，写成新电脑python的路径</p>
+</li>
+<li><p>修改虚拟环境文件夹中Scripts中的activate内VIRTUAL_ENV参数修改成新电脑虚拟环境文件夹路径</p>
+</li>
+<li><p>修改虚拟文件夹中Scripts中的activate.bat内set “VIRTUAL_ENV参数改成新电脑虚拟环境文件夹路径</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Project</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript-React-1</title>
+    <url>/2023/03/07/JavaScript-React-1/</url>
+    <content><![CDATA[<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><hr>
+<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ul>
+<li><p>只有一个参数的函数 参数 &#x3D;&gt; 返回值</p>
+</li>
+<li><p>多个参数使用括号 (a,b) &#x3D;&gt; 返回值</p>
+</li>
+<li><p>返回值必须是一个表达式</p>
+</li>
+<li><p>返回值是对象必须带括号</p>
+</li>
+<li><p>如需写语句，在后添加代码块</p>
+</li>
+</ul>
+<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>隐含参数arguments-表示当前函数的实参 arguments.lenth 获取实参数。剩余参数…args</p>
+</div>
+
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性:"></a>特性:</h4><ul>
+<li><p>箭头函数中没有arguments，可以使用…args</p>
+</li>
+<li><p>箭头函数的this总是看外层作用域的this</p>
+</li>
+<li><p>箭头函数中的this无法通过call(), apply(), bind()修改</p>
+</li>
+<li><p>箭头函数无法作为构造函数，无法new</p>
+</li>
+</ul>
+<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><hr>
+<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>默认情况下，script标签中不能使用import语句，必须设置script的type属性为module</p>
+</div>
+
+<h4 id="导出"><a href="#导出" class="headerlink" title="导出:"></a>导出:</h4><ul>
+<li><p>默认导出</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>一个模块里只有一个默认导出</p>
+<ul>
+<li><p>命名导出</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b,c&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="导入"><a href="#导入" class="headerlink" title="导入:"></a>导入:</h4><ul>
+<li><p>默认导入</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>导入默认模块时，变量名可以自主制定，无需使用模块中的变量名</p>
+<ul>
+<li><p>命名导入</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;a,b,c&#125; <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
+<li><p>构造函数</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>构造函数中，可以通过this来引用当前的对象</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
+<li><p>严格模式</p>
+<p>“use strict”</p>
+<ol>
+<li><p>类中的所有代码都会在严格模式下执行</p>
+</li>
+<li><p>函数的this不再是window,而是undefined</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> test = mc.<span class="property">fn</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+</ul>
+<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>以方法形式调用时, this就是当前的实例。以函数形式调用, this是undefined</p>
+</div>
+
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = <span class="variable language_">this</span>.<span class="property">fn</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>) <span class="comment">//将fn方法的this绑定为当前实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>可以限制this绑定在自身</p>
+<p>也可以使用箭头函数的形式调用，永远绑定为本身</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">   fn = <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>&#123;&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>在子类中重写父类构造函数时，应该在子类中第一时间调用父类构造函数，否则报错</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(name, age); <span class="comment">//调用父类构造函数，并且需要加入父类参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
+<li><p>动态属性</p>
+<p>需要首先new一个实例才能使用</p>
+</li>
+<li><p>静态属性</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> name = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="comment">// 静态方法this不是实例对象而是当前类对象</span></span><br><span class="line">    <span class="keyword">static</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>可以直接使用<code>MyClass.name</code></p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
+<ul>
+<li><p>map()</p>
+<ol>
+<li><p>可以根据原有的数组返回一个新数组</p>
+</li>
+<li><p>需要一个回调函数作为参数, 回调函数返回值会成为新数组中的元素</p>
+<p>用法:</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> result = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> item+<span class="number">2</span></span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 第一个参数 当前元素</span></span><br><span class="line"><span class="comment">// 第二个参数 当前元素索引</span></span><br><span class="line"><span class="comment">// 第三个参数 当前数组</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+<li><p>filter()</p>
+<p>过滤器</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">result = arr.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item % <span class="number">2</span> === <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>根据条件过滤元素</p>
+<ul>
+<li><p>find()</p>
+<p>找第一个被过滤条件通过的元素</p>
+</li>
+</ul>
+</li>
+<li><p>reduce()</p>
+<p>整合数组</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> &#123;&#125;, <span class="number">0</span>) </span><br><span class="line"><span class="comment">// 0的位置是定义第一次prev的值, prev 上一次合并后值, curr 当前值</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>React Study</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript-React-2</title>
     <url>/2023/03/08/JavaScript-React-2/</url>
     <content><![CDATA[<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><hr>
@@ -706,128 +828,6 @@
 <li><p>createRef钩子函数</p>
 <p>与useRef相同，都是创建一个不会变化的JS容器</p>
 </li>
-</ul>
-]]></content>
-      <tags>
-        <tag>React Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript-React-1</title>
-    <url>/2023/03/07/JavaScript-React-1/</url>
-    <content><![CDATA[<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><hr>
-<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ul>
-<li><p>只有一个参数的函数 参数 &#x3D;&gt; 返回值</p>
-</li>
-<li><p>多个参数使用括号 (a,b) &#x3D;&gt; 返回值</p>
-</li>
-<li><p>返回值必须是一个表达式</p>
-</li>
-<li><p>返回值是对象必须带括号</p>
-</li>
-<li><p>如需写语句，在后添加代码块</p>
-</li>
-</ul>
-<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>隐含参数arguments-表示当前函数的实参 arguments.lenth 获取实参数。剩余参数…args</p>
-</div>
-
-<h4 id="特性"><a href="#特性" class="headerlink" title="特性:"></a>特性:</h4><ul>
-<li><p>箭头函数中没有arguments，可以使用…args</p>
-</li>
-<li><p>箭头函数的this总是看外层作用域的this</p>
-</li>
-<li><p>箭头函数中的this无法通过call(), apply(), bind()修改</p>
-</li>
-<li><p>箭头函数无法作为构造函数，无法new</p>
-</li>
-</ul>
-<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><hr>
-<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>默认情况下，script标签中不能使用import语句，必须设置script的type属性为module</p>
-</div>
-
-<h4 id="导出"><a href="#导出" class="headerlink" title="导出:"></a>导出:</h4><ul>
-<li><p>默认导出</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>一个模块里只有一个默认导出</p>
-<ul>
-<li><p>命名导出</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b,c&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h4 id="导入"><a href="#导入" class="headerlink" title="导入:"></a>导入:</h4><ul>
-<li><p>默认导入</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>导入默认模块时，变量名可以自主制定，无需使用模块中的变量名</p>
-<ul>
-<li><p>命名导入</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;a,b,c&#125; <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span></span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
-<li><p>构造函数</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>构造函数中，可以通过this来引用当前的对象</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
-<li><p>严格模式</p>
-<p>“use strict”</p>
-<ol>
-<li><p>类中的所有代码都会在严格模式下执行</p>
-</li>
-<li><p>函数的this不再是window,而是undefined</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> test = mc.<span class="property">fn</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-</ul>
-<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>以方法形式调用时, this就是当前的实例。以函数形式调用, this是undefined</p>
-</div>
-
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = <span class="variable language_">this</span>.<span class="property">fn</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>) <span class="comment">//将fn方法的this绑定为当前实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>可以限制this绑定在自身</p>
-<p>也可以使用箭头函数的形式调用，永远绑定为本身</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">   fn = <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>&#123;&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>在子类中重写父类构造函数时，应该在子类中第一时间调用父类构造函数，否则报错</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(name, age); <span class="comment">//调用父类构造函数，并且需要加入父类参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
-<li><p>动态属性</p>
-<p>需要首先new一个实例才能使用</p>
-</li>
-<li><p>静态属性</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> name = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="comment">// 静态方法this不是实例对象而是当前类对象</span></span><br><span class="line">    <span class="keyword">static</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>可以直接使用<code>MyClass.name</code></p>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
-<ul>
-<li><p>map()</p>
-<ol>
-<li><p>可以根据原有的数组返回一个新数组</p>
-</li>
-<li><p>需要一个回调函数作为参数, 回调函数返回值会成为新数组中的元素</p>
-<p>用法:</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> result = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> item+<span class="number">2</span></span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 第一个参数 当前元素</span></span><br><span class="line"><span class="comment">// 第二个参数 当前元素索引</span></span><br><span class="line"><span class="comment">// 第三个参数 当前数组</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-<li><p>filter()</p>
-<p>过滤器</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">result = arr.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item % <span class="number">2</span> === <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>根据条件过滤元素</p>
-<ul>
-<li><p>find()</p>
-<p>找第一个被过滤条件通过的元素</p>
-</li>
-</ul>
-</li>
-<li><p>reduce()</p>
-<p>整合数组</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> &#123;&#125;, <span class="number">0</span>) </span><br><span class="line"><span class="comment">// 0的位置是定义第一次prev的值, prev 上一次合并后值, curr 当前值</span></span><br></pre></td></tr></table></figure></div></li>
 </ul>
 ]]></content>
       <tags>
@@ -1334,62 +1334,6 @@
 ]]></content>
       <tags>
         <tag>Linux Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据库</title>
-    <url>/2023/04/12/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<ol>
-<li><p>MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？</p>
-<blockquote>
-</blockquote>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>poetry使用</title>
-    <url>/2023/03/09/poetry%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<h3 id="Poetry"><a href="#Poetry" class="headerlink" title="Poetry"></a>Poetry</h3><hr>
-<p>使用pyproject.toml管理整个项目的依赖</p>
-<h4 id="安装poetry"><a href="#安装poetry" class="headerlink" title="安装poetry"></a>安装poetry</h4><ol>
-<li><p>安装pipx为每个包自动创建隔离环境，方便管理</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pip install pipx</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>安装poetry</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipx install poetry</span><br></pre></td></tr></table></figure></div></li>
-</ol>
-<h4 id="项目中使用portry"><a href="#项目中使用portry" class="headerlink" title="项目中使用portry"></a>项目中使用portry</h4><ol>
-<li><p>初始化pyproject.toml</p>
-<p>在项目路径中使用:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry init</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>创建项目虚拟环境</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry <span class="built_in">env</span> use python</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>进入虚拟环境</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry shell</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>添加新依赖</p>
-<p>在pyproject.toml文件中添加如下内容:</p>
-<div class="highlight-container" data-rel="Toml"><figure class="iseeu highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[[tool.poetry.source]]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;aliyun&quot;</span></span><br><span class="line"><span class="attr">url</span> = <span class="string">&quot;https://mirrors.aliyun.com/pypi/simple&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>添加普通依赖:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt;</span><br></pre></td></tr></table></figure></div>
-
-<p>添加开发依赖:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt; -D</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>测试</p>
-<p>使用pytest</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry run pytest</span><br></pre></td></tr></table></figure></div></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>poetry</tag>
       </tags>
   </entry>
   <entry>
@@ -2015,7 +1959,8 @@
 </li>
 </ul>
 </li>
-<li><p>创建存储过程</p>
+</ul>
+<h3 id="创建存储过程"><a href="#创建存储过程" class="headerlink" title="创建存储过程"></a>创建存储过程</h3><hr>
 <ul>
 <li><p>语法</p>
 <div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 创建一个存储过程实现加法运算</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> <span class="operator">&lt;</span>procName<span class="operator">&gt;</span>(</span><br><span class="line">    [<span class="keyword">IN</span> param1 <span class="type">int</span>, <span class="keyword">IN</span> param2 <span class="type">int</span>,...,<span class="keyword">OUT</span> param3 <span class="type">int</span>]</span><br><span class="line">)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="comment">-- SQL语句</span></span><br><span class="line"><span class="keyword">end</span>;</span><br></pre></td></tr></table></figure></div>
@@ -2023,28 +1968,23 @@
 <li><p>案例</p>
 <div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 创建一个存储过程实现加法运算</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> test1(<span class="keyword">IN</span> a <span class="type">int</span>, <span class="keyword">IN</span> b <span class="type">int</span>, <span class="keyword">OUT</span> c <span class="type">int</span>)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">SET</span> c <span class="operator">=</span> a<span class="operator">+</span>b;</span><br><span class="line"><span class="keyword">end</span>;</span><br></pre></td></tr></table></figure></div></li>
 </ul>
-</li>
-<li><p>调用存储过程</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="variable">@m</span> <span class="operator">=</span> <span class="number">0</span>; ## 定义变量<span class="variable">@m</span></span><br><span class="line"><span class="keyword">call</span> test1(<span class="number">3</span>, <span class="number">4</span>, <span class="variable">@m</span>) ## 将<span class="variable">@m</span>传递给c</span><br><span class="line"><span class="comment">-- 显示变量值</span></span><br><span class="line"><span class="keyword">select</span> <span class="variable">@m</span> <span class="keyword">from</span> DUAL;</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>存储过程中变量的使用</p>
+<h4 id="调用存储过程"><a href="#调用存储过程" class="headerlink" title="调用存储过程"></a>调用存储过程</h4><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="variable">@m</span> <span class="operator">=</span> <span class="number">0</span>; ## 定义变量<span class="variable">@m</span></span><br><span class="line"><span class="keyword">call</span> test1(<span class="number">3</span>, <span class="number">4</span>, <span class="variable">@m</span>) ## 将<span class="variable">@m</span>传递给c</span><br><span class="line"><span class="comment">-- 显示变量值</span></span><br><span class="line"><span class="keyword">select</span> <span class="variable">@m</span> <span class="keyword">from</span> DUAL;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="存储过程中变量的使用"><a href="#存储过程中变量的使用" class="headerlink" title="存储过程中变量的使用"></a>存储过程中变量的使用</h3><hr>
 <blockquote>
 <p>局部变量 和 用户变量</p>
 </blockquote>
-<ul>
-<li><p>局部变量</p>
-<blockquote>
+<h4 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h4><blockquote>
 <p>定义在存储过程中的变量，只能在存储过程内部使用</p>
 </blockquote>
 <div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 创建一个存储过程，计算 输入参数的平方 与 输入参数/2 之和</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> test2(<span class="keyword">IN</span> a <span class="type">int</span>, <span class="keyword">OUT</span> c <span class="type">int</span>)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">declare</span> x <span class="type">int</span> <span class="keyword">default</span> <span class="number">0</span>; ## 定义x <span class="type">int</span>类型 默认值为<span class="number">0</span></span><br><span class="line">    <span class="keyword">declare</span> y <span class="type">int</span> <span class="keyword">default</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">set</span> x <span class="operator">=</span> a<span class="operator">*</span>a; ## 设置x的值</span><br><span class="line">    <span class="keyword">set</span> y <span class="operator">=</span> a<span class="operator">/</span><span class="number">2</span>;</span><br><span class="line">    <span class="keyword">set</span> r <span class="operator">=</span> x<span class="operator">+</span>y;</span><br><span class="line"><span class="keyword">end</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> x <span class="keyword">from</span> DUAL; ## 无结果，局部变量不会出现在DUAL内</span><br></pre></td></tr></table></figure></div>
 
-<ol>
-<li><p>局部变量要定义在存储过程中，而且必须定义在存储过程开始</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="operator">&lt;</span>变量名<span class="operator">&gt;</span> <span class="operator">&lt;</span>变量类型<span class="operator">&gt;</span> [<span class="keyword">default</span> 默认值];</span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-<li><p>用户变量</p>
 <blockquote>
+<p>局部变量要定义在存储过程中，而且必须定义在存储过程开始</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="operator">&lt;</span>变量名<span class="operator">&gt;</span> <span class="operator">&lt;</span>变量类型<span class="operator">&gt;</span> [<span class="keyword">default</span> 默认值];</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="用户变量"><a href="#用户变量" class="headerlink" title="用户变量"></a>用户变量</h4><blockquote>
 <p>相当于全局变量，定义的用户变量可以通过<code>select @attrName from DUAL</code>查询到</p>
 </blockquote>
 <div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 用户变量直接使用set设置</span></span><br><span class="line"><span class="comment">-- 用户变量需要舒勇@来修饰</span></span><br><span class="line"><span class="keyword">set</span> <span class="variable">@n</span><span class="operator">=</span><span class="number">1</span>;</span><br><span class="line"><span class="keyword">call</span> test2(<span class="number">6</span>,<span class="variable">@n</span>);</span><br><span class="line"><span class="keyword">select</span> <span class="variable">@n</span> <span class="keyword">from</span> DUAL;</span><br></pre></td></tr></table></figure></div>
@@ -2056,18 +1996,125 @@
 </blockquote>
 </li>
 </ul>
-</li>
-<li><p>设置变量值</p>
-<blockquote>
+<h5 id="设置变量值"><a href="#设置变量值" class="headerlink" title="设置变量值"></a>设置变量值</h5><blockquote>
 <p>无论时局部变量还是用户变量，都是使用<code>set</code> 关键字修改值</p>
 </blockquote>
 <div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="variable">@n</span><span class="operator">=</span><span class="number">1</span>;</span><br><span class="line"><span class="comment">-- 或</span></span><br><span class="line"><span class="keyword">set</span> y <span class="operator">=</span> a<span class="operator">+</span>b;</span><br></pre></td></tr></table></figure></div>
-</li>
+
+<ul>
 <li><p>在SQL语句中赋值给变量</p>
 <div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> test3(<span class="keyword">OUT</span> c <span class="type">int</span>)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">select</span> <span class="built_in">count</span>(stu_num) <span class="keyword">INTO</span> c <span class="keyword">from</span> students;</span><br><span class="line">    ## 使用select...INTO关键字段，赋值给c</span><br><span class="line"><span class="keyword">end</span>;</span><br></pre></td></tr></table></figure></div></li>
 </ul>
+<h3 id="存储过程的参数"><a href="#存储过程的参数" class="headerlink" title="存储过程的参数"></a>存储过程的参数</h3><hr>
+<blockquote>
+<p>MySQL存储过程的参数：IN &#x2F; OUT &#x2F; INOUT</p>
+</blockquote>
+<h4 id="IN-输入参数"><a href="#IN-输入参数" class="headerlink" title="IN 输入参数"></a>IN 输入参数</h4><blockquote>
+<p>在调用存储过程中传递数据给存储过程的参数(在调用的过程中必须为具有实际值的变量 或者 字面值)</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> test4(</span><br><span class="line">    <span class="keyword">IN</span> snum <span class="type">char</span>(<span class="number">8</span>), <span class="keyword">IN</span> sname <span class="type">varchar</span>(<span class="number">20</span>), <span class="keyword">IN</span> gender <span class="type">char</span>(<span class="number">2</span>), <span class="keyword">IN</span> age <span class="type">int</span>,</span><br><span class="line">    <span class="keyword">IN</span> cid <span class="type">int</span>, <span class="keyword">IN</span> remark <span class="type">varchar</span>(<span class="number">255</span>))</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">insert</span> <span class="keyword">into</span> students(stu_num,stu_name,stu_gender,stu_age,cid,remark)</span><br><span class="line">    <span class="keyword">values</span>(snum,sname,gender,age,cid,remark);</span><br><span class="line"><span class="keyword">end</span>;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="OUT-输出参数"><a href="#OUT-输出参数" class="headerlink" title="OUT 输出参数"></a>OUT 输出参数</h4><blockquote>
+<p>将存储过程中产生的数据返回给过程调用者</p>
+</blockquote>
+<h4 id="INOUT-输入输出参数"><a href="#INOUT-输入输出参数" class="headerlink" title="INOUT 输入输出参数"></a>INOUT 输入输出参数</h4><blockquote>
+<p>输入与输出都在同一个参数上传递</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> test6(<span class="keyword">INOUT</span> str <span class="type">varchar</span>(<span class="number">20</span>))</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">select</span> stu_name <span class="keyword">INTO</span> str <span class="keyword">from</span> students <span class="keyword">where</span> stu_num<span class="operator">=</span>str;</span><br><span class="line"><span class="keyword">end</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> <span class="variable">@name</span><span class="operator">=</span><span class="string">&#x27;aa&#x27;</span>;</span><br><span class="line"><span class="keyword">call</span> test6(<span class="variable">@name</span>);</span><br><span class="line"><span class="keyword">select</span> <span class="variable">@name</span> <span class="keyword">from</span> dual;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="存储过程中的流程控制"><a href="#存储过程中的流程控制" class="headerlink" title="存储过程中的流程控制"></a>存储过程中的流程控制</h3><hr>
+<blockquote>
+<p>在存储过程中支持流程控制语句用于实现逻辑的控制</p>
+</blockquote>
+<h4 id="分支语句"><a href="#分支语句" class="headerlink" title="分支语句"></a>分支语句</h4><ul>
+<li><p><code>if-then-else</code></p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 单分支</span></span><br><span class="line">if conditions <span class="keyword">then</span></span><br><span class="line">    <span class="comment">-- SQL</span></span><br><span class="line"><span class="keyword">end</span> if;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 双分支</span></span><br><span class="line">if confitions <span class="keyword">then</span></span><br><span class="line">    <span class="comment">-- SQL1</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="comment">-- SQL2</span></span><br><span class="line"><span class="keyword">end</span> if;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p><code>case</code></p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> 变量名</span><br><span class="line"><span class="keyword">when</span> value1 <span class="keyword">then</span></span><br><span class="line">    <span class="comment">-- SQL1</span></span><br><span class="line"><span class="keyword">when</span> value2 <span class="keyword">then</span></span><br><span class="line">    <span class="comment">-- SQL2</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="comment">-- SQL3</span></span><br><span class="line"><span class="keyword">end</span> <span class="keyword">case</span>;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h4><ul>
+<li><p><code>while</code></p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">declare</span> i <span class="type">int</span>;</span><br><span class="line"><span class="keyword">set</span> i <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">while i <span class="operator">&lt;</span> num do</span><br><span class="line">    <span class="comment">--SQL</span></span><br><span class="line">    <span class="keyword">set</span> i <span class="operator">=</span> i <span class="operator">+</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span> while;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p><code>repeat</code></p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">declare</span> i <span class="type">int</span>;</span><br><span class="line"><span class="keyword">set</span> i <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">repeat</span><br><span class="line">    <span class="comment">--SQL</span></span><br><span class="line">    <span class="keyword">insert</span> <span class="keyword">into</span> classes(class_name,remark) </span><br><span class="line">    <span class="keyword">values</span>(CONCAT(<span class="string">&#x27;Python&#x27;</span>,i),<span class="string">&#x27;....&#x27;</span>);</span><br><span class="line">    <span class="keyword">set</span> i <span class="operator">=</span> i<span class="operator">+</span><span class="number">1</span></span><br><span class="line">until i <span class="operator">&gt;</span> num <span class="keyword">end</span> repeat;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p><code>loop</code></p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">declare</span> i <span class="type">int</span>;</span><br><span class="line"><span class="keyword">set</span> i <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">myloop:loop</span><br><span class="line">    <span class="comment">--SQL</span></span><br><span class="line">    if i <span class="operator">=</span> num <span class="keyword">then</span></span><br><span class="line">        leave myloop;</span><br><span class="line">    <span class="keyword">end</span> if;</span><br><span class="line"><span class="keyword">end</span> loop;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="存储过程管理"><a href="#存储过程管理" class="headerlink" title="存储过程管理"></a>存储过程管理</h3><hr>
+<h4 id="查询存储过程"><a href="#查询存储过程" class="headerlink" title="查询存储过程"></a>查询存储过程</h4><blockquote>
+<p>存储过程是属于某个数据库的，也就是说当我们将存储过程创建在某个数据库之后，只能在当前数据库调用此存储过程</p>
+<p>查询：查询某个数据库中有哪些存储过程</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 根据数据库名查询数据库内存储过程</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">procedure</span> status [<span class="keyword">where</span> db<span class="operator">=</span>数据库名];</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询某数据库中特定存储过程的实现细节</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">procedure</span> 数据库名.存储过程;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="修改存储过程"><a href="#修改存储过程" class="headerlink" title="修改存储过程"></a>修改存储过程</h4><blockquote>
+<p>修改存储过程的特征 &#x2F; 特性</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">procedure</span> <span class="operator">&lt;</span>proc_name<span class="operator">&gt;</span> 特征<span class="number">1</span> [特征<span class="number">2</span> 特征<span class="number">3</span> ...];</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>存储过程的特征参数</p>
+<ul>
+<li><p><code>CONTAINS SQL</code> 表示子程序包含 SQL 语句，但不包含读或写数据的语句</p>
+</li>
+<li><p><code>NO SQL</code> 表示子程序中不包含 SQL 语句</p>
+</li>
+<li><p><code>READS SQL DATA</code> 表示子程序中不包含 SQL 语句</p>
+</li>
+<li><p><code>MODIFIES SQL DATA</code> 表示子程序中包含写数据的语句</p>
+</li>
+<li><p><code>SQL SECURITY</code> {DEFINER | INVOKER} 指明谁有权限来执行</p>
+<ul>
+<li><p>DEFINER 表示只有定义者自己才能够执行</p>
+</li>
+<li><p>INVOKER 表示调用者可以执行</p>
 </li>
 </ul>
+</li>
+<li><p><code>COMMENT &#39;string&#39;</code> 表示注释信息</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="删除存储过程"><a href="#删除存储过程" class="headerlink" title="删除存储过程"></a>删除存储过程</h4><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- drop 删除数据库中的对象</span></span><br><span class="line"><span class="comment">-- delete 删除数据表中的数据</span></span><br><span class="line">dro <span class="keyword">procedure</span> proc_test1</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h3><hr>
+<blockquote>
+<p>创建一个存储过程，需要返回查询语句查询到的多条数据</p>
+</blockquote>
+<p><code>concat_ws(&#39;~&#39;, x, xx, aa) = x~xx~aa</code> 拼接 </p>
+<h4 id="游标的概念"><a href="#游标的概念" class="headerlink" title="游标的概念"></a>游标的概念</h4><blockquote>
+<p>游标可以用来一次取出查询结果中的每一条数据，逐个读取</p>
+</blockquote>
+<h4 id="游标的使用步骤"><a href="#游标的使用步骤" class="headerlink" title="游标的使用步骤"></a>游标的使用步骤</h4><ol>
+<li><p>声明游标</p>
+<ul>
+<li><p>声明游标语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">declare</span> cursor_name <span class="keyword">CURSOR</span> <span class="keyword">FOR</span> <span class="operator">&lt;</span>查询语句<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+</li>
+<li><p>打开游标</p>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">open</span> cursor_name;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+</li>
+<li><p>使用游标</p>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> i<span class="operator">=</span><span class="number">0</span>;</span><br><span class="line">while i<span class="operator">&lt;</span>num do</span><br><span class="line">    <span class="keyword">FETCH</span> cursor_name <span class="keyword">INTO</span> bname,bauthor,bprice; ## 循环取出</span><br><span class="line">    <span class="keyword">set</span> i<span class="operator">=</span>i<span class="operator">+</span><span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span> while;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+</li>
+<li><p>关闭游标</p>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">close</span> cursor_name;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+</li>
+</ol>
 ]]></content>
       <tags>
         <tag>MySQL Study</tag>
@@ -2326,6 +2373,20 @@
 </li>
 </ul>
 <p>这些模型区别在于应用程序和内核之间的交互方式以及数据准备和拷贝的过程</p>
+</blockquote>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库</title>
+    <url>/2023/04/12/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<ol>
+<li><p>MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？</p>
+<blockquote>
 </blockquote>
 </li>
 </ol>
@@ -2609,6 +2670,48 @@
 ]]></content>
       <tags>
         <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>poetry使用</title>
+    <url>/2023/03/09/poetry%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h3 id="Poetry"><a href="#Poetry" class="headerlink" title="Poetry"></a>Poetry</h3><hr>
+<p>使用pyproject.toml管理整个项目的依赖</p>
+<h4 id="安装poetry"><a href="#安装poetry" class="headerlink" title="安装poetry"></a>安装poetry</h4><ol>
+<li><p>安装pipx为每个包自动创建隔离环境，方便管理</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pip install pipx</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>安装poetry</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipx install poetry</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<h4 id="项目中使用portry"><a href="#项目中使用portry" class="headerlink" title="项目中使用portry"></a>项目中使用portry</h4><ol>
+<li><p>初始化pyproject.toml</p>
+<p>在项目路径中使用:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry init</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>创建项目虚拟环境</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry <span class="built_in">env</span> use python</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>进入虚拟环境</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry shell</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>添加新依赖</p>
+<p>在pyproject.toml文件中添加如下内容:</p>
+<div class="highlight-container" data-rel="Toml"><figure class="iseeu highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[[tool.poetry.source]]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;aliyun&quot;</span></span><br><span class="line"><span class="attr">url</span> = <span class="string">&quot;https://mirrors.aliyun.com/pypi/simple&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>添加普通依赖:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>添加开发依赖:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt; -D</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>测试</p>
+<p>使用pytest</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry run pytest</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>poetry</tag>
       </tags>
   </entry>
 </search>
