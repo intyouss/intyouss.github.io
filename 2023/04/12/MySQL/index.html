@@ -30,7 +30,7 @@
 <meta property="og:description" content="SQL  结构化查询语言，用于存取，查询，更新数据以及管理关系型数据库系统   在不同的数据库产品中遵循SQL的通用规范，但是也对SQL有一些不同的改进，形成了一些数据库的专有指令  MySQL: limit  SQLServer: top  Oracle: rownum     SQL分类  根据SQL指令完成的数据库操作的不同，可以将SQL指令分类   DDL Data Definition">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-12T03:42:33.000Z">
-<meta property="article:modified_time" content="2023-04-14T13:00:51.421Z">
+<meta property="article:modified_time" content="2023-04-15T05:11:34.764Z">
 <meta property="article:author" content="IntYou">
 <meta property="article:tag" content="MySQL Study">
 <meta name="twitter:card" content="summary">
@@ -225,8 +225,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-14 21:51</span>
-            <span class="mobile">2023-04-14 21</span>
+            <span class="desktop">2023-04-15 13:11:34</span>
+            <span class="mobile">2023-04-15 13:11</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -1037,6 +1037,223 @@
 </ul>
 </li>
 </ol>
+<h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><hr>
+<h3 id="触发器介绍"><a href="#触发器介绍" class="headerlink" title="触发器介绍"></a>触发器介绍</h3><hr>
+<blockquote>
+<p>触发器是一种特殊的存储过程，能够完成特定功能，存储在数据库服务器上的SQL片段，但是触发器无需调用，当对数据表中的数据执行DML操作时自动触发这个SQL片段的执行，无需手动调用</p>
+<p>在MySQL中只有执行insert\delete\update操作才能触发触发器的执行</p>
+</blockquote>
+<h3 id="触发器的使用"><a href="#触发器的使用" class="headerlink" title="触发器的使用"></a>触发器的使用</h3><hr>
+<h4 id="创建触发器"><a href="#创建触发器" class="headerlink" title="创建触发器"></a>创建触发器</h4><ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> tri_name</span><br><span class="line"><span class="operator">&lt;</span>before<span class="operator">|</span>after<span class="operator">&gt;</span>   <span class="comment">--定义触发时机</span></span><br><span class="line"><span class="operator">&lt;</span><span class="keyword">insert</span><span class="operator">|</span><span class="keyword">delete</span><span class="operator">|</span><span class="keyword">update</span><span class="operator">&gt;</span>  <span class="comment">--定义DML类型</span></span><br><span class="line"><span class="keyword">ON</span> <span class="operator">&lt;</span>table_name<span class="operator">&gt;</span></span><br><span class="line"><span class="keyword">for</span> <span class="keyword">each</span> <span class="type">row</span>  <span class="comment">--声明为行级触发器(只要操作一条记录就触发触发器一次)</span></span><br><span class="line"><span class="comment">--SQL语句</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--例</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> tri_test1</span><br><span class="line">before <span class="keyword">insert</span> <span class="keyword">on</span> students</span><br><span class="line"><span class="keyword">for</span> <span class="keyword">each</span> <span class="type">row</span></span><br><span class="line"><span class="comment">--SQL语句</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="查看触发器"><a href="#查看触发器" class="headerlink" title="查看触发器"></a>查看触发器</h4><ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> triggers;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="删除触发器"><a href="#删除触发器" class="headerlink" title="删除触发器"></a>删除触发器</h4><ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">trigger</span> tri_name;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="NEW-与-OLD"><a href="#NEW-与-OLD" class="headerlink" title="NEW 与 OLD"></a>NEW 与 OLD</h3><hr>
+<blockquote>
+<p>我们可以通过<code>NEW</code> 和 <code>OLD</code> 关键字在触发器中货期触发器的MDML操作的数据</p>
+<ul>
+<li><p><code>NEW</code>：在触发器中用于获取insert操作添加的数据，update操作修改后的记录</p>
+</li>
+<li><p><code>OLD</code>：在触发器中用于获取delete操作删除前的数据，update操作修改前的数据</p>
+</li>
+</ul>
+</blockquote>
+<h4 id="NEW"><a href="#NEW" class="headerlink" title="NEW"></a>NEW</h4><ul>
+<li><p>insert操作</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> tri_test1</span><br><span class="line">before <span class="keyword">insert</span> <span class="keyword">on</span> students</span><br><span class="line"><span class="keyword">for</span> <span class="keyword">each</span> <span class="type">row</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> stulogs(<span class="type">time</span>, log_text) </span><br><span class="line"><span class="keyword">values</span>(now(), concat(<span class="string">&#x27;添加&#x27;</span>, NEW.stu_name, <span class="string">&#x27;学生信息&#x27;</span>));</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>update操作</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> tri_test2</span><br><span class="line">after <span class="keyword">update</span> <span class="keyword">on</span> students <span class="keyword">for</span> <span class="keyword">each</span> <span class="type">row</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> stulogs(<span class="type">time</span>, log_text) </span><br><span class="line"><span class="keyword">values</span>(now(), concat(<span class="string">&#x27;修改&#x27;</span>, NEW.stu_num, NEW.stu_name));</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="OLD"><a href="#OLD" class="headerlink" title="OLD"></a>OLD</h4><ul>
+<li><p>delete操作</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> tri_test2</span><br><span class="line">after <span class="keyword">delete</span> <span class="keyword">on</span> students <span class="keyword">for</span> <span class="keyword">each</span> <span class="type">row</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> stulogs(<span class="type">time</span>, log_text) </span><br><span class="line"><span class="keyword">values</span>(now(), concat(<span class="string">&#x27;删除&#x27;</span>, OLD.stu_num, <span class="string">&#x27;学生信息&#x27;</span>));</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>update操作</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> tri_test2</span><br><span class="line">after <span class="keyword">update</span> <span class="keyword">on</span> students <span class="keyword">for</span> <span class="keyword">each</span> <span class="type">row</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> stulogs(<span class="type">time</span>, log_text) </span><br><span class="line"><span class="keyword">values</span>(now(), concat(<span class="string">&#x27;修改&#x27;</span>, OLD.stu_name, NEW.stu_name));</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><hr>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li><p>触发器时自动执行的，当对触发器相应的表执行响应的DML操作时立即执行</p>
+</li>
+<li><p>触发器可以实现表中的数据的级联操作(关联操作)，有利于保证数据库的完整性</p>
+</li>
+<li><p>触发器可以对DML操作的数据进行更为复杂的合法性校验</p>
+</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li><p>使用触发器实现的业务逻辑如果出现问题，将难以定位，后期维护难</p>
+</li>
+<li><p>如果大量使用，容易导致代码结构杂乱，增加了程序的复杂性</p>
+</li>
+<li><p>当触发器操作的数据量比较大时，执行效率会大大降低</p>
+</li>
+</ul>
+<h4 id="使用建议"><a href="#使用建议" class="headerlink" title="使用建议"></a>使用建议</h4><ul>
+<li><p>在互联网项目中，应避免使用触发器</p>
+</li>
+<li><p>对于并发量不大的项目可以选择使用存储过程，但是在互联网引用中不提倡使用存储过程(原因：存储过程将实现业务逻辑交给数据库处理，一则增加了数据库的负载，二则不利于数据库的迁移)</p>
+</li>
+</ul>
+<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><hr>
+<h3 id="视图的概念"><a href="#视图的概念" class="headerlink" title="视图的概念"></a>视图的概念</h3><hr>
+<blockquote>
+<p>视图就是由数据库中一张表或者多张表根据特定的条件查询出的数据构造成的虚拟表</p>
+</blockquote>
+<h3 id="视图的作用"><a href="#视图的作用" class="headerlink" title="视图的作用"></a>视图的作用</h3><hr>
+<ul>
+<li><p>安全性</p>
+<blockquote>
+<p>如果我们直接将数据表授权给用户操作，那么用户可以操作数据表中的所有数据，假如我们想要对数据表中的部分数据进行保护，可以将公开的数据生成视图，授权用户访问视图；用户通过查询视图可以获取数据表中公开的数据，从而达到将数据表中的部分数据对用户隐藏</p>
+</blockquote>
+</li>
+<li><p>简单性</p>
+<blockquote>
+<p>如果我们需要查询的数据来源于多张数据表，可以使用多表连接查询来实现；我们通过视图将这些连表查询的结果对用户开放，用户则可以直接通过查询视图获取多表数据，操作更便捷</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h3><hr>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> view_name</span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line"><span class="comment">-- SQL语句</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--例</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> view_test1</span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> students <span class="keyword">where</span> stu_genter<span class="operator">=</span><span class="string">&#x27;男&#x27;</span>; ## 单表</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> view_test2</span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line"><span class="keyword">select</span> s.stu_name,b.book_name,borrow_num</span><br><span class="line"><span class="keyword">from</span> books b <span class="keyword">inner</span> <span class="keyword">join</span> records r <span class="keyword">inner</span> <span class="keyword">join</span> student s</span><br><span class="line"><span class="keyword">on</span> b.book_id<span class="operator">=</span>r.bid <span class="keyword">and</span> r.snum<span class="operator">=</span>s.stu_num;  ## 多表</span><br><span class="line"></span><br><span class="line"><span class="comment">--查询视图</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> view_test2;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="视图数据的特性"><a href="#视图数据的特性" class="headerlink" title="视图数据的特性"></a>视图数据的特性</h3><hr>
+<ul>
+<li><p>查询操作</p>
+<blockquote>
+<p>如果在数据表中添加了新的数据，而且这个数据满足创建视图时的查询语句条件，通过查询视图也可以查询出新增的数据；当删除原表中男足查询条件的数据时，也会从视图中消失</p>
+</blockquote>
+</li>
+<li><p>新增数据</p>
+<blockquote>
+<p>如果在视图中添加数据，数据会被添加到原数据表</p>
+</blockquote>
+</li>
+<li><p>删除数据</p>
+<blockquote>
+<p>如果在视图中删除数据，数据也将在原表中被删除</p>
+</blockquote>
+</li>
+<li><p>修改数据</p>
+<blockquote>
+<p>如果在视图中修改数据，数据也将在原表中被修改</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="使用建议-1"><a href="#使用建议-1" class="headerlink" title="使用建议"></a>使用建议</h4><blockquote>
+<p>对复杂查询简化操作，并且不会对数据进行修改的情况下可以使用视图</p>
+</blockquote>
+<h3 id="查询视图结构"><a href="#查询视图结构" class="headerlink" title="查询视图结构"></a>查询视图结构</h3><hr>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">desc</span> view_test2;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="修改视图结构"><a href="#修改视图结构" class="headerlink" title="修改视图结构"></a>修改视图结构</h3><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--方式1</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">OR</span> REPLACE <span class="keyword">view</span> view_test1 # 关键段 <span class="keyword">OR</span> REPLACE 若存在则覆盖</span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line"><span class="comment">-- SQL语句</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--方式2</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">view</span> view_test1</span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line"><span class="comment">-- SQL语句</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="删除视图"><a href="#删除视图" class="headerlink" title="删除视图"></a>删除视图</h3><hr>
+<blockquote>
+<p>删除数据表时会同时删除数据表中的数据，但是删除视图时不会影响原表中的数据</p>
+</blockquote>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">view</span> view_test1</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><hr>
+<blockquote>
+<p>数据库是用来存储数据的，在互联网应用中数据库中存储的数据可能会很多(大数据)，数据表中数据的查询速率会随着数据量的增长逐渐变慢，从而导致响应用户请求的速度变慢——用户体验差</p>
+</blockquote>
+<h3 id="索引的介绍"><a href="#索引的介绍" class="headerlink" title="索引的介绍"></a>索引的介绍</h3><hr>
+<blockquote>
+<p>索引就是用来提高数据表中数据的查询效率的</p>
+<p>将数据表中某一列&#x2F;某几列的值取出来构造成便于查找的结构进行存储，生成数据表的目录，当我们进行数据查询时，则现在目录中进行查找得到对应数据的地址，然后再到数据表中根据地址快速获取数据记录，避免全表扫描</p>
+</blockquote>
+<h3 id="索引的分类"><a href="#索引的分类" class="headerlink" title="索引的分类"></a>索引的分类</h3><hr>
+<blockquote>
+<p>MySQL中的索引根据创建索引的列的不同分为：</p>
+<ul>
+<li><p>主键索引：在主键字段创建的索引</p>
+</li>
+<li><p>唯一索引：在唯一约束字段创建的索引，可以为NULL</p>
+</li>
+<li><p>普通索引：没有限制，在普通字段创建的索引</p>
+</li>
+<li><p>组合索引：两个及以上的字段创建的索引</p>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>说明</p>
+<blockquote>
+<ol>
+<li><p>在创建数据表时，将字段声明为主键时，会自动在主键字段创建主键索引</p>
+</li>
+<li><p>在创建数据表时，将字段声明为唯一键，会自动在唯一字段创建唯一索引</p>
+</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h3 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h3><hr>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## <span class="keyword">unique</span> 唯一索引，无 普通索引</span><br><span class="line"><span class="keyword">create</span> [<span class="keyword">unique</span>] index index_索引名 <span class="keyword">on</span> 表名(字段名);</span><br><span class="line"></span><br><span class="line">## 组合索引，需要多个字段值</span><br><span class="line"><span class="keyword">create</span> index index_索引名 <span class="keyword">on</span> 表名(字段名<span class="number">1</span>，<span class="number">2</span>);</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="全文索引"><a href="#全文索引" class="headerlink" title="全文索引"></a>全文索引</h4><blockquote>
+<p>通过此索引进行全文检索操作</p>
+</blockquote>
+<ul>
+<li><p>语法</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> fulltext index index_索引名 <span class="keyword">on</span> 表名(字段名);</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="索引的使用"><a href="#索引的使用" class="headerlink" title="索引的使用"></a>索引的使用</h3><hr>
+<blockquote>
+<p>索引创建完成之后无需调用，当根据创建索引的列进行数据查询的时候，会自动使用索引</p>
+<p>组合索引需要根据创建索引的所有字段进行查询时触发</p>
+</blockquote>
+<ul>
+<li><p>在命令行中查看查询语句的查询规划</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain <span class="operator">&lt;</span><span class="keyword">SQL</span>语句<span class="operator">&gt;</span>\G;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="查看索引"><a href="#查看索引" class="headerlink" title="查看索引"></a>查看索引</h3><hr>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--方案1 ，</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">table</span> tb_testindex\G;</span><br><span class="line"><span class="comment">--方案2 查询数据表的索引</span></span><br><span class="line"><span class="keyword">show</span> indexes <span class="keyword">from</span> tb_testindex;</span><br><span class="line"><span class="comment">--方案3 查询索引</span></span><br><span class="line"><span class="keyword">show</span> keys <span class="keyword">from</span> tb_testindex;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h3><hr>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--索引是建立在表的字段上的，不同的表可能会出现相同名称的索引，</span></span><br><span class="line"><span class="comment">--因此删除索引时需要指定表名</span></span><br><span class="line"><span class="keyword">drop</span> index index_test3 <span class="keyword">on</span> tb_testindex;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><hr>
+<h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><blockquote>
+<ol>
+<li><p>索引大大降低了数据库服务器在执行查询操作时扫描的数据</p>
+</li>
+<li><p>索引可以避免服务器排序，将随机IO变成顺序IO</p>
+</li>
+</ol>
+</blockquote>
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><blockquote>
+<ol>
+<li><p>索引是根据数据表列创建的，当数据表中数据发生DML操作时，索引页也需要更新</p>
+</li>
+<li><p>索引文件也会占用磁盘空间</p>
+</li>
+</ol>
+</blockquote>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><blockquote>
+<ol>
+<li><p>数据表中数据不多时，全表扫描可能更快，不要使用索引</p>
+</li>
+<li><p>数据量大但是DML操作很频繁，不建议使用</p>
+</li>
+<li><p>不要在数据重复高度高的列上创建索引</p>
+</li>
+<li><p>创建索引之后，要注意查询SQL语句的编写，避免索引失效</p>
+</li>
+</ol>
+</blockquote>
 
             </div>
 
@@ -1049,7 +1266,7 @@
         <li><strong>创建于:</strong> 2023-04-12 11:42:33</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-14 21:00:51
+                <strong>更新于:</strong> 2023-04-15 13:11:34
             </li>
         
         <li>
@@ -1108,7 +1325,7 @@
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">MySQL</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL"><span class="nav-text">SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL%E5%88%86%E7%B1%BB"><span class="nav-text">SQL分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-text">SQL基本语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDL"><span class="nav-text">DDL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-text">MySQL 数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E6%AE%B5%E7%BA%A6%E6%9D%9F"><span class="nav-text">字段约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DML"><span class="nav-text">DML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DQL"><span class="nav-text">DQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-text">对查询结果的处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0"><span class="nav-text">聚合函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E5%87%BD%E6%95%B0-%E5%92%8C-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0"><span class="nav-text">日期函数  和 字符串函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2"><span class="nav-text">分组查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2"><span class="nav-text">分页查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%9A%84%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB"><span class="nav-text">数据表的关联关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%E4%BB%8B%E7%BB%8D"><span class="nav-text">关联关系介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E8%81%94"><span class="nav-text">一对一关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%AF%B9%E5%A4%9A-%E4%B8%8E-%E5%A4%9A%E5%AF%B9%E4%B8%80-%E5%85%B3%E8%81%94"><span class="nav-text">一对多 与 多对一 关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94"><span class="nav-text">多对多关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="nav-text">外键约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A7%E8%81%94"><span class="nav-text">级联</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="nav-text">连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E8%BF%9E%E6%8E%A5-INNER-JOIN"><span class="nav-text">内连接 INNER JOIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A6%E8%BF%9E%E6%8E%A5-LEFT-JOIN"><span class="nav-text">左连接 LEFT JOIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%B3%E8%BF%9E%E6%8E%A5-RIGHT-JOIN"><span class="nav-text">右连接 RIGHT JOIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8%E5%88%AB%E5%90%8D"><span class="nav-text">数据表别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2-x2F-%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2"><span class="nav-text">子查询 &#x2F; 嵌套查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="nav-text">存储过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%BB%8B%E7%BB%8D"><span class="nav-text">存储过程介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="nav-text">创建存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">存储过程中变量的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-text">存储过程的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="nav-text">存储过程中的流程控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-text">存储过程管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%B8%E6%A0%87"><span class="nav-text">游标</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL"><span class="nav-text">SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL%E5%88%86%E7%B1%BB"><span class="nav-text">SQL分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-text">SQL基本语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDL"><span class="nav-text">DDL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-text">MySQL 数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E6%AE%B5%E7%BA%A6%E6%9D%9F"><span class="nav-text">字段约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DML"><span class="nav-text">DML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DQL"><span class="nav-text">DQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-text">对查询结果的处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0"><span class="nav-text">聚合函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E5%87%BD%E6%95%B0-%E5%92%8C-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0"><span class="nav-text">日期函数  和 字符串函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2"><span class="nav-text">分组查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2"><span class="nav-text">分页查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%9A%84%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB"><span class="nav-text">数据表的关联关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB%E4%BB%8B%E7%BB%8D"><span class="nav-text">关联关系介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E8%81%94"><span class="nav-text">一对一关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%AF%B9%E5%A4%9A-%E4%B8%8E-%E5%A4%9A%E5%AF%B9%E4%B8%80-%E5%85%B3%E8%81%94"><span class="nav-text">一对多 与 多对一 关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94"><span class="nav-text">多对多关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="nav-text">外键约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A7%E8%81%94"><span class="nav-text">级联</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="nav-text">连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E8%BF%9E%E6%8E%A5-INNER-JOIN"><span class="nav-text">内连接 INNER JOIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A6%E8%BF%9E%E6%8E%A5-LEFT-JOIN"><span class="nav-text">左连接 LEFT JOIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%B3%E8%BF%9E%E6%8E%A5-RIGHT-JOIN"><span class="nav-text">右连接 RIGHT JOIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8%E5%88%AB%E5%90%8D"><span class="nav-text">数据表别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2-x2F-%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2"><span class="nav-text">子查询 &#x2F; 嵌套查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="nav-text">存储过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%BB%8B%E7%BB%8D"><span class="nav-text">存储过程介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="nav-text">创建存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">存储过程中变量的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-text">存储过程的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="nav-text">存储过程中的流程控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-text">存储过程管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%B8%E6%A0%87"><span class="nav-text">游标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="nav-text">触发器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A6%E5%8F%91%E5%99%A8%E4%BB%8B%E7%BB%8D"><span class="nav-text">触发器介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A6%E5%8F%91%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">触发器的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NEW-%E4%B8%8E-OLD"><span class="nav-text">NEW 与 OLD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE"><span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-text">视图的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">视图的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A7%86%E5%9B%BE"><span class="nav-text">创建视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-text">视图数据的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E8%A7%86%E5%9B%BE%E7%BB%93%E6%9E%84"><span class="nav-text">查询视图结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%A7%86%E5%9B%BE%E7%BB%93%E6%9E%84"><span class="nav-text">修改视图结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A7%86%E5%9B%BE"><span class="nav-text">删除视图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95"><span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-text">索引的介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-text">索引的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95"><span class="nav-text">创建索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">索引的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%B4%A2%E5%BC%95"><span class="nav-text">查看索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95"><span class="nav-text">删除索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-text">总结</span></a></li></ol></li></ol>
 
     </div>
 </div>
