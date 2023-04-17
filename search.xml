@@ -43,6 +43,477 @@
       </tags>
   </entry>
   <entry>
+    <title>3月6日 学习记录</title>
+    <url>/2023/03/06/3%E6%9C%886%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h3 id="唯一的URL-x2F-重定向行为"><a href="#唯一的URL-x2F-重定向行为" class="headerlink" title="唯一的URL&#x2F;重定向行为"></a>唯一的URL&#x2F;重定向行为</h3><hr>
+<p>route内的元素表示不同，将有不同的限制</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/projects/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">projects</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;a&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/about&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">about</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;b&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>如果使用没有斜杠的&#x2F;projects访问，Flask会自动帮助添加斜杠，因此中规中矩，却有两种访问方式。  </p>
+<p>如果使用有斜杠的&#x2F;about&#x2F;访问，将会返回一个404未找到错误，可以保证URL唯一性，并有助于搜索引擎重复索引同一个界面！</p>
+<h3 id="flask的session"><a href="#flask的session" class="headerlink" title="flask的session"></a>flask的session</h3><hr>
+<p>flask的session是以加密保存在浏览器上的，依赖于secret_key</p>
+<h3 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h3><hr>
+<p>使用数据库连接池可以很好的解决链接数据库时，重复连接的问题</p>
+<p>可以将数据库连接封装成一个函数或者类，方便调用</p>
+<h4 id="With上下文管理-简"><a href="#With上下文管理-简" class="headerlink" title="With上下文管理(简)"></a>With上下文管理(简)</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__enter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">124</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__exit__</span>(<span class="params">self, exc_type, exc_val</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">obj = Foo()</span><br><span class="line"><span class="keyword">with</span> obj <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(f)</span><br></pre></td></tr></table></figure></div>
+
+<p>with一个对象会调用对象中的 属性__enter__ ，结束后调用属性__exit__。</p>
+<p>使用上下文管理操控线程池的开关，可以实现线程自动化</p>
+<h3 id="引入静态文件"><a href="#引入静态文件" class="headerlink" title="引入静态文件"></a>引入静态文件</h3><hr>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;&#123;</span> <span class="attr">url_for</span>(&#x27;<span class="attr">static</span>&#x27;, <span class="attr">filename</span>=<span class="string">&#x27;mm.jpg&#x27;</span>) &#125;&#125; /&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>或</p>
+<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#x27;/static/mm.jpg&#x27;</span> /&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>在使用static_url_path&#x3D;’&#x2F;xx’修改static文件夹路径时，前一个可以在不做修改下实现自动识别static路径。后者需要一个一个修改，不利于使用。</p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><hr>
+<p>使用函数加载配置文件:</p>
+<p><code>app.config.from_object(&#39;config.settings&#39;)</code></p>
+<p>使用配置文件:</p>
+<p><code>app.config[&#39;xx&#39;]</code></p>
+<ol>
+<li><p>可以使用localsettings在本地测试, 覆盖settings, 保护原始文件</p>
+<p>在settings添加:</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">from</span> localsettings <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">except</span> ImportError:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>        在上传服务器时，可以方便的在服务器和本地切换</p>
+<p>        使用.gitgnore控制上传文件，忽略不需要的文件</p>
+<ol start="2">
+<li><p>类配置文件</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dev</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Prod</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>        使用类隔离开发环境</p>
+<h3 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h3><hr>
+<ol>
+<li><p>进程是cpu中执行的最小单元，线程是cpu中资源调度的最小单元，一个进程内可以有多个线程</p>
+</li>
+<li><p>接口<br>其他语言 :<br>接口是以interface关键字开头，内部定义方法，但不具体实现，专门用于约束实现类<br>类中可以有多个接口继承  </p>
+<p>python :<br>无接口，可以多继承<br>但不能继承多个类</p>
+</li>
+<li><p>构造函数和析构函数<br>构造函数：用于创建对象的函数 class foo(obj)<br>析构函数：用于销毁对象的函数 del obj()</p>
+</li>
+<li><p>重写和重载的区别<br>重载：函数名相同而参数类型，个数，返回值不同<br>重写：在子类中，对父类的方法重写</p>
+</li>
+<li><p>抽象类和抽象方法<br>java :<br>抽象类中可以有抽象方法也可以有普通方法。<br>抽象类被继承后需要实现抽象方法</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Flask Study</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>3月7日学习记录</title>
+    <url>/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
+<h4 id="路由的两种写法"><a href="#路由的两种写法" class="headerlink" title="路由的两种写法"></a>路由的两种写法</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">app.add_url_rule(<span class="string">&#x27;/index&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, index)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/inddex&#x27;</span></span>)</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="路由加载源码的流程"><a href="#路由加载源码的流程" class="headerlink" title="路由加载源码的流程"></a>路由加载源码的流程</h4><ul>
+<li><p>将URL和函数打包成为Rule对象</p>
+</li>
+<li><p>将Rule对象添加到map对象中</p>
+</li>
+<li><p>app_url_map &#x3D; map对象</p>
+</li>
+</ul>
+<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&lt;string:name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;name&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>uuid类型 类似于xxxxx-xxxxxxx-xxxxxx-xxxxxx</p>
+<h5 id="自定义路由"><a href="#自定义路由" class="headerlink" title="自定义路由"></a>自定义路由</h5><p>必须继承BaseConverter</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, regex</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>)</span><br><span class="line">        self.regex = regex</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_python</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.url_map.converters[<span class="string">&#x27;regex&#x27;</span>] = RegexConverter</span><br></pre></td></tr></table></figure></div>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><hr>
+<h4 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span>, method=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="CBV"><a href="#CBV" class="headerlink" title="CBV"></a>CBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(views, MethodView):</span><br><span class="line">    method = [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span><br><span class="line">    decorators = [test1, test2] //CBV添加装饰器</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/user&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;user&#x27;</span>))</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="模板-jinja2"><a href="#模板-jinja2" class="headerlink" title="模板(jinja2)"></a>模板(jinja2)</h3><hr>
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>模板可继承</p>
+<ol>
+<li><p>被继承:</p>
+<p><code>&#123;% block content %&#125; ? &#123;% endbloack %&#125;</code>  </p>
+</li>
+<li><p>继承:</p>
+<p><code>&#123;% extends 'layout.html' %&#125;  &#123;% block content %&#125; ? &#123;% endbloack %&#125;</code></p>
+</li>
+<li><p>引入:</p>
+<p><code>&#123;% include 'from.html' %&#125;</code></p>
+</li>
+</ol>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dunc</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line">render_template(<span class="string">&#x27;md.html&#x27;</span>, nums=nums, f=func) //可以传递函数名</span><br></pre></td></tr></table></figure></div>
+
+<p>定义全局模板方法</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.template_glabol() //模板中全局使用 &#123;&#123; func(<span class="params"><span class="string">&#x27;haha&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.template_filter() //模板全局使用 &#123;&#123; <span class="string">&#x27;haha&#x27;</span>|f(<span class="params"><span class="string">&#x27;e&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">arg,h</span>):</span><br><span class="line">    <span class="keyword">return</span> arg + h</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/md/hg&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;md_hg.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>如果想要将一个方法限制为一个蓝图域中使用，只需将app修改即可</p>
+<h3 id="特殊装饰器"><a href="#特殊装饰器" class="headerlink" title="特殊装饰器"></a>特殊装饰器</h3><hr>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.before_request //视图函数运行前运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f1</span>():// 一旦返回值为真，则停止行为向下传播(判断用户登录等), 反之空，则继续</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request //视图函数运行结束后运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">response</span>): //视图函数有返回值，就必须返回一个Responce</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f2&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>或</p>
+<p><code>app.before_request(func)</code>不加装饰器使用</p>
+]]></content>
+      <tags>
+        <tag>Flask Study</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>3月9日项目问题</title>
+    <url>/2023/03/09/3%E6%9C%889%E6%97%A5%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h4 id="读取yaml"><a href="#读取yaml" class="headerlink" title="读取yaml"></a>读取yaml</h4><p>引用<code>from ruamel import yaml</code></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">yaml.load(</span><br><span class="line">    Path(<span class="string">&#x27;C:\\Users\\Lenovo\\Desktop\\bot\\IntBot\\configs\\config.yaml&#x27;</span>).read_text(encoding=<span class="string">&#x27;utf-8&#x27;</span>),</span><br><span class="line">    Loader=yaml.Loader</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="pydantic"><a href="#pydantic" class="headerlink" title="pydantic"></a>pydantic</h4><p><code>extra=&#39;ignore&#39;</code>忽略额外属性</p>
+<h3 id="flask-migrate数据迁移"><a href="#flask-migrate数据迁移" class="headerlink" title="flask-migrate数据迁移"></a>flask-migrate数据迁移</h3><p>因为在开发中，由于数据表模型的改动，数据经常被清除，因此可以使用数据迁移，保存旧数据</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_sqlalchemy <span class="keyword">import</span> SQLAlchemy</span><br><span class="line"><span class="keyword">from</span> flask_migrate <span class="keyword">import</span> Migrate</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="comment"># 设置数据库连接地址</span></span><br><span class="line">DB_URI = <span class="string">&#x27;mysql+pymysql://root:123456@127.0.0.1:3306/web&#x27;</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_DATABASE_URI&#x27;</span>] = DB_URI</span><br><span class="line"><span class="comment"># 是否追踪数据库修改，一般不开启, 会影响性能</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_TRACK_MODIFICATIONS&#x27;</span>] = <span class="literal">False</span></span><br><span class="line"><span class="comment"># 是否显示底层执行的SQL语句</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_ECHO&#x27;</span>] = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化db,关联flask 项目</span></span><br><span class="line">db = SQLAlchemy(app)</span><br><span class="line"><span class="comment"># 迁移组件初始化</span></span><br><span class="line">Migrate(app, db)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Students</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;students&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">20</span>))</span><br><span class="line">    fullname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line">    nickname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Students(name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;, fullname=&#x27;<span class="subst">&#123;self.fullname&#125;</span>&#x27;, nickname=&#x27;<span class="subst">&#123;self.nickname&#125;</span>&#x27;)&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Users</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;user&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Users(id=&#x27;<span class="subst">&#123;self.<span class="built_in">id</span>&#125;</span>&#x27;, name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;)&gt;&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>执行迁移命令，先设置环境变量, 如果启动文件是app.py 这步可以省略。</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
+
+<p>windows用set设置环境变量，linux 用export 设置环境变量</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
+
+<p>执行相关命令</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db init  <span class="comment"># 生成迁移文件夹  只执行一次</span></span><br><span class="line">flask db migrate  <span class="comment"># ⽣成迁移版本, 保存到迁移文件夹中</span></span><br><span class="line">flask db upgrade  <span class="comment"># 执行迁移</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="迁移命令"><a href="#迁移命令" class="headerlink" title="迁移命令"></a>迁移命令</h4><p>init 命令执行后，会生成migrations目录</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db init</span><br></pre></td></tr></table></figure></div>
+
+<p>migrate 命令生成迁移脚本，保存到迁移文件夹中versions目录</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db migrate</span><br></pre></td></tr></table></figure></div>
+
+<p>upgrade 命令执行迁移</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db upgrade</span><br></pre></td></tr></table></figure></div>
+
+<p>执行完upgrade 命令才会在数据库中生成表</p>
+<h3 id="虚拟环境直接复制迁移"><a href="#虚拟环境直接复制迁移" class="headerlink" title="虚拟环境直接复制迁移"></a>虚拟环境直接复制迁移</h3><ol>
+<li><p>迁移到新电脑，将 虚拟环境文件夹内的pyvenv.cfg文件中home参数，写成新电脑python的路径</p>
+</li>
+<li><p>修改虚拟环境文件夹中Scripts中的activate内VIRTUAL_ENV参数修改成新电脑虚拟环境文件夹路径</p>
+</li>
+<li><p>修改虚拟文件夹中Scripts中的activate.bat内set “VIRTUAL_ENV参数改成新电脑虚拟环境文件夹路径</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Project</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript-React-2</title>
+    <url>/2023/03/08/JavaScript-React-2/</url>
+    <content><![CDATA[<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><hr>
+<h4 id="三大API"><a href="#三大API" class="headerlink" title="三大API"></a>三大API</h4><ol>
+<li><p><code>React.createElement()</code>用来创建React元素，无法修改</p>
+</li>
+<li><p><code>React.createRoot()</code>用来创建React的根容器， 容器用来放置React元素</p>
+</li>
+<li><p><code>root.render()</code></p>
+<ul>
+<li><p>当首次调用时, 容器节点里的所有DOM元素都会被替换, 后续的调用则会使用React的DOM差分算法(DOM diffing alorithm) 进行高效更新</p>
+</li>
+<li><p>不会修改容器节点(只会修改容器的子节点), 可以在不覆盖现有子节点的情况下, 将组件插入已有的DOM节点中</p>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h4><h5 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项:"></a>注意事项:</h5><ol>
+<li><p>JSX不是字符串, 不要加引号</p>
+</li>
+<li><p>JSX中html标签应该小写, React组件应该大写开头</p>
+</li>
+<li><p>JSX中有且只有一个根标签</p>
+</li>
+<li><p>jSX的标签必须正确结束<code>&lt;input type=&#39;text&#39; /&gt;</code>必须写斜杠或成对出现</p>
+</li>
+<li><p>在JSX中可以使用{}嵌入表达式</p>
+<ul>
+<li>有返回值就是表达式</li>
+</ul>
+</li>
+<li><p>如果表达式是空值, Null, undefined, 布尔值, 不会显示</p>
+</li>
+<li><p>在JSX中, 属性可以直接在标签中设置</p>
+<ul>
+<li><p>class 需使用className代替</p>
+</li>
+<li><p>style中必须使用对象设置, 不能使用属性</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> div = <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;&#123;backgroundColor:</span>&#x27;<span class="attr">yellow</span>&#x27;&#125;&#125;&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+</li>
+</ol>
+<h5 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h5><div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>]</span><br><span class="line"><span class="keyword">const</span> list  = <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;arr&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure></div>
+
+<p>相当于直接渲染列表中的所有元素</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> list = <span class="language-xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span>data.map(item =&gt; <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;item&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span>)<span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="虚拟DOM"><a href="#虚拟DOM" class="headerlink" title="虚拟DOM"></a>虚拟DOM</h4><p>好处:  </p>
+<ol>
+<li><p>降低API的复杂度</p>
+</li>
+<li><p>解决兼容问题</p>
+</li>
+<li><p>提升性能(减少DOM的不必要操作)</p>
+</li>
+</ol>
+<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>当我们在JSX中显示数组时, 数组中每一个元素都需要一个唯一的KEY， 否则会显示警告</p>
+</div>
+
+<p>JSX比较元素是否发生改变是按照位置比较的，如果将一个新元素插入到数组前,则可能造成重复元素渲染, 为了解决这个问题, 可以自定义唯一KEY, 将比较规则改成用KEY比较</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&#x27;1&#x27;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&#x27;3&#x27;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure></div>
+
+<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>尽量不要使用索引做KEY, 索引会跟着元素顺序改变, 做无用功. 唯一不同就是无警告</p>
+</div>
+
+
+
+<h3 id="React-项目"><a href="#React-项目" class="headerlink" title="React 项目"></a>React 项目</h3><hr>
+<p>public&#x2F;index.html 是首页的模板; webpack会以index.html为模板生成index.html</p>
+<p>src&#x2F;index.js 是js的入口文件</p>
+<h4 id="手动准备"><a href="#手动准备" class="headerlink" title="手动准备"></a>手动准备</h4><p><code>npm init -y</code>初始化</p>
+<p><code>npm install react react-dom react-scripts -S</code>下载依赖</p>
+<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>需要使用<code>import ReactDOM from &#39;react-dom/client&#39;;</code>引入ReactDOM</p>
+</div>
+
+
+
+<p><code>npx react-scripts build</code>打包</p>
+<p><code>npx react-scripts start</code>开发时测试</p>
+<ul>
+<li><p>这两个命令可以在packetage.json中加入’scripts’内置:</p>
+<p><code>&quot;start&quot;: &quot;react-scripts start&quot;</code>  命令行中使用<code>npm start</code></p>
+<p><code>&quot;build&quot;: &quot;react-scripts build&quot;</code>  命令行中使用<code>npm run build</code></p>
+</li>
+</ul>
+<p>ESLint语法检查器: </p>
+<ul>
+<li><p>可以在packetage.json 中添加:</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;eslintConfig&quot;: &#123;</span><br><span class="line">    &quot;extends&quot;: [</span><br><span class="line">        &quot;react-app&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>引入CSS<code>import &#39;./index.css&#39;</code></p>
+<h4 id="React组件"><a href="#React组件" class="headerlink" title="React组件"></a>React组件</h4><h5 id="函数组件-推荐"><a href="#函数组件-推荐" class="headerlink" title="函数组件(推荐)"></a>函数组件(推荐)</h5><div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>)&#123;<span class="comment">// 也可以使用箭头函数</span></span><br><span class="line">    retun &lt;div&gt;<span class="title class_">Hello</span>&lt;/div&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> root = <span class="title class_">ReactDOM</span>.<span class="title function_">createRoot</span>(<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;root&#x27;</span>))</span><br><span class="line">root.<span class="title function_">render</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">App</span>/&gt;</span></span>)<span class="comment">// 一般写在入口文件中</span></span><br></pre></td></tr></table></figure></div>
+
+<h6 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h6><p>在React中事件需要通过元素的属性来设置，和原生Js不一样, 在React中事件的属性需要使用驼峰命名法</p>
+<p><code>onclick -&gt; onClick</code></p>
+<p><code>onchange -&gt; onChange</code></p>
+<p>属性值不能直接执行代码:</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">onClink = &#123;<span class="function">() =&gt;</span> &#123;<span class="title function_">alert</span>(<span class="string">&#x27;123&#x27;</span>)&#125;&#125; <span class="comment">// 正确</span></span><br><span class="line">oClink = &#123;clickHandler&#125; <span class="comment">//函数不需要加括号，若返回值为函数可加</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>事件对象</p>
+<ul>
+<li><p>React事件中同样会传递事件对象， 可以在响应函数中定义参数来接收事件对象</p>
+</li>
+<li><p>React事件对象不是原生的事件对象，是经过React包装过的事件对象</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>取消行为:</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">clickHandler</span> = (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">    event.<span class="title function_">preventDefault</span>(); </span><br><span class="line">    <span class="comment">//取消默认行为(PS: 若放在&lt;a href=&#x27;#&#x27;&gt;中，则取消跳转)</span></span><br><span class="line">    event.<span class="title function_">stopPropagation</span>()</span><br><span class="line">    <span class="comment">//取消冒泡</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>动态传参</p>
+<p>在组件间，父组件可以通过props(属性)向子组件传递数据(父传子)</p>
+<ul>
+<li>props(外部，父 -&gt; 子)是只读属性, 不能修改</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">LogItem</span> test=<span class="string">&#x27;123&#x27;</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">LogItem</span> = (<span class="params">props</span>) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 可以在函数组件的形参中定义一个props，props指定所有传递的参数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;props.test&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    <span class="comment">// 调用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>状态</p>
+<p>在React中，当组件渲染完毕后，在修改组件中的变量，不会使组件重新渲染。因此必须重新渲染。</p>
+<ul>
+<li><p>state(自身)</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">LogItem</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> [count, setCounter] = <span class="title function_">useState</span>(<span class="number">1</span>) </span><br><span class="line">    <span class="comment">// 该函数会返回一个数组，数组第一个元素是初始值，第二个是一个函数</span></span><br><span class="line">    <span class="comment">// 初始值只是用来显示，修改不会触发渲染</span></span><br><span class="line">    <span class="comment">// 函数通常命名为setXxxx, 使用函数可以修改count触发渲染</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ol>
+<li><p>React会监控这个变量的变化，当state发生变化时，会自动触发组件的重新渲染</p>
+</li>
+<li><p>在函数组件中，我们需要通过钩子函数，获取state(useState)</p>
+</li>
+<li><p>State实际就是一个被React管理的变量</p>
+</li>
+<li><p>setXxxx只有在值与count不一样的时候才会渲染</p>
+</li>
+<li><p>当通过setState去修改一个state时，并不是修改当前state,是修改下一次渲染时的state时</p>
+</li>
+<li><p>setState()会触发组件的渲染，他是异步的，所以当调用setState需要用到旧值，可能出现错误。可以传递回调函数来修改state</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="title function_">setCounter</span>(<span class="function"><span class="params">prevCounter</span> =&gt;</span> prevCounter + <span class="number">1</span>)</span><br><span class="line"><span class="comment">// 回调函数执行时，React会将最新的state值作为参数</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<div class="note-large notel-yellow"><div class="notel-title"><p>注意</p>
+</div><div class="notel-content"><p>当useState为一个对象时，如果直接修改旧的State对象，对象地址不会改变，所以不会被渲染。可以使用浅拷贝</p>
+ </div></div>
+
+<p>PS: <code>setXxxx(&#123;...user, name:&#39;aaa&#39;&#125;)</code></p>
+<ul>
+<li><p>useRef()钩子函数</p>
+<p>创建一个容器， 返回一个普通的JS对象，但是可以确保每次渲染都是同一个对象，减少对象的创建次数(当你需要一个对象不会因为渲染改变时使用)</p>
+</li>
+</ul>
+<h5 id="类组件"><a href="#类组件" class="headerlink" title="类组件"></a>类组件</h5><p>必须继承React.Component</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">App</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span>&#123;</span><br><span class="line">    <span class="comment">// 类组件中，必须添加一个render()方法，且方法的返回值要是一个jsx</span></span><br><span class="line">    <span class="title function_">render</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>aaa<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>类组件的props是存储在实例对象中，可以直接通过实例对象访问<code>this.props</code></p>
+</li>
+<li><p>类组件的state是存储在对象的state属性中，可以直接通过<code>this.state</code>访问</p>
+<ul>
+<li><p>通过<code>this.setState()对其进行修改</code></p>
+</li>
+<li><p>当我们通过this.setState()修改state时，只会修改设置的属性(只限于直接存储state的值)</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">state = &#123;</span><br><span class="line">    <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">    <span class="attr">test</span>: <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="attr">obj</span>: &#123;<span class="attr">name</span>: <span class="string">&#x27;aaa&#x27;</span>&#125; <span class="comment">// 没有直接存储在state，会被覆盖</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>在类组件中，响应函数是以类的方法定义的</li>
+</ul>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">clickHandler = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">setState</span>(<span class="function"><span class="params">prevState</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">count</span>: prevState + <span class="number">1</span>    </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p>createRef钩子函数</p>
+<p>与useRef相同，都是创建一个不会变化的JS容器</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>React Study</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript-React-1</title>
+    <url>/2023/03/07/JavaScript-React-1/</url>
+    <content><![CDATA[<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><hr>
+<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ul>
+<li><p>只有一个参数的函数 参数 &#x3D;&gt; 返回值</p>
+</li>
+<li><p>多个参数使用括号 (a,b) &#x3D;&gt; 返回值</p>
+</li>
+<li><p>返回值必须是一个表达式</p>
+</li>
+<li><p>返回值是对象必须带括号</p>
+</li>
+<li><p>如需写语句，在后添加代码块</p>
+</li>
+</ul>
+<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>隐含参数arguments-表示当前函数的实参 arguments.lenth 获取实参数。剩余参数…args</p>
+</div>
+
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性:"></a>特性:</h4><ul>
+<li><p>箭头函数中没有arguments，可以使用…args</p>
+</li>
+<li><p>箭头函数的this总是看外层作用域的this</p>
+</li>
+<li><p>箭头函数中的this无法通过call(), apply(), bind()修改</p>
+</li>
+<li><p>箭头函数无法作为构造函数，无法new</p>
+</li>
+</ul>
+<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><hr>
+<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>默认情况下，script标签中不能使用import语句，必须设置script的type属性为module</p>
+</div>
+
+<h4 id="导出"><a href="#导出" class="headerlink" title="导出:"></a>导出:</h4><ul>
+<li><p>默认导出</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>一个模块里只有一个默认导出</p>
+<ul>
+<li><p>命名导出</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b,c&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="导入"><a href="#导入" class="headerlink" title="导入:"></a>导入:</h4><ul>
+<li><p>默认导入</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>导入默认模块时，变量名可以自主制定，无需使用模块中的变量名</p>
+<ul>
+<li><p>命名导入</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;a,b,c&#125; <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
+<li><p>构造函数</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>构造函数中，可以通过this来引用当前的对象</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
+<li><p>严格模式</p>
+<p>“use strict”</p>
+<ol>
+<li><p>类中的所有代码都会在严格模式下执行</p>
+</li>
+<li><p>函数的this不再是window,而是undefined</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> test = mc.<span class="property">fn</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+</ul>
+<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>以方法形式调用时, this就是当前的实例。以函数形式调用, this是undefined</p>
+</div>
+
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = <span class="variable language_">this</span>.<span class="property">fn</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>) <span class="comment">//将fn方法的this绑定为当前实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>可以限制this绑定在自身</p>
+<p>也可以使用箭头函数的形式调用，永远绑定为本身</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">   fn = <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>&#123;&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>在子类中重写父类构造函数时，应该在子类中第一时间调用父类构造函数，否则报错</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(name, age); <span class="comment">//调用父类构造函数，并且需要加入父类参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
+<li><p>动态属性</p>
+<p>需要首先new一个实例才能使用</p>
+</li>
+<li><p>静态属性</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> name = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="comment">// 静态方法this不是实例对象而是当前类对象</span></span><br><span class="line">    <span class="keyword">static</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>可以直接使用<code>MyClass.name</code></p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
+<ul>
+<li><p>map()</p>
+<ol>
+<li><p>可以根据原有的数组返回一个新数组</p>
+</li>
+<li><p>需要一个回调函数作为参数, 回调函数返回值会成为新数组中的元素</p>
+<p>用法:</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> result = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> item+<span class="number">2</span></span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 第一个参数 当前元素</span></span><br><span class="line"><span class="comment">// 第二个参数 当前元素索引</span></span><br><span class="line"><span class="comment">// 第三个参数 当前数组</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+<li><p>filter()</p>
+<p>过滤器</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">result = arr.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item % <span class="number">2</span> === <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>根据条件过滤元素</p>
+<ul>
+<li><p>find()</p>
+<p>找第一个被过滤条件通过的元素</p>
+</li>
+</ul>
+</li>
+<li><p>reduce()</p>
+<p>整合数组</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> &#123;&#125;, <span class="number">0</span>) </span><br><span class="line"><span class="comment">// 0的位置是定义第一次prev的值, prev 上一次合并后值, curr 当前值</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>React Study</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Django</title>
     <url>/2023/03/25/Django/</url>
     <content><![CDATA[<h3 id="Django-MVT"><a href="#Django-MVT" class="headerlink" title="Django MVT"></a>Django MVT</h3><ul>
@@ -361,477 +832,6 @@
 ]]></content>
       <tags>
         <tag>Django Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>3月9日项目问题</title>
-    <url>/2023/03/09/3%E6%9C%889%E6%97%A5%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h4 id="读取yaml"><a href="#读取yaml" class="headerlink" title="读取yaml"></a>读取yaml</h4><p>引用<code>from ruamel import yaml</code></p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">yaml.load(</span><br><span class="line">    Path(<span class="string">&#x27;C:\\Users\\Lenovo\\Desktop\\bot\\IntBot\\configs\\config.yaml&#x27;</span>).read_text(encoding=<span class="string">&#x27;utf-8&#x27;</span>),</span><br><span class="line">    Loader=yaml.Loader</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="pydantic"><a href="#pydantic" class="headerlink" title="pydantic"></a>pydantic</h4><p><code>extra=&#39;ignore&#39;</code>忽略额外属性</p>
-<h3 id="flask-migrate数据迁移"><a href="#flask-migrate数据迁移" class="headerlink" title="flask-migrate数据迁移"></a>flask-migrate数据迁移</h3><p>因为在开发中，由于数据表模型的改动，数据经常被清除，因此可以使用数据迁移，保存旧数据</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask_sqlalchemy <span class="keyword">import</span> SQLAlchemy</span><br><span class="line"><span class="keyword">from</span> flask_migrate <span class="keyword">import</span> Migrate</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="comment"># 设置数据库连接地址</span></span><br><span class="line">DB_URI = <span class="string">&#x27;mysql+pymysql://root:123456@127.0.0.1:3306/web&#x27;</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_DATABASE_URI&#x27;</span>] = DB_URI</span><br><span class="line"><span class="comment"># 是否追踪数据库修改，一般不开启, 会影响性能</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_TRACK_MODIFICATIONS&#x27;</span>] = <span class="literal">False</span></span><br><span class="line"><span class="comment"># 是否显示底层执行的SQL语句</span></span><br><span class="line">app.config[<span class="string">&#x27;SQLALCHEMY_ECHO&#x27;</span>] = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化db,关联flask 项目</span></span><br><span class="line">db = SQLAlchemy(app)</span><br><span class="line"><span class="comment"># 迁移组件初始化</span></span><br><span class="line">Migrate(app, db)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Students</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;students&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">20</span>))</span><br><span class="line">    fullname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line">    nickname = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Students(name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;, fullname=&#x27;<span class="subst">&#123;self.fullname&#125;</span>&#x27;, nickname=&#x27;<span class="subst">&#123;self.nickname&#125;</span>&#x27;)&gt;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Users</span>(db.Model):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;user&#x27;</span>  <span class="comment"># 数据库表名</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = db.Column(db.Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = db.Column(db.String(<span class="number">30</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;&lt;Users(id=&#x27;<span class="subst">&#123;self.<span class="built_in">id</span>&#125;</span>&#x27;, name=&#x27;<span class="subst">&#123;self.name&#125;</span>&#x27;)&gt;&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>执行迁移命令，先设置环境变量, 如果启动文件是app.py 这步可以省略。</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
-
-<p>windows用set设置环境变量，linux 用export 设置环境变量</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> FLASK_APP=app.py  <span class="comment"># 设置环境变量指定启动文件</span></span><br></pre></td></tr></table></figure></div>
-
-<p>执行相关命令</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db init  <span class="comment"># 生成迁移文件夹  只执行一次</span></span><br><span class="line">flask db migrate  <span class="comment"># ⽣成迁移版本, 保存到迁移文件夹中</span></span><br><span class="line">flask db upgrade  <span class="comment"># 执行迁移</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="迁移命令"><a href="#迁移命令" class="headerlink" title="迁移命令"></a>迁移命令</h4><p>init 命令执行后，会生成migrations目录</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db init</span><br></pre></td></tr></table></figure></div>
-
-<p>migrate 命令生成迁移脚本，保存到迁移文件夹中versions目录</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db migrate</span><br></pre></td></tr></table></figure></div>
-
-<p>upgrade 命令执行迁移</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flask db upgrade</span><br></pre></td></tr></table></figure></div>
-
-<p>执行完upgrade 命令才会在数据库中生成表</p>
-<h3 id="虚拟环境直接复制迁移"><a href="#虚拟环境直接复制迁移" class="headerlink" title="虚拟环境直接复制迁移"></a>虚拟环境直接复制迁移</h3><ol>
-<li><p>迁移到新电脑，将 虚拟环境文件夹内的pyvenv.cfg文件中home参数，写成新电脑python的路径</p>
-</li>
-<li><p>修改虚拟环境文件夹中Scripts中的activate内VIRTUAL_ENV参数修改成新电脑虚拟环境文件夹路径</p>
-</li>
-<li><p>修改虚拟文件夹中Scripts中的activate.bat内set “VIRTUAL_ENV参数改成新电脑虚拟环境文件夹路径</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Project</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>3月6日 学习记录</title>
-    <url>/2023/03/06/3%E6%9C%886%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h3 id="唯一的URL-x2F-重定向行为"><a href="#唯一的URL-x2F-重定向行为" class="headerlink" title="唯一的URL&#x2F;重定向行为"></a>唯一的URL&#x2F;重定向行为</h3><hr>
-<p>route内的元素表示不同，将有不同的限制</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/projects/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">projects</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;a&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/about&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">about</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;b&#x27;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>如果使用没有斜杠的&#x2F;projects访问，Flask会自动帮助添加斜杠，因此中规中矩，却有两种访问方式。  </p>
-<p>如果使用有斜杠的&#x2F;about&#x2F;访问，将会返回一个404未找到错误，可以保证URL唯一性，并有助于搜索引擎重复索引同一个界面！</p>
-<h3 id="flask的session"><a href="#flask的session" class="headerlink" title="flask的session"></a>flask的session</h3><hr>
-<p>flask的session是以加密保存在浏览器上的，依赖于secret_key</p>
-<h3 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h3><hr>
-<p>使用数据库连接池可以很好的解决链接数据库时，重复连接的问题</p>
-<p>可以将数据库连接封装成一个函数或者类，方便调用</p>
-<h4 id="With上下文管理-简"><a href="#With上下文管理-简" class="headerlink" title="With上下文管理(简)"></a>With上下文管理(简)</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__enter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">124</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__exit__</span>(<span class="params">self, exc_type, exc_val</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">obj = Foo()</span><br><span class="line"><span class="keyword">with</span> obj <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(f)</span><br></pre></td></tr></table></figure></div>
-
-<p>with一个对象会调用对象中的 属性__enter__ ，结束后调用属性__exit__。</p>
-<p>使用上下文管理操控线程池的开关，可以实现线程自动化</p>
-<h3 id="引入静态文件"><a href="#引入静态文件" class="headerlink" title="引入静态文件"></a>引入静态文件</h3><hr>
-<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;&#123;</span> <span class="attr">url_for</span>(&#x27;<span class="attr">static</span>&#x27;, <span class="attr">filename</span>=<span class="string">&#x27;mm.jpg&#x27;</span>) &#125;&#125; /&gt;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>或</p>
-<div class="highlight-container" data-rel="Html"><figure class="iseeu highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#x27;/static/mm.jpg&#x27;</span> /&gt;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>在使用static_url_path&#x3D;’&#x2F;xx’修改static文件夹路径时，前一个可以在不做修改下实现自动识别static路径。后者需要一个一个修改，不利于使用。</p>
-<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><hr>
-<p>使用函数加载配置文件:</p>
-<p><code>app.config.from_object(&#39;config.settings&#39;)</code></p>
-<p>使用配置文件:</p>
-<p><code>app.config[&#39;xx&#39;]</code></p>
-<ol>
-<li><p>可以使用localsettings在本地测试, 覆盖settings, 保护原始文件</p>
-<p>在settings添加:</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">from</span> localsettings <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">except</span> ImportError:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-<p>        在上传服务器时，可以方便的在服务器和本地切换</p>
-<p>        使用.gitgnore控制上传文件，忽略不需要的文件</p>
-<ol start="2">
-<li><p>类配置文件</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dev</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Prod</span>(<span class="title class_ inherited__">obj</span>):</span><br><span class="line">    HOST = <span class="number">1.1</span><span class="number">.1</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-<p>        使用类隔离开发环境</p>
-<h3 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h3><hr>
-<ol>
-<li><p>进程是cpu中执行的最小单元，线程是cpu中资源调度的最小单元，一个进程内可以有多个线程</p>
-</li>
-<li><p>接口<br>其他语言 :<br>接口是以interface关键字开头，内部定义方法，但不具体实现，专门用于约束实现类<br>类中可以有多个接口继承  </p>
-<p>python :<br>无接口，可以多继承<br>但不能继承多个类</p>
-</li>
-<li><p>构造函数和析构函数<br>构造函数：用于创建对象的函数 class foo(obj)<br>析构函数：用于销毁对象的函数 del obj()</p>
-</li>
-<li><p>重写和重载的区别<br>重载：函数名相同而参数类型，个数，返回值不同<br>重写：在子类中，对父类的方法重写</p>
-</li>
-<li><p>抽象类和抽象方法<br>java :<br>抽象类中可以有抽象方法也可以有普通方法。<br>抽象类被继承后需要实现抽象方法</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Flask Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>3月7日学习记录</title>
-    <url>/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
-<h4 id="路由的两种写法"><a href="#路由的两种写法" class="headerlink" title="路由的两种写法"></a>路由的两种写法</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">app.add_url_rule(<span class="string">&#x27;/index&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, index)</span><br></pre></td></tr></table></figure></div>
-
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/inddex&#x27;</span></span>)</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="路由加载源码的流程"><a href="#路由加载源码的流程" class="headerlink" title="路由加载源码的流程"></a>路由加载源码的流程</h4><ul>
-<li><p>将URL和函数打包成为Rule对象</p>
-</li>
-<li><p>将Rule对象添加到map对象中</p>
-</li>
-<li><p>app_url_map &#x3D; map对象</p>
-</li>
-</ul>
-<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&lt;string:name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;name&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>uuid类型 类似于xxxxx-xxxxxxx-xxxxxx-xxxxxx</p>
-<h5 id="自定义路由"><a href="#自定义路由" class="headerlink" title="自定义路由"></a>自定义路由</h5><p>必须继承BaseConverter</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, regex</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>)</span><br><span class="line">        self.regex = regex</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_python</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.url_map.converters[<span class="string">&#x27;regex&#x27;</span>] = RegexConverter</span><br></pre></td></tr></table></figure></div>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><hr>
-<h4 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span>, method=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="CBV"><a href="#CBV" class="headerlink" title="CBV"></a>CBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(views, MethodView):</span><br><span class="line">    method = [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span><br><span class="line">    decorators = [test1, test2] //CBV添加装饰器</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/user&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;user&#x27;</span>))</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="模板-jinja2"><a href="#模板-jinja2" class="headerlink" title="模板(jinja2)"></a>模板(jinja2)</h3><hr>
-<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>模板可继承</p>
-<ol>
-<li><p>被继承:</p>
-<p><code>&#123;% block content %&#125; ? &#123;% endbloack %&#125;</code>  </p>
-</li>
-<li><p>继承:</p>
-<p><code>&#123;% extends 'layout.html' %&#125;  &#123;% block content %&#125; ? &#123;% endbloack %&#125;</code></p>
-</li>
-<li><p>引入:</p>
-<p><code>&#123;% include 'from.html' %&#125;</code></p>
-</li>
-</ol>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dunc</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line">render_template(<span class="string">&#x27;md.html&#x27;</span>, nums=nums, f=func) //可以传递函数名</span><br></pre></td></tr></table></figure></div>
-
-<p>定义全局模板方法</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.template_glabol() //模板中全局使用 &#123;&#123; func(<span class="params"><span class="string">&#x27;haha&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.template_filter() //模板全局使用 &#123;&#123; <span class="string">&#x27;haha&#x27;</span>|f(<span class="params"><span class="string">&#x27;e&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">arg,h</span>):</span><br><span class="line">    <span class="keyword">return</span> arg + h</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/md/hg&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;md_hg.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>如果想要将一个方法限制为一个蓝图域中使用，只需将app修改即可</p>
-<h3 id="特殊装饰器"><a href="#特殊装饰器" class="headerlink" title="特殊装饰器"></a>特殊装饰器</h3><hr>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.before_request //视图函数运行前运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f1</span>():// 一旦返回值为真，则停止行为向下传播(判断用户登录等), 反之空，则继续</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request //视图函数运行结束后运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">response</span>): //视图函数有返回值，就必须返回一个Responce</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f2&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>或</p>
-<p><code>app.before_request(func)</code>不加装饰器使用</p>
-]]></content>
-      <tags>
-        <tag>Flask Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript-React-2</title>
-    <url>/2023/03/08/JavaScript-React-2/</url>
-    <content><![CDATA[<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><hr>
-<h4 id="三大API"><a href="#三大API" class="headerlink" title="三大API"></a>三大API</h4><ol>
-<li><p><code>React.createElement()</code>用来创建React元素，无法修改</p>
-</li>
-<li><p><code>React.createRoot()</code>用来创建React的根容器， 容器用来放置React元素</p>
-</li>
-<li><p><code>root.render()</code></p>
-<ul>
-<li><p>当首次调用时, 容器节点里的所有DOM元素都会被替换, 后续的调用则会使用React的DOM差分算法(DOM diffing alorithm) 进行高效更新</p>
-</li>
-<li><p>不会修改容器节点(只会修改容器的子节点), 可以在不覆盖现有子节点的情况下, 将组件插入已有的DOM节点中</p>
-</li>
-</ul>
-</li>
-</ol>
-<h4 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h4><h5 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项:"></a>注意事项:</h5><ol>
-<li><p>JSX不是字符串, 不要加引号</p>
-</li>
-<li><p>JSX中html标签应该小写, React组件应该大写开头</p>
-</li>
-<li><p>JSX中有且只有一个根标签</p>
-</li>
-<li><p>jSX的标签必须正确结束<code>&lt;input type=&#39;text&#39; /&gt;</code>必须写斜杠或成对出现</p>
-</li>
-<li><p>在JSX中可以使用{}嵌入表达式</p>
-<ul>
-<li>有返回值就是表达式</li>
-</ul>
-</li>
-<li><p>如果表达式是空值, Null, undefined, 布尔值, 不会显示</p>
-</li>
-<li><p>在JSX中, 属性可以直接在标签中设置</p>
-<ul>
-<li><p>class 需使用className代替</p>
-</li>
-<li><p>style中必须使用对象设置, 不能使用属性</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> div = <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&#123;&#123;backgroundColor:</span>&#x27;<span class="attr">yellow</span>&#x27;&#125;&#125;&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure></div></li>
-</ul>
-</li>
-</ol>
-<h5 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h5><div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span>]</span><br><span class="line"><span class="keyword">const</span> list  = <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;arr&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure></div>
-
-<p>相当于直接渲染列表中的所有元素</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> list = <span class="language-xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span>data.map(item =&gt; <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;item&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span>)<span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="虚拟DOM"><a href="#虚拟DOM" class="headerlink" title="虚拟DOM"></a>虚拟DOM</h4><p>好处:  </p>
-<ol>
-<li><p>降低API的复杂度</p>
-</li>
-<li><p>解决兼容问题</p>
-</li>
-<li><p>提升性能(减少DOM的不必要操作)</p>
-</li>
-</ol>
-<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>当我们在JSX中显示数组时, 数组中每一个元素都需要一个唯一的KEY， 否则会显示警告</p>
-</div>
-
-<p>JSX比较元素是否发生改变是按照位置比较的，如果将一个新元素插入到数组前,则可能造成重复元素渲染, 为了解决这个问题, 可以自定义唯一KEY, 将比较规则改成用KEY比较</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&#x27;1&#x27;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&#x27;3&#x27;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure></div>
-
-<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>尽量不要使用索引做KEY, 索引会跟着元素顺序改变, 做无用功. 唯一不同就是无警告</p>
-</div>
-
-
-
-<h3 id="React-项目"><a href="#React-项目" class="headerlink" title="React 项目"></a>React 项目</h3><hr>
-<p>public&#x2F;index.html 是首页的模板; webpack会以index.html为模板生成index.html</p>
-<p>src&#x2F;index.js 是js的入口文件</p>
-<h4 id="手动准备"><a href="#手动准备" class="headerlink" title="手动准备"></a>手动准备</h4><p><code>npm init -y</code>初始化</p>
-<p><code>npm install react react-dom react-scripts -S</code>下载依赖</p>
-<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>需要使用<code>import ReactDOM from &#39;react-dom/client&#39;;</code>引入ReactDOM</p>
-</div>
-
-
-
-<p><code>npx react-scripts build</code>打包</p>
-<p><code>npx react-scripts start</code>开发时测试</p>
-<ul>
-<li><p>这两个命令可以在packetage.json中加入’scripts’内置:</p>
-<p><code>&quot;start&quot;: &quot;react-scripts start&quot;</code>  命令行中使用<code>npm start</code></p>
-<p><code>&quot;build&quot;: &quot;react-scripts build&quot;</code>  命令行中使用<code>npm run build</code></p>
-</li>
-</ul>
-<p>ESLint语法检查器: </p>
-<ul>
-<li><p>可以在packetage.json 中添加:</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;eslintConfig&quot;: &#123;</span><br><span class="line">    &quot;extends&quot;: [</span><br><span class="line">        &quot;react-app&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>引入CSS<code>import &#39;./index.css&#39;</code></p>
-<h4 id="React组件"><a href="#React组件" class="headerlink" title="React组件"></a>React组件</h4><h5 id="函数组件-推荐"><a href="#函数组件-推荐" class="headerlink" title="函数组件(推荐)"></a>函数组件(推荐)</h5><div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>)&#123;<span class="comment">// 也可以使用箭头函数</span></span><br><span class="line">    retun &lt;div&gt;<span class="title class_">Hello</span>&lt;/div&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> root = <span class="title class_">ReactDOM</span>.<span class="title function_">createRoot</span>(<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;root&#x27;</span>))</span><br><span class="line">root.<span class="title function_">render</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">App</span>/&gt;</span></span>)<span class="comment">// 一般写在入口文件中</span></span><br></pre></td></tr></table></figure></div>
-
-<h6 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h6><p>在React中事件需要通过元素的属性来设置，和原生Js不一样, 在React中事件的属性需要使用驼峰命名法</p>
-<p><code>onclick -&gt; onClick</code></p>
-<p><code>onchange -&gt; onChange</code></p>
-<p>属性值不能直接执行代码:</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">onClink = &#123;<span class="function">() =&gt;</span> &#123;<span class="title function_">alert</span>(<span class="string">&#x27;123&#x27;</span>)&#125;&#125; <span class="comment">// 正确</span></span><br><span class="line">oClink = &#123;clickHandler&#125; <span class="comment">//函数不需要加括号，若返回值为函数可加</span></span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li><p>事件对象</p>
-<ul>
-<li><p>React事件中同样会传递事件对象， 可以在响应函数中定义参数来接收事件对象</p>
-</li>
-<li><p>React事件对象不是原生的事件对象，是经过React包装过的事件对象</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>取消行为:</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">clickHandler</span> = (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">    event.<span class="title function_">preventDefault</span>(); </span><br><span class="line">    <span class="comment">//取消默认行为(PS: 若放在&lt;a href=&#x27;#&#x27;&gt;中，则取消跳转)</span></span><br><span class="line">    event.<span class="title function_">stopPropagation</span>()</span><br><span class="line">    <span class="comment">//取消冒泡</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li><p>动态传参</p>
-<p>在组件间，父组件可以通过props(属性)向子组件传递数据(父传子)</p>
-<ul>
-<li>props(外部，父 -&gt; 子)是只读属性, 不能修改</li>
-</ul>
-</li>
-</ul>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">LogItem</span> test=<span class="string">&#x27;123&#x27;</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">LogItem</span> = (<span class="params">props</span>) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 可以在函数组件的形参中定义一个props，props指定所有传递的参数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;props.test&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    <span class="comment">// 调用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li><p>状态</p>
-<p>在React中，当组件渲染完毕后，在修改组件中的变量，不会使组件重新渲染。因此必须重新渲染。</p>
-<ul>
-<li><p>state(自身)</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">LogItem</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> [count, setCounter] = <span class="title function_">useState</span>(<span class="number">1</span>) </span><br><span class="line">    <span class="comment">// 该函数会返回一个数组，数组第一个元素是初始值，第二个是一个函数</span></span><br><span class="line">    <span class="comment">// 初始值只是用来显示，修改不会触发渲染</span></span><br><span class="line">    <span class="comment">// 函数通常命名为setXxxx, 使用函数可以修改count触发渲染</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<ol>
-<li><p>React会监控这个变量的变化，当state发生变化时，会自动触发组件的重新渲染</p>
-</li>
-<li><p>在函数组件中，我们需要通过钩子函数，获取state(useState)</p>
-</li>
-<li><p>State实际就是一个被React管理的变量</p>
-</li>
-<li><p>setXxxx只有在值与count不一样的时候才会渲染</p>
-</li>
-<li><p>当通过setState去修改一个state时，并不是修改当前state,是修改下一次渲染时的state时</p>
-</li>
-<li><p>setState()会触发组件的渲染，他是异步的，所以当调用setState需要用到旧值，可能出现错误。可以传递回调函数来修改state</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="title function_">setCounter</span>(<span class="function"><span class="params">prevCounter</span> =&gt;</span> prevCounter + <span class="number">1</span>)</span><br><span class="line"><span class="comment">// 回调函数执行时，React会将最新的state值作为参数</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<div class="note-large notel-yellow"><div class="notel-title"><p>注意</p>
-</div><div class="notel-content"><p>当useState为一个对象时，如果直接修改旧的State对象，对象地址不会改变，所以不会被渲染。可以使用浅拷贝</p>
- </div></div>
-
-<p>PS: <code>setXxxx(&#123;...user, name:&#39;aaa&#39;&#125;)</code></p>
-<ul>
-<li><p>useRef()钩子函数</p>
-<p>创建一个容器， 返回一个普通的JS对象，但是可以确保每次渲染都是同一个对象，减少对象的创建次数(当你需要一个对象不会因为渲染改变时使用)</p>
-</li>
-</ul>
-<h5 id="类组件"><a href="#类组件" class="headerlink" title="类组件"></a>类组件</h5><p>必须继承React.Component</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">App</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span>&#123;</span><br><span class="line">    <span class="comment">// 类组件中，必须添加一个render()方法，且方法的返回值要是一个jsx</span></span><br><span class="line">    <span class="title function_">render</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>aaa<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li><p>类组件的props是存储在实例对象中，可以直接通过实例对象访问<code>this.props</code></p>
-</li>
-<li><p>类组件的state是存储在对象的state属性中，可以直接通过<code>this.state</code>访问</p>
-<ul>
-<li><p>通过<code>this.setState()对其进行修改</code></p>
-</li>
-<li><p>当我们通过this.setState()修改state时，只会修改设置的属性(只限于直接存储state的值)</p>
-</li>
-</ul>
-</li>
-</ul>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">state = &#123;</span><br><span class="line">    <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">    <span class="attr">test</span>: <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="attr">obj</span>: &#123;<span class="attr">name</span>: <span class="string">&#x27;aaa&#x27;</span>&#125; <span class="comment">// 没有直接存储在state，会被覆盖</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li>在类组件中，响应函数是以类的方法定义的</li>
-</ul>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">clickHandler = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">setState</span>(<span class="function"><span class="params">prevState</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">count</span>: prevState + <span class="number">1</span>    </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li><p>createRef钩子函数</p>
-<p>与useRef相同，都是创建一个不会变化的JS容器</p>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>React Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript-React-1</title>
-    <url>/2023/03/07/JavaScript-React-1/</url>
-    <content><![CDATA[<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><hr>
-<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ul>
-<li><p>只有一个参数的函数 参数 &#x3D;&gt; 返回值</p>
-</li>
-<li><p>多个参数使用括号 (a,b) &#x3D;&gt; 返回值</p>
-</li>
-<li><p>返回值必须是一个表达式</p>
-</li>
-<li><p>返回值是对象必须带括号</p>
-</li>
-<li><p>如需写语句，在后添加代码块</p>
-</li>
-</ul>
-<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>隐含参数arguments-表示当前函数的实参 arguments.lenth 获取实参数。剩余参数…args</p>
-</div>
-
-<h4 id="特性"><a href="#特性" class="headerlink" title="特性:"></a>特性:</h4><ul>
-<li><p>箭头函数中没有arguments，可以使用…args</p>
-</li>
-<li><p>箭头函数的this总是看外层作用域的this</p>
-</li>
-<li><p>箭头函数中的this无法通过call(), apply(), bind()修改</p>
-</li>
-<li><p>箭头函数无法作为构造函数，无法new</p>
-</li>
-</ul>
-<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><hr>
-<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>默认情况下，script标签中不能使用import语句，必须设置script的type属性为module</p>
-</div>
-
-<h4 id="导出"><a href="#导出" class="headerlink" title="导出:"></a>导出:</h4><ul>
-<li><p>默认导出</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>一个模块里只有一个默认导出</p>
-<ul>
-<li><p>命名导出</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b,c&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h4 id="导入"><a href="#导入" class="headerlink" title="导入:"></a>导入:</h4><ul>
-<li><p>默认导入</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>导入默认模块时，变量名可以自主制定，无需使用模块中的变量名</p>
-<ul>
-<li><p>命名导入</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;a,b,c&#125; <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span></span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
-<li><p>构造函数</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>构造函数中，可以通过this来引用当前的对象</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
-<li><p>严格模式</p>
-<p>“use strict”</p>
-<ol>
-<li><p>类中的所有代码都会在严格模式下执行</p>
-</li>
-<li><p>函数的this不再是window,而是undefined</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> test = mc.<span class="property">fn</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-</ul>
-<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>以方法形式调用时, this就是当前的实例。以函数形式调用, this是undefined</p>
-</div>
-
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = <span class="variable language_">this</span>.<span class="property">fn</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>) <span class="comment">//将fn方法的this绑定为当前实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>可以限制this绑定在自身</p>
-<p>也可以使用箭头函数的形式调用，永远绑定为本身</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">   fn = <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>&#123;&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>在子类中重写父类构造函数时，应该在子类中第一时间调用父类构造函数，否则报错</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(name, age); <span class="comment">//调用父类构造函数，并且需要加入父类参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
-<li><p>动态属性</p>
-<p>需要首先new一个实例才能使用</p>
-</li>
-<li><p>静态属性</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> name = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="comment">// 静态方法this不是实例对象而是当前类对象</span></span><br><span class="line">    <span class="keyword">static</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>可以直接使用<code>MyClass.name</code></p>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
-<ul>
-<li><p>map()</p>
-<ol>
-<li><p>可以根据原有的数组返回一个新数组</p>
-</li>
-<li><p>需要一个回调函数作为参数, 回调函数返回值会成为新数组中的元素</p>
-<p>用法:</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> result = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> item+<span class="number">2</span></span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 第一个参数 当前元素</span></span><br><span class="line"><span class="comment">// 第二个参数 当前元素索引</span></span><br><span class="line"><span class="comment">// 第三个参数 当前数组</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-<li><p>filter()</p>
-<p>过滤器</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">result = arr.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item % <span class="number">2</span> === <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>根据条件过滤元素</p>
-<ul>
-<li><p>find()</p>
-<p>找第一个被过滤条件通过的元素</p>
-</li>
-</ul>
-</li>
-<li><p>reduce()</p>
-<p>整合数组</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> &#123;&#125;, <span class="number">0</span>) </span><br><span class="line"><span class="comment">// 0的位置是定义第一次prev的值, prev 上一次合并后值, curr 当前值</span></span><br></pre></td></tr></table></figure></div></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>React Study</tag>
       </tags>
   </entry>
   <entry>
@@ -1334,6 +1334,323 @@
 ]]></content>
       <tags>
         <tag>Linux Study</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>poetry使用</title>
+    <url>/2023/03/09/poetry%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h3 id="Poetry"><a href="#Poetry" class="headerlink" title="Poetry"></a>Poetry</h3><hr>
+<p>使用pyproject.toml管理整个项目的依赖</p>
+<h4 id="安装poetry"><a href="#安装poetry" class="headerlink" title="安装poetry"></a>安装poetry</h4><ol>
+<li><p>安装pipx为每个包自动创建隔离环境，方便管理</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pip install pipx</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>安装poetry</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipx install poetry</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<h4 id="项目中使用portry"><a href="#项目中使用portry" class="headerlink" title="项目中使用portry"></a>项目中使用portry</h4><ol>
+<li><p>初始化pyproject.toml</p>
+<p>在项目路径中使用:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry init</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>创建项目虚拟环境</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry <span class="built_in">env</span> use python</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>进入虚拟环境</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry shell</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>添加新依赖</p>
+<p>在pyproject.toml文件中添加如下内容:</p>
+<div class="highlight-container" data-rel="Toml"><figure class="iseeu highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[[tool.poetry.source]]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;aliyun&quot;</span></span><br><span class="line"><span class="attr">url</span> = <span class="string">&quot;https://mirrors.aliyun.com/pypi/simple&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>添加普通依赖:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>添加开发依赖:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt; -D</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>测试</p>
+<p>使用pytest</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry run pytest</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>poetry</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库</title>
+    <url>/2023/04/12/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<h2 id="MySQL-为什么使用-B-树来作索引，对比-B-树它的优点和缺点是什么？"><a href="#MySQL-为什么使用-B-树来作索引，对比-B-树它的优点和缺点是什么？" class="headerlink" title="MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？"></a>MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？</h2><hr>
+<blockquote>
+<ul>
+<li><p>优点</p>
+<ol>
+<li><p>B+ 树具有更高的扇出因子，这意味着它们可以在每个节点中存储更多的键。这减少了树的高度并提高了搜索性能。此外，因为B+树仅在其叶子节点中存储键，所以它们可以存储比B树更多的键，B树在内部和叶子节点中都存储键</p>
+</li>
+<li><p>B+树的另一个优点是它们更适合范围查询。因为所有叶子节点都连接在一起形成一个链表，所以很容易按顺序遍历树并检索某个范围内的所有键。相比之下，B树需要额外的遍历才能找到范围内的所有键</p>
+</li>
+</ol>
+</li>
+<li><p>缺点</p>
+<ol>
+<li>使用B+树需要更多的磁盘空间，因为叶子节点中有额外的指针。此外，由于需要维护叶子节点的链接列表，B+树可能需要更多的CPU时间来执行插入和删除操作</li>
+</ol>
+</li>
+<li><p>总结</p>
+<p>在MySQL中使用B+树而不是B树的决定可能是基于改善搜索性能和增加磁盘空间和CPU使用率之间的权衡</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="数据库大的事务隔离级别有哪些-各有哪些优缺点？"><a href="#数据库大的事务隔离级别有哪些-各有哪些优缺点？" class="headerlink" title="数据库大的事务隔离级别有哪些?各有哪些优缺点？"></a>数据库大的事务隔离级别有哪些?各有哪些优缺点？</h2><hr>
+<table>
+<thead>
+<tr>
+<th align="center">隔离级别</th>
+<th align="center">脏读</th>
+<th align="center">不可重复读</th>
+<th align="center">幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Read uncommitted</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">Read committed</td>
+<td align="center">×</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">Repeatable read</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">Serializable</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">×</td>
+</tr>
+</tbody></table>
+<h2 id="什么是数据库事务的特性？-简述数据库中的ACID分别是什么"><a href="#什么是数据库事务的特性？-简述数据库中的ACID分别是什么" class="headerlink" title="什么是数据库事务的特性？(简述数据库中的ACID分别是什么)"></a>什么是数据库事务的特性？(简述数据库中的ACID分别是什么)</h2><hr>
+<blockquote>
+<p>原子性，一致性，隔离性，持久性</p>
+</blockquote>
+<h2 id="什么情况下会发生死锁，如何解决死锁？"><a href="#什么情况下会发生死锁，如何解决死锁？" class="headerlink" title="什么情况下会发生死锁，如何解决死锁？"></a>什么情况下会发生死锁，如何解决死锁？</h2><hr>
+<blockquote>
+<p>死锁是指两个或多个事务相互等待对方释放资源，从而导致所有事务都无法继续执行的情况。在MySQL中，死锁通常发生在事务中使用了不同的锁定顺序时</p>
+<p>解决方法</p>
+<ol>
+<li><p>进行系统的重新启动，代价很大，它意味着在这之前所有的进程已经完成的计算工作都无效，包括参与死锁的进程，以及未参与的进程</p>
+</li>
+<li><p>撤销进程，剥夺资源。终止参加死锁的进程，收回它们占有的资源，从而解除死锁。</p>
+<ul>
+<li><p>情况一：一次性撤销参与死锁的全部进程，剥夺全部进程</p>
+</li>
+<li><p>情况二：逐步撤销参与死锁的进程，逐步收回死锁进程占有的资源</p>
+</li>
+</ul>
+<p>一般来说，选择逐步撤销的进程时要按照一定的原则进行，目的是撤销哪些代价最小的进程，比如按进程的优先级确定进程的代价；考虑进程允许是&#x3D;时的代价和与此进程相关的外部作业的代价等因素</p>
+</li>
+<li><p>进程回退策略，即让参与死锁的进程回退到没有发生死锁前的某一点处，并由此点处继续执行，以求再次执行时不在发生死锁。</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="简述乐观锁以及悲观锁的区别以及使用场景"><a href="#简述乐观锁以及悲观锁的区别以及使用场景" class="headerlink" title="简述乐观锁以及悲观锁的区别以及使用场景"></a>简述乐观锁以及悲观锁的区别以及使用场景</h2><hr>
+<blockquote>
+<p>定义</p>
+<ul>
+<li><p>悲观锁(Pessimistic Lock)</p>
+<blockquote>
+<p>每次获取数据的时候，都会担心数据被修改，所以每次获取数据的时候都会进行加锁，确保在自己使用的过程中数据不会被别人修改，使用完成后进行数据解锁。由于数据进行加锁，期间对该数据进行读写的其他线程都会进行等待</p>
+</blockquote>
+</li>
+<li><p>乐观锁(Optimistic Lock)</p>
+<blockquote>
+<p>每次获取数据时，都不会担心数据被修改，所以每次获取数据的时候都不会进行加锁，但是在更新数据的时候需要判断该数据是否被别人修改过。如果数据被其他线程修改，则不进行更新，如果数据没有被其他线程修改，则进行更新。由于数据没有进行加锁，期间该数据可以被其他线程进行读写操作</p>
+</blockquote>
+</li>
+</ul>
+<p>适合场景</p>
+<ul>
+<li><p>悲观锁</p>
+<blockquote>
+<p>比较适合写入操作比较频繁的场景，如果出现大量的读取操作，每次读取的时候都会进行加锁，这样会增加大量的锁的开销，降低了系统的吞吐量</p>
+</blockquote>
+</li>
+<li><p>乐观锁</p>
+<blockquote>
+<p>比较适合读取操作比较频繁的场景，如果出现大量的写入操作，数据发生冲突的可能性就会增加，为了保证数据的一致性，应用层需要不断的重新获取数据，这样会增加大量的查询操作，降低了系统的吞吐量</p>
+</blockquote>
+</li>
+</ul>
+<p>总结</p>
+<blockquote>
+<p>两种锁各有优缺，读取频繁用乐观锁，写入频繁用悲观锁</p>
+</blockquote>
+</blockquote>
+<h2 id="聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？"><a href="#聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？" class="headerlink" title="聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？"></a>聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？</h2><hr>
+<blockquote>
+<p>聚簇索引和非聚簇索引是用于提高数据库查询性能的两种索引类型</p>
+<p>聚簇索引决定了表中数据的物理顺序。他根据索引列对数据行进行排序和存储。<em>一个表只能有一个聚簇索引</em></p>
+<p>非聚簇索引是数据行之外的独立结构。它包括索引列的副本和指向相应的数据行指针。<em>一个表可以有多个非聚簇索引</em></p>
+<p>聚簇索引最适合在表中频繁查询某个列的一定范围内的值时使用。这是因为数据时根据索引列进行物理排序的，因此检索一定范围内的值更快。而非聚簇索引是数据行之外的一个独立结构，最适合在表中频繁查询使用多个列时使用。在决定使用哪一种时，需要考虑数据修改的频率</p>
+<p>注意</p>
+<blockquote>
+<p>在具有频繁插入或更新的表上创建聚簇索引可能会对性能产生负面影响。这是因为每次插入新行或更新现有行时，数据都必须进行物理重组</p>
+</blockquote>
+</blockquote>
+<h2 id="简述脏读和幻读的发生场景，InnoDB-是如何解决幻读的？"><a href="#简述脏读和幻读的发生场景，InnoDB-是如何解决幻读的？" class="headerlink" title="简述脏读和幻读的发生场景，InnoDB 是如何解决幻读的？"></a>简述脏读和幻读的发生场景，InnoDB 是如何解决幻读的？</h2><hr>
+<blockquote>
+<p>脏读是指一个事务读取了另一个事务未提交的数据，如果另一个事务回滚了操作，那么读取的数据就是无效的。InnoDB通过实现MVCC(多版本并发控制)来避免脏读的发生。MVCC通过在每一行数据后面添加两个隐藏的列来实现，一个是创造时间，一个是过期时间。当一个事务开始时，他会创建一个视图，这个视图包含了当前时间点之前的所有数据。如果一个事务正在修改一行数据，那么这个行的过期时间就会被设置为当前时间，这样其他事务就无法读取到这个行的数据。如果一个事务正在读取一行数据，那么这个行的创建时间必须早于这个事务的开始时间，这样才能保证读取到的数据是有效的</p>
+<p>幻读是指一个事务在读取某个范围内的数据时，另一个事务在这个范围内插入和新的数据，导致第一个事务读取到了之前不存在的数据。InnoDB通过实现间隙锁来避免幻读的发生。当一个事务执行SELECT语句时，InnoDB会对查询的范围进行加锁，这样其他事务就无法在这个范围内插入新的数据。如果一个事务要插入新的数据，那么他必须等待其他事务释放锁之后才能执行插入操作</p>
+</blockquote>
+<h2 id="唯一索引与普通索引的区别是什么-使用索引会有哪些优缺点？"><a href="#唯一索引与普通索引的区别是什么-使用索引会有哪些优缺点？" class="headerlink" title="唯一索引与普通索引的区别是什么?使用索引会有哪些优缺点？"></a>唯一索引与普通索引的区别是什么?使用索引会有哪些优缺点？</h2><hr>
+<blockquote>
+<p>唯一索引会限定数据唯一，而普通索引则没有</p>
+<p>优点</p>
+<ol>
+<li><p>提高查询效率</p>
+<blockquote>
+<p>索引可以帮助数据库快速定位到符合条件的数据</p>
+</blockquote>
+</li>
+<li><p>减少数据扫描</p>
+<blockquote>
+<p>使用索引可以减少数据库扫描的数据量</p>
+</blockquote>
+</li>
+<li><p>加速排序</p>
+<blockquote>
+<p>如果查询需要排序，使用索引可以加速排序的过程</p>
+</blockquote>
+</li>
+</ol>
+<p>缺点</p>
+<ol>
+<li><p>索引会占用磁盘空间</p>
+</li>
+<li><p>索引会降低写入性能</p>
+<blockquote>
+<p>每次插入，更新或删除数据时，都需要更新索引</p>
+</blockquote>
+</li>
+<li><p>索引可能会导致查询变慢</p>
+<blockquote>
+<p>如果索引被错误的使用，或者索引的选择不当</p>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+<h2 id="MySQL的索引什么时候会失效？"><a href="#MySQL的索引什么时候会失效？" class="headerlink" title="MySQL的索引什么时候会失效？"></a>MySQL的索引什么时候会失效？</h2><blockquote>
+<ol>
+<li><p>带有运算</p>
+<blockquote>
+<p>在where子句中使用&#x3D;，+这些运算符号</p>
+</blockquote>
+</li>
+<li><p>使用not in，in</p>
+<blockquote>
+<p>范围运算，会导致索引失效产生全表扫描</p>
+</blockquote>
+</li>
+<li><p>like模糊查询，使用%开头的左模糊查询</p>
+</li>
+<li><p>使用or的时候</p>
+<blockquote>
+<p>因为or是一个并集，如果or条件中有一个不是索引，就会导致索引失效</p>
+</blockquote>
+</li>
+<li><p>字段类型与SQL语句类型不匹配时</p>
+<blockquote>
+<p>如果列类型是字符串，则SQL语句中使用到该列的条件数据就必须用引号引用起来，否则会导致索引失效，原因是MySQL会进行隐式的数据类型转换，导致索引失效</p>
+</blockquote>
+</li>
+<li><p>使用函数</p>
+</li>
+<li><p>复合索引违反最左原则时</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 组合索引a,b,c，需出现a</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> a<span class="operator">=</span><span class="string">&#x27;&#x27;</span> <span class="keyword">and</span> b<span class="operator">=</span><span class="string">&#x27;&#x27;</span> ## 索引可用</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> b<span class="operator">=</span><span class="string">&#x27;&#x27;</span> <span class="keyword">and</span> c<span class="operator">=</span><span class="string">&#x27;&#x27;</span> ## 索引不可用</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>使用复合索引(组合索引)时，需要遵循最左前缀原则，即查询条件必须包括复合索引的最左前缀列，才能使用该索引进行查询</p>
+<p>最左前缀原则的意义在于，如果查询条件包含复合索引的最左前缀列，那么该索引可以帮助数据库快速定位到符合条件的数据，从而提高查询效率。如果查询条件不包含最左前缀列，那么该索引就无法使用，需要对所有数据进行扫描，这导致查询变慢</p>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+<h2 id="简述MySQL的主从同步机制"><a href="#简述MySQL的主从同步机制" class="headerlink" title="简述MySQL的主从同步机制"></a>简述MySQL的主从同步机制</h2><blockquote>
+<p>指将一个MySQL数据库实例(主库)的数据同步到另一个MySQL数据库实例(从库)的过程。主从同步可以实现数据备份，负载均衡，读写分离等操作</p>
+<p>原理</p>
+<blockquote>
+<p>主库将更新操作记录在二进制日记(binlog)中，从库连接主库，将主库的binlog复制到从库的中继日志(relay log)中，然后从库读取中继日志，将更新操作应用到从库的数据中。从库可以设置延迟时间，以便在主库出现故障时，从库可以称为新的主库，继续提供服务</p>
+</blockquote>
+<p>步骤</p>
+<blockquote>
+<ol>
+<li><p>主库接收用户左CRUD操作，写入数据库，更新结果集到binlog中</p>
+</li>
+<li><p>主从同步时主找从的，从库IO发起请求，主库的主进程看从库 master change 中给的参数是否合法，如果合法主进程交给IO进程执行2操作，否则拒绝处理</p>
+</li>
+<li><p>主库根据 master 的位置点，从这个位置点的 binlog 日志一直到 binlog 日志最后，将其准备发送给从库</p>
+</li>
+<li><p>将找到的 binlog 日志发送给从库，并且还会发送新的日志点</p>
+</li>
+<li><p>从库接收到 binlog 日志，将其写入 relay-log(中继日志)中</p>
+</li>
+<li><p>从库IO进程再想 master info 保存主库传过来的最后的 binlog 日志的日志位置点</p>
+</li>
+<li><p>从库IO时循环发起的请求，发了再要，不会管 SQL 读取中继日志的操作。从库 IO 根据新的日志点，向主库发起请求，主库执行 3 4 操作，再发送新的 binlog 给从库，从库再执行5操作</p>
+</li>
+<li><p>其实第一次向 relay-log 中放数据时，SQL进程就已经知道，SQL进程将 relay-log 中的SQL语句转换成数据，写入从库，从而实现同步</p>
+</li>
+<li><p>从库 SQL 线程读取中继日志，并不会一次性读完，会把读取到的日志点存放到relay-log.info中</p>
+</li>
+</ol>
+</blockquote>
+<p>主从同步配置注意</p>
+<blockquote>
+<ol>
+<li><p>主从库MySQL版本必须一致，否则可能会出现兼容性问题</p>
+</li>
+<li><p>主从库的字符集和校对规则必须一致，否则可能会出现乱码等问题</p>
+</li>
+<li><p>主从库的数据表结构必须一致，否则可能会出现同步失败等问题</p>
+</li>
+<li><p>主从库的数据同步需要保证网络稳定，否则可能会出现同步延迟等问题</p>
+</li>
+<li><p>主从库的数据同步需要保证主库的写入性能，否则可能会出现主库性能下降等问题</p>
+</li>
+</ol>
+</blockquote>
+</blockquote>
+<h2 id="主从复制延迟"><a href="#主从复制延迟" class="headerlink" title="主从复制延迟"></a>主从复制延迟</h2><blockquote>
+<p>指从库的数据更新操作与主库的数据更新操作之间存在一定的时间差，这可能导致从库的数据不一致</p>
+<ul>
+<li><p>网络延迟</p>
+<blockquote>
+<p>主库和从库之间的网络延迟可能会导致从库无法及时获取主库的更新操作</p>
+</blockquote>
+</li>
+<li><p>从库负载过高</p>
+<blockquote>
+<p>同上</p>
+</blockquote>
+</li>
+<li><p>主库负载过高</p>
+<blockquote>
+<p>如果主库的负载过高，可能会导致主库无法即时将更新操作记录到二进制日志中，从而导致从库无法及时获取更新操作</p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
@@ -2241,8 +2558,6 @@
 </blockquote>
 <div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">view</span> view_test1</span><br></pre></td></tr></table></figure></div>
 
-
-
 <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><hr>
 <blockquote>
 <p>数据库是用来存储数据的，在互联网应用中数据库中存储的数据可能会很多(大数据)，数据表中数据的查询速率会随着数据量的增长逐渐变慢，从而导致响应用户请求的速度变慢——用户体验差</p>
@@ -2553,48 +2868,6 @@
       </tags>
   </entry>
   <entry>
-    <title>poetry使用</title>
-    <url>/2023/03/09/poetry%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<h3 id="Poetry"><a href="#Poetry" class="headerlink" title="Poetry"></a>Poetry</h3><hr>
-<p>使用pyproject.toml管理整个项目的依赖</p>
-<h4 id="安装poetry"><a href="#安装poetry" class="headerlink" title="安装poetry"></a>安装poetry</h4><ol>
-<li><p>安装pipx为每个包自动创建隔离环境，方便管理</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pip install pipx</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>安装poetry</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipx install poetry</span><br></pre></td></tr></table></figure></div></li>
-</ol>
-<h4 id="项目中使用portry"><a href="#项目中使用portry" class="headerlink" title="项目中使用portry"></a>项目中使用portry</h4><ol>
-<li><p>初始化pyproject.toml</p>
-<p>在项目路径中使用:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry init</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>创建项目虚拟环境</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry <span class="built_in">env</span> use python</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>进入虚拟环境</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry shell</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>添加新依赖</p>
-<p>在pyproject.toml文件中添加如下内容:</p>
-<div class="highlight-container" data-rel="Toml"><figure class="iseeu highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[[tool.poetry.source]]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;aliyun&quot;</span></span><br><span class="line"><span class="attr">url</span> = <span class="string">&quot;https://mirrors.aliyun.com/pypi/simple&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>添加普通依赖:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt;</span><br></pre></td></tr></table></figure></div>
-
-<p>添加开发依赖:</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry add &lt;pakge_name&gt; -D</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>测试</p>
-<p>使用pytest</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">poetry run pytest</span><br></pre></td></tr></table></figure></div></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>poetry</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>操作系统</title>
     <url>/2023/04/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<ol>
@@ -2847,20 +3120,6 @@
 </li>
 </ul>
 <p>这些模型区别在于应用程序和内核之间的交互方式以及数据准备和拷贝的过程</p>
-</blockquote>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据库</title>
-    <url>/2023/04/12/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<ol>
-<li><p>MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？</p>
-<blockquote>
 </blockquote>
 </li>
 </ol>

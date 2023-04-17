@@ -22,15 +22,15 @@
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？">
+        <meta name="description" content="MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？   优点  B+ 树具有更高的扇出因子，这意味着它们可以在每个节点中存储更多的键。这减少了树的高度并提高了搜索性能。此外，因为B+树仅在其叶子节点中存储键，所以它们可以存储比B树更多的键，B树在内部和叶子节点中都存储键  B+树的另一个优点是它们更适合范围查询。因为所有叶子节点都连接在一起形成一个链表，所以很容易按顺序遍">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库">
 <meta property="og:url" content="https://intyouss.github.io/2023/04/12/%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
 <meta property="og:site_name" content="IntYou&#39;s Blog">
-<meta property="og:description" content="MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？">
+<meta property="og:description" content="MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？   优点  B+ 树具有更高的扇出因子，这意味着它们可以在每个节点中存储更多的键。这减少了树的高度并提高了搜索性能。此外，因为B+树仅在其叶子节点中存储键，所以它们可以存储比B树更多的键，B树在内部和叶子节点中都存储键  B+树的另一个优点是它们更适合范围查询。因为所有叶子节点都连接在一起形成一个链表，所以很容易按顺序遍">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-04-12T03:26:11.000Z">
-<meta property="article:modified_time" content="2023-04-12T03:43:07.838Z">
+<meta property="article:modified_time" content="2023-04-17T01:25:32.171Z">
 <meta property="article:author" content="IntYou">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
@@ -225,8 +225,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-12 11:43:07</span>
-            <span class="mobile">2023-04-12 11:43</span>
+            <span class="desktop">2023-04-17 09:25:32</span>
+            <span class="mobile">2023-04-17 09:25</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -261,12 +261,273 @@
             
 
             <div class="article-content markdown-body">
-                <ol>
-<li><p>MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？</p>
+                <h2 id="MySQL-为什么使用-B-树来作索引，对比-B-树它的优点和缺点是什么？"><a href="#MySQL-为什么使用-B-树来作索引，对比-B-树它的优点和缺点是什么？" class="headerlink" title="MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？"></a>MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？</h2><hr>
 <blockquote>
+<ul>
+<li><p>优点</p>
+<ol>
+<li><p>B+ 树具有更高的扇出因子，这意味着它们可以在每个节点中存储更多的键。这减少了树的高度并提高了搜索性能。此外，因为B+树仅在其叶子节点中存储键，所以它们可以存储比B树更多的键，B树在内部和叶子节点中都存储键</p>
+</li>
+<li><p>B+树的另一个优点是它们更适合范围查询。因为所有叶子节点都连接在一起形成一个链表，所以很容易按顺序遍历树并检索某个范围内的所有键。相比之下，B树需要额外的遍历才能找到范围内的所有键</p>
+</li>
+</ol>
+</li>
+<li><p>缺点</p>
+<ol>
+<li>使用B+树需要更多的磁盘空间，因为叶子节点中有额外的指针。此外，由于需要维护叶子节点的链接列表，B+树可能需要更多的CPU时间来执行插入和删除操作</li>
+</ol>
+</li>
+<li><p>总结</p>
+<p>在MySQL中使用B+树而不是B树的决定可能是基于改善搜索性能和增加磁盘空间和CPU使用率之间的权衡</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="数据库大的事务隔离级别有哪些-各有哪些优缺点？"><a href="#数据库大的事务隔离级别有哪些-各有哪些优缺点？" class="headerlink" title="数据库大的事务隔离级别有哪些?各有哪些优缺点？"></a>数据库大的事务隔离级别有哪些?各有哪些优缺点？</h2><hr>
+<table>
+<thead>
+<tr>
+<th align="center">隔离级别</th>
+<th align="center">脏读</th>
+<th align="center">不可重复读</th>
+<th align="center">幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Read uncommitted</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">Read committed</td>
+<td align="center">×</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">Repeatable read</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">Serializable</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">×</td>
+</tr>
+</tbody></table>
+<h2 id="什么是数据库事务的特性？-简述数据库中的ACID分别是什么"><a href="#什么是数据库事务的特性？-简述数据库中的ACID分别是什么" class="headerlink" title="什么是数据库事务的特性？(简述数据库中的ACID分别是什么)"></a>什么是数据库事务的特性？(简述数据库中的ACID分别是什么)</h2><hr>
+<blockquote>
+<p>原子性，一致性，隔离性，持久性</p>
+</blockquote>
+<h2 id="什么情况下会发生死锁，如何解决死锁？"><a href="#什么情况下会发生死锁，如何解决死锁？" class="headerlink" title="什么情况下会发生死锁，如何解决死锁？"></a>什么情况下会发生死锁，如何解决死锁？</h2><hr>
+<blockquote>
+<p>死锁是指两个或多个事务相互等待对方释放资源，从而导致所有事务都无法继续执行的情况。在MySQL中，死锁通常发生在事务中使用了不同的锁定顺序时</p>
+<p>解决方法</p>
+<ol>
+<li><p>进行系统的重新启动，代价很大，它意味着在这之前所有的进程已经完成的计算工作都无效，包括参与死锁的进程，以及未参与的进程</p>
+</li>
+<li><p>撤销进程，剥夺资源。终止参加死锁的进程，收回它们占有的资源，从而解除死锁。</p>
+<ul>
+<li><p>情况一：一次性撤销参与死锁的全部进程，剥夺全部进程</p>
+</li>
+<li><p>情况二：逐步撤销参与死锁的进程，逐步收回死锁进程占有的资源</p>
+</li>
+</ul>
+<p>一般来说，选择逐步撤销的进程时要按照一定的原则进行，目的是撤销哪些代价最小的进程，比如按进程的优先级确定进程的代价；考虑进程允许是&#x3D;时的代价和与此进程相关的外部作业的代价等因素</p>
+</li>
+<li><p>进程回退策略，即让参与死锁的进程回退到没有发生死锁前的某一点处，并由此点处继续执行，以求再次执行时不在发生死锁。</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="简述乐观锁以及悲观锁的区别以及使用场景"><a href="#简述乐观锁以及悲观锁的区别以及使用场景" class="headerlink" title="简述乐观锁以及悲观锁的区别以及使用场景"></a>简述乐观锁以及悲观锁的区别以及使用场景</h2><hr>
+<blockquote>
+<p>定义</p>
+<ul>
+<li><p>悲观锁(Pessimistic Lock)</p>
+<blockquote>
+<p>每次获取数据的时候，都会担心数据被修改，所以每次获取数据的时候都会进行加锁，确保在自己使用的过程中数据不会被别人修改，使用完成后进行数据解锁。由于数据进行加锁，期间对该数据进行读写的其他线程都会进行等待</p>
+</blockquote>
+</li>
+<li><p>乐观锁(Optimistic Lock)</p>
+<blockquote>
+<p>每次获取数据时，都不会担心数据被修改，所以每次获取数据的时候都不会进行加锁，但是在更新数据的时候需要判断该数据是否被别人修改过。如果数据被其他线程修改，则不进行更新，如果数据没有被其他线程修改，则进行更新。由于数据没有进行加锁，期间该数据可以被其他线程进行读写操作</p>
+</blockquote>
+</li>
+</ul>
+<p>适合场景</p>
+<ul>
+<li><p>悲观锁</p>
+<blockquote>
+<p>比较适合写入操作比较频繁的场景，如果出现大量的读取操作，每次读取的时候都会进行加锁，这样会增加大量的锁的开销，降低了系统的吞吐量</p>
+</blockquote>
+</li>
+<li><p>乐观锁</p>
+<blockquote>
+<p>比较适合读取操作比较频繁的场景，如果出现大量的写入操作，数据发生冲突的可能性就会增加，为了保证数据的一致性，应用层需要不断的重新获取数据，这样会增加大量的查询操作，降低了系统的吞吐量</p>
+</blockquote>
+</li>
+</ul>
+<p>总结</p>
+<blockquote>
+<p>两种锁各有优缺，读取频繁用乐观锁，写入频繁用悲观锁</p>
+</blockquote>
+</blockquote>
+<h2 id="聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？"><a href="#聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？" class="headerlink" title="聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？"></a>聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？</h2><hr>
+<blockquote>
+<p>聚簇索引和非聚簇索引是用于提高数据库查询性能的两种索引类型</p>
+<p>聚簇索引决定了表中数据的物理顺序。他根据索引列对数据行进行排序和存储。<em>一个表只能有一个聚簇索引</em></p>
+<p>非聚簇索引是数据行之外的独立结构。它包括索引列的副本和指向相应的数据行指针。<em>一个表可以有多个非聚簇索引</em></p>
+<p>聚簇索引最适合在表中频繁查询某个列的一定范围内的值时使用。这是因为数据时根据索引列进行物理排序的，因此检索一定范围内的值更快。而非聚簇索引是数据行之外的一个独立结构，最适合在表中频繁查询使用多个列时使用。在决定使用哪一种时，需要考虑数据修改的频率</p>
+<p>注意</p>
+<blockquote>
+<p>在具有频繁插入或更新的表上创建聚簇索引可能会对性能产生负面影响。这是因为每次插入新行或更新现有行时，数据都必须进行物理重组</p>
+</blockquote>
+</blockquote>
+<h2 id="简述脏读和幻读的发生场景，InnoDB-是如何解决幻读的？"><a href="#简述脏读和幻读的发生场景，InnoDB-是如何解决幻读的？" class="headerlink" title="简述脏读和幻读的发生场景，InnoDB 是如何解决幻读的？"></a>简述脏读和幻读的发生场景，InnoDB 是如何解决幻读的？</h2><hr>
+<blockquote>
+<p>脏读是指一个事务读取了另一个事务未提交的数据，如果另一个事务回滚了操作，那么读取的数据就是无效的。InnoDB通过实现MVCC(多版本并发控制)来避免脏读的发生。MVCC通过在每一行数据后面添加两个隐藏的列来实现，一个是创造时间，一个是过期时间。当一个事务开始时，他会创建一个视图，这个视图包含了当前时间点之前的所有数据。如果一个事务正在修改一行数据，那么这个行的过期时间就会被设置为当前时间，这样其他事务就无法读取到这个行的数据。如果一个事务正在读取一行数据，那么这个行的创建时间必须早于这个事务的开始时间，这样才能保证读取到的数据是有效的</p>
+<p>幻读是指一个事务在读取某个范围内的数据时，另一个事务在这个范围内插入和新的数据，导致第一个事务读取到了之前不存在的数据。InnoDB通过实现间隙锁来避免幻读的发生。当一个事务执行SELECT语句时，InnoDB会对查询的范围进行加锁，这样其他事务就无法在这个范围内插入新的数据。如果一个事务要插入新的数据，那么他必须等待其他事务释放锁之后才能执行插入操作</p>
+</blockquote>
+<h2 id="唯一索引与普通索引的区别是什么-使用索引会有哪些优缺点？"><a href="#唯一索引与普通索引的区别是什么-使用索引会有哪些优缺点？" class="headerlink" title="唯一索引与普通索引的区别是什么?使用索引会有哪些优缺点？"></a>唯一索引与普通索引的区别是什么?使用索引会有哪些优缺点？</h2><hr>
+<blockquote>
+<p>唯一索引会限定数据唯一，而普通索引则没有</p>
+<p>优点</p>
+<ol>
+<li><p>提高查询效率</p>
+<blockquote>
+<p>索引可以帮助数据库快速定位到符合条件的数据</p>
+</blockquote>
+</li>
+<li><p>减少数据扫描</p>
+<blockquote>
+<p>使用索引可以减少数据库扫描的数据量</p>
+</blockquote>
+</li>
+<li><p>加速排序</p>
+<blockquote>
+<p>如果查询需要排序，使用索引可以加速排序的过程</p>
 </blockquote>
 </li>
 </ol>
+<p>缺点</p>
+<ol>
+<li><p>索引会占用磁盘空间</p>
+</li>
+<li><p>索引会降低写入性能</p>
+<blockquote>
+<p>每次插入，更新或删除数据时，都需要更新索引</p>
+</blockquote>
+</li>
+<li><p>索引可能会导致查询变慢</p>
+<blockquote>
+<p>如果索引被错误的使用，或者索引的选择不当</p>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+<h2 id="MySQL的索引什么时候会失效？"><a href="#MySQL的索引什么时候会失效？" class="headerlink" title="MySQL的索引什么时候会失效？"></a>MySQL的索引什么时候会失效？</h2><blockquote>
+<ol>
+<li><p>带有运算</p>
+<blockquote>
+<p>在where子句中使用&#x3D;，+这些运算符号</p>
+</blockquote>
+</li>
+<li><p>使用not in，in</p>
+<blockquote>
+<p>范围运算，会导致索引失效产生全表扫描</p>
+</blockquote>
+</li>
+<li><p>like模糊查询，使用%开头的左模糊查询</p>
+</li>
+<li><p>使用or的时候</p>
+<blockquote>
+<p>因为or是一个并集，如果or条件中有一个不是索引，就会导致索引失效</p>
+</blockquote>
+</li>
+<li><p>字段类型与SQL语句类型不匹配时</p>
+<blockquote>
+<p>如果列类型是字符串，则SQL语句中使用到该列的条件数据就必须用引号引用起来，否则会导致索引失效，原因是MySQL会进行隐式的数据类型转换，导致索引失效</p>
+</blockquote>
+</li>
+<li><p>使用函数</p>
+</li>
+<li><p>复合索引违反最左原则时</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## 组合索引a,b,c，需出现a</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> a<span class="operator">=</span><span class="string">&#x27;&#x27;</span> <span class="keyword">and</span> b<span class="operator">=</span><span class="string">&#x27;&#x27;</span> ## 索引可用</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> b<span class="operator">=</span><span class="string">&#x27;&#x27;</span> <span class="keyword">and</span> c<span class="operator">=</span><span class="string">&#x27;&#x27;</span> ## 索引不可用</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>使用复合索引(组合索引)时，需要遵循最左前缀原则，即查询条件必须包括复合索引的最左前缀列，才能使用该索引进行查询</p>
+<p>最左前缀原则的意义在于，如果查询条件包含复合索引的最左前缀列，那么该索引可以帮助数据库快速定位到符合条件的数据，从而提高查询效率。如果查询条件不包含最左前缀列，那么该索引就无法使用，需要对所有数据进行扫描，这导致查询变慢</p>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+<h2 id="简述MySQL的主从同步机制"><a href="#简述MySQL的主从同步机制" class="headerlink" title="简述MySQL的主从同步机制"></a>简述MySQL的主从同步机制</h2><blockquote>
+<p>指将一个MySQL数据库实例(主库)的数据同步到另一个MySQL数据库实例(从库)的过程。主从同步可以实现数据备份，负载均衡，读写分离等操作</p>
+<p>原理</p>
+<blockquote>
+<p>主库将更新操作记录在二进制日记(binlog)中，从库连接主库，将主库的binlog复制到从库的中继日志(relay log)中，然后从库读取中继日志，将更新操作应用到从库的数据中。从库可以设置延迟时间，以便在主库出现故障时，从库可以称为新的主库，继续提供服务</p>
+</blockquote>
+<p>步骤</p>
+<blockquote>
+<ol>
+<li><p>主库接收用户左CRUD操作，写入数据库，更新结果集到binlog中</p>
+</li>
+<li><p>主从同步时主找从的，从库IO发起请求，主库的主进程看从库 master change 中给的参数是否合法，如果合法主进程交给IO进程执行2操作，否则拒绝处理</p>
+</li>
+<li><p>主库根据 master 的位置点，从这个位置点的 binlog 日志一直到 binlog 日志最后，将其准备发送给从库</p>
+</li>
+<li><p>将找到的 binlog 日志发送给从库，并且还会发送新的日志点</p>
+</li>
+<li><p>从库接收到 binlog 日志，将其写入 relay-log(中继日志)中</p>
+</li>
+<li><p>从库IO进程再想 master info 保存主库传过来的最后的 binlog 日志的日志位置点</p>
+</li>
+<li><p>从库IO时循环发起的请求，发了再要，不会管 SQL 读取中继日志的操作。从库 IO 根据新的日志点，向主库发起请求，主库执行 3 4 操作，再发送新的 binlog 给从库，从库再执行5操作</p>
+</li>
+<li><p>其实第一次向 relay-log 中放数据时，SQL进程就已经知道，SQL进程将 relay-log 中的SQL语句转换成数据，写入从库，从而实现同步</p>
+</li>
+<li><p>从库 SQL 线程读取中继日志，并不会一次性读完，会把读取到的日志点存放到relay-log.info中</p>
+</li>
+</ol>
+</blockquote>
+<p>主从同步配置注意</p>
+<blockquote>
+<ol>
+<li><p>主从库MySQL版本必须一致，否则可能会出现兼容性问题</p>
+</li>
+<li><p>主从库的字符集和校对规则必须一致，否则可能会出现乱码等问题</p>
+</li>
+<li><p>主从库的数据表结构必须一致，否则可能会出现同步失败等问题</p>
+</li>
+<li><p>主从库的数据同步需要保证网络稳定，否则可能会出现同步延迟等问题</p>
+</li>
+<li><p>主从库的数据同步需要保证主库的写入性能，否则可能会出现主库性能下降等问题</p>
+</li>
+</ol>
+</blockquote>
+</blockquote>
+<h2 id="主从复制延迟"><a href="#主从复制延迟" class="headerlink" title="主从复制延迟"></a>主从复制延迟</h2><blockquote>
+<p>指从库的数据更新操作与主库的数据更新操作之间存在一定的时间差，这可能导致从库的数据不一致</p>
+<ul>
+<li><p>网络延迟</p>
+<blockquote>
+<p>主库和从库之间的网络延迟可能会导致从库无法及时获取主库的更新操作</p>
+</blockquote>
+</li>
+<li><p>从库负载过高</p>
+<blockquote>
+<p>同上</p>
+</blockquote>
+</li>
+<li><p>主库负载过高</p>
+<blockquote>
+<p>如果主库的负载过高，可能会导致主库无法即时将更新操作记录到二进制日志中，从而导致从库无法及时获取更新操作</p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
 
             </div>
 
@@ -279,7 +540,7 @@
         <li><strong>创建于:</strong> 2023-04-12 11:26:11</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-12 11:43:07
+                <strong>更新于:</strong> 2023-04-17 09:25:32
             </li>
         
         <li>
@@ -353,7 +614,7 @@
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">数据库</div>
-        
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8-B-%E6%A0%91%E6%9D%A5%E4%BD%9C%E7%B4%A2%E5%BC%95%EF%BC%8C%E5%AF%B9%E6%AF%94-B-%E6%A0%91%E5%AE%83%E7%9A%84%E4%BC%98%E7%82%B9%E5%92%8C%E7%BC%BA%E7%82%B9%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%A7%E7%9A%84%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E6%9C%89%E5%93%AA%E4%BA%9B-%E5%90%84%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%9F"><span class="nav-text">数据库大的事务隔离级别有哪些?各有哪些优缺点？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E7%9A%84%E7%89%B9%E6%80%A7%EF%BC%9F-%E7%AE%80%E8%BF%B0%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84ACID%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">什么是数据库事务的特性？(简述数据库中的ACID分别是什么)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BC%9A%E5%8F%91%E7%94%9F%E6%AD%BB%E9%94%81%EF%BC%8C%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E6%AD%BB%E9%94%81%EF%BC%9F"><span class="nav-text">什么情况下会发生死锁，如何解决死锁？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0%E4%B9%90%E8%A7%82%E9%94%81%E4%BB%A5%E5%8F%8A%E6%82%B2%E8%A7%82%E9%94%81%E7%9A%84%E5%8C%BA%E5%88%AB%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">简述乐观锁以及悲观锁的区别以及使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E5%92%8C%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%EF%BC%9F"><span class="nav-text">聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0%E8%84%8F%E8%AF%BB%E5%92%8C%E5%B9%BB%E8%AF%BB%E7%9A%84%E5%8F%91%E7%94%9F%E5%9C%BA%E6%99%AF%EF%BC%8CInnoDB-%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%B9%BB%E8%AF%BB%E7%9A%84%EF%BC%9F"><span class="nav-text">简述脏读和幻读的发生场景，InnoDB 是如何解决幻读的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E4%B8%8E%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88-%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E4%BC%9A%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%9F"><span class="nav-text">唯一索引与普通索引的区别是什么?使用索引会有哪些优缺点？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL%E7%9A%84%E7%B4%A2%E5%BC%95%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BC%9A%E5%A4%B1%E6%95%88%EF%BC%9F"><span class="nav-text">MySQL的索引什么时候会失效？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0MySQL%E7%9A%84%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6"><span class="nav-text">简述MySQL的主从同步机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%BB%B6%E8%BF%9F"><span class="nav-text">主从复制延迟</span></a></li></ol>
 
     </div>
 </div>
