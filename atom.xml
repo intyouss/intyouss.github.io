@@ -6,7 +6,7 @@
   <link href="https://intyouss.github.io/atom.xml" rel="self"/>
   
   <link href="https://intyouss.github.io/"/>
-  <updated>2023-04-15T10:33:43.897Z</updated>
+  <updated>2023-04-17T01:59:53.731Z</updated>
   <id>https://intyouss.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Redis</title>
+    <link href="https://intyouss.github.io/2023/04/17/Redis/"/>
+    <id>https://intyouss.github.io/2023/04/17/Redis/</id>
+    <published>2023-04-17T01:28:36.000Z</published>
+    <updated>2023-04-17T01:59:53.731Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="NoSQL"><a href="#NoSQL" class="headerlink" title="NoSQL"></a>NoSQL</h2><hr><blockquote><p>非关系型数据库</p></blockquote><h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><hr><blockquote><ol><li><p>键值存储数据库</p><blockquote><p>key-value</p></blockquote></li><li><p>列存储数据库</p><blockquote><p>关系型数据库是典型的行存储数据库(MySQL)，按行存储的数据在物理层面占用的时连续的存储空间，不适合海量数据存储。而按列存储则可实现分布式存储，适合海量存储(HBase)</p></blockquote></li><li><p>文档型数据库</p><blockquote><p>NoSQL 与 关系型数据库的结合(MangoDB)</p></blockquote></li><li><p>图像(Graph)数据库</p><blockquote><p>用于存放一个节点关系的数据库(Neo4J)</p></blockquote></li></ol></blockquote><h2 id="Redis的用途"><a href="#Redis的用途" class="headerlink" title="Redis的用途"></a>Redis的用途</h2><hr><h3 id="数据缓存"><a href="#数据缓存" class="headerlink" title="数据缓存"></a>数据缓存</h3><hr><blockquote><p>减小 RT，而且降低 DBMS 的压力</p></blockquote><h3 id="缓存分类"><a href="#缓存分类" class="headerlink" title="缓存分类"></a>缓存分类</h3><hr><h4 id="实时同步缓存"><a href="#实时同步缓存" class="headerlink" title="实时同步缓存"></a>实时同步缓存</h4><blockquote><p>指DBMS中数据更新后，Redis缓存中存放的相关数据会被立即清除，以促使再有对该数据的访问到来时，必须先从DBMS中查询获取到的最新数据，然后再写入到Redis</p></blockquote><h4 id="阶段性同步缓存"><a href="#阶段性同步缓存" class="headerlink" title="阶段性同步缓存"></a>阶段性同步缓存</h4><blockquote><p>指Redis缓存中的数据允许在一段时间内与DBMS中的数据不完全一致，而这个时间段就是这个缓存数据的过期时间</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;NoSQL&quot;&gt;&lt;a href=&quot;#NoSQL&quot; class=&quot;headerlink&quot; title=&quot;NoSQL&quot;&gt;&lt;/a&gt;NoSQL&lt;/h2&gt;&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;非关系型数据库&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;类型&quot;&gt;&lt;a</summary>
+      
+    
+    
+    
+    
+    <category term="Redis Study" scheme="https://intyouss.github.io/tags/Redis-Study/"/>
+    
+  </entry>
   
   <entry>
     <title>MySQL</title>
