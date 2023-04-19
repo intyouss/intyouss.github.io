@@ -29,11 +29,18 @@
 <meta property="og:site_name" content="IntYou&#39;s Blog">
 <meta property="og:description" content="Redis 概述 NoSQL  非关系型数据库  类型  键值存储数据库  key-value   列存储数据库  关系型数据库是典型的行存储数据库(MySQL)，按行存储的数据在物理层面占用的时连续的存储空间，不适合海量数据存储。而按列存储则可实现分布式存储，适合海量存储(HBase)   文档型数据库  NoSQL 与 关系型数据库的结合(MangoDB)   图像(Graph)数据库  用于">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-19-11-22-image.png">
+<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-19-29-07-image.png">
+<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-19-52-54-image.png">
+<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-19-52-28-image.png">
+<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-20-06-24-image.png">
+<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-20-15-57-image.png">
 <meta property="article:published_time" content="2023-04-17T01:28:36.000Z">
-<meta property="article:modified_time" content="2023-04-18T15:17:21.381Z">
+<meta property="article:modified_time" content="2023-04-19T12:59:54.409Z">
 <meta property="article:author" content="IntYou">
 <meta property="article:tag" content="Redis Study">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-19-11-22-image.png">
     
     <!--- Icon Part-->
     <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="192x192">
@@ -225,8 +232,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-18 23:17:21</span>
-            <span class="mobile">2023-04-18 23:17</span>
+            <span class="desktop">2023-04-19 20:59:54</span>
+            <span class="mobile">2023-04-19 20:59</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -746,6 +753,401 @@
 </ul>
 <p>返回被移除元素的数量，当 key 不存在时，返回 0</p>
 </blockquote>
+<h4 id="ltrim"><a href="#ltrim" class="headerlink" title="ltrim"></a>ltrim</h4><ul>
+<li>格式 <code>LTRIM key start stop</code></li>
+</ul>
+<blockquote>
+<p>对一个列表进行修剪，让列表只保留指定区间内的元素，不在指定区间之内的元素都将被删除</p>
+<p>下表参数 start 和 stop 都以 0 为底，如果 start &gt; stop，返回空列表，如果 stop &lt; end,Redis 将 stop 的值设置为 end</p>
+</blockquote>
+<h4 id="应用场景-2"><a href="#应用场景-2" class="headerlink" title="应用场景"></a>应用场景</h4><blockquote>
+<p>通过构建不同的数据结构来实现相应的业务功能</p>
+<ul>
+<li><p>列(lpush + lpop)</p>
+</li>
+<li><p>队列(lpush + rpop)</p>
+</li>
+<li><p>阻塞式消息队列(lpush + brpop)</p>
+</li>
+<li><p>动态有限集合(lpush + ltrim)</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="Set-型-Value-操作命令"><a href="#Set-型-Value-操作命令" class="headerlink" title="Set 型 Value 操作命令"></a>Set 型 Value 操作命令</h3><hr>
+<blockquote>
+<p>Set 型的底层是 Hash 表，Set 中的元素具有无序性与不可重复性</p>
+</blockquote>
+<h4 id="sadd"><a href="#sadd" class="headerlink" title="sadd"></a>sadd</h4><ul>
+<li>格式 <code>SADD key member [member ...]</code></li>
+</ul>
+<blockquote>
+<p>将一个或多个 member 元素加入到集合 key 中，已经存在于集合的 member 元素将被忽略</p>
+<p>key 不存在，则创建。当 key 不是集合类型时，返回一个错误</p>
+</blockquote>
+<h4 id="smembers"><a href="#smembers" class="headerlink" title="smembers"></a>smembers</h4><ul>
+<li>格式 <code>SMEMBERS key</code></li>
+</ul>
+<blockquote>
+<p>查看 key 中的所有值</p>
+</blockquote>
+<h4 id="scard"><a href="#scard" class="headerlink" title="scard"></a>scard</h4><ul>
+<li>格式 <code>SCARD key</code></li>
+</ul>
+<blockquote>
+<p>返回 Set 集合的长度</p>
+</blockquote>
+<h4 id="sismember"><a href="#sismember" class="headerlink" title="sismember"></a>sismember</h4><ul>
+<li>格式 <code>SISMEMBER key member</code></li>
+</ul>
+<blockquote>
+<p>判断 member 元素是否是集合 key 的成员</p>
+</blockquote>
+<h4 id="smove"><a href="#smove" class="headerlink" title="smove"></a>smove</h4><ul>
+<li>格式 <code>SMOVE source destination member</code></li>
+</ul>
+<blockquote>
+<p>将 member 元素从 source 集合移动到 destination 集合</p>
+</blockquote>
+<h4 id="srem"><a href="#srem" class="headerlink" title="srem"></a>srem</h4><ul>
+<li>格式 <code>SREM key member [member ...]</code></li>
+</ul>
+<blockquote>
+<p>移除集合 key 中的一个或多个 member 元素，不存在的 member 元素会被忽略</p>
+</blockquote>
+<h4 id="srandmember"><a href="#srandmember" class="headerlink" title="srandmember"></a>srandmember</h4><ul>
+<li>格式 <code>srandmember key [count]</code></li>
+</ul>
+<blockquote>
+<p>在 key 中随机 count 个元素，count 默认为 1</p>
+<p>count 为正数时，且小于集合长度，那么返回一个包含 count 个元素的数组，数组中的元素各不相同。如果 count 大于等于集合长度，返回整个集合。如果 count 为负数，那么返回一个包含 count 绝对值个元素的数组，但数组中的元素可能会出现重复</p>
+</blockquote>
+<h4 id="spop"><a href="#spop" class="headerlink" title="spop"></a>spop</h4><ul>
+<li>格式 <code>SPOP key [count]</code></li>
+</ul>
+<blockquote>
+<p>移除并返回集合中的 count 个随机元素，count 必须为正数，且默认值为 1</p>
+</blockquote>
+<h4 id="sdiff"><a href="#sdiff" class="headerlink" title="sdiff"></a>sdiff</h4><ul>
+<li>格式 <code>SDIFF key key2</code></li>
+</ul>
+<blockquote>
+<p>差集，返回 key 相对于 key2 不同的元素</p>
+</blockquote>
+<h4 id="sdiffstore"><a href="#sdiffstore" class="headerlink" title="sdiffstore"></a>sdiffstore</h4><ul>
+<li>格式 <code>SDIFFSTORE destination key key2</code></li>
+</ul>
+<blockquote>
+<p>差集存储，将 key 相对于 key2 的差集存储在 destation 集合中</p>
+</blockquote>
+<h4 id="sinter"><a href="#sinter" class="headerlink" title="sinter"></a>sinter</h4><ul>
+<li>格式 <code>SINTER key key2</code></li>
+</ul>
+<blockquote>
+<p>交集，返回 key 与 key2 的交集</p>
+</blockquote>
+<h4 id="sinterstore"><a href="#sinterstore" class="headerlink" title="sinterstore"></a>sinterstore</h4><ul>
+<li>格式 <code>SINTERSTROE destination key key2</code></li>
+</ul>
+<blockquote>
+<p>交集存储，将 key 与 key2 的交集存储在 destination 集合中</p>
+</blockquote>
+<h4 id="sunion"><a href="#sunion" class="headerlink" title="sunion"></a>sunion</h4><blockquote>
+<p>并集，同上</p>
+</blockquote>
+<h4 id="sunionstore"><a href="#sunionstore" class="headerlink" title="sunionstore"></a>sunionstore</h4><blockquote>
+<p>并集存储，同上</p>
+</blockquote>
+<h4 id="应用场景-3"><a href="#应用场景-3" class="headerlink" title="应用场景"></a>应用场景</h4><blockquote>
+<ul>
+<li><p>动态黑白名单</p>
+</li>
+<li><p>有限随机数(spop 或 srandmember)</p>
+</li>
+<li><p>用户画像(sadd&#x2F;sinter&#x2F;sinterstore)</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="有序-Set-型-Value-操作命令-ZSet"><a href="#有序-Set-型-Value-操作命令-ZSet" class="headerlink" title="有序 Set 型 Value 操作命令(ZSet)"></a>有序 Set 型 Value 操作命令(ZSet)</h3><blockquote>
+<p>Redis 存储数据的 Value 可以是一个有序的 Set，这个有序的 Set 中的每个元素均 String 类型，有序 Set 与 Set 的不同之处是，有序 Set 中的每个元素都有一个分值 scor，Redis 会根据 score 的值对集合进行由小到大的排序。其与 Set 集合要求相同，元素不能重复，但元素的 score 可以重复，由于该类型的所有命令均是 z 开头，所有该 Set 也称为 ZSet</p>
+</blockquote>
+<h4 id="zadd"><a href="#zadd" class="headerlink" title="zadd"></a>zadd</h4><ul>
+<li>格式 <code>ZADD key score member [[score member] ...]</code></li>
+</ul>
+<blockquote>
+<p>将一个或多个 member 元素以及其 score 值加入到有序 key 中的适当位置</p>
+</blockquote>
+<h4 id="zrange"><a href="#zrange" class="headerlink" title="zrange"></a>zrange</h4><ul>
+<li>格式 <code>zrange key start end [withscores]</code></li>
+</ul>
+<blockquote>
+<p>将集合 key 中从 start 到 end 的元素切片输出，添加 withscores 显示 key 内元素的 score 值</p>
+</blockquote>
+<h4 id="zrangebyscore-与-zrevrangebyscore"><a href="#zrangebyscore-与-zrevrangebyscore" class="headerlink" title="zrangebyscore 与 zrevrangebyscore"></a>zrangebyscore 与 zrevrangebyscore</h4><ul>
+<li><p>格式 <code>zrangebyscore key min max [withscores] [LIMIT offset count]</code></p>
+</li>
+<li><p>格式 <code>zrangebyscore key max min [withscores] [LIMIT offset count]</code></p>
+</li>
+</ul>
+<blockquote>
+<p>将集合 key 中 score &gt; min，score &lt;&#x3D; max 的 元素输出，limit 按照前部分查询到的结果 从下标为 offset 开始，切片 count 数量元素并返回</p>
+<p>zrevrangebyscore 是 zrangebyscore 的反向</p>
+</blockquote>
+<h4 id="zcard"><a href="#zcard" class="headerlink" title="zcard"></a>zcard</h4><blockquote>
+<p>查询 key 集合的长度，同Set</p>
+</blockquote>
+<h4 id="zcount"><a href="#zcount" class="headerlink" title="zcount"></a>zcount</h4><ul>
+<li>格式 <code>zcount key start end</code></li>
+</ul>
+<blockquote>
+<p>计数 key 集合中下标 &gt; start，下标 &lt;&#x3D; end 的元素个数 </p>
+</blockquote>
+<h4 id="zscore"><a href="#zscore" class="headerlink" title="zscore"></a>zscore</h4><ul>
+<li>格式 <code>zscore key field</code></li>
+</ul>
+<blockquote>
+<p>查询 key 集合中 field 元素的 score 值</p>
+</blockquote>
+<h4 id="zrank-与-zrevrank"><a href="#zrank-与-zrevrank" class="headerlink" title="zrank 与 zrevrank"></a>zrank 与 zrevrank</h4><ul>
+<li>格式 <code>zrank key field</code> 或 <code>zrevrank key field</code></li>
+</ul>
+<blockquote>
+<p>查询 key 中 field 元素的排名，zrevrank 倒序排名</p>
+</blockquote>
+<h4 id="zrem-与-zremrangerank"><a href="#zrem-与-zremrangerank" class="headerlink" title="zrem 与 zremrangerank"></a>zrem 与 zremrangerank</h4><blockquote>
+<p>删除 key 中元素，zremrangerank 删除 key 中一个范围内的元素</p>
+</blockquote>
+<h4 id="zremrangebyscore"><a href="#zremrangebyscore" class="headerlink" title="zremrangebyscore"></a>zremrangebyscore</h4><blockquote>
+<p>删除 key 中 score 在一个范围内的元素</p>
+</blockquote>
+<h4 id="zrangebylex"><a href="#zrangebylex" class="headerlink" title="zrangebylex"></a>zrangebylex</h4><ul>
+<li>格式 <code>zrangebylex key (min [max</code></li>
+</ul>
+<blockquote>
+<p>按照第一个字母排序切片，min 和 max 前必须添加符号</p>
+</blockquote>
+<h4 id="zlexcount"><a href="#zlexcount" class="headerlink" title="zlexcount"></a>zlexcount</h4><blockquote>
+<p>根据字母返回计数</p>
+</blockquote>
+<h3 id="简单动态字符串-SDS-String类型底层"><a href="#简单动态字符串-SDS-String类型底层" class="headerlink" title="简单动态字符串 SDS(String类型底层)"></a>简单动态字符串 SDS(String类型底层)</h3><hr>
+<blockquote>
+<p>无论是 Redis 的 Key 还是 Value，其基础数据类型都是字符串。例如，Hash 型 Value 的 field 与 value 类型，List，Set，ZSet 型 Value 的元素的类型等都是字符串。Redis 虽然是使用标准 C 语言开发，但并没有直接使用 C语言中传统的字符串表示，而是自定义了一种字符串。这种字符串本身的结构比较简单，但功能却非常强大，称为简单动态字符串 SDS</p>
+<p>注意，Redis 中的所有字符串并不都是 SDS，也会出现 C 字符串，C 字符串只会出现在字符串’字面常量’中，并且该字符串不可能发生变化</p>
+</blockquote>
+<h4 id="SDS-结构"><a href="#SDS-结构" class="headerlink" title="SDS 结构"></a>SDS 结构</h4><blockquote>
+<p>buf[] 字节数组 + len 数组中已使用字节数量 + free 数组中未使用的字节数量</p>
+</blockquote>
+<h4 id="SDS-的优势"><a href="#SDS-的优势" class="headerlink" title="SDS 的优势"></a>SDS 的优势</h4><ol>
+<li><p>防止’字符串长度获取’性能瓶颈</p>
+</li>
+<li><p>保证二进制安全(‘\0’)</p>
+</li>
+<li><p>减少内存再分配次数</p>
+<blockquote>
+<p>SDS 采用了 <strong>空间预分配策略</strong> 与 <strong>惰性空间释放策略</strong> 来避免内存再分配问题</p>
+<p>空间预分配策略是指，每次 SDS 进行空间扩展时，程序不但为其分配所需空间，还会为其分配额外的未使用空间，以减少内存再分配次数，而额外分配的未使用空间大小取决于空间扩展后 SDS 的 len 属性</p>
+<ul>
+<li><p>如果 len 属性值小于 1M，那么分配的未使用空间 free 的大小与 len 属性值相同</p>
+</li>
+<li><p>如果 len 属性值大于等于 1M，那么分配的未使用空间 free 的大小固定是 1M</p>
+</li>
+</ul>
+<p>SDS 对于空间释放采用的是惰性空间释放策略，该策略是指，SDS 字符串长度如果缩短，那么多出的未使用空间将暂时不释放，而是增加到 free 中，以使后期扩展 SDS 时减少内存再分配次数</p>
+<p>如果要释放 SDS 的未使用空间，则可通过 sdsREmoveFreeSpace() 函数来释放</p>
+</blockquote>
+</li>
+<li><p>兼容 C 函数</p>
+<blockquote>
+<p>SDS 底层数组 buf[] 中的字符串仍以空字符’\0’结尾</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="集合的底层实现原理"><a href="#集合的底层实现原理" class="headerlink" title="集合的底层实现原理"></a>集合的底层实现原理</h3><hr>
+<h4 id="两种实现的选择"><a href="#两种实现的选择" class="headerlink" title="两种实现的选择"></a>两种实现的选择</h4><blockquote>
+<p>对于 Hash 与 ZSet 集合，其底层的实现实际有两种：压缩列表 zipList 与 跳跃列表 skipList，这两种实现对于用户来说是透明的，但用户写入不同的数据，系统会自动使用不同的实现。只有同时满足以配置文件 redis.conf 中相关集合元素数量阈值两个条件，使用的就是压缩列表 zipList，只要有一个条件不满足使用的就是跳跃列表 skipList</p>
+<p>例如，对于 ZSet 集合中这两个条件如下</p>
+<ul>
+<li><p>集合元素个数小于 redis.conf 中 zset-max-ziplist-entries 属性的值，其默认值为 128</p>
+</li>
+<li><p>每个集合元素大小都小于 redis.conf 中 zset-max-ziplist-value 属性的值，其默认值为 64字节</p>
+</li>
+</ul>
+</blockquote>
+<h4 id="zipList"><a href="#zipList" class="headerlink" title="zipList"></a>zipList</h4><ol>
+<li><p>什么是 zipList</p>
+<blockquote>
+<p>通常称为压缩列表，是一个经过 <em>特殊编码</em> 的用于存储字符串或整数的双向链表，其底层数据结构由三部分构成：head，entries 与 end，这三部分在内存上是连续存放的</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-19-19-11-22-image.png"
+                     
+                ></p>
+</li>
+<li><p>head</p>
+<blockquote>
+<p>head 分为三部分</p>
+<ol>
+<li><p>zlbytes：占4个字节，用于存放 zipList 列表整体数据结构所占的字节数，包括 zlbytes 本身的长度</p>
+</li>
+<li><p>zltail：占4个字节，用于存放 zipList 中最后一个 entry 在整个数据结构中的偏移量(字节)。该数据的存在可以快速定位列表的尾 entry 位置，以方便操作</p>
+</li>
+<li><p>zllen：占2个字节，用于存放列表包含的 entry 个数。由于其只有 16 位，所以 zipList 最多可以含有的 entry 个数为 2^16 -1 &#x3D; 65535 个</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>entries</p>
+<blockquote>
+<p>entries 是真正的列表，有很多的列表元素 entry 构成。由于不同的元素类型，数值的不同，从而导致每个 entry 的长度不同</p>
+<p>每个 entry 由三部分组成</p>
+<ol>
+<li><p>prevlength：该部分用于记录上一个 entry 的长度，以实现逆序遍历，默认长度为 1 字节，只要上一个 entry 的长度 &lt; 254 字节，prevlength 就占 1 字节，否则其会自动扩展为 3 字节长度</p>
+</li>
+<li><p>encoding：该部分用于标志后面的 data 的具体类型。如果 data 为整数类型，encoding 固定长度为 1 字节。如果 data 为字符串类型，则 encoding 长度可能会是 1 字节，2 字节或5 字节，data 字符串不同的长度，对应着不同的 encoding 长度</p>
+</li>
+<li><p>data：真正存储的数据。数据类型只能是整数类型或字符串类型。不同的数据占用的字节长度不同</p>
+</li>
+</ol>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-19-19-29-07-image.png"
+                     
+                ></p>
+</li>
+<li><p>end</p>
+<blockquote>
+<p>end只包含一部分，称为zlend，占 1字节，值固定为255，表示一个 zipList 列表的结束</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="listPack"><a href="#listPack" class="headerlink" title="listPack"></a>listPack</h4><blockquote>
+<p>对于 zipList，实现复杂，为了逆序遍历，每个 entry 中包含前一个 entry 的长度，这样会导致在 zipList 中间修改或者插入 entry 时需要进行级联更新。在高并发的写操作场景下会极度降低 Redis 的性能。为了实现更紧凑，更快的解析，更简单的实现，重写实现了 zipList，并命名为 listPack</p>
+<p>在 Redis 7.0 中，已经将 zipList 全部替换为了 listPack，但为了兼容性，在配置中也保留了 zipList 的相关属性</p>
+</blockquote>
+<ol>
+<li><p>什么是 listPack</p>
+<blockquote>
+<p>listPack 与 zipList 的区别在 head 与每个 entry 的结构上。表示列表结束的end 与 zipList 的 zlend 是相同的，占一个字节，且8位全为1</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-19-19-52-54-image.png"
+                     
+                ></p>
+</li>
+<li><p>head</p>
+<blockquote>
+<p>head 由两部分构成</p>
+<ol>
+<li><p>totalBytes：占 4个字节，用于存放 listPack 列表整体数据结构所占的字节数，包括 totalBytes 本身长度</p>
+</li>
+<li><p>elemNum：占 2字节，用于存放列表包含的 entry 个数，其意义与 zipList 中 zllen 的相同</p>
+</li>
+</ol>
+<p>与 zipList 的 head 相比，没有了记录最后一个 entry 偏移量的 zltail。</p>
+</blockquote>
+</li>
+<li><p>entries</p>
+<blockquote>
+<p>与 zipList 不同的是，没有了记录前一个 entry 长度的 prevlength，而增加了记录当前 entry 长度的 element-total-len。而这个改变仍然可以实现逆序遍历，但却避免了由于在列表中间修改或插入 entry 时引发的级联更新</p>
+<p>每个 entry 仍由三部分构成</p>
+<ol>
+<li><p>encoding：该部分用于标志后面的 data 的具体类型，如果 data 位整数类型，encoding 长度可能会是1，2，3，4，5 或 9字节，不同的字节长度，其标识位不同。如果 data 为字符串类型，则 encoding 长度可能会是 1，2 或 5 字节，data 字符串不同的长度，对应着不同的 encoding 长度</p>
+</li>
+<li><p>data</p>
+</li>
+<li><p>element-total-len：该部分用于记录当前 entry 的长度，用于实现逆序遍历。由于其特殊的记录方式，使其本身占有的字节数据可能会是1，2，3，4 或 5字节</p>
+</li>
+</ol>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-19-19-52-28-image.png"
+                     
+                ></p>
+</li>
+</ol>
+<h4 id="skipList"><a href="#skipList" class="headerlink" title="skipList"></a>skipList</h4><ol>
+<li><p>什么时 skipList</p>
+<blockquote>
+<p>skipList 简称跳表，是一种 <strong>随机化</strong> 的数据结构，基于 <strong>并联</strong> 的链表，实现简单，查找效率较高，简单来说跳表也是链表的一种，只不过它在链表的基础上增加了跳跃功能，也正是这个功能，使得在查找元素时，能够提供较高的效率</p>
+</blockquote>
+</li>
+<li><p>skipList 原理</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-19-20-06-24-image.png"
+                     
+                ></p>
+<blockquote>
+<p>每个节点随机分层，每多一层多一层链表，减少比较的次数</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="quickList"><a href="#quickList" class="headerlink" title="quickList"></a>quickList</h4><ol>
+<li><p>什么是 quickList</p>
+<blockquote>
+<p>quickList 快速列表，quickList 本身是一个双向无循环链表，他的每一个节点都是一个 zipList，从 Redis 3.2 版本开始，对于 List 的底层实现，使用 quickList 替代了 zipList 和 linkedList</p>
+<p>quickList 本质上是 zipList 和 linkedList 的混合体，其将 linkedList 按段切分，每一段使用 zipList 来紧凑存储若干真正的数据元素，多个 zipList 之间使用双向指针串接起来，当然，对于每个 zipList 中最多可存放多大容量的数据元素，在配置文件中通过 list-max-ziplist-size 属性可以指定</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-19-20-15-57-image.png"
+                     
+                ></p>
+</li>
+<li><p>检索操作</p>
+<blockquote>
+<p>对于 List 元素的检索，都是以其索引 index 为依据的。quickList 由一个个的 zipList 构成，每个 zipList 的 zllen 中记录的就是当前 zipList 中包含的 entry 的个数，即包含的真正数据元素的个数。根据要检索的 index，从 quickList 的头节点开始，逐个对 zipList 的 zllen 做 sum 求和，直到找到第一个求和后 sum 大于 index 的 zipList，那么要检索的这个元素就在这个 zipList 中</p>
+</blockquote>
+</li>
+<li><p>插入操作</p>
+<blockquote>
+<p>假设要插入的元素的大小为 indexBytes</p>
+<ol>
+<li><p>若 indexBytes + zlBytes &lt;&#x3D; zipListMaxSize，则直接将元素插入到当前找到的 zipList 中即可</p>
+</li>
+<li><p>若 indexBytes + zlbytes &gt; zipListMaxSize，且插入的位置在该 zipList 的首部位置，此时需要再查看该 zipList 的前一个 zipList 的大小 prev_zlBytes</p>
+<ul>
+<li><p>若 indexBytes + prev_zlBytes &lt;&#x3D; zipListMaxSize，则直接将元素插入到前一个 zipList 的尾部即可</p>
+</li>
+<li><p>若 indexBytes + prev_zlBytes &gt; zipListMaxSize，则将元素自己构建为一个 zipList，连接到 quickList</p>
+</li>
+</ul>
+</li>
+<li><p>若 indexBytes + zlbytes &gt; zipListMaxSize，且插入的位置在该 zipList 的尾部位置，此时需要再查看该 zipList 的下一个 zipList 的大小 next_zlBytes</p>
+<ul>
+<li><p>若 indexBytes + next_zlBytes &lt;&#x3D; zipListMaxSize，则直接将元素插入到下一个 zipList 的首部即可</p>
+</li>
+<li><p>若 indexBytes + next_zlBytes &gt; zipListMaxSize，则将元素自己构建为一个 zipList，连接到 quickList</p>
+</li>
+</ul>
+</li>
+<li><p>若 indexBytes + zlbytes &gt; zipListMaxSize，且插入的位置在该 zipList 的中间位置，此时需要将该 zipList 分割为两个 zipList 并连接到 quickList，然后再将元素直接插入到分割出的两个 zipList 中的前一个 zipList 的尾部位置</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>删除操作</p>
+<blockquote>
+<p>直接将节点删除即可</p>
+<p>注意，如果 entry 只有一个元素，需要将 head 和 end 一起删除</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="key-与-value-中元素的数量"><a href="#key-与-value-中元素的数量" class="headerlink" title="key 与 value 中元素的数量"></a>key 与 value 中元素的数量</h4><ul>
+<li><p>Redis 最多可以处理 2^32 个 key，每个 Redis 实例至少可以处理 2.5 亿个 key</p>
+</li>
+<li><p>每个 Hash，List，Set，ZSet 集合都可以包含 2^32 个元素</p>
+</li>
+</ul>
 
             </div>
 
@@ -758,7 +1160,7 @@
         <li><strong>创建于:</strong> 2023-04-17 09:28:36</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-18 23:17:21
+                <strong>更新于:</strong> 2023-04-19 20:59:54
             </li>
         
         <li>
@@ -817,7 +1219,7 @@
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">Redis</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E6%A6%82%E8%BF%B0"><span class="nav-text">Redis 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NoSQL"><span class="nav-text">NoSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis%E7%9A%84%E7%94%A8%E9%80%94"><span class="nav-text">Redis的用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E7%9A%84-IO-%E6%A8%A1%E5%9E%8B"><span class="nav-text">Redis 的 IO 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">Redis 的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#INCLUDE"><span class="nav-text">INCLUDE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MODULES"><span class="nav-text">MODULES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NETWORK"><span class="nav-text">NETWORK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GENERAL"><span class="nav-text">GENERAL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CLIENTS"><span class="nav-text">CLIENTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MEMORY-MANAGEMENT"><span class="nav-text">MEMORY MANAGEMENT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Threaded-I-x2F-O"><span class="nav-text">Threaded I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E5%91%BD%E4%BB%A4"><span class="nav-text">Redis 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-text">Redis 基本命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Key%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Key操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">String 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Hash 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">List 型 Value 操作命令</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E6%A6%82%E8%BF%B0"><span class="nav-text">Redis 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NoSQL"><span class="nav-text">NoSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis%E7%9A%84%E7%94%A8%E9%80%94"><span class="nav-text">Redis的用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E7%9A%84-IO-%E6%A8%A1%E5%9E%8B"><span class="nav-text">Redis 的 IO 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">Redis 的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#INCLUDE"><span class="nav-text">INCLUDE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MODULES"><span class="nav-text">MODULES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NETWORK"><span class="nav-text">NETWORK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GENERAL"><span class="nav-text">GENERAL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CLIENTS"><span class="nav-text">CLIENTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MEMORY-MANAGEMENT"><span class="nav-text">MEMORY MANAGEMENT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Threaded-I-x2F-O"><span class="nav-text">Threaded I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E5%91%BD%E4%BB%A4"><span class="nav-text">Redis 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-text">Redis 基本命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Key%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Key操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">String 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Hash 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">List 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Set 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F-Set-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4-ZSet"><span class="nav-text">有序 Set 型 Value 操作命令(ZSet)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2-SDS-String%E7%B1%BB%E5%9E%8B%E5%BA%95%E5%B1%82"><span class="nav-text">简单动态字符串 SDS(String类型底层)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-text">集合的底层实现原理</span></a></li></ol></li></ol>
 
     </div>
 </div>
