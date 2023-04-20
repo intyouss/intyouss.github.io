@@ -35,8 +35,13 @@
 <meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-19-52-28-image.png">
 <meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-20-06-24-image.png">
 <meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-20-15-57-image.png">
+<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-20-13-59-47-image.png">
+<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-20-14-03-19-image.png">
+<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-20-15-07-16-image.png">
+<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-20-15-10-56-image.png">
+<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-20-15-12-04-image.png">
 <meta property="article:published_time" content="2023-04-17T01:28:36.000Z">
-<meta property="article:modified_time" content="2023-04-20T04:20:35.333Z">
+<meta property="article:modified_time" content="2023-04-20T07:12:30.331Z">
 <meta property="article:author" content="IntYou">
 <meta property="article:tag" content="Redis Study">
 <meta name="twitter:card" content="summary">
@@ -232,8 +237,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-20 12:20:35</span>
-            <span class="mobile">2023-04-20 12:20</span>
+            <span class="desktop">2023-04-20 15:12:30</span>
+            <span class="mobile">2023-04-20 15:12</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -1148,19 +1153,154 @@
 <li><p>每个 Hash，List，Set，ZSet 集合都可以包含 2^32 个元素</p>
 </li>
 </ul>
-<h3 id="BitMap-操作命令"><a href="#BitMap-操作命令" class="headerlink" title="BitMap 操作命令"></a>BitMap 操作命令</h3><hr>
+<h3 id="Redis-事务"><a href="#Redis-事务" class="headerlink" title="Redis 事务"></a>Redis 事务</h3><hr>
 <blockquote>
-<p>BitMap 是 Redis 2.2.0 版本中引入的一种新的数据类型。该数据类型本质上就是一个仅包含 0 和 1 的二进制字符串，而其所有相关的命令都是对这个字符串二进制位的操作。</p>
-<p>用于描述该字符串的属性有三个：key，offset，bitValue</p>
+<p>Redis 的事务的本质是一组命令的批处理。这组命令在执行过程中会被顺序的，一次性全部执行完毕，只要没有出现语法错误，这组命令在执行期间是不会被中断</p>
+</blockquote>
+<h4 id="Redis-事务特性"><a href="#Redis-事务特性" class="headerlink" title="Redis 事务特性"></a>Redis 事务特性</h4><blockquote>
+<p>redis 的事务仅保证了数据的一致性，不具有像 DBMS 一样的 ACID 特性</p>
+</blockquote>
 <ul>
-<li><p>key：Key-Value 中的 Key值</p>
+<li><p>这组命令中的某些命令的执行失败不会影响其他命令的执行，不会引发 <strong>回滚</strong> 。即不具备原子性</p>
 </li>
-<li><p>offset：每个 BitMap 数据都是一个字符串，字符串中的每个字符都有其对应的索引，索引从0开始计数。该索引就称为每个字符在该 BitMap 中的偏移量 offset。这个 offset 的值的范围是[0，2^32-1]</p>
+<li><p>这组命令通过乐观锁机制实现了简单的隔离性。没有复杂的隔离级别</p>
 </li>
-<li><p>bitValue：每个 BitMap 数据都是一个仅包含 0 和 1 的 二进制字符串。每个 offset 位上的字符就称为该位的值 bitValue。bitValue 的值非 0 即 1</p>
+<li><p>这组命令的执行结果是被写入到内存的，是否持久取决于 Redis 的持久化策略，与事务无关</p>
 </li>
 </ul>
+<h4 id="Redis-事务实现"><a href="#Redis-事务实现" class="headerlink" title="Redis 事务实现"></a>Redis 事务实现</h4><ol>
+<li><p>三个命令</p>
+<ul>
+<li><p>multi：开启事务</p>
+</li>
+<li><p>exec：执行事务</p>
+</li>
+<li><p>discard：取消事务</p>
+</li>
+</ul>
+<blockquote>
+<p>exec 与 discard 不可共存</p>
 </blockquote>
+</li>
+</ol>
+<h2 id="Redis-持久化"><a href="#Redis-持久化" class="headerlink" title="Redis 持久化"></a>Redis 持久化</h2><hr>
+<blockquote>
+<p>Redis 具有持久化功能，其会按照设置以 <strong>快照</strong> 或 <strong>操作日志</strong> 的形式将数据持久化到磁盘</p>
+<p>根据持久化使用技术不同，分为两种：RDB 与 AOF</p>
+</blockquote>
+<h3 id="持久化-钝化-基本原理"><a href="#持久化-钝化-基本原理" class="headerlink" title="持久化(钝化)基本原理"></a>持久化(钝化)基本原理</h3><hr>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-20-13-59-47-image.png"
+                     
+                ></p>
+<blockquote>
+<p>RDB 与 AOF 可以共存，RDB 是默认持久化技术，而如果开启 AOF，则 AOF 的优先级更高</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-20-14-03-19-image.png"
+                     
+                ></p>
+<h3 id="RDB-持久化"><a href="#RDB-持久化" class="headerlink" title="RDB 持久化"></a>RDB 持久化</h3><hr>
+<blockquote>
+<p>是指将内存中某一时刻的数据快照 <strong>全量</strong> 写入到指定的 rdb 文件的持久化技术。RDB 持久化是默认开启的。当 Redis 启动时会自动读取 RDB 快照文件，将数据从硬盘载入到内存，以恢复 Redis 关机前的数据库状态</p>
+</blockquote>
+<h4 id="持久化的执行"><a href="#持久化的执行" class="headerlink" title="持久化的执行"></a>持久化的执行</h4><blockquote>
+<p>RDB 持久化的执行有三种方式：手动 save 命令，手动 bgsave 命令，与自动条件触发</p>
+</blockquote>
+<ol>
+<li><p>手动 save 命令</p>
+<blockquote>
+<p>通过在 redis-cli 客户端中执行 save 命令可立即进行一次持久化保存。save 命令在执行期间会阻塞 redis-server 进程，直至持久化过程完毕。而在 redis-server 进程阻塞期间，redis 不能处理任何读写请求，无法对外提供服务</p>
+</blockquote>
+</li>
+<li><p>手动 bgsave 命令</p>
+<blockquote>
+<p>通过在 redis-cli 客户端中执行 bgsave 命令可立即进行一次持久化保存。不同于 save 的是，可以后台允许 save。bgsave 命令会使服务器进程 redis-server 生成一个子进程，由该子进程负责完成保存过程。在子进程进行保存过程中，不会阻塞 redis-server 进程对客户端读写请求的处理</p>
+</blockquote>
+</li>
+<li><p>自动条件触发</p>
+<blockquote>
+<p>本质仍是 bgsave 命令的执行。只不过是用户通过在配置文件中做相应的设置后，Redis 会根据设置信息自动调用 bgsave 命令执行。</p>
+</blockquote>
+</li>
+<li><p>查看上次持久化的时间</p>
+<ul>
+<li>格式：<code>lastsave</code></li>
+</ul>
+</li>
+</ol>
+<h4 id="RDB-优化配置"><a href="#RDB-优化配置" class="headerlink" title="RDB 优化配置"></a>RDB 优化配置</h4><blockquote>
+<p>参考配置文件 redis.conf 中的 SNAPSHOTTING 字段内容</p>
+</blockquote>
+<h4 id="RDB-文件结构"><a href="#RDB-文件结构" class="headerlink" title="RDB 文件结构"></a>RDB 文件结构</h4><blockquote>
+<p>RDB 持久化文件 dump.rdb 分为五部分</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-20-15-07-16-image.png"
+                     
+                ></p>
+<ol>
+<li><p>SOF</p>
+<blockquote>
+<p>SOF 是一个常量，一个字符串 REDIS，仅包含这五个字符，其长度为 5。用于 标识 RDB 文件的开始，以便在加载 RDB 文件时可以迅速判断出文件是否是 RDB 文件</p>
+</blockquote>
+</li>
+<li><p>rdb_version</p>
+<blockquote>
+<p>一个整数，长度为 4 字节，标识 RDB 文件的版本号</p>
+</blockquote>
+</li>
+<li><p>databases</p>
+<blockquote>
+<p>内部包含任意多个非空数据库。而每个 database 由三部分组成</p>
+<ul>
+<li><p>SODB：常量，占1字节，用于标识一个数据库的开始</p>
+</li>
+<li><p>db_number：数据库编号</p>
+</li>
+<li><p>key_value_pairs：当前数据库中的键值对数据</p>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-20-15-10-56-image.png"
+                     
+                ></p>
+<p>每个 key_value_pairs 又由很多个用于描述键值对的数据构成</p>
+<ul>
+<li><p>VALUE_TYPE：常量，占1字节，用于标识该键值对中 value 的类型</p>
+</li>
+<li><p>EXPIRETIME_UNIT：常量，占1字节，用于标识过期时间的单位是秒还是毫秒</p>
+</li>
+<li><p>time：当前 key-value 的过期时间</p>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-20-15-12-04-image.png"
+                     
+                ></p>
+</blockquote>
+</li>
+<li><p>EOF</p>
+<blockquote>
+<p>一个常量，长度为 1，用于标识 RDB 数据的结束，校验和的开始</p>
+</blockquote>
+</li>
+<li><p>check_sum</p>
+<blockquote>
+<p>校验和 check_sum 用于判断 RDB 文件中的内容是否出现数据异常，其采用的是 CRC 校验算法</p>
+</blockquote>
+</li>
+</ol>
 
             </div>
 
@@ -1173,7 +1313,7 @@
         <li><strong>创建于:</strong> 2023-04-17 09:28:36</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-20 12:20:35
+                <strong>更新于:</strong> 2023-04-20 15:12:30
             </li>
         
         <li>
@@ -1232,7 +1372,7 @@
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">Redis</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E6%A6%82%E8%BF%B0"><span class="nav-text">Redis 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NoSQL"><span class="nav-text">NoSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis%E7%9A%84%E7%94%A8%E9%80%94"><span class="nav-text">Redis的用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E7%9A%84-IO-%E6%A8%A1%E5%9E%8B"><span class="nav-text">Redis 的 IO 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">Redis 的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#INCLUDE"><span class="nav-text">INCLUDE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MODULES"><span class="nav-text">MODULES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NETWORK"><span class="nav-text">NETWORK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GENERAL"><span class="nav-text">GENERAL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CLIENTS"><span class="nav-text">CLIENTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MEMORY-MANAGEMENT"><span class="nav-text">MEMORY MANAGEMENT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Threaded-I-x2F-O"><span class="nav-text">Threaded I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E5%91%BD%E4%BB%A4"><span class="nav-text">Redis 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-text">Redis 基本命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Key%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Key操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">String 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Hash 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">List 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Set 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F-Set-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4-ZSet"><span class="nav-text">有序 Set 型 Value 操作命令(ZSet)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2-SDS-String%E7%B1%BB%E5%9E%8B%E5%BA%95%E5%B1%82"><span class="nav-text">简单动态字符串 SDS(String类型底层)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-text">集合的底层实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BitMap-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">BitMap 操作命令</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E6%A6%82%E8%BF%B0"><span class="nav-text">Redis 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NoSQL"><span class="nav-text">NoSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis%E7%9A%84%E7%94%A8%E9%80%94"><span class="nav-text">Redis的用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E7%9A%84-IO-%E6%A8%A1%E5%9E%8B"><span class="nav-text">Redis 的 IO 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">Redis 的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#INCLUDE"><span class="nav-text">INCLUDE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MODULES"><span class="nav-text">MODULES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NETWORK"><span class="nav-text">NETWORK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GENERAL"><span class="nav-text">GENERAL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CLIENTS"><span class="nav-text">CLIENTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MEMORY-MANAGEMENT"><span class="nav-text">MEMORY MANAGEMENT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Threaded-I-x2F-O"><span class="nav-text">Threaded I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E5%91%BD%E4%BB%A4"><span class="nav-text">Redis 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-text">Redis 基本命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Key%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Key操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">String 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Hash 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">List 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Set 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F-Set-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4-ZSet"><span class="nav-text">有序 Set 型 Value 操作命令(ZSet)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2-SDS-String%E7%B1%BB%E5%9E%8B%E5%BA%95%E5%B1%82"><span class="nav-text">简单动态字符串 SDS(String类型底层)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-text">集合的底层实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E4%BA%8B%E5%8A%A1"><span class="nav-text">Redis 事务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-text">Redis 持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96-%E9%92%9D%E5%8C%96-%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-text">持久化(钝化)基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RDB-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-text">RDB 持久化</span></a></li></ol></li></ol>
 
     </div>
 </div>
