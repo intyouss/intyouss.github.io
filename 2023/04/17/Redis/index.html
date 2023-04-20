@@ -36,7 +36,7 @@
 <meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-20-06-24-image.png">
 <meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-20-15-57-image.png">
 <meta property="article:published_time" content="2023-04-17T01:28:36.000Z">
-<meta property="article:modified_time" content="2023-04-19T12:59:54.409Z">
+<meta property="article:modified_time" content="2023-04-20T04:20:35.333Z">
 <meta property="article:author" content="IntYou">
 <meta property="article:tag" content="Redis Study">
 <meta name="twitter:card" content="summary">
@@ -232,8 +232,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-19 20:59:54</span>
-            <span class="mobile">2023-04-19 20:59</span>
+            <span class="desktop">2023-04-20 12:20:35</span>
+            <span class="mobile">2023-04-20 12:20</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -1148,6 +1148,19 @@
 <li><p>每个 Hash，List，Set，ZSet 集合都可以包含 2^32 个元素</p>
 </li>
 </ul>
+<h3 id="BitMap-操作命令"><a href="#BitMap-操作命令" class="headerlink" title="BitMap 操作命令"></a>BitMap 操作命令</h3><hr>
+<blockquote>
+<p>BitMap 是 Redis 2.2.0 版本中引入的一种新的数据类型。该数据类型本质上就是一个仅包含 0 和 1 的二进制字符串，而其所有相关的命令都是对这个字符串二进制位的操作。</p>
+<p>用于描述该字符串的属性有三个：key，offset，bitValue</p>
+<ul>
+<li><p>key：Key-Value 中的 Key值</p>
+</li>
+<li><p>offset：每个 BitMap 数据都是一个字符串，字符串中的每个字符都有其对应的索引，索引从0开始计数。该索引就称为每个字符在该 BitMap 中的偏移量 offset。这个 offset 的值的范围是[0，2^32-1]</p>
+</li>
+<li><p>bitValue：每个 BitMap 数据都是一个仅包含 0 和 1 的 二进制字符串。每个 offset 位上的字符就称为该位的值 bitValue。bitValue 的值非 0 即 1</p>
+</li>
+</ul>
+</blockquote>
 
             </div>
 
@@ -1160,7 +1173,7 @@
         <li><strong>创建于:</strong> 2023-04-17 09:28:36</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-19 20:59:54
+                <strong>更新于:</strong> 2023-04-20 12:20:35
             </li>
         
         <li>
@@ -1219,7 +1232,7 @@
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">Redis</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E6%A6%82%E8%BF%B0"><span class="nav-text">Redis 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NoSQL"><span class="nav-text">NoSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis%E7%9A%84%E7%94%A8%E9%80%94"><span class="nav-text">Redis的用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E7%9A%84-IO-%E6%A8%A1%E5%9E%8B"><span class="nav-text">Redis 的 IO 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">Redis 的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#INCLUDE"><span class="nav-text">INCLUDE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MODULES"><span class="nav-text">MODULES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NETWORK"><span class="nav-text">NETWORK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GENERAL"><span class="nav-text">GENERAL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CLIENTS"><span class="nav-text">CLIENTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MEMORY-MANAGEMENT"><span class="nav-text">MEMORY MANAGEMENT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Threaded-I-x2F-O"><span class="nav-text">Threaded I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E5%91%BD%E4%BB%A4"><span class="nav-text">Redis 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-text">Redis 基本命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Key%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Key操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">String 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Hash 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">List 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Set 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F-Set-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4-ZSet"><span class="nav-text">有序 Set 型 Value 操作命令(ZSet)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2-SDS-String%E7%B1%BB%E5%9E%8B%E5%BA%95%E5%B1%82"><span class="nav-text">简单动态字符串 SDS(String类型底层)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-text">集合的底层实现原理</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E6%A6%82%E8%BF%B0"><span class="nav-text">Redis 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NoSQL"><span class="nav-text">NoSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis%E7%9A%84%E7%94%A8%E9%80%94"><span class="nav-text">Redis的用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E7%9A%84-IO-%E6%A8%A1%E5%9E%8B"><span class="nav-text">Redis 的 IO 模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">Redis 的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#INCLUDE"><span class="nav-text">INCLUDE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MODULES"><span class="nav-text">MODULES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NETWORK"><span class="nav-text">NETWORK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GENERAL"><span class="nav-text">GENERAL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CLIENTS"><span class="nav-text">CLIENTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MEMORY-MANAGEMENT"><span class="nav-text">MEMORY MANAGEMENT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Threaded-I-x2F-O"><span class="nav-text">Threaded I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E5%91%BD%E4%BB%A4"><span class="nav-text">Redis 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-text">Redis 基本命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Key%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Key操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">String 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Hash 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">List 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">Set 型 Value 操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F-Set-%E5%9E%8B-Value-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4-ZSet"><span class="nav-text">有序 Set 型 Value 操作命令(ZSet)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2-SDS-String%E7%B1%BB%E5%9E%8B%E5%BA%95%E5%B1%82"><span class="nav-text">简单动态字符串 SDS(String类型底层)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-text">集合的底层实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BitMap-%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">BitMap 操作命令</span></a></li></ol></li></ol>
 
     </div>
 </div>
