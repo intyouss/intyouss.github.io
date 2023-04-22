@@ -1,104 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>3月7日学习记录</title>
-    <url>/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
-<h4 id="路由的两种写法"><a href="#路由的两种写法" class="headerlink" title="路由的两种写法"></a>路由的两种写法</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">app.add_url_rule(<span class="string">&#x27;/index&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, index)</span><br></pre></td></tr></table></figure></div>
-
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/inddex&#x27;</span></span>)</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="路由加载源码的流程"><a href="#路由加载源码的流程" class="headerlink" title="路由加载源码的流程"></a>路由加载源码的流程</h4><ul>
-<li><p>将URL和函数打包成为Rule对象</p>
-</li>
-<li><p>将Rule对象添加到map对象中</p>
-</li>
-<li><p>app_url_map &#x3D; map对象</p>
-</li>
-</ul>
-<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&lt;string:name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;name&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>uuid类型 类似于xxxxx-xxxxxxx-xxxxxx-xxxxxx</p>
-<h5 id="自定义路由"><a href="#自定义路由" class="headerlink" title="自定义路由"></a>自定义路由</h5><p>必须继承BaseConverter</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, regex</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>)</span><br><span class="line">        self.regex = regex</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_python</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.url_map.converters[<span class="string">&#x27;regex&#x27;</span>] = RegexConverter</span><br></pre></td></tr></table></figure></div>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><hr>
-<h4 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span>, method=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="CBV"><a href="#CBV" class="headerlink" title="CBV"></a>CBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(views, MethodView):</span><br><span class="line">    method = [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span><br><span class="line">    decorators = [test1, test2] //CBV添加装饰器</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/user&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;user&#x27;</span>))</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="模板-jinja2"><a href="#模板-jinja2" class="headerlink" title="模板(jinja2)"></a>模板(jinja2)</h3><hr>
-<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>模板可继承</p>
-<ol>
-<li><p>被继承:</p>
-<p><code>&#123;% block content %&#125; ? &#123;% endbloack %&#125;</code>  </p>
-</li>
-<li><p>继承:</p>
-<p><code>&#123;% extends 'layout.html' %&#125;  &#123;% block content %&#125; ? &#123;% endbloack %&#125;</code></p>
-</li>
-<li><p>引入:</p>
-<p><code>&#123;% include 'from.html' %&#125;</code></p>
-</li>
-</ol>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dunc</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line">render_template(<span class="string">&#x27;md.html&#x27;</span>, nums=nums, f=func) //可以传递函数名</span><br></pre></td></tr></table></figure></div>
-
-<p>定义全局模板方法</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.template_glabol() //模板中全局使用 &#123;&#123; func(<span class="params"><span class="string">&#x27;haha&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.template_filter() //模板全局使用 &#123;&#123; <span class="string">&#x27;haha&#x27;</span>|f(<span class="params"><span class="string">&#x27;e&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">arg,h</span>):</span><br><span class="line">    <span class="keyword">return</span> arg + h</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/md/hg&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;md_hg.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>如果想要将一个方法限制为一个蓝图域中使用，只需将app修改即可</p>
-<h3 id="特殊装饰器"><a href="#特殊装饰器" class="headerlink" title="特殊装饰器"></a>特殊装饰器</h3><hr>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.before_request //视图函数运行前运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f1</span>():// 一旦返回值为真，则停止行为向下传播(判断用户登录等), 反之空，则继续</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request //视图函数运行结束后运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">response</span>): //视图函数有返回值，就必须返回一个Responce</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f2&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>或</p>
-<p><code>app.before_request(func)</code>不加装饰器使用</p>
-]]></content>
-      <tags>
-        <tag>Flask Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>3月5日 学习记录</title>
-    <url>/2023/03/05/3%E6%9C%885%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h4 id="flask中函数app-route-嵌套装饰器可能错误"><a href="#flask中函数app-route-嵌套装饰器可能错误" class="headerlink" title="flask中函数app.route()嵌套装饰器可能错误"></a>flask中函数app.route()嵌套装饰器可能错误</h4><hr>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">atuh1</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">atuh2</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner    </span><br><span class="line"></span><br><span class="line"><span class="meta">@auth1</span></span><br><span class="line"><span class="meta">@auth2</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;index&quot;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>单装饰器装饰: 装饰器在装饰一个函数时，此函数将被装饰器内部函数替代，如果想暴露原本函数，可以使用装饰器@functools.wraps(func)</p>
-<p>多装饰器装饰: 优先使用内部装饰器，逐层向上</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/index&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;h&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/login&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;g&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>@app.route() endpoint默认为函数名  </p>
-<p>两个函数使用相同函数装饰auth, 在不使用@functools.warps(func)的情况下，两个初始函数被装饰后，都将变为inner的属性，形成别名重复错误:<br><code>AssertionError: View function mapping is ovwewriting an existing endpoint function: inner</code></p>
-<h4 id="flask蓝图"><a href="#flask蓝图" class="headerlink" title="flask蓝图"></a>flask蓝图</h4><hr>
-<p>flask蓝图主要功能就是分类(Blueprint)，不同功能函数放在不同文件中实现: </p>
-<ol>
-<li><p>创建蓝图</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">xxx = Blueprint(<span class="string">&#x27;xxx&#x27;</span>, __name__)</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>在主进程中引用蓝图</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> <span class="string">&#x27;/path&#x27;</span> <span class="keyword">import</span> xxx</span><br><span class="line">app.register_blueprint(xxx, url_prefix=<span class="string">&#x27;/x&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>url_prefix 添加前缀 使用: &#x2F;x&#x2F;xxx</p>
-</li>
-</ol>
-<h4 id="Django的路由映射和Flask的蓝图有什么区别"><a href="#Django的路由映射和Flask的蓝图有什么区别" class="headerlink" title="Django的路由映射和Flask的蓝图有什么区别"></a>Django的路由映射和Flask的蓝图有什么区别</h4><hr>
-<p>flask:</p>
-<ol>
-<li><p>flask是利用蓝图进行模块划分的，通过app装饰器注册模块蓝图，在主模块统一调用;</p>
-</li>
-<li><p>在flask中，路由是通过装饰器给每个视图函数提供的, 而且根据请求方式的不同可以一个url用于不同的作用。功能相似，但是底层实现不一样</p>
-</li>
-</ol>
-<p>Django:</p>
-<ol>
-<li>Django路由映射是通过路由正则匹配映射到每一个模块的</li>
-<li>在django中，路由是浏览器访问服务器时，先访问的项目中的url，再由项目中的url找到应用中url，这些url是放在一个列表里，遵从从前往后匹配的规则。</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Flask Study</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>3月6日 学习记录</title>
     <url>/2023/03/06/3%E6%9C%886%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h3 id="唯一的URL-x2F-重定向行为"><a href="#唯一的URL-x2F-重定向行为" class="headerlink" title="唯一的URL&#x2F;重定向行为"></a>唯一的URL&#x2F;重定向行为</h3><hr>
@@ -160,6 +62,48 @@
       </tags>
   </entry>
   <entry>
+    <title>3月5日 学习记录</title>
+    <url>/2023/03/05/3%E6%9C%885%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h4 id="flask中函数app-route-嵌套装饰器可能错误"><a href="#flask中函数app-route-嵌套装饰器可能错误" class="headerlink" title="flask中函数app.route()嵌套装饰器可能错误"></a>flask中函数app.route()嵌套装饰器可能错误</h4><hr>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">atuh1</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">atuh2</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner    </span><br><span class="line"></span><br><span class="line"><span class="meta">@auth1</span></span><br><span class="line"><span class="meta">@auth2</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;index&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>单装饰器装饰: 装饰器在装饰一个函数时，此函数将被装饰器内部函数替代，如果想暴露原本函数，可以使用装饰器@functools.wraps(func)</p>
+<p>多装饰器装饰: 优先使用内部装饰器，逐层向上</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/index&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;h&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/login&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;g&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>@app.route() endpoint默认为函数名  </p>
+<p>两个函数使用相同函数装饰auth, 在不使用@functools.warps(func)的情况下，两个初始函数被装饰后，都将变为inner的属性，形成别名重复错误:<br><code>AssertionError: View function mapping is ovwewriting an existing endpoint function: inner</code></p>
+<h4 id="flask蓝图"><a href="#flask蓝图" class="headerlink" title="flask蓝图"></a>flask蓝图</h4><hr>
+<p>flask蓝图主要功能就是分类(Blueprint)，不同功能函数放在不同文件中实现: </p>
+<ol>
+<li><p>创建蓝图</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">xxx = Blueprint(<span class="string">&#x27;xxx&#x27;</span>, __name__)</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>在主进程中引用蓝图</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> <span class="string">&#x27;/path&#x27;</span> <span class="keyword">import</span> xxx</span><br><span class="line">app.register_blueprint(xxx, url_prefix=<span class="string">&#x27;/x&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>url_prefix 添加前缀 使用: &#x2F;x&#x2F;xxx</p>
+</li>
+</ol>
+<h4 id="Django的路由映射和Flask的蓝图有什么区别"><a href="#Django的路由映射和Flask的蓝图有什么区别" class="headerlink" title="Django的路由映射和Flask的蓝图有什么区别"></a>Django的路由映射和Flask的蓝图有什么区别</h4><hr>
+<p>flask:</p>
+<ol>
+<li><p>flask是利用蓝图进行模块划分的，通过app装饰器注册模块蓝图，在主模块统一调用;</p>
+</li>
+<li><p>在flask中，路由是通过装饰器给每个视图函数提供的, 而且根据请求方式的不同可以一个url用于不同的作用。功能相似，但是底层实现不一样</p>
+</li>
+</ol>
+<p>Django:</p>
+<ol>
+<li>Django路由映射是通过路由正则匹配映射到每一个模块的</li>
+<li>在django中，路由是浏览器访问服务器时，先访问的项目中的url，再由项目中的url找到应用中url，这些url是放在一个列表里，遵从从前往后匹配的规则。</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Flask Study</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Django</title>
     <url>/2023/03/25/Django/</url>
     <content><![CDATA[<h3 id="Django-MVT"><a href="#Django-MVT" class="headerlink" title="Django MVT"></a>Django MVT</h3><ul>
@@ -169,12 +113,7 @@
 </li>
 </ul>
 <p>M(Model数据模型: 数据层)V(View视图层: 控制层)T(Templete模板层(在MVC中为视图层))</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-25-12-39-38-image.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-25-12-39-38-image.png"></p>
 <h3 id="创建Django工程文件"><a href="#创建Django工程文件" class="headerlink" title="创建Django工程文件"></a>创建Django工程文件</h3><p>django-admin startproject 文件名</p>
 <p>内部生成文件</p>
 <ul>
@@ -481,6 +420,62 @@
       </tags>
   </entry>
   <entry>
+    <title>3月7日学习记录</title>
+    <url>/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
+<h4 id="路由的两种写法"><a href="#路由的两种写法" class="headerlink" title="路由的两种写法"></a>路由的两种写法</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">app.add_url_rule(<span class="string">&#x27;/index&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, index)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/inddex&#x27;</span></span>)</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="路由加载源码的流程"><a href="#路由加载源码的流程" class="headerlink" title="路由加载源码的流程"></a>路由加载源码的流程</h4><ul>
+<li><p>将URL和函数打包成为Rule对象</p>
+</li>
+<li><p>将Rule对象添加到map对象中</p>
+</li>
+<li><p>app_url_map &#x3D; map对象</p>
+</li>
+</ul>
+<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&lt;string:name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;name&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>uuid类型 类似于xxxxx-xxxxxxx-xxxxxx-xxxxxx</p>
+<h5 id="自定义路由"><a href="#自定义路由" class="headerlink" title="自定义路由"></a>自定义路由</h5><p>必须继承BaseConverter</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, regex</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>)</span><br><span class="line">        self.regex = regex</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_python</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.url_map.converters[<span class="string">&#x27;regex&#x27;</span>] = RegexConverter</span><br></pre></td></tr></table></figure></div>
+
+<h3 id><a href="#" class="headerlink" title></a></h3><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><hr>
+<h4 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span>, method=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="CBV"><a href="#CBV" class="headerlink" title="CBV"></a>CBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(views, MethodView):</span><br><span class="line">    method = [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span><br><span class="line">    decorators = [test1, test2] //CBV添加装饰器</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/user&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;user&#x27;</span>))</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="模板-jinja2"><a href="#模板-jinja2" class="headerlink" title="模板(jinja2)"></a>模板(jinja2)</h3><hr>
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>模板可继承</p>
+<ol>
+<li><p>被继承:</p>
+<p><code>&#123;% block content %&#125; ? &#123;% endbloack %&#125;</code>  </p>
+</li>
+<li><p>继承:</p>
+<p><code>&#123;% extends 'layout.html' %&#125;  &#123;% block content %&#125; ? &#123;% endbloack %&#125;</code></p>
+</li>
+<li><p>引入:</p>
+<p><code>&#123;% include 'from.html' %&#125;</code></p>
+</li>
+</ol>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dunc</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line">render_template(<span class="string">&#x27;md.html&#x27;</span>, nums=nums, f=func) //可以传递函数名</span><br></pre></td></tr></table></figure></div>
+
+<p>定义全局模板方法</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.template_glabol() //模板中全局使用 &#123;&#123; func(<span class="params"><span class="string">&#x27;haha&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.template_filter() //模板全局使用 &#123;&#123; <span class="string">&#x27;haha&#x27;</span>|f(<span class="params"><span class="string">&#x27;e&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">arg,h</span>):</span><br><span class="line">    <span class="keyword">return</span> arg + h</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/md/hg&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;md_hg.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>如果想要将一个方法限制为一个蓝图域中使用，只需将app修改即可</p>
+<h3 id="特殊装饰器"><a href="#特殊装饰器" class="headerlink" title="特殊装饰器"></a>特殊装饰器</h3><hr>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.before_request //视图函数运行前运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f1</span>():// 一旦返回值为真，则停止行为向下传播(判断用户登录等), 反之空，则继续</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request //视图函数运行结束后运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">response</span>): //视图函数有返回值，就必须返回一个Responce</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f2&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>或</p>
+<p><code>app.before_request(func)</code>不加装饰器使用</p>
+]]></content>
+      <tags>
+        <tag>Flask Study</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>3月9日项目问题</title>
     <url>/2023/03/09/3%E6%9C%889%E6%97%A5%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<h4 id="读取yaml"><a href="#读取yaml" class="headerlink" title="读取yaml"></a>读取yaml</h4><p>引用<code>from ruamel import yaml</code></p>
@@ -520,128 +515,6 @@
 ]]></content>
       <tags>
         <tag>Project</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript-React-1</title>
-    <url>/2023/03/07/JavaScript-React-1/</url>
-    <content><![CDATA[<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><hr>
-<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ul>
-<li><p>只有一个参数的函数 参数 &#x3D;&gt; 返回值</p>
-</li>
-<li><p>多个参数使用括号 (a,b) &#x3D;&gt; 返回值</p>
-</li>
-<li><p>返回值必须是一个表达式</p>
-</li>
-<li><p>返回值是对象必须带括号</p>
-</li>
-<li><p>如需写语句，在后添加代码块</p>
-</li>
-</ul>
-<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>隐含参数arguments-表示当前函数的实参 arguments.lenth 获取实参数。剩余参数…args</p>
-</div>
-
-<h4 id="特性"><a href="#特性" class="headerlink" title="特性:"></a>特性:</h4><ul>
-<li><p>箭头函数中没有arguments，可以使用…args</p>
-</li>
-<li><p>箭头函数的this总是看外层作用域的this</p>
-</li>
-<li><p>箭头函数中的this无法通过call(), apply(), bind()修改</p>
-</li>
-<li><p>箭头函数无法作为构造函数，无法new</p>
-</li>
-</ul>
-<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><hr>
-<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>默认情况下，script标签中不能使用import语句，必须设置script的type属性为module</p>
-</div>
-
-<h4 id="导出"><a href="#导出" class="headerlink" title="导出:"></a>导出:</h4><ul>
-<li><p>默认导出</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>一个模块里只有一个默认导出</p>
-<ul>
-<li><p>命名导出</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b,c&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h4 id="导入"><a href="#导入" class="headerlink" title="导入:"></a>导入:</h4><ul>
-<li><p>默认导入</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>导入默认模块时，变量名可以自主制定，无需使用模块中的变量名</p>
-<ul>
-<li><p>命名导入</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;a,b,c&#125; <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span></span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
-<li><p>构造函数</p>
-<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>构造函数中，可以通过this来引用当前的对象</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
-<li><p>严格模式</p>
-<p>“use strict”</p>
-<ol>
-<li><p>类中的所有代码都会在严格模式下执行</p>
-</li>
-<li><p>函数的this不再是window,而是undefined</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> test = mc.<span class="property">fn</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-</ul>
-<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>以方法形式调用时, this就是当前的实例。以函数形式调用, this是undefined</p>
-</div>
-
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = <span class="variable language_">this</span>.<span class="property">fn</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>) <span class="comment">//将fn方法的this绑定为当前实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>可以限制this绑定在自身</p>
-<p>也可以使用箭头函数的形式调用，永远绑定为本身</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">   fn = <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>&#123;&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>在子类中重写父类构造函数时，应该在子类中第一时间调用父类构造函数，否则报错</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(name, age); <span class="comment">//调用父类构造函数，并且需要加入父类参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
-<li><p>动态属性</p>
-<p>需要首先new一个实例才能使用</p>
-</li>
-<li><p>静态属性</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> name = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="comment">// 静态方法this不是实例对象而是当前类对象</span></span><br><span class="line">    <span class="keyword">static</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>可以直接使用<code>MyClass.name</code></p>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
-<ul>
-<li><p>map()</p>
-<ol>
-<li><p>可以根据原有的数组返回一个新数组</p>
-</li>
-<li><p>需要一个回调函数作为参数, 回调函数返回值会成为新数组中的元素</p>
-<p>用法:</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> result = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> item+<span class="number">2</span></span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 第一个参数 当前元素</span></span><br><span class="line"><span class="comment">// 第二个参数 当前元素索引</span></span><br><span class="line"><span class="comment">// 第三个参数 当前数组</span></span><br></pre></td></tr></table></figure></div></li>
-</ol>
-</li>
-<li><p>filter()</p>
-<p>过滤器</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">result = arr.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item % <span class="number">2</span> === <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>根据条件过滤元素</p>
-<ul>
-<li><p>find()</p>
-<p>找第一个被过滤条件通过的元素</p>
-</li>
-</ul>
-</li>
-<li><p>reduce()</p>
-<p>整合数组</p>
-<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> &#123;&#125;, <span class="number">0</span>) </span><br><span class="line"><span class="comment">// 0的位置是定义第一次prev的值, prev 上一次合并后值, curr 当前值</span></span><br></pre></td></tr></table></figure></div></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>React Study</tag>
       </tags>
   </entry>
   <entry>
@@ -833,6 +706,144 @@
       <tags>
         <tag>React Study</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>JavaScript-React-1</title>
+    <url>/2023/03/07/JavaScript-React-1/</url>
+    <content><![CDATA[<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><hr>
+<h4 id="限制"><a href="#限制" class="headerlink" title="限制:"></a>限制:</h4><ul>
+<li><p>只有一个参数的函数 参数 &#x3D;&gt; 返回值</p>
+</li>
+<li><p>多个参数使用括号 (a,b) &#x3D;&gt; 返回值</p>
+</li>
+<li><p>返回值必须是一个表达式</p>
+</li>
+<li><p>返回值是对象必须带括号</p>
+</li>
+<li><p>如需写语句，在后添加代码块</p>
+</li>
+</ul>
+<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>隐含参数arguments-表示当前函数的实参 arguments.lenth 获取实参数。剩余参数…args</p>
+</div>
+
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性:"></a>特性:</h4><ul>
+<li><p>箭头函数中没有arguments，可以使用…args</p>
+</li>
+<li><p>箭头函数的this总是看外层作用域的this</p>
+</li>
+<li><p>箭头函数中的this无法通过call(), apply(), bind()修改</p>
+</li>
+<li><p>箭头函数无法作为构造函数，无法new</p>
+</li>
+</ul>
+<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><hr>
+<div class="note note-info icon-padding"><i class="note-icon fa-solid fa-info-circle"></i><p>默认情况下，script标签中不能使用import语句，必须设置script的type属性为module</p>
+</div>
+
+<h4 id="导出"><a href="#导出" class="headerlink" title="导出:"></a>导出:</h4><ul>
+<li><p>默认导出</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> xxx;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>一个模块里只有一个默认导出</p>
+<ul>
+<li><p>命名导出</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b,c&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h4 id="导入"><a href="#导入" class="headerlink" title="导入:"></a>导入:</h4><ul>
+<li><p>默认导入</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> xxx <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span>;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>导入默认模块时，变量名可以自主制定，无需使用模块中的变量名</p>
+<ul>
+<li><p>命名导入</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;a,b,c&#125; <span class="keyword">from</span> <span class="string">&#x27;./m1.js&#x27;</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
+<li><p>构造函数</p>
+<div class="highlight-container" data-rel="Javascript"><figure class="iseeu highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>构造函数中，可以通过this来引用当前的对象</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h4><ul>
+<li><p>严格模式</p>
+<p>“use strict”</p>
+<ol>
+<li><p>类中的所有代码都会在严格模式下执行</p>
+</li>
+<li><p>函数的this不再是window,而是undefined</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> test = mc.<span class="property">fn</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+</ul>
+<div class="note note-warning icon-padding"><i class="note-icon fa-solid fa-exclamation-circle"></i><p>以方法形式调用时, this就是当前的实例。以函数形式调用, this是undefined</p>
+</div>
+
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fn</span> = <span class="variable language_">this</span>.<span class="property">fn</span>.<span class="title function_">bind</span>(<span class="variable language_">this</span>) <span class="comment">//将fn方法的this绑定为当前实例</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>可以限制this绑定在自身</p>
+<p>也可以使用箭头函数的形式调用，永远绑定为本身</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">   fn = <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span>&#123;&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>在子类中重写父类构造函数时，应该在子类中第一时间调用父类构造函数，否则报错</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">constructor</span>(<span class="params">name, age</span>)&#123;</span><br><span class="line">    <span class="variable language_">super</span>(name, age); <span class="comment">//调用父类构造函数，并且需要加入父类参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
+<li><p>动态属性</p>
+<p>需要首先new一个实例才能使用</p>
+</li>
+<li><p>静态属性</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>&#123;</span><br><span class="line">    <span class="keyword">static</span> name = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">    <span class="comment">// 静态方法this不是实例对象而是当前类对象</span></span><br><span class="line">    <span class="keyword">static</span> fn = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>可以直接使用<code>MyClass.name</code></p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
+<ul>
+<li><p>map()</p>
+<ol>
+<li><p>可以根据原有的数组返回一个新数组</p>
+</li>
+<li><p>需要一个回调函数作为参数, 回调函数返回值会成为新数组中的元素</p>
+<p>用法:</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> result = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">item, index, array</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> item+<span class="number">2</span></span><br><span class="line">&#125;) </span><br><span class="line"><span class="comment">// 第一个参数 当前元素</span></span><br><span class="line"><span class="comment">// 第二个参数 当前元素索引</span></span><br><span class="line"><span class="comment">// 第三个参数 当前数组</span></span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+<li><p>filter()</p>
+<p>过滤器</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">result = arr.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item % <span class="number">2</span> === <span class="number">0</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>根据条件过滤元素</p>
+<ul>
+<li><p>find()</p>
+<p>找第一个被过滤条件通过的元素</p>
+</li>
+</ul>
+</li>
+<li><p>reduce()</p>
+<p>整合数组</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> &#123;&#125;, <span class="number">0</span>) </span><br><span class="line"><span class="comment">// 0的位置是定义第一次prev的值, prev 上一次合并后值, curr 当前值</span></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>React Study</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript-React-3</title>
+    <url>/2023/03/09/JavaScript-React-3/</url>
+    <content><![CDATA[<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><hr>
+<p>父组件传递属性，需要在子组件获取才能使用:</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;div className=&#123;<span class="string">`card <span class="subst">$&#123;props.className&#125;</span>`</span>&#125;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>props.children 表示组件的标签体</p>
+<p>useRef().current 表示当前的DOM</p>
+<p>事件对象:</p>
+<ul>
+<li><p>event包含所有触发事件对象信息</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">descChangeHandler</span> = (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">target</span>.<span class="property">value</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+]]></content>
   </entry>
   <entry>
     <title>Linux</title>
@@ -1056,12 +1067,7 @@
 <p>drwxr-xr-x  intyou intyou</p>
 <p>drwxr-xr-x - 表示权限管控细节</p>
 <p>-代表无</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-21-18-03-51-image.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-21-18-03-51-image.png"></p>
 <p>第一块 ‘-‘表示文件 ‘d’表示文件夹 ‘l’表示软链接</p>
 <p>除去第一块:</p>
 <ul>
@@ -1171,7 +1177,7 @@
 </ul>
 <h3 id="在linux中固定ip地址"><a href="#在linux中固定ip地址" class="headerlink" title="在linux中固定ip地址"></a>在linux中固定ip地址</h3><p>在ubuntu22.04中应找到&#x2F;etc&#x2F;netplan中的yaml文件修改</p>
 <blockquote>
-<p><a class="link"   href="https://www.cnblogs.com/liujiaxin2018/p/16287463.html" >ubuntu 22.04如何配置静态IP、网关、DNS - 小鲨鱼2018 - 博客园 (cnblogs.com) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>&#96;</p>
+<p><a class="link" href="https://www.cnblogs.com/liujiaxin2018/p/16287463.html">ubuntu 22.04如何配置静态IP、网关、DNS - 小鲨鱼2018 - 博客园 (cnblogs.com) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>&#96;</p>
 </blockquote>
 <h3 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h3><p>检测指定网络服务器是否可联通状态</p>
 <p>ping [-c num] ip或主机名</p>
@@ -1216,26 +1222,11 @@
 <li><p>第四行: kib Mem 物理内存  total总量  free空闲  used 使用  buff&#x2F;cache buff和cache占用 kibSwap  虚拟内存(交换空间)</p>
 </li>
 </ul>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-26-29-image.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-26-29-image.png"></p>
 <p>选项:</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-28-00-image.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-28-00-image.png"></p>
 <p>交互式选项:</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-31-28-image.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-31-28-image.png"></p>
 <h3 id="磁盘信息监控"><a href="#磁盘信息监控" class="headerlink" title="磁盘信息监控"></a>磁盘信息监控</h3><p>查看硬盘使用情况</p>
 <p>df [-h]</p>
 <ul>
@@ -2472,31 +2463,16 @@
 <h4 id="绘制E-R图"><a href="#绘制E-R图" class="headerlink" title="绘制E-R图"></a>绘制E-R图</h4><blockquote>
 <p>E-R实体关系图，用于直观的体现实体与实体之间的关联关系(一对一，一对多，多对一，多对多)</p>
 </blockquote>
-<h5 id="E-R图基本图例"><a href="#E-R图基本图例" class="headerlink" title="E-R图基本图例"></a>E-R图基本图例</h5><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-15-17-26-47-image.png"
-                     
-                ></p>
+<h5 id="E-R图基本图例"><a href="#E-R图基本图例" class="headerlink" title="E-R图基本图例"></a>E-R图基本图例</h5><p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-15-17-26-47-image.png"></p>
 <ul>
 <li><p>示例</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-15-17-27-15-image.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-15-17-27-15-image.png"></p>
 </li>
 </ul>
 <h5 id="三线图"><a href="#三线图" class="headerlink" title="三线图"></a>三线图</h5><blockquote>
 <p>统一数据实体的表结构</p>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-15-17-40-28-image.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-15-17-40-28-image.png"></p>
 <h4 id="数据库建模"><a href="#数据库建模" class="headerlink" title="数据库建模"></a>数据库建模</h4><blockquote>
 <ul>
 <li><p>E-R 图 数据表设计 建库建表</p>
@@ -2533,22 +2509,6 @@
       <tags>
         <tag>MySQL Study</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>JavaScript-React-3</title>
-    <url>/2023/03/09/JavaScript-React-3/</url>
-    <content><![CDATA[<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><hr>
-<p>父组件传递属性，需要在子组件获取才能使用:</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;div className=&#123;<span class="string">`card <span class="subst">$&#123;props.className&#125;</span>`</span>&#125;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></div>
-
-<p>props.children 表示组件的标签体</p>
-<p>useRef().current 表示当前的DOM</p>
-<p>事件对象:</p>
-<ul>
-<li><p>event包含所有触发事件对象信息</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">descChangeHandler</span> = (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">target</span>.<span class="property">value</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-]]></content>
   </entry>
   <entry>
     <title>poetry使用</title>
@@ -2590,613 +2550,6 @@
 ]]></content>
       <tags>
         <tag>poetry</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据库</title>
-    <url>/2023/04/12/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-    <content><![CDATA[<h2 id="MySQL-为什么使用-B-树来作索引，对比-B-树它的优点和缺点是什么？"><a href="#MySQL-为什么使用-B-树来作索引，对比-B-树它的优点和缺点是什么？" class="headerlink" title="MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？"></a>MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？</h2><hr>
-<blockquote>
-<ul>
-<li><p>优点</p>
-<ol>
-<li><p>B+ 树具有更高的扇出因子，这意味着它们可以在每个节点中存储更多的键。这减少了树的高度并提高了搜索性能。此外，因为B+树仅在其叶子节点中存储键，所以它们可以存储比B树更多的键，B树在内部和叶子节点中都存储键</p>
-</li>
-<li><p>B+树的另一个优点是它们更适合范围查询。因为所有叶子节点都连接在一起形成一个链表，所以很容易按顺序遍历树并检索某个范围内的所有键。相比之下，B树需要额外的遍历才能找到范围内的所有键</p>
-</li>
-</ol>
-</li>
-<li><p>缺点</p>
-<ol>
-<li>使用B+树需要更多的磁盘空间，因为叶子节点中有额外的指针。此外，由于需要维护叶子节点的链接列表，B+树可能需要更多的CPU时间来执行插入和删除操作</li>
-</ol>
-</li>
-<li><p>总结</p>
-<p>在MySQL中使用B+树而不是B树的决定可能是基于改善搜索性能和增加磁盘空间和CPU使用率之间的权衡</p>
-</li>
-</ul>
-</blockquote>
-<h2 id="数据库大的事务隔离级别有哪些-各有哪些优缺点？"><a href="#数据库大的事务隔离级别有哪些-各有哪些优缺点？" class="headerlink" title="数据库大的事务隔离级别有哪些?各有哪些优缺点？"></a>数据库大的事务隔离级别有哪些?各有哪些优缺点？</h2><hr>
-<table>
-<thead>
-<tr>
-<th align="center">隔离级别</th>
-<th align="center">脏读</th>
-<th align="center">不可重复读</th>
-<th align="center">幻读</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Read uncommitted</td>
-<td align="center">√</td>
-<td align="center">√</td>
-<td align="center">√</td>
-</tr>
-<tr>
-<td align="center">Read committed</td>
-<td align="center">×</td>
-<td align="center">√</td>
-<td align="center">√</td>
-</tr>
-<tr>
-<td align="center">Repeatable read</td>
-<td align="center">×</td>
-<td align="center">×</td>
-<td align="center">√</td>
-</tr>
-<tr>
-<td align="center">Serializable</td>
-<td align="center">×</td>
-<td align="center">×</td>
-<td align="center">×</td>
-</tr>
-</tbody></table>
-<h2 id="什么是数据库事务的特性？-简述数据库中的ACID分别是什么"><a href="#什么是数据库事务的特性？-简述数据库中的ACID分别是什么" class="headerlink" title="什么是数据库事务的特性？(简述数据库中的ACID分别是什么)"></a>什么是数据库事务的特性？(简述数据库中的ACID分别是什么)</h2><hr>
-<blockquote>
-<p>原子性，一致性，隔离性，持久性</p>
-</blockquote>
-<h2 id="什么情况下会发生死锁，如何解决死锁？"><a href="#什么情况下会发生死锁，如何解决死锁？" class="headerlink" title="什么情况下会发生死锁，如何解决死锁？"></a>什么情况下会发生死锁，如何解决死锁？</h2><hr>
-<blockquote>
-<p>死锁是指两个或多个事务相互等待对方释放资源，从而导致所有事务都无法继续执行的情况。在MySQL中，死锁通常发生在事务中使用了不同的锁定顺序时</p>
-<p>解决方法</p>
-<ol>
-<li><p>进行系统的重新启动，代价很大，它意味着在这之前所有的进程已经完成的计算工作都无效，包括参与死锁的进程，以及未参与的进程</p>
-</li>
-<li><p>撤销进程，剥夺资源。终止参加死锁的进程，收回它们占有的资源，从而解除死锁。</p>
-<ul>
-<li><p>情况一：一次性撤销参与死锁的全部进程，剥夺全部进程</p>
-</li>
-<li><p>情况二：逐步撤销参与死锁的进程，逐步收回死锁进程占有的资源</p>
-</li>
-</ul>
-<p>一般来说，选择逐步撤销的进程时要按照一定的原则进行，目的是撤销哪些代价最小的进程，比如按进程的优先级确定进程的代价；考虑进程允许是&#x3D;时的代价和与此进程相关的外部作业的代价等因素</p>
-</li>
-<li><p>进程回退策略，即让参与死锁的进程回退到没有发生死锁前的某一点处，并由此点处继续执行，以求再次执行时不在发生死锁。</p>
-</li>
-</ol>
-</blockquote>
-<h2 id="简述乐观锁以及悲观锁的区别以及使用场景"><a href="#简述乐观锁以及悲观锁的区别以及使用场景" class="headerlink" title="简述乐观锁以及悲观锁的区别以及使用场景"></a>简述乐观锁以及悲观锁的区别以及使用场景</h2><hr>
-<blockquote>
-<p>定义</p>
-<ul>
-<li><p>悲观锁(Pessimistic Lock)</p>
-<blockquote>
-<p>每次获取数据的时候，都会担心数据被修改，所以每次获取数据的时候都会进行加锁，确保在自己使用的过程中数据不会被别人修改，使用完成后进行数据解锁。由于数据进行加锁，期间对该数据进行读写的其他线程都会进行等待</p>
-</blockquote>
-</li>
-<li><p>乐观锁(Optimistic Lock)</p>
-<blockquote>
-<p>每次获取数据时，都不会担心数据被修改，所以每次获取数据的时候都不会进行加锁，但是在更新数据的时候需要判断该数据是否被别人修改过。如果数据被其他线程修改，则不进行更新，如果数据没有被其他线程修改，则进行更新。由于数据没有进行加锁，期间该数据可以被其他线程进行读写操作</p>
-</blockquote>
-</li>
-</ul>
-<p>适合场景</p>
-<ul>
-<li><p>悲观锁</p>
-<blockquote>
-<p>比较适合写入操作比较频繁的场景，如果出现大量的读取操作，每次读取的时候都会进行加锁，这样会增加大量的锁的开销，降低了系统的吞吐量</p>
-</blockquote>
-</li>
-<li><p>乐观锁</p>
-<blockquote>
-<p>比较适合读取操作比较频繁的场景，如果出现大量的写入操作，数据发生冲突的可能性就会增加，为了保证数据的一致性，应用层需要不断的重新获取数据，这样会增加大量的查询操作，降低了系统的吞吐量</p>
-</blockquote>
-</li>
-</ul>
-<p>总结</p>
-<blockquote>
-<p>两种锁各有优缺，读取频繁用乐观锁，写入频繁用悲观锁</p>
-</blockquote>
-</blockquote>
-<h2 id="聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？"><a href="#聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？" class="headerlink" title="聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？"></a>聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？</h2><hr>
-<blockquote>
-<p>聚簇索引和非聚簇索引是用于提高数据库查询性能的两种索引类型</p>
-<p>聚簇索引决定了表中数据的物理顺序。他根据索引列对数据行进行排序和存储。<em>一个表只能有一个聚簇索引</em></p>
-<p>非聚簇索引是数据行之外的独立结构。它包括索引列的副本和指向相应的数据行指针。<em>一个表可以有多个非聚簇索引</em></p>
-<p>聚簇索引最适合在表中频繁查询某个列的一定范围内的值时使用。这是因为数据时根据索引列进行物理排序的，因此检索一定范围内的值更快。而非聚簇索引是数据行之外的一个独立结构，最适合在表中频繁查询使用多个列时使用。在决定使用哪一种时，需要考虑数据修改的频率</p>
-<p>注意</p>
-<blockquote>
-<p>在具有频繁插入或更新的表上创建聚簇索引可能会对性能产生负面影响。这是因为每次插入新行或更新现有行时，数据都必须进行物理重组</p>
-</blockquote>
-</blockquote>
-<h2 id="简述脏读和幻读的发生场景，InnoDB-是如何解决幻读的？"><a href="#简述脏读和幻读的发生场景，InnoDB-是如何解决幻读的？" class="headerlink" title="简述脏读和幻读的发生场景，InnoDB 是如何解决幻读的？"></a>简述脏读和幻读的发生场景，InnoDB 是如何解决幻读的？</h2><hr>
-<blockquote>
-<p>脏读是指一个事务读取了另一个事务未提交的数据，如果另一个事务回滚了操作，那么读取的数据就是无效的。InnoDB通过实现MVCC(多版本并发控制)来避免脏读的发生。MVCC通过在每一行数据后面添加两个隐藏的列来实现，一个是创造时间，一个是过期时间。当一个事务开始时，他会创建一个视图，这个视图包含了当前时间点之前的所有数据。如果一个事务正在修改一行数据，那么这个行的过期时间就会被设置为当前时间，这样其他事务就无法读取到这个行的数据。如果一个事务正在读取一行数据，那么这个行的创建时间必须早于这个事务的开始时间，这样才能保证读取到的数据是有效的</p>
-<p>幻读是指一个事务在读取某个范围内的数据时，另一个事务在这个范围内插入和新的数据，导致第一个事务读取到了之前不存在的数据。InnoDB通过实现间隙锁来避免幻读的发生。当一个事务执行SELECT语句时，InnoDB会对查询的范围进行加锁，这样其他事务就无法在这个范围内插入新的数据。如果一个事务要插入新的数据，那么他必须等待其他事务释放锁之后才能执行插入操作</p>
-</blockquote>
-<h2 id="唯一索引与普通索引的区别是什么-使用索引会有哪些优缺点？"><a href="#唯一索引与普通索引的区别是什么-使用索引会有哪些优缺点？" class="headerlink" title="唯一索引与普通索引的区别是什么?使用索引会有哪些优缺点？"></a>唯一索引与普通索引的区别是什么?使用索引会有哪些优缺点？</h2><hr>
-<blockquote>
-<p>唯一索引会限定数据唯一，而普通索引则没有</p>
-<p>优点</p>
-<ol>
-<li><p>提高查询效率</p>
-<blockquote>
-<p>索引可以帮助数据库快速定位到符合条件的数据</p>
-</blockquote>
-</li>
-<li><p>减少数据扫描</p>
-<blockquote>
-<p>使用索引可以减少数据库扫描的数据量</p>
-</blockquote>
-</li>
-<li><p>加速排序</p>
-<blockquote>
-<p>如果查询需要排序，使用索引可以加速排序的过程</p>
-</blockquote>
-</li>
-</ol>
-<p>缺点</p>
-<ol>
-<li><p>索引会占用磁盘空间</p>
-</li>
-<li><p>索引会降低写入性能</p>
-<blockquote>
-<p>每次插入，更新或删除数据时，都需要更新索引</p>
-</blockquote>
-</li>
-<li><p>索引可能会导致查询变慢</p>
-<blockquote>
-<p>如果索引被错误的使用，或者索引的选择不当</p>
-</blockquote>
-</li>
-</ol>
-</blockquote>
-<h2 id="MySQL的索引什么时候会失效？"><a href="#MySQL的索引什么时候会失效？" class="headerlink" title="MySQL的索引什么时候会失效？"></a>MySQL的索引什么时候会失效？</h2><blockquote>
-<ol>
-<li><p>带有运算</p>
-<blockquote>
-<p>在where子句中使用&#x3D;，+这些运算符号</p>
-</blockquote>
-</li>
-<li><p>使用not in，in</p>
-<blockquote>
-<p>范围运算，会导致索引失效产生全表扫描</p>
-</blockquote>
-</li>
-<li><p>like模糊查询，使用%开头的左模糊查询</p>
-</li>
-<li><p>使用or的时候</p>
-<blockquote>
-<p>因为or是一个并集，如果or条件中有一个不是索引，就会导致索引失效</p>
-</blockquote>
-</li>
-<li><p>字段类型与SQL语句类型不匹配时</p>
-<blockquote>
-<p>如果列类型是字符串，则SQL语句中使用到该列的条件数据就必须用引号引用起来，否则会导致索引失效，原因是MySQL会进行隐式的数据类型转换，导致索引失效</p>
-</blockquote>
-</li>
-<li><p>使用函数</p>
-</li>
-<li><p>复合索引违反最左原则时</p>
-<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 组合索引a,b,c，需出现a</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> a<span class="operator">=</span><span class="string">&#x27;&#x27;</span> <span class="keyword">and</span> b<span class="operator">=</span><span class="string">&#x27;&#x27;</span> ## 索引可用</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> b<span class="operator">=</span><span class="string">&#x27;&#x27;</span> <span class="keyword">and</span> c<span class="operator">=</span><span class="string">&#x27;&#x27;</span> ## 索引不可用</span><br></pre></td></tr></table></figure></div>
-
-<blockquote>
-<p>使用复合索引(组合索引)时，需要遵循最左前缀原则，即查询条件必须包括复合索引的最左前缀列，才能使用该索引进行查询</p>
-<p>最左前缀原则的意义在于，如果查询条件包含复合索引的最左前缀列，那么该索引可以帮助数据库快速定位到符合条件的数据，从而提高查询效率。如果查询条件不包含最左前缀列，那么该索引就无法使用，需要对所有数据进行扫描，这导致查询变慢</p>
-</blockquote>
-</li>
-</ol>
-</blockquote>
-<h2 id="简述MySQL的主从同步机制"><a href="#简述MySQL的主从同步机制" class="headerlink" title="简述MySQL的主从同步机制"></a>简述MySQL的主从同步机制</h2><blockquote>
-<p>指将一个MySQL数据库实例(主库)的数据同步到另一个MySQL数据库实例(从库)的过程。主从同步可以实现数据备份，负载均衡，读写分离等操作</p>
-<p>原理</p>
-<blockquote>
-<p>主库将更新操作记录在二进制日记(binlog)中，从库连接主库，将主库的binlog复制到从库的中继日志(relay log)中，然后从库读取中继日志，将更新操作应用到从库的数据中。从库可以设置延迟时间，以便在主库出现故障时，从库可以称为新的主库，继续提供服务</p>
-</blockquote>
-<p>步骤</p>
-<blockquote>
-<ol>
-<li><p>主库接收用户左CRUD操作，写入数据库，更新结果集到binlog中</p>
-</li>
-<li><p>主从同步时主找从的，从库IO发起请求，主库的主进程看从库 master change 中给的参数是否合法，如果合法主进程交给IO进程执行2操作，否则拒绝处理</p>
-</li>
-<li><p>主库根据 master 的位置点，从这个位置点的 binlog 日志一直到 binlog 日志最后，将其准备发送给从库</p>
-</li>
-<li><p>将找到的 binlog 日志发送给从库，并且还会发送新的日志点</p>
-</li>
-<li><p>从库接收到 binlog 日志，将其写入 relay-log(中继日志)中</p>
-</li>
-<li><p>从库IO进程再想 master info 保存主库传过来的最后的 binlog 日志的日志位置点</p>
-</li>
-<li><p>从库IO时循环发起的请求，发了再要，不会管 SQL 读取中继日志的操作。从库 IO 根据新的日志点，向主库发起请求，主库执行 3 4 操作，再发送新的 binlog 给从库，从库再执行5操作</p>
-</li>
-<li><p>其实第一次向 relay-log 中放数据时，SQL进程就已经知道，SQL进程将 relay-log 中的SQL语句转换成数据，写入从库，从而实现同步</p>
-</li>
-<li><p>从库 SQL 线程读取中继日志，并不会一次性读完，会把读取到的日志点存放到relay-log.info中</p>
-</li>
-</ol>
-</blockquote>
-<p>主从同步配置注意</p>
-<blockquote>
-<ol>
-<li><p>主从库MySQL版本必须一致，否则可能会出现兼容性问题</p>
-</li>
-<li><p>主从库的字符集和校对规则必须一致，否则可能会出现乱码等问题</p>
-</li>
-<li><p>主从库的数据表结构必须一致，否则可能会出现同步失败等问题</p>
-</li>
-<li><p>主从库的数据同步需要保证网络稳定，否则可能会出现同步延迟等问题</p>
-</li>
-<li><p>主从库的数据同步需要保证主库的写入性能，否则可能会出现主库性能下降等问题</p>
-</li>
-</ol>
-</blockquote>
-</blockquote>
-<h2 id="主从复制延迟"><a href="#主从复制延迟" class="headerlink" title="主从复制延迟"></a>主从复制延迟</h2><blockquote>
-<p>指从库的数据更新操作与主库的数据更新操作之间存在一定的时间差，这可能导致从库的数据不一致</p>
-<ul>
-<li><p>网络延迟</p>
-<blockquote>
-<p>主库和从库之间的网络延迟可能会导致从库无法及时获取主库的更新操作</p>
-</blockquote>
-</li>
-<li><p>从库负载过高</p>
-<blockquote>
-<p>同上</p>
-</blockquote>
-</li>
-<li><p>主库负载过高</p>
-<blockquote>
-<p>如果主库的负载过高，可能会导致主库无法即时将更新操作记录到二进制日志中，从而导致从库无法及时获取更新操作</p>
-</blockquote>
-</li>
-</ul>
-</blockquote>
-<h2 id="Redis-如何实现延时队列"><a href="#Redis-如何实现延时队列" class="headerlink" title="Redis 如何实现延时队列"></a>Redis 如何实现延时队列</h2><blockquote>
-<p>可以使用 有序集合 sortedset 来存储任务，我们可以将任务的执行时间作为有序集合的 score，任务大的内容作为有序集合的 member。这样，我们就可以通过 score 的排序来获取最早需要执行的任务</p>
-</blockquote>
-<h2 id="简述-Redis-中如何防止缓存雪崩和缓存击穿"><a href="#简述-Redis-中如何防止缓存雪崩和缓存击穿" class="headerlink" title="简述 Redis 中如何防止缓存雪崩和缓存击穿"></a>简述 Redis 中如何防止缓存雪崩和缓存击穿</h2><h4 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h4><blockquote>
-<p>是指缓存中没有但数据库中有的数据(一般是缓存时间到期)，这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力增大，造成过大压力</p>
-<p>解决方法</p>
-<ol>
-<li><p>设置热点数据永不过期</p>
-</li>
-<li><p>加互斥锁</p>
-</li>
-</ol>
-</blockquote>
-<h4 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h4><blockquote>
-<p>是指缓存中数据大批量到过期时间，而查询数据量巨大，引起数据库压力过大甚至 down 机。和缓存击穿不同的是，缓存击穿指并发查询同一条数据，缓存雪崩是不同数据都过期了，很多数据都查不到从而查询数据库</p>
-<p>解决方法</p>
-<ol>
-<li><p>缓存数据的过期时间设置随机，防止同一时间大量数据过期现象发生</p>
-</li>
-<li><p>如果缓存数据库是分布式部署，将热点数据均匀分布在不同的缓存数据库中</p>
-</li>
-<li><p>设置热点数据永不过期</p>
-</li>
-</ol>
-</blockquote>
-<h2 id="简述-Redis-持久化中-rdb-以及-aof-方案的优缺点"><a href="#简述-Redis-持久化中-rdb-以及-aof-方案的优缺点" class="headerlink" title="简述 Redis 持久化中 rdb 以及 aof 方案的优缺点"></a>简述 Redis 持久化中 rdb 以及 aof 方案的优缺点</h2><h4 id="RDB-方案"><a href="#RDB-方案" class="headerlink" title="RDB 方案"></a>RDB 方案</h4><blockquote>
-<p>是将 Redis 内存中的数据定期保存到磁盘上，以保证数据的持久化</p>
-</blockquote>
-<h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5><ul>
-<li><p>RDB 方案适合大规模的数据恢复，因为 RDB 文件是一个快照，可以在 Redis 重启时快速的加载数据</p>
-</li>
-<li><p>RDB 方案对于 Redis 的性能影响较小，因为 RDB 文件是在后台异步生成的，不会影响 Redis 的正常操作</p>
-</li>
-</ul>
-<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><ul>
-<li><p>RDB 方案不够实时，如果 Redis 发生故障，可能会丢失最后一次快照之后的数据</p>
-</li>
-<li><p>RDB 方案的文件较大，如果数据量较大，可能会占用较多的磁盘空间</p>
-</li>
-</ul>
-<h4 id="AOF-方案"><a href="#AOF-方案" class="headerlink" title="AOF 方案"></a>AOF 方案</h4><blockquote>
-<p>是将 Redis 的操作日志以追加的方式写入到磁盘上，以保证数据的持久化</p>
-</blockquote>
-<h5 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h5><ul>
-<li><p>AOF 方案可以保证数据的实时性，因为每个操作都会被记录到 AOF 文件中</p>
-</li>
-<li><p>AOF 方案的文件较小，因为只记录了 Redis 的操作日志，而不是整个数据集</p>
-</li>
-</ul>
-<h5 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h5><ul>
-<li><p>AOF 方案不够适合大规模的数据恢复，因为 AOF 文件是一个操作日志，需要重新执行所有的操作才能恢复数据</p>
-</li>
-<li><p>AOF 方案对于 Redis 的性能影响较大，因为每个操作都需要写入到 AOF 文件中，会影响 Redis 的正常操作</p>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>计算机网络</title>
-    <url>/2023/04/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
-    <content><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><ol>
-<li><p>简述 TCP 三次握手以及四次挥手的流程。为什么需要三次握手以及四次挥手?</p>
-<blockquote>
-<ul>
-<li><p>三次握手</p>
-<blockquote>
-<p>指建立一个TCP连接时，需要客户端和服务器总共发送3个包</p>
-<ol>
-<li><p>客户端发送一个SYN包到服务器，并进入SYN-SEND状态</p>
-</li>
-<li><p>服务器收到SYN包后，回复一个SYN-ACK包，确认收到客户端的SYN包，并进入SYN-RECV状态</p>
-</li>
-<li><p>客户端收到服务器的SYN+ACK包后，发送一个ACK包给服务器，确认收到服务器的SYN+ACK包，此时连接建立成功</p>
-</li>
-</ol>
-</blockquote>
-</li>
-<li><p>四次挥手</p>
-<blockquote>
-<p>指断开一个TCP连接时，需要客户端和服务器总共发送4个包</p>
-<ol>
-<li><p>客户端发送一个FIN包到服务器，表示客户端不在发送数据，并进入FIN-WAIT-1状态</p>
-</li>
-<li><p>服务器收到FIN包后，回复一个ACK包，确认收到客户端的FIN包，并进入CLOSE-WAIT状态</p>
-</li>
-<li><p>服务器再次发送一个FIN包给客户端，表示服务器不再发送数据，并进入LAST-ACK状态</p>
-</li>
-<li><p>客户端收到服务器的FIN包后，回复一个ACK包给服务器，确认收到服务器的FIN包，并进入TIME-WAIT状态。此时连接断开成功，而TIME-WAIT状态在等待2MSL后返回CLOSED状态</p>
-</li>
-</ol>
-</blockquote>
-</li>
-</ul>
-<p>三次握手是为了防止已失效的连接请求报文突然又传送到了服务端。</p>
-<p>四次挥手是为了确保数据能够完整传输。</p>
-<p>为什么TIME-WAIT状态还需要等待2MSL后才能返回到CLOSED状态?</p>
-<blockquote>
-<ol>
-<li>无法保证最后发送的ACK报文会一定被对方收到，所以需要重发可能丢失的ACK报文</li>
-<li>关闭连接一段时间后可能会出现相同的IP地址和端口建立新的连接，为了防止旧连接的重复分组在新连接已经终止后再现。2msl足以让分组最多存活msl秒被丢弃</li>
-</ol>
-</blockquote>
-<p>为什么必须是三次握手，不能用两次握手进行连接？</p>
-<blockquote>
-<p>两次握手容易死锁！如果服务器的应答分组在传输中丢失，S将不知道建立什么样的序列号。C认为链接还未建立成功，将忽视S发来的任何数据分组，只等待连接确认。而S在发出的分组超时后，重复发送同样的分组，这样就形成了死锁</p>
-</blockquote>
-</blockquote>
-</li>
-<li><p>Restful 与 RPC 的区别是什么? Restful 的优点在哪里?</p>
-<blockquote>
-<p>Restful 和 RFC 的主要区别在于 Restful 是一种用于构建web服务的架构结构，而 RFC 是一系列描述互联网及其协议的技术文档</p>
-<p>Restful 基于一组原则，强调使用 HTTP 方法和资源 URL 来表示和操作资源。它还强调无状态性，这意味这每个请求应包含完成请求所需的所有信息，而不依赖于任何先前的请求</p>
-<p><code>Restful: GET /order/123</code></p>
-<p>RFC 是一系列描述互联网及其协议的技术文档。这些文档又互联网工程任务组(IEIF)创建，并用于定义电子邮件，文件传输和网络协议等标准</p>
-<p><code>RFC: Queryorder/order_id=123</code></p>
-</blockquote>
-<blockquote>
-<p>Restful 优点在于它是一种简单易用，高度可扩展，可移植的架构风格，可以帮助开发人员更轻松地构建web服务</p>
-</blockquote>
-</li>
-<li><p>HTTP 与 HTTPS 有什么区别?</p>
-<blockquote>
-<ol>
-<li><p>HTTPS 协议需要到证书颁发机构CA申请证书，HTTP 不用申请</p>
-</li>
-<li><p>HTTP 是长文本传输协议，属于应用层信息传输。HTTPS 则是具有 SSL 加密安全性传输协议，对数据的传输进行加密，相当于 HTTP 的升级版</p>
-</li>
-<li><p>HTTP 和 HTTPS 使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443</p>
-</li>
-<li><p>HTTP 的连接很简单，是无状态的；HTTPS 协议是由 SSL + HTTP 协议构建的可进行加密传输，身份认证的网络协议，比 HTTP 协议安全</p>
-</li>
-</ol>
-</blockquote>
-</li>
-<li><p>HTTPS 的加密原理是什么?</p>
-<blockquote>
-<p>HTTPS 使用一种称为 SSL&#x2F;TLS 的协议来加密数据传输。SSL&#x2F;TLS 使用公钥加密和私钥解密的方法来保护数据的机密性和完整性</p>
-<p>当客户端与服务器建立连接时，ta们会协商一种加密算法和密钥长度，然后使用该算法和密钥来加密和解密数据。这种加密方法可以防止中间人攻击和窃听，因为只有客户端和服务器知道密钥</p>
-</blockquote>
-</li>
-<li><p>一次 HTTP 请求过程中发生了什么?</p>
-<blockquote>
-<p>HTTP 请求过程中发生了以下步骤:</p>
-<ol>
-<li><p>DNS 解析：客户端将 URL 解析为 IP 地址，以便与服务器建立连接。</p>
-</li>
-<li><p>建立 TCP 连接：客户端使用 TCP 协议与服务器建立连接，以便在客户端和服务器之间传输数据</p>
-</li>
-<li><p>发送 HTTP 请求：客户端向服务器发送 HTTP 请求，其中包括请求方法，请求头和请求体</p>
-</li>
-<li><p>服务器处理请求：服务器接收到 HTTP 请求后，会根据请求方法和请求 URL 来处理请求，并返回 HTTP 响应</p>
-</li>
-<li><p>接收 HTTP 响应：客户端接收到 HTTP 响应后，会解析响应头和响应体，并根据响应状态码来判断请求是否成功</p>
-</li>
-<li><p>关闭 TCP 连接：客户端和服务器之间的 TCP 连接在请求和响应完成后会被关闭</p>
-</li>
-</ol>
-</blockquote>
-</li>
-<li><p>域名解析的过程是?</p>
-<blockquote>
-<ol>
-<li><p>客户端向本地DNS服务器发送域名解析请求</p>
-</li>
-<li><p>如果本地DNS服务器缓存了该域名的IP地址，则直接返回该IP地址给客户端</p>
-<p>如果本地DNS服务器没有缓存该域名的IP地址，则向根DNS服务器发送域名解析请求</p>
-</li>
-<li><p>根DNS服务器返回顶级域名服务器的IP地址给本地DNS服务器</p>
-</li>
-<li><p>本地DNS服务器向顶级域名服务器发送域名解析请求</p>
-</li>
-<li><p>顶级域名服务器返回次级域名服务器的IP地址给本地DNS服务器</p>
-</li>
-<li><p>本地DNS服务器向次级域名服务器发送域名解析请求</p>
-</li>
-<li><p>次级域名服务器返回该域名的IP地址给本地DNS服务器</p>
-</li>
-<li><p>本地DNS服务器将该IP地址缓存起来，并返回给客户端</p>
-</li>
-</ol>
-</blockquote>
-</li>
-<li><p>TCP 与 UDP 在网络协议中的哪一层，他们之间有什么区别?</p>
-<blockquote>
-<p>TCP 和 UDP 是传输层协议，用于在网络上传输数据。</p>
-<p>它们之间的主要区别在于它们如何传输数据以及它们提供的服务类型</p>
-<p>TCP(传输控制协议)：</p>
-<blockquote>
-<p>是一种面向连接的协议，它提供可靠的数据传输服务。它使用三次握手协议来建立连接，并使用确认和重传机制来确保数据的可靠传输。TCP 还提供流量控制和拥塞控制功能，以确保网络的稳定性和可靠性。TCP 通常用于需要可靠数据传输的应用程序</p>
-</blockquote>
-<p>UDP(用户数据报协议)：</p>
-<blockquote>
-<p>是一种无连接的协议，它提供不可靠的数据传输服务。它不使用握手协议来建立连接，也不提供确认和重传机制。UDP 不提供流量控制和拥塞控制功能，因此他通常用于需要快速数据传输的应用程序</p>
-</blockquote>
-</blockquote>
-</li>
-<li><p>TCP 中拥塞控制的实现?</p>
-<blockquote>
-<p>慢启动：</p>
-<blockquote>
-<p>在TCP连接建立后，发送方会先发送少量数据，然后逐渐增加发送数据的速率，直到网络出现拥塞为止。这样可以避免发送方一开始就发送大量数据导致网络拥塞</p>
-</blockquote>
-<p>拥塞避免：</p>
-<blockquote>
-<p>一旦网络出现拥塞，TCP会减小发送窗口的大小，以避免发送过多的数据导致网络拥塞。同时，TCP还会动态调整发送窗口的大小，以适应网络的变化</p>
-</blockquote>
-<p>拥塞恢复</p>
-<p>快速重传</p>
-<p>快速恢复</p>
-</blockquote>
-</li>
-<li><p>TCP 怎么保证可靠传递?</p>
-<blockquote>
-<p>校验和</p>
-<p>确认应答与序列号</p>
-<p>超时重传</p>
-<p>连接管理</p>
-<p>流量控制：</p>
-<blockquote>
-<ol>
-<li><p>发送方维护一个发送窗口，用于存储已发送但未被确认的数据。发送方只有在接收到接收方的确认后才能将窗口向前移动，发送更多的数据</p>
-</li>
-<li><p>接收方维护一个接收窗口，用于存储已接收但未被处理的数据。接收方会向发送方发送确认消息，告诉发送方已经成功接收到数据，并将接收窗口向前移动，以便接收更多的数据</p>
-</li>
-<li><p>发送方根据接收方发送的确认消息来动态调整发送窗口的大小，如果接收方的接收窗口变小，发送方会减小发送窗口的大小，以避免发送过多的数据导致接收方无法处理。如果接收方的接收窗口变大，发送方会增大发送窗口的大小，以提高发送数据的速率</p>
-</li>
-</ol>
-<p>避免了发送过多数据导致接收方无法处理的情况</p>
-</blockquote>
-<p>拥塞控制</p>
-</blockquote>
-</li>
-<li><p>从系统层面上看，UDP如何保证尽量可靠?</p>
-<blockquote>
-<p>为了在系统级别上确保可靠性，UDP实现的几种技术。</p>
-<p>其中一种技术是使用校验和来检测数据中的错误。这可以通过在UDP头中添加一个校验和字段来实现，该字段是基于发送的数据计算出来的。接收方可以重新计算校验和，并将其与头部中发送的校验和进行比较，以检测任何错误</p>
-<p>另一种技术是在应用程序级别实现重传。这涉及到发送方跟踪接收方已成功接受的数据包，并重新传输任何未被确认的数据包。这可以使用UDP头中的序列号来实现</p>
-<p>需要注意的是，虽然这些技术可以提高可靠性，但他并不能保证可靠性。UDP仍然是一种尽力而为的协议，数据包仍然可能在传输过程中丢失或损坏。</p>
-</blockquote>
-</li>
-<li><p>TCP 的 keepalive 了解吗？说一说它和 http 的 keepalive 的区别</p>
-<blockquote>
-<p>在TCP中，keepalive用于检测连接是否仍然处于活动状态。如果连接在一段时间内没有活动，则会发送一个keepalive消息，以确保连接仍然存在。这可以防止连接因为长时间没有活动而被关闭</p>
-<p>在HTTP中，keepalive用于在单个TCP连接上处理多个HTTP请求，这可以减少连接建立和关闭的开销，并提高性能。在HTTP keepalive中，客户端和服务器之间的TCP连接保持打开状态，直到达到某个条件(例如超时或达到最大请求数)</p>
-</blockquote>
-</li>
-<li><p>简述 HTTP 1.0 1.1 2.0 的主要区别</p>
-<blockquote>
-<p>HTTP1.0</p>
-<ul>
-<li>无状态，无连接</li>
-</ul>
-<p>HTTP1.1</p>
-<ul>
-<li><p>支持长连接</p>
-</li>
-<li><p>增加缓存处理</p>
-</li>
-<li><p>增加host字段</p>
-</li>
-<li><p>支持断点传输</p>
-</li>
-</ul>
-<p>HTTP2.0</p>
-<ul>
-<li><p>二进制分帧</p>
-</li>
-<li><p>多路复用(连接共享)</p>
-</li>
-<li><p>头部压缩，encoder</p>
-</li>
-<li><p>服务器推送</p>
-</li>
-</ul>
-</blockquote>
-</li>
-<li><p>HTTP 的方法有哪些？</p>
-<blockquote>
-<p>get post put delete patch</p>
-</blockquote>
-</li>
-<li><p>简述 TCP 协议的延迟 ACK 和累计应答</p>
-<blockquote>
-<p>两者用于优化网络传输性能和可靠性</p>
-<p>延迟 ACK 是指 TCP 接收方在接收到数据包后不立即发送 ACK 确认消息，而是等待一段时间(通常是200ms)，以便在此期间接收到其他数据包时可以一起发送 ACK。这可以减少网络流量和减轻网络负载，从而提高性能。但是，延迟 ACK 也可能导致一些问题，例如在某些情况下可能会导致数据包重传</p>
-<p>累计应答是指 TCP 接收方只发送一个 ACK 消息来确认接收到的所有数据包，而不是每个数据包都发送一个 ACK。这可以减少网络流量和减轻网络负载，从而提高性能。但是累计应答也可能导致一些问题，例如在某些情况下可能会导致发送方重传已经被接收方接受的数据包</p>
-</blockquote>
-</li>
-<li><p>简述 TCP 的报文头部结构</p>
-<blockquote>
-<p>16位端口号，32位序号，32位确认号，4位头部长度，6位标志位，16位窗口大小，16位校验和，16位紧急指针，TCP 头部选项</p>
-</blockquote>
-</li>
-<li><p>简述 TCP 半连接发生场景</p>
-<blockquote>
-<ol>
-<li><p>服务器负载过高，无法处理新的连接请求。在这种情况下，服务器可能会忽略或拒绝新的连接请求，导致客户端无法建立完整的TCP连接</p>
-</li>
-<li><p>防火墙或其他网络设备阻止了 SYN + ACK 包的传输。在这种情况下，客户端可能会发送多个SYN包，但服务器仍然无法回复 SYN + ACK 包，导致客户端无法建立完整的 TCP 连接</p>
-</li>
-</ol>
-<p>解决方法:</p>
-<blockquote>
-<ol>
-<li><p>增加服务器的处理能力，以便能够处理更多的连接请求</p>
-</li>
-<li><p>检查网络设备和防火墙的配置，确保它们不会阻止 SYN + ACK 包的传输</p>
-</li>
-<li><p>在客户端和服务器之间使用心跳机制，以便在连接空闲时保持连接状态</p>
-</li>
-</ol>
-</blockquote>
-</blockquote>
-</li>
-<li><p>什么时 SYN flood？如何防范？</p>
-<blockquote>
-<p>SYN flood是一种网络攻击，攻击者通过发送大量的 SYN 包来占用服务器的资源，从而导致服务器无法处理正常的连接请求。</p>
-<p>可以采取以下措施防范:</p>
-<blockquote>
-<ol>
-<li><p>增加服务器的处理能力，以便能够处理更多的连接请求。这可以通过增加服务器的硬件资源(例如CPU, 内存，网络带宽等)或优化服务器的软件配置(例如调整服务器的网络栈参数，使用负载均衡等)来实现</p>
-</li>
-<li><p>使用防火墙或其他网络设备来过滤 SYN flood 攻击。这可以通过配置防火墙规则，使用 SYN cookies 等技术来实现。SYN cookies 是一种防范 SYN flood 攻击的技术，它可以在服务器端生成一个加密的 cookie，并将其发送给客户端。当客户端发送 SYN 包时，服务器可以验证 cookie 的有效性，从而防止 SYN flood 攻击</p>
-</li>
-</ol>
-</blockquote>
-</blockquote>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
@@ -3911,12 +3264,7 @@
 <blockquote>
 <p>通常称为压缩列表，是一个经过 <em>特殊编码</em> 的用于存储字符串或整数的双向链表，其底层数据结构由三部分构成：head，entries 与 end，这三部分在内存上是连续存放的</p>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/ziplist.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/ziplist.png"></p>
 </li>
 <li><p>head</p>
 <blockquote>
@@ -3944,12 +3292,7 @@
 </li>
 </ol>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/entry%E7%9A%84%E7%BB%93%E6%9E%84.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/entry%E7%9A%84%E7%BB%93%E6%9E%84.png"></p>
 </li>
 <li><p>end</p>
 <blockquote>
@@ -3966,12 +3309,7 @@
 <blockquote>
 <p>listPack 与 zipList 的区别在 head 与每个 entry 的结构上。表示列表结束的end 与 zipList 的 zlend 是相同的，占一个字节，且8位全为1</p>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/listpack%E7%BB%93%E6%9E%84.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/listpack%E7%BB%93%E6%9E%84.png"></p>
 </li>
 <li><p>head</p>
 <blockquote>
@@ -3998,12 +3336,7 @@
 </li>
 </ol>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/entry%E7%9A%84%E7%BB%86%E8%87%B4%E7%BB%93%E6%9E%84.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/entry%E7%9A%84%E7%BB%86%E8%87%B4%E7%BB%93%E6%9E%84.png"></p>
 </li>
 </ol>
 <h4 id="skipList"><a href="#skipList" class="headerlink" title="skipList"></a>skipList</h4><ol>
@@ -4013,12 +3346,7 @@
 </blockquote>
 </li>
 <li><p>skipList 原理</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/skiplist.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/skiplist.png"></p>
 <blockquote>
 <p>每个节点随机分层，每多一层多一层链表，减少比较的次数</p>
 </blockquote>
@@ -4030,12 +3358,7 @@
 <p>quickList 快速列表，quickList 本身是一个双向无循环链表，他的每一个节点都是一个 zipList，从 Redis 3.2 版本开始，对于 List 的底层实现，使用 quickList 替代了 zipList 和 linkedList</p>
 <p>quickList 本质上是 zipList 和 linkedList 的混合体，其将 linkedList 按段切分，每一段使用 zipList 来紧凑存储若干真正的数据元素，多个 zipList 之间使用双向指针串接起来，当然，对于每个 zipList 中最多可存放多大容量的数据元素，在配置文件中通过 list-max-ziplist-size 属性可以指定</p>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/quicklist.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/quicklist.png"></p>
 </li>
 <li><p>检索操作</p>
 <blockquote>
@@ -4118,21 +3441,11 @@
 <p>根据持久化使用技术不同，分为两种：RDB 与 AOF</p>
 </blockquote>
 <h3 id="持久化-钝化-基本原理"><a href="#持久化-钝化-基本原理" class="headerlink" title="持久化(钝化)基本原理"></a>持久化(钝化)基本原理</h3><hr>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/Redis%E6%8C%81%E4%B9%85%E5%8C%96%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/Redis%E6%8C%81%E4%B9%85%E5%8C%96%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86.png"></p>
 <blockquote>
 <p>RDB 与 AOF 可以共存，RDB 是默认持久化技术，而如果开启 AOF，则 AOF 的优先级更高</p>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%87%E4%BB%B6%E7%9A%84%E5%8A%A0%E8%BD%BD.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%87%E4%BB%B6%E7%9A%84%E5%8A%A0%E8%BD%BD.png"></p>
 <h3 id="RDB-持久化"><a href="#RDB-持久化" class="headerlink" title="RDB 持久化"></a>RDB 持久化</h3><hr>
 <blockquote>
 <p>是指将内存中某一时刻的数据快照 <strong>全量</strong> 写入到指定的 rdb 文件的持久化技术。RDB 持久化是默认开启的。当 Redis 启动时会自动读取 RDB 快照文件，将数据从硬盘载入到内存，以恢复 Redis 关机前的数据库状态</p>
@@ -4168,12 +3481,7 @@
 <h4 id="RDB-文件结构"><a href="#RDB-文件结构" class="headerlink" title="RDB 文件结构"></a>RDB 文件结构</h4><blockquote>
 <p>RDB 持久化文件 dump.rdb 分为五部分</p>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/RDB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/RDB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84.png"></p>
 <ol>
 <li><p>SOF</p>
 <blockquote>
@@ -4196,12 +3504,7 @@
 <li><p>key_value_pairs：当前数据库中的键值对数据</p>
 </li>
 </ul>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/RDB%E6%96%87%E4%BB%B6%E4%B8%AD%E6%AF%8F%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E7%BB%93%E6%9E%84.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/RDB%E6%96%87%E4%BB%B6%E4%B8%AD%E6%AF%8F%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E7%BB%93%E6%9E%84.png"></p>
 <p>每个 key_value_pairs 又由很多个用于描述键值对的数据构成</p>
 <ul>
 <li><p>VALUE_TYPE：常量，占1字节，用于标识该键值对中 value 的类型</p>
@@ -4211,12 +3514,7 @@
 <li><p>time：当前 key-value 的过期时间</p>
 </li>
 </ul>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/%E5%B8%A6%E4%B8%8E%E4%B8%8D%E5%B8%A6%E6%97%B6%E9%97%B4%E9%94%AE%E5%80%BC%E5%AF%B9%E5%AF%B9%E6%AF%94.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E5%B8%A6%E4%B8%8E%E4%B8%8D%E5%B8%A6%E6%97%B6%E9%97%B4%E7%9A%84%E9%94%AE%E5%80%BC%E5%AF%B9%E5%AF%B9%E6%AF%94.png"></p>
 </blockquote>
 </li>
 <li><p>EOF</p>
@@ -4242,12 +3540,7 @@
 </li>
 </ul>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/RDB%E6%8C%81%E4%B9%85%E5%8C%96%E8%BF%87%E7%A8%8B.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/RDB%E6%8C%81%E4%B9%85%E5%8C%96%E8%BF%87%E7%A8%8B.png"></p>
 <h3 id="AOF-持久化"><a href="#AOF-持久化" class="headerlink" title="AOF 持久化"></a>AOF 持久化</h3><hr>
 <blockquote>
 <p>AOF，是指 Redis 将每一次的写操作都以日志的形式记录到一个 AOF 文件中的持久性技术。当需要恢复内存数据时，将这些写操作重新执行一次，便会恢复到之前的内存数据状态</p>
@@ -4367,12 +3660,7 @@
 </blockquote>
 </li>
 </ol>
-<h4 id="AOF-持久化过程"><a href="#AOF-持久化过程" class="headerlink" title="AOF 持久化过程"></a>AOF 持久化过程</h4><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/AOF%E6%8C%81%E4%B9%85%E5%8C%96%E8%BF%87%E7%A8%8B.png"
-                     
-                ></p>
+<h4 id="AOF-持久化过程"><a href="#AOF-持久化过程" class="headerlink" title="AOF 持久化过程"></a>AOF 持久化过程</h4><p><img lazyload src="/images/loading.svg" data-src="/images/AOF%E6%8C%81%E4%B9%85%E5%8C%96%E8%BF%87%E7%A8%8B.png"></p>
 <h3 id="RDB-与-AOF-对比"><a href="#RDB-与-AOF-对比" class="headerlink" title="RDB 与 AOF 对比"></a>RDB 与 AOF 对比</h3><hr>
 <h4 id="RDB-优势与不足"><a href="#RDB-优势与不足" class="headerlink" title="RDB 优势与不足"></a>RDB 优势与不足</h4><h5 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h5><ul>
 <li><p>RDB 文件较小(快照)</p>
@@ -4465,12 +3753,7 @@
 <p>若 Redis 主从集群中的 Slave 较多时，它们的数据同步过程会对 Master 形成较大的性能压力。此时可以对 Slave 进行分级管理</p>
 <p>使用 slaveof 低级 Slave 指向高级 Slave 即可</p>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/Redis%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E7%9A%84%E5%88%86%E7%BA%A7%E7%AE%A1%E7%90%86.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/Redis%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E7%9A%84%E5%88%86%E7%BA%A7%E7%AE%A1%E7%90%86.png"></p>
 <h4 id="容灾冷处理"><a href="#容灾冷处理" class="headerlink" title="容灾冷处理"></a>容灾冷处理</h4><blockquote>
 <p>在 Master&#x2F;Slave 的 Redis 集群中，如果 Master 宕机有两种处理方式</p>
 <ul>
@@ -4528,174 +3811,341 @@
 </blockquote>
 </li>
 </ol>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE1.png"
-                     
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE2.png"
-                     
-                ></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE1.png"></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE2.png"></p>
 ]]></content>
       <tags>
         <tag>Redis Study</tag>
       </tags>
   </entry>
   <entry>
-    <title>软件设计师</title>
-    <url>/2023/04/21/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%B8%88/</url>
-    <content><![CDATA[<h2 id="下午题"><a href="#下午题" class="headerlink" title="下午题"></a>下午题</h2><hr>
-<h3 id="数据流图"><a href="#数据流图" class="headerlink" title="数据流图"></a>数据流图</h3><blockquote>
-<p>也称数据流程图(DFD)，它是一种便于用户理解，分析系统数据流程的图形工具。他摆脱了系统的物理内容，精确的在逻辑上描述系统的功能，输入，输出和数据存储等，是系统逻辑模型的重要组成部分</p>
-</blockquote>
-<ol>
-<li><p>数据流图的基本图形元素</p>
+    <title>数据库</title>
+    <url>/2023/04/12/%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<h2 id="MySQL-为什么使用-B-树来作索引，对比-B-树它的优点和缺点是什么？"><a href="#MySQL-为什么使用-B-树来作索引，对比-B-树它的优点和缺点是什么？" class="headerlink" title="MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？"></a>MySQL 为什么使用 B+ 树来作索引，对比 B 树它的优点和缺点是什么？</h2><hr>
 <blockquote>
-<p>数据流图中的基本图形元素包括数据流，加工，数据存储和外部实体。</p>
-<p>其中，数据流，加工和数据存储用于构建软件系统内部的数据处理模型；外部实体表示存在于系统之外的对象，用来帮助用户理解系统数据的来源和去向</p>
-</blockquote>
 <ul>
-<li><p>DFD 的基本图形元素</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/DFD.png"
-                     
-                ></p>
-<ul>
-<li><p>外部实体内一般标记为 E</p>
-</li>
-<li><p>数据存储内一般标记为 D</p>
-</li>
-<li><p>加工内一般标记为 P</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>元素含义</p>
-<ul>
-<li><p>外部实体：当前系统之外的人，物，外部系统</p>
-</li>
-<li><p>数据存储：存储加工的输出数据和提供加工的输入数据</p>
-</li>
-<li><p>加工：将输入数据处理后得到输出数据，一个加工至少有一个输入数据流和一个输出数据流</p>
-<ul>
-<li><p>加工只有输入没有输出称为：黑洞</p>
-</li>
-<li><p>加工只有输出没有输入称为：白洞</p>
-</li>
-<li><p>加工的输入数据不足以产生输出数据：灰洞</p>
-</li>
-</ul>
-</li>
-<li><p>数据流：数据流有一组固定成分的数据组成，表示数据的流向，<strong>数据流的起点或终点必须有一个是加工</strong> ，在 DFD 中，数据流的流向可分为几种</p>
-<ul>
-<li><p>从一个加工流向另一个加工</p>
-</li>
-<li><p>从加工流向数据存储(写)</p>
-</li>
-<li><p>从数据存储流向加工(读)</p>
-</li>
-<li><p>从外部实体流向加工(输入)</p>
-</li>
-<li><p>从加工流向外部实体(输出)</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h4 id="题目答案规范"><a href="#题目答案规范" class="headerlink" title="题目答案规范"></a>题目答案规范</h4><h5 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h5><h6 id="答题格式"><a href="#答题格式" class="headerlink" title="答题格式"></a>答题格式</h6><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/%E6%95%B0%E6%8D%AE%E6%B5%81%E9%97%AE%E9%A2%981.png"
-                     
-                ></p>
-<h5 id="问题二"><a href="#问题二" class="headerlink" title="问题二"></a>问题二</h5><blockquote>
-<p>特殊一：如果说明文章内没有详细说明存储于某文件或某表，则可 __根据数据流上文字__，直接在其后添加 <strong>文件</strong> 或 <strong>表</strong> 即可</p>
-<p>特殊二：如果与数据存储相关联的数据流上没有文字，可在说明文章中获取文件霍或表名</p>
-<p>其他：与问题一大同小异</p>
-</blockquote>
-<h6 id="答题格式-1"><a href="#答题格式-1" class="headerlink" title="答题格式"></a>答题格式</h6><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/%E6%95%B0%E6%8D%AE%E6%B5%81%E9%97%AE%E9%A2%982.png"
-                     
-                ></p>
-<h5 id="问题三"><a href="#问题三" class="headerlink" title="问题三"></a>问题三</h5><blockquote>
-<p>方法(一起使用)</p>
+<li><p>优点</p>
 <ol>
-<li><p>父图子图平衡(不一定100%找到缺失数据流)：父图中有的数据流，必须在子图中存在。若不存在，即找到一条缺失数据流</p>
-<ul>
-<li>在数据流上文字中，<strong>符号 &#x2F;</strong> 的含义是指分别有两条数据流输入或输出(重点关注)</li>
-</ul>
+<li><p>B+ 树具有更高的扇出因子，这意味着它们可以在每个节点中存储更多的键。这减少了树的高度并提高了搜索性能。此外，因为B+树仅在其叶子节点中存储键，所以它们可以存储比B树更多的键，B树在内部和叶子节点中都存储键</p>
 </li>
-<li><p>加工必须有输入输出(不一定100%找到所有缺失数据流)：查找图中加工是否都有 __输入输出__，若无其中任意一种，则为缺失</p>
-</li>
-<li><p>数据守恒(阅读理解，不一定100%找到所有缺失数据流)：将说明文章与图对比，看是否所有功能都在图中体现，若没有体现则缺失</p>
+<li><p>B+树的另一个优点是它们更适合范围查询。因为所有叶子节点都连接在一起形成一个链表，所以很容易按顺序遍历树并检索某个范围内的所有键。相比之下，B树需要额外的遍历才能找到范围内的所有键</p>
 </li>
 </ol>
-</blockquote>
-<h6 id="答题格式-2"><a href="#答题格式-2" class="headerlink" title="答题格式"></a>答题格式</h6><blockquote>
-<p>起点与终点若都有字母或者汉字，请使用相同的字型，如(起点：D3，终点：3)。若两者题中只给出不同字型，就按实际书写</p>
-</blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/%E6%95%B0%E6%8D%AE%E6%B5%81%E9%97%AE%E9%A2%983.png"
-                     
-                ></p>
-<h5 id="问题四"><a href="#问题四" class="headerlink" title="问题四"></a>问题四</h5><blockquote>
-<p>推测考两部分</p>
-<ul>
-<li><p>结构化语言</p>
 </li>
-<li><p>根据说明，写出数据流组成</p>
-</li>
-</ul>
-</blockquote>
-<h6 id="结构化语言类"><a href="#结构化语言类" class="headerlink" title="结构化语言类"></a>结构化语言类</h6><blockquote>
-<p>结构化语言是一种介于自然语言和形式化语言之间的半形式化语言，是自然语言的一个受限子集</p>
-<p>结构化语言没有严格的语法，他的结构通常可以分为内层和外层。外层有严格的语法，内层的语法比较灵活，可以接近于自然语言的描述</p>
+<li><p>缺点</p>
 <ol>
-<li><p>外层：用来描述控制结构，采用顺序，选择和重复3种基本结构</p>
-<ul>
-<li><p>顺序结构：一组祈使语句，选择语句，重复语句的顺序排列。祈使语句是指至少包含一个动词即一个名词。指出要执行的动作及接受动作的对象</p>
+<li>使用B+树需要更多的磁盘空间，因为叶子节点中有额外的指针。此外，由于需要维护叶子节点的链接列表，B+树可能需要更多的CPU时间来执行插入和删除操作</li>
+</ol>
 </li>
-<li><p><strong>选择结构：一般用 IF-THEN-ELSE-ENDIF,CASE-OF-ENDCASE等关键词(重点)</strong></p>
-</li>
-<li><p>重复结构：一般用 DO-WHILE-ENDDO,REPEAT-UNTIL等关键词</p>
+<li><p>总结</p>
+<p>在MySQL中使用B+树而不是B树的决定可能是基于改善搜索性能和增加磁盘空间和CPU使用率之间的权衡</p>
 </li>
 </ul>
+</blockquote>
+<h2 id="数据库大的事务隔离级别有哪些-各有哪些优缺点？"><a href="#数据库大的事务隔离级别有哪些-各有哪些优缺点？" class="headerlink" title="数据库大的事务隔离级别有哪些?各有哪些优缺点？"></a>数据库大的事务隔离级别有哪些?各有哪些优缺点？</h2><hr>
+<table>
+<thead>
+<tr>
+<th align="center">隔离级别</th>
+<th align="center">脏读</th>
+<th align="center">不可重复读</th>
+<th align="center">幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Read uncommitted</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">Read committed</td>
+<td align="center">×</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">Repeatable read</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">Serializable</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">×</td>
+</tr>
+</tbody></table>
+<h2 id="什么是数据库事务的特性？-简述数据库中的ACID分别是什么"><a href="#什么是数据库事务的特性？-简述数据库中的ACID分别是什么" class="headerlink" title="什么是数据库事务的特性？(简述数据库中的ACID分别是什么)"></a>什么是数据库事务的特性？(简述数据库中的ACID分别是什么)</h2><hr>
+<blockquote>
+<p>原子性，一致性，隔离性，持久性</p>
+</blockquote>
+<h2 id="什么情况下会发生死锁，如何解决死锁？"><a href="#什么情况下会发生死锁，如何解决死锁？" class="headerlink" title="什么情况下会发生死锁，如何解决死锁？"></a>什么情况下会发生死锁，如何解决死锁？</h2><hr>
+<blockquote>
+<p>死锁是指两个或多个事务相互等待对方释放资源，从而导致所有事务都无法继续执行的情况。在MySQL中，死锁通常发生在事务中使用了不同的锁定顺序时</p>
+<p>解决方法</p>
+<ol>
+<li><p>进行系统的重新启动，代价很大，它意味着在这之前所有的进程已经完成的计算工作都无效，包括参与死锁的进程，以及未参与的进程</p>
 </li>
-<li><p>内层：一般采用祈使语句的自然语言短语，使用数字字典中的名词和有限的自定义词，其动词含义要具体，尽量不用形容词来修饰，还可以使用一些简单的算法运算和逻辑运算符号</p>
+<li><p>撤销进程，剥夺资源。终止参加死锁的进程，收回它们占有的资源，从而解除死锁。</p>
+<ul>
+<li><p>情况一：一次性撤销参与死锁的全部进程，剥夺全部进程</p>
+</li>
+<li><p>情况二：逐步撤销参与死锁的进程，逐步收回死锁进程占有的资源</p>
+</li>
+</ul>
+<p>一般来说，选择逐步撤销的进程时要按照一定的原则进行，目的是撤销哪些代价最小的进程，比如按进程的优先级确定进程的代价；考虑进程允许是&#x3D;时的代价和与此进程相关的外部作业的代价等因素</p>
+</li>
+<li><p>进程回退策略，即让参与死锁的进程回退到没有发生死锁前的某一点处，并由此点处继续执行，以求再次执行时不在发生死锁。</p>
 </li>
 </ol>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/%E6%95%B0%E6%8D%AE%E6%B5%81%E9%97%AE%E9%A2%984%E7%BB%93%E6%9E%84%E5%8C%96%E8%AF%AD%E8%A8%80%E7%B1%BB.png"
-                     
-                ></p>
-<h6 id="组成类"><a href="#组成类" class="headerlink" title="组成类"></a>组成类</h6><blockquote>
-<p>数据流由具体的数据属性构成，采用 <strong>符号 +</strong> 表示，__&#x3D;__ 表示组成(被定义为)，__:__ 表示有多个属性(与)，__{}__ 表示其中属性出现多次，__()__ 表示其中属性可选等。</p>
-<p>例：一个学生至少有一个家长，可以有多个家长，即 <strong>1{家长 ID}*</strong> </p>
+<h2 id="简述乐观锁以及悲观锁的区别以及使用场景"><a href="#简述乐观锁以及悲观锁的区别以及使用场景" class="headerlink" title="简述乐观锁以及悲观锁的区别以及使用场景"></a>简述乐观锁以及悲观锁的区别以及使用场景</h2><hr>
+<blockquote>
+<p>定义</p>
+<ul>
+<li><p>悲观锁(Pessimistic Lock)</p>
+<blockquote>
+<p>每次获取数据的时候，都会担心数据被修改，所以每次获取数据的时候都会进行加锁，确保在自己使用的过程中数据不会被别人修改，使用完成后进行数据解锁。由于数据进行加锁，期间对该数据进行读写的其他线程都会进行等待</p>
 </blockquote>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/%E6%95%B0%E6%8D%AE%E6%B5%81%E9%97%AE%E9%A2%984%E7%BB%84%E6%88%90%E7%B1%BB.png"
-                     
-                ></p>
+</li>
+<li><p>乐观锁(Optimistic Lock)</p>
+<blockquote>
+<p>每次获取数据时，都不会担心数据被修改，所以每次获取数据的时候都不会进行加锁，但是在更新数据的时候需要判断该数据是否被别人修改过。如果数据被其他线程修改，则不进行更新，如果数据没有被其他线程修改，则进行更新。由于数据没有进行加锁，期间该数据可以被其他线程进行读写操作</p>
+</blockquote>
+</li>
+</ul>
+<p>适合场景</p>
+<ul>
+<li><p>悲观锁</p>
+<blockquote>
+<p>比较适合写入操作比较频繁的场景，如果出现大量的读取操作，每次读取的时候都会进行加锁，这样会增加大量的锁的开销，降低了系统的吞吐量</p>
+</blockquote>
+</li>
+<li><p>乐观锁</p>
+<blockquote>
+<p>比较适合读取操作比较频繁的场景，如果出现大量的写入操作，数据发生冲突的可能性就会增加，为了保证数据的一致性，应用层需要不断的重新获取数据，这样会增加大量的查询操作，降低了系统的吞吐量</p>
+</blockquote>
+</li>
+</ul>
+<p>总结</p>
+<blockquote>
+<p>两种锁各有优缺，读取频繁用乐观锁，写入频繁用悲观锁</p>
+</blockquote>
+</blockquote>
+<h2 id="聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？"><a href="#聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？" class="headerlink" title="聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？"></a>聚簇索引和非聚簇索引的区别，什么时候使用聚簇索引？</h2><hr>
+<blockquote>
+<p>聚簇索引和非聚簇索引是用于提高数据库查询性能的两种索引类型</p>
+<p>聚簇索引决定了表中数据的物理顺序。他根据索引列对数据行进行排序和存储。<em>一个表只能有一个聚簇索引</em></p>
+<p>非聚簇索引是数据行之外的独立结构。它包括索引列的副本和指向相应的数据行指针。<em>一个表可以有多个非聚簇索引</em></p>
+<p>聚簇索引最适合在表中频繁查询某个列的一定范围内的值时使用。这是因为数据时根据索引列进行物理排序的，因此检索一定范围内的值更快。而非聚簇索引是数据行之外的一个独立结构，最适合在表中频繁查询使用多个列时使用。在决定使用哪一种时，需要考虑数据修改的频率</p>
+<p>注意</p>
+<blockquote>
+<p>在具有频繁插入或更新的表上创建聚簇索引可能会对性能产生负面影响。这是因为每次插入新行或更新现有行时，数据都必须进行物理重组</p>
+</blockquote>
+</blockquote>
+<h2 id="简述脏读和幻读的发生场景，InnoDB-是如何解决幻读的？"><a href="#简述脏读和幻读的发生场景，InnoDB-是如何解决幻读的？" class="headerlink" title="简述脏读和幻读的发生场景，InnoDB 是如何解决幻读的？"></a>简述脏读和幻读的发生场景，InnoDB 是如何解决幻读的？</h2><hr>
+<blockquote>
+<p>脏读是指一个事务读取了另一个事务未提交的数据，如果另一个事务回滚了操作，那么读取的数据就是无效的。InnoDB通过实现MVCC(多版本并发控制)来避免脏读的发生。MVCC通过在每一行数据后面添加两个隐藏的列来实现，一个是创造时间，一个是过期时间。当一个事务开始时，他会创建一个视图，这个视图包含了当前时间点之前的所有数据。如果一个事务正在修改一行数据，那么这个行的过期时间就会被设置为当前时间，这样其他事务就无法读取到这个行的数据。如果一个事务正在读取一行数据，那么这个行的创建时间必须早于这个事务的开始时间，这样才能保证读取到的数据是有效的</p>
+<p>幻读是指一个事务在读取某个范围内的数据时，另一个事务在这个范围内插入和新的数据，导致第一个事务读取到了之前不存在的数据。InnoDB通过实现间隙锁来避免幻读的发生。当一个事务执行SELECT语句时，InnoDB会对查询的范围进行加锁，这样其他事务就无法在这个范围内插入新的数据。如果一个事务要插入新的数据，那么他必须等待其他事务释放锁之后才能执行插入操作</p>
+</blockquote>
+<h2 id="唯一索引与普通索引的区别是什么-使用索引会有哪些优缺点？"><a href="#唯一索引与普通索引的区别是什么-使用索引会有哪些优缺点？" class="headerlink" title="唯一索引与普通索引的区别是什么?使用索引会有哪些优缺点？"></a>唯一索引与普通索引的区别是什么?使用索引会有哪些优缺点？</h2><hr>
+<blockquote>
+<p>唯一索引会限定数据唯一，而普通索引则没有</p>
+<p>优点</p>
+<ol>
+<li><p>提高查询效率</p>
+<blockquote>
+<p>索引可以帮助数据库快速定位到符合条件的数据</p>
+</blockquote>
+</li>
+<li><p>减少数据扫描</p>
+<blockquote>
+<p>使用索引可以减少数据库扫描的数据量</p>
+</blockquote>
+</li>
+<li><p>加速排序</p>
+<blockquote>
+<p>如果查询需要排序，使用索引可以加速排序的过程</p>
+</blockquote>
+</li>
+</ol>
+<p>缺点</p>
+<ol>
+<li><p>索引会占用磁盘空间</p>
+</li>
+<li><p>索引会降低写入性能</p>
+<blockquote>
+<p>每次插入，更新或删除数据时，都需要更新索引</p>
+</blockquote>
+</li>
+<li><p>索引可能会导致查询变慢</p>
+<blockquote>
+<p>如果索引被错误的使用，或者索引的选择不当</p>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+<h2 id="MySQL的索引什么时候会失效？"><a href="#MySQL的索引什么时候会失效？" class="headerlink" title="MySQL的索引什么时候会失效？"></a>MySQL的索引什么时候会失效？</h2><blockquote>
+<ol>
+<li><p>带有运算</p>
+<blockquote>
+<p>在where子句中使用&#x3D;，+这些运算符号</p>
+</blockquote>
+</li>
+<li><p>使用not in，in</p>
+<blockquote>
+<p>范围运算，会导致索引失效产生全表扫描</p>
+</blockquote>
+</li>
+<li><p>like模糊查询，使用%开头的左模糊查询</p>
+</li>
+<li><p>使用or的时候</p>
+<blockquote>
+<p>因为or是一个并集，如果or条件中有一个不是索引，就会导致索引失效</p>
+</blockquote>
+</li>
+<li><p>字段类型与SQL语句类型不匹配时</p>
+<blockquote>
+<p>如果列类型是字符串，则SQL语句中使用到该列的条件数据就必须用引号引用起来，否则会导致索引失效，原因是MySQL会进行隐式的数据类型转换，导致索引失效</p>
+</blockquote>
+</li>
+<li><p>使用函数</p>
+</li>
+<li><p>复合索引违反最左原则时</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">## 组合索引a,b,c，需出现a</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> a<span class="operator">=</span><span class="string">&#x27;&#x27;</span> <span class="keyword">and</span> b<span class="operator">=</span><span class="string">&#x27;&#x27;</span> ## 索引可用</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> b<span class="operator">=</span><span class="string">&#x27;&#x27;</span> <span class="keyword">and</span> c<span class="operator">=</span><span class="string">&#x27;&#x27;</span> ## 索引不可用</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>使用复合索引(组合索引)时，需要遵循最左前缀原则，即查询条件必须包括复合索引的最左前缀列，才能使用该索引进行查询</p>
+<p>最左前缀原则的意义在于，如果查询条件包含复合索引的最左前缀列，那么该索引可以帮助数据库快速定位到符合条件的数据，从而提高查询效率。如果查询条件不包含最左前缀列，那么该索引就无法使用，需要对所有数据进行扫描，这导致查询变慢</p>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+<h2 id="简述MySQL的主从同步机制"><a href="#简述MySQL的主从同步机制" class="headerlink" title="简述MySQL的主从同步机制"></a>简述MySQL的主从同步机制</h2><blockquote>
+<p>指将一个MySQL数据库实例(主库)的数据同步到另一个MySQL数据库实例(从库)的过程。主从同步可以实现数据备份，负载均衡，读写分离等操作</p>
+<p>原理</p>
+<blockquote>
+<p>主库将更新操作记录在二进制日记(binlog)中，从库连接主库，将主库的binlog复制到从库的中继日志(relay log)中，然后从库读取中继日志，将更新操作应用到从库的数据中。从库可以设置延迟时间，以便在主库出现故障时，从库可以称为新的主库，继续提供服务</p>
+</blockquote>
+<p>步骤</p>
+<blockquote>
+<ol>
+<li><p>主库接收用户左CRUD操作，写入数据库，更新结果集到binlog中</p>
+</li>
+<li><p>主从同步时主找从的，从库IO发起请求，主库的主进程看从库 master change 中给的参数是否合法，如果合法主进程交给IO进程执行2操作，否则拒绝处理</p>
+</li>
+<li><p>主库根据 master 的位置点，从这个位置点的 binlog 日志一直到 binlog 日志最后，将其准备发送给从库</p>
+</li>
+<li><p>将找到的 binlog 日志发送给从库，并且还会发送新的日志点</p>
+</li>
+<li><p>从库接收到 binlog 日志，将其写入 relay-log(中继日志)中</p>
+</li>
+<li><p>从库IO进程再想 master info 保存主库传过来的最后的 binlog 日志的日志位置点</p>
+</li>
+<li><p>从库IO时循环发起的请求，发了再要，不会管 SQL 读取中继日志的操作。从库 IO 根据新的日志点，向主库发起请求，主库执行 3 4 操作，再发送新的 binlog 给从库，从库再执行5操作</p>
+</li>
+<li><p>其实第一次向 relay-log 中放数据时，SQL进程就已经知道，SQL进程将 relay-log 中的SQL语句转换成数据，写入从库，从而实现同步</p>
+</li>
+<li><p>从库 SQL 线程读取中继日志，并不会一次性读完，会把读取到的日志点存放到relay-log.info中</p>
+</li>
+</ol>
+</blockquote>
+<p>主从同步配置注意</p>
+<blockquote>
+<ol>
+<li><p>主从库MySQL版本必须一致，否则可能会出现兼容性问题</p>
+</li>
+<li><p>主从库的字符集和校对规则必须一致，否则可能会出现乱码等问题</p>
+</li>
+<li><p>主从库的数据表结构必须一致，否则可能会出现同步失败等问题</p>
+</li>
+<li><p>主从库的数据同步需要保证网络稳定，否则可能会出现同步延迟等问题</p>
+</li>
+<li><p>主从库的数据同步需要保证主库的写入性能，否则可能会出现主库性能下降等问题</p>
+</li>
+</ol>
+</blockquote>
+</blockquote>
+<h2 id="主从复制延迟"><a href="#主从复制延迟" class="headerlink" title="主从复制延迟"></a>主从复制延迟</h2><blockquote>
+<p>指从库的数据更新操作与主库的数据更新操作之间存在一定的时间差，这可能导致从库的数据不一致</p>
+<ul>
+<li><p>网络延迟</p>
+<blockquote>
+<p>主库和从库之间的网络延迟可能会导致从库无法及时获取主库的更新操作</p>
+</blockquote>
+</li>
+<li><p>从库负载过高</p>
+<blockquote>
+<p>同上</p>
+</blockquote>
+</li>
+<li><p>主库负载过高</p>
+<blockquote>
+<p>如果主库的负载过高，可能会导致主库无法即时将更新操作记录到二进制日志中，从而导致从库无法及时获取更新操作</p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<h2 id="Redis-如何实现延时队列"><a href="#Redis-如何实现延时队列" class="headerlink" title="Redis 如何实现延时队列"></a>Redis 如何实现延时队列</h2><blockquote>
+<p>可以使用 有序集合 sortedset 来存储任务，我们可以将任务的执行时间作为有序集合的 score，任务大的内容作为有序集合的 member。这样，我们就可以通过 score 的排序来获取最早需要执行的任务</p>
+</blockquote>
+<h2 id="简述-Redis-中如何防止缓存雪崩和缓存击穿"><a href="#简述-Redis-中如何防止缓存雪崩和缓存击穿" class="headerlink" title="简述 Redis 中如何防止缓存雪崩和缓存击穿"></a>简述 Redis 中如何防止缓存雪崩和缓存击穿</h2><h4 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h4><blockquote>
+<p>是指缓存中没有但数据库中有的数据(一般是缓存时间到期)，这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力增大，造成过大压力</p>
+<p>解决方法</p>
+<ol>
+<li><p>设置热点数据永不过期</p>
+</li>
+<li><p>加互斥锁</p>
+</li>
+</ol>
+</blockquote>
+<h4 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h4><blockquote>
+<p>是指缓存中数据大批量到过期时间，而查询数据量巨大，引起数据库压力过大甚至 down 机。和缓存击穿不同的是，缓存击穿指并发查询同一条数据，缓存雪崩是不同数据都过期了，很多数据都查不到从而查询数据库</p>
+<p>解决方法</p>
+<ol>
+<li><p>缓存数据的过期时间设置随机，防止同一时间大量数据过期现象发生</p>
+</li>
+<li><p>如果缓存数据库是分布式部署，将热点数据均匀分布在不同的缓存数据库中</p>
+</li>
+<li><p>设置热点数据永不过期</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="简述-Redis-持久化中-rdb-以及-aof-方案的优缺点"><a href="#简述-Redis-持久化中-rdb-以及-aof-方案的优缺点" class="headerlink" title="简述 Redis 持久化中 rdb 以及 aof 方案的优缺点"></a>简述 Redis 持久化中 rdb 以及 aof 方案的优缺点</h2><h4 id="RDB-方案"><a href="#RDB-方案" class="headerlink" title="RDB 方案"></a>RDB 方案</h4><blockquote>
+<p>是将 Redis 内存中的数据定期保存到磁盘上，以保证数据的持久化</p>
+</blockquote>
+<h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5><ul>
+<li><p>RDB 方案适合大规模的数据恢复，因为 RDB 文件是一个快照，可以在 Redis 重启时快速的加载数据</p>
+</li>
+<li><p>RDB 方案对于 Redis 的性能影响较小，因为 RDB 文件是在后台异步生成的，不会影响 Redis 的正常操作</p>
+</li>
+</ul>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><ul>
+<li><p>RDB 方案不够实时，如果 Redis 发生故障，可能会丢失最后一次快照之后的数据</p>
+</li>
+<li><p>RDB 方案的文件较大，如果数据量较大，可能会占用较多的磁盘空间</p>
+</li>
+</ul>
+<h4 id="AOF-方案"><a href="#AOF-方案" class="headerlink" title="AOF 方案"></a>AOF 方案</h4><blockquote>
+<p>是将 Redis 的操作日志以追加的方式写入到磁盘上，以保证数据的持久化</p>
+</blockquote>
+<h5 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h5><ul>
+<li><p>AOF 方案可以保证数据的实时性，因为每个操作都会被记录到 AOF 文件中</p>
+</li>
+<li><p>AOF 方案的文件较小，因为只记录了 Redis 的操作日志，而不是整个数据集</p>
+</li>
+</ul>
+<h5 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h5><ul>
+<li><p>AOF 方案不够适合大规模的数据恢复，因为 AOF 文件是一个操作日志，需要重新执行所有的操作才能恢复数据</p>
+</li>
+<li><p>AOF 方案对于 Redis 的性能影响较大，因为每个操作都需要写入到 AOF 文件中，会影响 Redis 的正常操作</p>
+</li>
+</ul>
 ]]></content>
       <tags>
-        <tag>证书</tag>
+        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
@@ -4951,6 +4401,481 @@
 </li>
 </ul>
 <p>这些模型区别在于应用程序和内核之间的交互方式以及数据准备和拷贝的过程</p>
+</blockquote>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软件设计师</title>
+    <url>/2023/04/21/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%B8%88/</url>
+    <content><![CDATA[<h2 id="下午题"><a href="#下午题" class="headerlink" title="下午题"></a>下午题</h2><hr>
+<h3 id="数据流图"><a href="#数据流图" class="headerlink" title="数据流图"></a>数据流图</h3><blockquote>
+<p>也称数据流程图(DFD)，它是一种便于用户理解，分析系统数据流程的图形工具。他摆脱了系统的物理内容，精确的在逻辑上描述系统的功能，输入，输出和数据存储等，是系统逻辑模型的重要组成部分</p>
+</blockquote>
+<ol>
+<li><p>数据流图的基本图形元素</p>
+<blockquote>
+<p>数据流图中的基本图形元素包括数据流，加工，数据存储和外部实体。</p>
+<p>其中，数据流，加工和数据存储用于构建软件系统内部的数据处理模型；外部实体表示存在于系统之外的对象，用来帮助用户理解系统数据的来源和去向</p>
+</blockquote>
+<ul>
+<li><p>DFD 的基本图形元素</p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/DFD.png"></p>
+<ul>
+<li><p>外部实体内一般标记为 E</p>
+</li>
+<li><p>数据存储内一般标记为 D</p>
+</li>
+<li><p>加工内一般标记为 P</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>元素含义</p>
+<ul>
+<li><p>外部实体：当前系统之外的人，物，外部系统</p>
+</li>
+<li><p>数据存储：存储加工的输出数据和提供加工的输入数据</p>
+</li>
+<li><p>加工：将输入数据处理后得到输出数据，一个加工至少有一个输入数据流和一个输出数据流</p>
+<ul>
+<li><p>加工只有输入没有输出称为：黑洞</p>
+</li>
+<li><p>加工只有输出没有输入称为：白洞</p>
+</li>
+<li><p>加工的输入数据不足以产生输出数据：灰洞</p>
+</li>
+</ul>
+</li>
+<li><p>数据流：数据流有一组固定成分的数据组成，表示数据的流向，<strong>数据流的起点或终点必须有一个是加工</strong> ，在 DFD 中，数据流的流向可分为几种</p>
+<ul>
+<li><p>从一个加工流向另一个加工</p>
+</li>
+<li><p>从加工流向数据存储(写)</p>
+</li>
+<li><p>从数据存储流向加工(读)</p>
+</li>
+<li><p>从外部实体流向加工(输入)</p>
+</li>
+<li><p>从加工流向外部实体(输出)</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="题目答案规范"><a href="#题目答案规范" class="headerlink" title="题目答案规范"></a>题目答案规范</h4><h5 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h5><h6 id="答题格式"><a href="#答题格式" class="headerlink" title="答题格式"></a>答题格式</h6><p><img lazyload src="/images/loading.svg" data-src="/images/%E6%95%B0%E6%8D%AE%E6%B5%81%E9%97%AE%E9%A2%981.png"></p>
+<h5 id="问题二"><a href="#问题二" class="headerlink" title="问题二"></a>问题二</h5><blockquote>
+<p>特殊一：如果说明文章内没有详细说明存储于某文件或某表，则可 __根据数据流上文字__，直接在其后添加 <strong>文件</strong> 或 <strong>表</strong> 即可</p>
+<p>特殊二：如果与数据存储相关联的数据流上没有文字，可在说明文章中获取文件霍或表名</p>
+<p>其他：与问题一大同小异</p>
+</blockquote>
+<h6 id="答题格式-1"><a href="#答题格式-1" class="headerlink" title="答题格式"></a>答题格式</h6><p><img lazyload src="/images/loading.svg" data-src="/images/%E6%95%B0%E6%8D%AE%E6%B5%81%E9%97%AE%E9%A2%982.png"></p>
+<h5 id="问题三"><a href="#问题三" class="headerlink" title="问题三"></a>问题三</h5><blockquote>
+<p>方法(一起使用)</p>
+<ol>
+<li><p>父图子图平衡(不一定100%找到缺失数据流)：父图中有的数据流，必须在子图中存在。若不存在，即找到一条缺失数据流</p>
+<ul>
+<li>在数据流上文字中，<strong>符号 &#x2F;</strong> 的含义是指分别有两条数据流输入或输出(重点关注)</li>
+</ul>
+</li>
+<li><p>加工必须有输入输出(不一定100%找到所有缺失数据流)：查找图中加工是否都有 __输入输出__，若无其中任意一种，则为缺失</p>
+</li>
+<li><p>数据守恒(阅读理解，不一定100%找到所有缺失数据流)：将说明文章与图对比，看是否所有功能都在图中体现，若没有体现则缺失</p>
+</li>
+</ol>
+</blockquote>
+<h6 id="答题格式-2"><a href="#答题格式-2" class="headerlink" title="答题格式"></a>答题格式</h6><blockquote>
+<p>起点与终点若都有字母或者汉字，请使用相同的字型，如(起点：D3，终点：3)。若两者题中只给出不同字型，就按实际书写</p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E6%95%B0%E6%8D%AE%E6%B5%81%E9%97%AE%E9%A2%983.png"></p>
+<h5 id="问题四"><a href="#问题四" class="headerlink" title="问题四"></a>问题四</h5><blockquote>
+<p>推测考两部分</p>
+<ul>
+<li><p>结构化语言</p>
+</li>
+<li><p>根据说明，写出数据流组成</p>
+</li>
+</ul>
+</blockquote>
+<h6 id="结构化语言类"><a href="#结构化语言类" class="headerlink" title="结构化语言类"></a>结构化语言类</h6><blockquote>
+<p>结构化语言是一种介于自然语言和形式化语言之间的半形式化语言，是自然语言的一个受限子集</p>
+<p>结构化语言没有严格的语法，他的结构通常可以分为内层和外层。外层有严格的语法，内层的语法比较灵活，可以接近于自然语言的描述</p>
+<ol>
+<li><p>外层：用来描述控制结构，采用顺序，选择和重复3种基本结构</p>
+<ul>
+<li><p>顺序结构：一组祈使语句，选择语句，重复语句的顺序排列。祈使语句是指至少包含一个动词即一个名词。指出要执行的动作及接受动作的对象</p>
+</li>
+<li><p><strong>选择结构：一般用 IF-THEN-ELSE-ENDIF,CASE-OF-ENDCASE等关键词(重点)</strong></p>
+</li>
+<li><p>重复结构：一般用 DO-WHILE-ENDDO,REPEAT-UNTIL等关键词</p>
+</li>
+</ul>
+</li>
+<li><p>内层：一般采用祈使语句的自然语言短语，使用数字字典中的名词和有限的自定义词，其动词含义要具体，尽量不用形容词来修饰，还可以使用一些简单的算法运算和逻辑运算符号</p>
+</li>
+</ol>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E6%95%B0%E6%8D%AE%E6%B5%81%E9%97%AE%E9%A2%984%E7%BB%93%E6%9E%84%E5%8C%96%E8%AF%AD%E8%A8%80%E7%B1%BB.png"></p>
+<h6 id="组成类"><a href="#组成类" class="headerlink" title="组成类"></a>组成类</h6><blockquote>
+<p>数据流由具体的数据属性构成，采用 <strong>符号 +</strong> 表示，__&#x3D;__ 表示组成(被定义为)，__:__ 表示有多个属性(与)，__{}__ 表示其中属性出现多次，__()__ 表示其中属性可选等。</p>
+<p>例：一个学生至少有一个家长，可以有多个家长，即 <strong>1{家长 ID}*</strong> </p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E6%95%B0%E6%8D%AE%E6%B5%81%E9%97%AE%E9%A2%984%E7%BB%84%E6%88%90%E7%B1%BB.png"></p>
+<h3 id="数据库设计"><a href="#数据库设计" class="headerlink" title="数据库设计"></a>数据库设计</h3><hr>
+<h4 id="E-R-图"><a href="#E-R-图" class="headerlink" title="E-R 图"></a>E-R 图</h4><blockquote>
+<p>椭圆：属性，内有属性名</p>
+<p>矩形：实体，内有实体名</p>
+<p>棱形：联系，内有联系字段，实体和实体之间的联系</p>
+</blockquote>
+<ol>
+<li><p>实体</p>
+<ul>
+<li><p>弱实体</p>
+<blockquote>
+<p>在现实世界中有一种特殊的联系，这种联系代表实体间的所有关系，例如职工与家属的联系，家属总是属于某职工的。这种实体对于另一些实体具有很强的依赖关系，即一个实体的存在必须以另一个实体为前提，将这类实体称为弱实体</p>
+<p>通常用 <strong>双线矩形</strong> 表示弱实体</p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E5%BC%B1%E5%AE%9E%E4%BD%93%E4%B8%8E%E4%BE%9D%E8%B5%96%E8%81%94%E7%B3%BB.png"></p>
+</li>
+<li><p>子实体</p>
+<blockquote>
+<p>父类和子类之间具有继承关系</p>
+<p>形状和橡皮擦一样，并且 <strong>连接线上带有一个圆圈</strong> (如果没有圆圈，就看是否像橡皮擦)</p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E7%88%B6%E7%B1%BB%E5%92%8C%E5%AD%90%E7%B1%BB%E7%9A%84%E5%85%B3%E7%B3%BB.png"></p>
+</li>
+</ul>
+</li>
+<li><p>属性</p>
+<ul>
+<li><p>简单属性和复合属性</p>
+<blockquote>
+<p>简单属性是原子的，不可再分的；复合属性可以细分为更小的部分</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>联系</p>
+<ul>
+<li><p>两个不同实体之间的联系</p>
+<ol>
+<li><p>一对一(1:1)</p>
+</li>
+<li><p>一对多(1:n)</p>
+</li>
+<li><p>多对多(m:n)</p>
+</li>
+</ol>
+</li>
+<li><p>两个以上不同实体集之间的联系</p>
+<ol>
+<li><p>1：1：1</p>
+</li>
+<li><p>1：1：n</p>
+</li>
+<li><p>1：m：n</p>
+</li>
+<li><p>r：m：n</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="题目答案规范-1"><a href="#题目答案规范-1" class="headerlink" title="题目答案规范"></a>题目答案规范</h4><h5 id="问题一-1"><a href="#问题一-1" class="headerlink" title="问题一"></a>问题一</h5><blockquote>
+<p>根据需求分析结果 答题</p>
+</blockquote>
+<ol>
+<li><p>第一种</p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%981%E7%AC%AC%E4%B8%80%E7%A7%8D.png"></p>
+</li>
+<li><p>第二种</p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%981%E7%AC%AC%E4%BA%8C%E7%A7%8D.png"></p>
+</li>
+<li><p>第三种</p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%981%E7%AC%AC%E4%B8%89%E7%A7%8D.png"></p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>证书</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机网络</title>
+    <url>/2023/04/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
+    <content><![CDATA[<h1 id><a href="#" class="headerlink" title></a></h1><ol>
+<li><p>简述 TCP 三次握手以及四次挥手的流程。为什么需要三次握手以及四次挥手?</p>
+<blockquote>
+<ul>
+<li><p>三次握手</p>
+<blockquote>
+<p>指建立一个TCP连接时，需要客户端和服务器总共发送3个包</p>
+<ol>
+<li><p>客户端发送一个SYN包到服务器，并进入SYN-SEND状态</p>
+</li>
+<li><p>服务器收到SYN包后，回复一个SYN-ACK包，确认收到客户端的SYN包，并进入SYN-RECV状态</p>
+</li>
+<li><p>客户端收到服务器的SYN+ACK包后，发送一个ACK包给服务器，确认收到服务器的SYN+ACK包，此时连接建立成功</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>四次挥手</p>
+<blockquote>
+<p>指断开一个TCP连接时，需要客户端和服务器总共发送4个包</p>
+<ol>
+<li><p>客户端发送一个FIN包到服务器，表示客户端不在发送数据，并进入FIN-WAIT-1状态</p>
+</li>
+<li><p>服务器收到FIN包后，回复一个ACK包，确认收到客户端的FIN包，并进入CLOSE-WAIT状态</p>
+</li>
+<li><p>服务器再次发送一个FIN包给客户端，表示服务器不再发送数据，并进入LAST-ACK状态</p>
+</li>
+<li><p>客户端收到服务器的FIN包后，回复一个ACK包给服务器，确认收到服务器的FIN包，并进入TIME-WAIT状态。此时连接断开成功，而TIME-WAIT状态在等待2MSL后返回CLOSED状态</p>
+</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<p>三次握手是为了防止已失效的连接请求报文突然又传送到了服务端。</p>
+<p>四次挥手是为了确保数据能够完整传输。</p>
+<p>为什么TIME-WAIT状态还需要等待2MSL后才能返回到CLOSED状态?</p>
+<blockquote>
+<ol>
+<li>无法保证最后发送的ACK报文会一定被对方收到，所以需要重发可能丢失的ACK报文</li>
+<li>关闭连接一段时间后可能会出现相同的IP地址和端口建立新的连接，为了防止旧连接的重复分组在新连接已经终止后再现。2msl足以让分组最多存活msl秒被丢弃</li>
+</ol>
+</blockquote>
+<p>为什么必须是三次握手，不能用两次握手进行连接？</p>
+<blockquote>
+<p>两次握手容易死锁！如果服务器的应答分组在传输中丢失，S将不知道建立什么样的序列号。C认为链接还未建立成功，将忽视S发来的任何数据分组，只等待连接确认。而S在发出的分组超时后，重复发送同样的分组，这样就形成了死锁</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>Restful 与 RPC 的区别是什么? Restful 的优点在哪里?</p>
+<blockquote>
+<p>Restful 和 RFC 的主要区别在于 Restful 是一种用于构建web服务的架构结构，而 RFC 是一系列描述互联网及其协议的技术文档</p>
+<p>Restful 基于一组原则，强调使用 HTTP 方法和资源 URL 来表示和操作资源。它还强调无状态性，这意味这每个请求应包含完成请求所需的所有信息，而不依赖于任何先前的请求</p>
+<p><code>Restful: GET /order/123</code></p>
+<p>RFC 是一系列描述互联网及其协议的技术文档。这些文档又互联网工程任务组(IEIF)创建，并用于定义电子邮件，文件传输和网络协议等标准</p>
+<p><code>RFC: Queryorder/order_id=123</code></p>
+</blockquote>
+<blockquote>
+<p>Restful 优点在于它是一种简单易用，高度可扩展，可移植的架构风格，可以帮助开发人员更轻松地构建web服务</p>
+</blockquote>
+</li>
+<li><p>HTTP 与 HTTPS 有什么区别?</p>
+<blockquote>
+<ol>
+<li><p>HTTPS 协议需要到证书颁发机构CA申请证书，HTTP 不用申请</p>
+</li>
+<li><p>HTTP 是长文本传输协议，属于应用层信息传输。HTTPS 则是具有 SSL 加密安全性传输协议，对数据的传输进行加密，相当于 HTTP 的升级版</p>
+</li>
+<li><p>HTTP 和 HTTPS 使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443</p>
+</li>
+<li><p>HTTP 的连接很简单，是无状态的；HTTPS 协议是由 SSL + HTTP 协议构建的可进行加密传输，身份认证的网络协议，比 HTTP 协议安全</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>HTTPS 的加密原理是什么?</p>
+<blockquote>
+<p>HTTPS 使用一种称为 SSL&#x2F;TLS 的协议来加密数据传输。SSL&#x2F;TLS 使用公钥加密和私钥解密的方法来保护数据的机密性和完整性</p>
+<p>当客户端与服务器建立连接时，ta们会协商一种加密算法和密钥长度，然后使用该算法和密钥来加密和解密数据。这种加密方法可以防止中间人攻击和窃听，因为只有客户端和服务器知道密钥</p>
+</blockquote>
+</li>
+<li><p>一次 HTTP 请求过程中发生了什么?</p>
+<blockquote>
+<p>HTTP 请求过程中发生了以下步骤:</p>
+<ol>
+<li><p>DNS 解析：客户端将 URL 解析为 IP 地址，以便与服务器建立连接。</p>
+</li>
+<li><p>建立 TCP 连接：客户端使用 TCP 协议与服务器建立连接，以便在客户端和服务器之间传输数据</p>
+</li>
+<li><p>发送 HTTP 请求：客户端向服务器发送 HTTP 请求，其中包括请求方法，请求头和请求体</p>
+</li>
+<li><p>服务器处理请求：服务器接收到 HTTP 请求后，会根据请求方法和请求 URL 来处理请求，并返回 HTTP 响应</p>
+</li>
+<li><p>接收 HTTP 响应：客户端接收到 HTTP 响应后，会解析响应头和响应体，并根据响应状态码来判断请求是否成功</p>
+</li>
+<li><p>关闭 TCP 连接：客户端和服务器之间的 TCP 连接在请求和响应完成后会被关闭</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>域名解析的过程是?</p>
+<blockquote>
+<ol>
+<li><p>客户端向本地DNS服务器发送域名解析请求</p>
+</li>
+<li><p>如果本地DNS服务器缓存了该域名的IP地址，则直接返回该IP地址给客户端</p>
+<p>如果本地DNS服务器没有缓存该域名的IP地址，则向根DNS服务器发送域名解析请求</p>
+</li>
+<li><p>根DNS服务器返回顶级域名服务器的IP地址给本地DNS服务器</p>
+</li>
+<li><p>本地DNS服务器向顶级域名服务器发送域名解析请求</p>
+</li>
+<li><p>顶级域名服务器返回次级域名服务器的IP地址给本地DNS服务器</p>
+</li>
+<li><p>本地DNS服务器向次级域名服务器发送域名解析请求</p>
+</li>
+<li><p>次级域名服务器返回该域名的IP地址给本地DNS服务器</p>
+</li>
+<li><p>本地DNS服务器将该IP地址缓存起来，并返回给客户端</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>TCP 与 UDP 在网络协议中的哪一层，他们之间有什么区别?</p>
+<blockquote>
+<p>TCP 和 UDP 是传输层协议，用于在网络上传输数据。</p>
+<p>它们之间的主要区别在于它们如何传输数据以及它们提供的服务类型</p>
+<p>TCP(传输控制协议)：</p>
+<blockquote>
+<p>是一种面向连接的协议，它提供可靠的数据传输服务。它使用三次握手协议来建立连接，并使用确认和重传机制来确保数据的可靠传输。TCP 还提供流量控制和拥塞控制功能，以确保网络的稳定性和可靠性。TCP 通常用于需要可靠数据传输的应用程序</p>
+</blockquote>
+<p>UDP(用户数据报协议)：</p>
+<blockquote>
+<p>是一种无连接的协议，它提供不可靠的数据传输服务。它不使用握手协议来建立连接，也不提供确认和重传机制。UDP 不提供流量控制和拥塞控制功能，因此他通常用于需要快速数据传输的应用程序</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>TCP 中拥塞控制的实现?</p>
+<blockquote>
+<p>慢启动：</p>
+<blockquote>
+<p>在TCP连接建立后，发送方会先发送少量数据，然后逐渐增加发送数据的速率，直到网络出现拥塞为止。这样可以避免发送方一开始就发送大量数据导致网络拥塞</p>
+</blockquote>
+<p>拥塞避免：</p>
+<blockquote>
+<p>一旦网络出现拥塞，TCP会减小发送窗口的大小，以避免发送过多的数据导致网络拥塞。同时，TCP还会动态调整发送窗口的大小，以适应网络的变化</p>
+</blockquote>
+<p>拥塞恢复</p>
+<p>快速重传</p>
+<p>快速恢复</p>
+</blockquote>
+</li>
+<li><p>TCP 怎么保证可靠传递?</p>
+<blockquote>
+<p>校验和</p>
+<p>确认应答与序列号</p>
+<p>超时重传</p>
+<p>连接管理</p>
+<p>流量控制：</p>
+<blockquote>
+<ol>
+<li><p>发送方维护一个发送窗口，用于存储已发送但未被确认的数据。发送方只有在接收到接收方的确认后才能将窗口向前移动，发送更多的数据</p>
+</li>
+<li><p>接收方维护一个接收窗口，用于存储已接收但未被处理的数据。接收方会向发送方发送确认消息，告诉发送方已经成功接收到数据，并将接收窗口向前移动，以便接收更多的数据</p>
+</li>
+<li><p>发送方根据接收方发送的确认消息来动态调整发送窗口的大小，如果接收方的接收窗口变小，发送方会减小发送窗口的大小，以避免发送过多的数据导致接收方无法处理。如果接收方的接收窗口变大，发送方会增大发送窗口的大小，以提高发送数据的速率</p>
+</li>
+</ol>
+<p>避免了发送过多数据导致接收方无法处理的情况</p>
+</blockquote>
+<p>拥塞控制</p>
+</blockquote>
+</li>
+<li><p>从系统层面上看，UDP如何保证尽量可靠?</p>
+<blockquote>
+<p>为了在系统级别上确保可靠性，UDP实现的几种技术。</p>
+<p>其中一种技术是使用校验和来检测数据中的错误。这可以通过在UDP头中添加一个校验和字段来实现，该字段是基于发送的数据计算出来的。接收方可以重新计算校验和，并将其与头部中发送的校验和进行比较，以检测任何错误</p>
+<p>另一种技术是在应用程序级别实现重传。这涉及到发送方跟踪接收方已成功接受的数据包，并重新传输任何未被确认的数据包。这可以使用UDP头中的序列号来实现</p>
+<p>需要注意的是，虽然这些技术可以提高可靠性，但他并不能保证可靠性。UDP仍然是一种尽力而为的协议，数据包仍然可能在传输过程中丢失或损坏。</p>
+</blockquote>
+</li>
+<li><p>TCP 的 keepalive 了解吗？说一说它和 http 的 keepalive 的区别</p>
+<blockquote>
+<p>在TCP中，keepalive用于检测连接是否仍然处于活动状态。如果连接在一段时间内没有活动，则会发送一个keepalive消息，以确保连接仍然存在。这可以防止连接因为长时间没有活动而被关闭</p>
+<p>在HTTP中，keepalive用于在单个TCP连接上处理多个HTTP请求，这可以减少连接建立和关闭的开销，并提高性能。在HTTP keepalive中，客户端和服务器之间的TCP连接保持打开状态，直到达到某个条件(例如超时或达到最大请求数)</p>
+</blockquote>
+</li>
+<li><p>简述 HTTP 1.0 1.1 2.0 的主要区别</p>
+<blockquote>
+<p>HTTP1.0</p>
+<ul>
+<li>无状态，无连接</li>
+</ul>
+<p>HTTP1.1</p>
+<ul>
+<li><p>支持长连接</p>
+</li>
+<li><p>增加缓存处理</p>
+</li>
+<li><p>增加host字段</p>
+</li>
+<li><p>支持断点传输</p>
+</li>
+</ul>
+<p>HTTP2.0</p>
+<ul>
+<li><p>二进制分帧</p>
+</li>
+<li><p>多路复用(连接共享)</p>
+</li>
+<li><p>头部压缩，encoder</p>
+</li>
+<li><p>服务器推送</p>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>HTTP 的方法有哪些？</p>
+<blockquote>
+<p>get post put delete patch</p>
+</blockquote>
+</li>
+<li><p>简述 TCP 协议的延迟 ACK 和累计应答</p>
+<blockquote>
+<p>两者用于优化网络传输性能和可靠性</p>
+<p>延迟 ACK 是指 TCP 接收方在接收到数据包后不立即发送 ACK 确认消息，而是等待一段时间(通常是200ms)，以便在此期间接收到其他数据包时可以一起发送 ACK。这可以减少网络流量和减轻网络负载，从而提高性能。但是，延迟 ACK 也可能导致一些问题，例如在某些情况下可能会导致数据包重传</p>
+<p>累计应答是指 TCP 接收方只发送一个 ACK 消息来确认接收到的所有数据包，而不是每个数据包都发送一个 ACK。这可以减少网络流量和减轻网络负载，从而提高性能。但是累计应答也可能导致一些问题，例如在某些情况下可能会导致发送方重传已经被接收方接受的数据包</p>
+</blockquote>
+</li>
+<li><p>简述 TCP 的报文头部结构</p>
+<blockquote>
+<p>16位端口号，32位序号，32位确认号，4位头部长度，6位标志位，16位窗口大小，16位校验和，16位紧急指针，TCP 头部选项</p>
+</blockquote>
+</li>
+<li><p>简述 TCP 半连接发生场景</p>
+<blockquote>
+<ol>
+<li><p>服务器负载过高，无法处理新的连接请求。在这种情况下，服务器可能会忽略或拒绝新的连接请求，导致客户端无法建立完整的TCP连接</p>
+</li>
+<li><p>防火墙或其他网络设备阻止了 SYN + ACK 包的传输。在这种情况下，客户端可能会发送多个SYN包，但服务器仍然无法回复 SYN + ACK 包，导致客户端无法建立完整的 TCP 连接</p>
+</li>
+</ol>
+<p>解决方法:</p>
+<blockquote>
+<ol>
+<li><p>增加服务器的处理能力，以便能够处理更多的连接请求</p>
+</li>
+<li><p>检查网络设备和防火墙的配置，确保它们不会阻止 SYN + ACK 包的传输</p>
+</li>
+<li><p>在客户端和服务器之间使用心跳机制，以便在连接空闲时保持连接状态</p>
+</li>
+</ol>
+</blockquote>
+</blockquote>
+</li>
+<li><p>什么时 SYN flood？如何防范？</p>
+<blockquote>
+<p>SYN flood是一种网络攻击，攻击者通过发送大量的 SYN 包来占用服务器的资源，从而导致服务器无法处理正常的连接请求。</p>
+<p>可以采取以下措施防范:</p>
+<blockquote>
+<ol>
+<li><p>增加服务器的处理能力，以便能够处理更多的连接请求。这可以通过增加服务器的硬件资源(例如CPU, 内存，网络带宽等)或优化服务器的软件配置(例如调整服务器的网络栈参数，使用负载均衡等)来实现</p>
+</li>
+<li><p>使用防火墙或其他网络设备来过滤 SYN flood 攻击。这可以通过配置防火墙规则，使用 SYN cookies 等技术来实现。SYN cookies 是一种防范 SYN flood 攻击的技术，它可以在服务器端生成一个加密的 cookie，并将其发送给客户端。当客户端发送 SYN 包时，服务器可以验证 cookie 的有效性，从而防止 SYN flood 攻击</p>
+</li>
+</ol>
+</blockquote>
 </blockquote>
 </li>
 </ol>
