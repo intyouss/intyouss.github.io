@@ -29,28 +29,28 @@
 <meta property="og:site_name" content="IntYou&#39;s Blog">
 <meta property="og:description" content="Redis 概述 NoSQL  非关系型数据库  类型  键值存储数据库  key-value   列存储数据库  关系型数据库是典型的行存储数据库(MySQL)，按行存储的数据在物理层面占用的时连续的存储空间，不适合海量数据存储。而按列存储则可实现分布式存储，适合海量存储(HBase)   文档型数据库  NoSQL 与 关系型数据库的结合(MangoDB)   图像(Graph)数据库  用于">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-19-11-22-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-19-29-07-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-19-52-54-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-19-52-28-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-20-06-24-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-20-15-57-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-20-13-59-47-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-20-14-03-19-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-20-15-07-16-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-20-15-10-56-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-20-15-12-04-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-20-21-57-57-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-21-12-28-27-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-21-13-30-57-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-21-15-43-18-image.png">
-<meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-21-15-46-57-image.png">
+<meta property="og:image" content="https://intyouss.github.io/images/ziplist.png">
+<meta property="og:image" content="https://intyouss.github.io/images/entry%E7%9A%84%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://intyouss.github.io/images/listpack%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://intyouss.github.io/images/entry%E7%9A%84%E7%BB%86%E8%87%B4%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://intyouss.github.io/images/skiplist.png">
+<meta property="og:image" content="https://intyouss.github.io/images/quicklist.png">
+<meta property="og:image" content="https://intyouss.github.io/images/Redis%E6%8C%81%E4%B9%85%E5%8C%96%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86.png">
+<meta property="og:image" content="https://intyouss.github.io/images/%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%87%E4%BB%B6%E7%9A%84%E5%8A%A0%E8%BD%BD.png">
+<meta property="og:image" content="https://intyouss.github.io/images/RDB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://intyouss.github.io/images/RDB%E6%96%87%E4%BB%B6%E4%B8%AD%E6%AF%8F%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://intyouss.github.io/images/%E5%B8%A6%E4%B8%8E%E4%B8%8D%E5%B8%A6%E6%97%B6%E9%97%B4%E9%94%AE%E5%80%BC%E5%AF%B9%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="https://intyouss.github.io/images/RDB%E6%8C%81%E4%B9%85%E5%8C%96%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="https://intyouss.github.io/images/AOF%E6%8C%81%E4%B9%85%E5%8C%96%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="https://intyouss.github.io/images/Redis%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E7%9A%84%E5%88%86%E7%BA%A7%E7%AE%A1%E7%90%86.png">
+<meta property="og:image" content="https://intyouss.github.io/images/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE1.png">
+<meta property="og:image" content="https://intyouss.github.io/images/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE2.png">
 <meta property="article:published_time" content="2023-04-17T01:28:36.000Z">
-<meta property="article:modified_time" content="2023-04-21T08:30:44.978Z">
+<meta property="article:modified_time" content="2023-04-22T06:56:46.146Z">
 <meta property="article:author" content="IntYou">
 <meta property="article:tag" content="Redis Study">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-04-19-19-11-22-image.png">
+<meta name="twitter:image" content="https://intyouss.github.io/images/ziplist.png">
     
     <!--- Icon Part-->
     <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="192x192">
@@ -242,8 +242,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-21 16:30:44</span>
-            <span class="mobile">2023-04-21 16:30</span>
+            <span class="desktop">2023-04-22 14:56:46</span>
+            <span class="mobile">2023-04-22 14:56</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -990,7 +990,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-19-19-11-22-image.png"
+                     data-src="/images/ziplist.png"
                      
                 ></p>
 </li>
@@ -1023,7 +1023,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-19-19-29-07-image.png"
+                     data-src="/images/entry%E7%9A%84%E7%BB%93%E6%9E%84.png"
                      
                 ></p>
 </li>
@@ -1045,7 +1045,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-19-19-52-54-image.png"
+                     data-src="/images/listpack%E7%BB%93%E6%9E%84.png"
                      
                 ></p>
 </li>
@@ -1077,7 +1077,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-19-19-52-28-image.png"
+                     data-src="/images/entry%E7%9A%84%E7%BB%86%E8%87%B4%E7%BB%93%E6%9E%84.png"
                      
                 ></p>
 </li>
@@ -1092,7 +1092,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-19-20-06-24-image.png"
+                     data-src="/images/skiplist.png"
                      
                 ></p>
 <blockquote>
@@ -1109,7 +1109,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-19-20-15-57-image.png"
+                     data-src="/images/quicklist.png"
                      
                 ></p>
 </li>
@@ -1197,7 +1197,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-20-13-59-47-image.png"
+                     data-src="/images/Redis%E6%8C%81%E4%B9%85%E5%8C%96%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86.png"
                      
                 ></p>
 <blockquote>
@@ -1206,7 +1206,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-20-14-03-19-image.png"
+                     data-src="/images/%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%87%E4%BB%B6%E7%9A%84%E5%8A%A0%E8%BD%BD.png"
                      
                 ></p>
 <h3 id="RDB-持久化"><a href="#RDB-持久化" class="headerlink" title="RDB 持久化"></a>RDB 持久化</h3><hr>
@@ -1247,7 +1247,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-20-15-07-16-image.png"
+                     data-src="/images/RDB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84.png"
                      
                 ></p>
 <ol>
@@ -1275,7 +1275,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-20-15-10-56-image.png"
+                     data-src="/images/RDB%E6%96%87%E4%BB%B6%E4%B8%AD%E6%AF%8F%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E7%BB%93%E6%9E%84.png"
                      
                 ></p>
 <p>每个 key_value_pairs 又由很多个用于描述键值对的数据构成</p>
@@ -1290,7 +1290,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-20-15-12-04-image.png"
+                     data-src="/images/%E5%B8%A6%E4%B8%8E%E4%B8%8D%E5%B8%A6%E6%97%B6%E9%97%B4%E9%94%AE%E5%80%BC%E5%AF%B9%E5%AF%B9%E6%AF%94.png"
                      
                 ></p>
 </blockquote>
@@ -1321,7 +1321,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-20-21-57-57-image.png"
+                     data-src="/images/RDB%E6%8C%81%E4%B9%85%E5%8C%96%E8%BF%87%E7%A8%8B.png"
                      
                 ></p>
 <h3 id="AOF-持久化"><a href="#AOF-持久化" class="headerlink" title="AOF 持久化"></a>AOF 持久化</h3><hr>
@@ -1446,7 +1446,7 @@
 <h4 id="AOF-持久化过程"><a href="#AOF-持久化过程" class="headerlink" title="AOF 持久化过程"></a>AOF 持久化过程</h4><p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-21-12-28-27-image.png"
+                     data-src="/images/AOF%E6%8C%81%E4%B9%85%E5%8C%96%E8%BF%87%E7%A8%8B.png"
                      
                 ></p>
 <h3 id="RDB-与-AOF-对比"><a href="#RDB-与-AOF-对比" class="headerlink" title="RDB 与 AOF 对比"></a>RDB 与 AOF 对比</h3><hr>
@@ -1544,7 +1544,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-21-13-30-57-image.png"
+                     data-src="/images/Redis%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4%E7%9A%84%E5%88%86%E7%BA%A7%E7%AE%A1%E7%90%86.png"
                      
                 ></p>
 <h4 id="容灾冷处理"><a href="#容灾冷处理" class="headerlink" title="容灾冷处理"></a>容灾冷处理</h4><blockquote>
@@ -1607,13 +1607,13 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-21-15-43-18-image.png"
+                     data-src="/images/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE1.png"
                      
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-04-21-15-46-57-image.png"
+                     data-src="/images/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E6%81%A2%E5%A4%8D%E6%95%B0%E6%8D%AE2.png"
                      
                 ></p>
 
@@ -1628,7 +1628,7 @@
         <li><strong>创建于:</strong> 2023-04-17 09:28:36</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-21 16:30:44
+                <strong>更新于:</strong> 2023-04-22 14:56:46
             </li>
         
         <li>
