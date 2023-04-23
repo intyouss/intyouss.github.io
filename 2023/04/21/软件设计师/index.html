@@ -46,8 +46,13 @@
 <meta property="og:image" content="https://intyouss.github.io/images/UML%E6%B3%9B%E5%8C%96%E5%85%B3%E7%B3%BB.png">
 <meta property="og:image" content="https://intyouss.github.io/images/UML%E5%AE%9E%E7%8E%B0%E5%85%B3%E7%B3%BB.png">
 <meta property="og:image" content="https://intyouss.github.io/images/UML%E7%B1%BB%E5%9B%BE%E4%B8%AD%E7%9A%84%E7%B1%BB.png">
+<meta property="og:image" content="https://intyouss.github.io/images/UML%E7%B1%BB%E5%9B%BE.png">
+<meta property="og:image" content="https://intyouss.github.io/images/UML%E7%94%A8%E4%BE%8B%E5%9B%BE.png">
+<meta property="og:image" content="https://intyouss.github.io/images/UML%E7%94%A8%E4%BE%8B%E5%9B%BE%E5%8C%85%E5%90%AB%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://intyouss.github.io/images/UML%E7%94%A8%E4%BE%8B%E5%9B%BE%E6%89%A9%E5%B1%95%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://intyouss.github.io/images/UML%E7%94%A8%E4%BE%8B%E5%9B%BE%E6%B3%9B%E5%8C%96%E5%85%B3%E7%B3%BB.png">
 <meta property="article:published_time" content="2023-04-21T08:35:10.000Z">
-<meta property="article:modified_time" content="2023-04-23T06:40:03.999Z">
+<meta property="article:modified_time" content="2023-04-23T10:18:05.779Z">
 <meta property="article:author" content="IntYou">
 <meta property="article:tag" content="证书">
 <meta name="twitter:card" content="summary">
@@ -243,8 +248,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-23 14:40:03</span>
-            <span class="mobile">2023-04-23 14:40</span>
+            <span class="desktop">2023-04-23 18:18:05</span>
+            <span class="mobile">2023-04-23 18:18</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -522,6 +527,10 @@
 <li><p>类图</p>
 <blockquote>
 <p>类图展现了一组对象，接口，协作和他们之间的关系。在面向对象系统的建模中所建立的最常见的图就是类图。类图给出系统的静态设计视图。包含主动类的类图给出了系统的静态进程视图</p>
+<p>+：public 公有的</p>
+<p>-：private 私有的</p>
+<p>#：protected 受保护的</p>
+<p>~：package 包</p>
 </blockquote>
 <p>类图中通常包括下述内容：</p>
 <ul>
@@ -535,6 +544,42 @@
 </li>
 </ul>
 <p><img lazyload src="/images/loading.svg" data-src="/images/UML%E7%B1%BB%E5%9B%BE%E4%B8%AD%E7%9A%84%E7%B1%BB.png"></p>
+<p><img lazyload src="/images/loading.svg" data-src="/images/UML%E7%B1%BB%E5%9B%BE.png"></p>
+</li>
+<li><p>用例图</p>
+<blockquote>
+<p>用例图展现了一组用例，参与者以及它们之间的关系</p>
+</blockquote>
+<p>用例图通常包括下述内容</p>
+<ul>
+<li><p>用例：椭圆</p>
+</li>
+<li><p>参与者：人形</p>
+</li>
+<li><p>用例之间的扩展关系(&lt;&lt; extend &gt;&gt;) 和 包含关系(&lt;&lt; include &gt;&gt;)，参与者和用例之间的关联关系，用例与用例以及参与者与参与者之间的泛式关系</p>
+</li>
+</ul>
+<p><img lazyload src="/images/loading.svg" data-src="/images/UML%E7%94%A8%E4%BE%8B%E5%9B%BE.png"></p>
+<ol>
+<li><p>包含关系</p>
+<blockquote>
+<p>一个用例包含另一个用例，使用 <strong>虚线加箭头，并在上有&lt;&lt; include &gt;&gt; 字段</strong> ，虚线起点包含终点</p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/UML%E7%94%A8%E4%BE%8B%E5%9B%BE%E5%8C%85%E5%90%AB%E5%85%B3%E7%B3%BB.png"></p>
+</li>
+<li><p>扩展关系</p>
+<blockquote>
+<p>一个用例执行的时候，可能会发生一些特殊的情况或可选的情况，这种情况就是这个用例的扩展用例。使用 <strong>虚线加箭头，并在上有&lt;&lt; extend &gt;&gt; 字段</strong> ，虚线起点是终点的扩展</p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/UML%E7%94%A8%E4%BE%8B%E5%9B%BE%E6%89%A9%E5%B1%95%E5%85%B3%E7%B3%BB.png"></p>
+</li>
+<li><p>泛化关系</p>
+<blockquote>
+<p>使用 <strong>实线加空心箭头</strong> ，虚线起点是终点的子类</p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/UML%E7%94%A8%E4%BE%8B%E5%9B%BE%E6%B3%9B%E5%8C%96%E5%85%B3%E7%B3%BB.png"></p>
+</li>
+</ol>
 </li>
 </ol>
 
@@ -549,7 +594,7 @@
         <li><strong>创建于:</strong> 2023-04-21 16:35:10</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-23 14:40:03
+                <strong>更新于:</strong> 2023-04-23 18:18:05
             </li>
         
         <li>
