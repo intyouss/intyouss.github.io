@@ -40,8 +40,14 @@
 <meta property="og:image" content="https://intyouss.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%981%E7%AC%AC%E4%B8%80%E7%A7%8D.png">
 <meta property="og:image" content="https://intyouss.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%981%E7%AC%AC%E4%BA%8C%E7%A7%8D.png">
 <meta property="og:image" content="https://intyouss.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%981%E7%AC%AC%E4%B8%89%E7%A7%8D.png">
+<meta property="og:image" content="https://intyouss.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%982.png">
+<meta property="og:image" content="https://intyouss.github.io/images/UML%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://intyouss.github.io/images/UML%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://intyouss.github.io/images/UML%E6%B3%9B%E5%8C%96%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://intyouss.github.io/images/UML%E5%AE%9E%E7%8E%B0%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://intyouss.github.io/images/UML%E7%B1%BB%E5%9B%BE%E4%B8%AD%E7%9A%84%E7%B1%BB.png">
 <meta property="article:published_time" content="2023-04-21T08:35:10.000Z">
-<meta property="article:modified_time" content="2023-04-22T16:13:38.007Z">
+<meta property="article:modified_time" content="2023-04-23T06:40:03.999Z">
 <meta property="article:author" content="IntYou">
 <meta property="article:tag" content="证书">
 <meta name="twitter:card" content="summary">
@@ -237,8 +243,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-23 00:13:38</span>
-            <span class="mobile">2023-04-23 00:13</span>
+            <span class="desktop">2023-04-23 14:40:03</span>
+            <span class="mobile">2023-04-23 14:40</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -463,6 +469,74 @@
 <p><img lazyload src="/images/loading.svg" data-src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%981%E7%AC%AC%E4%B8%89%E7%A7%8D.png"></p>
 </li>
 </ol>
+<h5 id="问题二-1"><a href="#问题二-1" class="headerlink" title="问题二"></a>问题二</h5><blockquote>
+<p>先根据 <strong>需求分析结果</strong> 对比查看是否缺少属性，再根据 <strong>概念模型设计</strong> 查看一对多等关系中是否有关系连接此实体(将1方的主码加到多方的属性中)</p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%982.png"></p>
+<h3 id="UML"><a href="#UML" class="headerlink" title="UML"></a>UML</h3><hr>
+<h4 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h4><ol>
+<li><p>依赖关系</p>
+<blockquote>
+<p>依赖是两个事物间的语义关系，其中一个事物(独立事物)发生变化会影响另一个事物(依赖事物)的语义。在图形上，把一个依赖画出一条 __可能有方向的虚线__，代表 <strong>左事物依赖于右事物</strong></p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/UML%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB.png"></p>
+</li>
+<li><p>关联关系(重点)</p>
+<blockquote>
+<p>可以分成两种关系：<strong>聚合</strong> 和 <strong>组合</strong> </p>
+<p>关联关系是一种结构关系，他描述了一组链，链是对象之间的连接。</p>
+<p><strong>聚合</strong> 是一种特殊类型的关联，他描述了整体与部分间的结构关系。整体消失了，部分仍然存在</p>
+<p><strong>组合</strong> 是整体消失了，部分也会消失</p>
+<p>在关联上可以标注 <strong>重复度</strong> 和 <strong>角色</strong></p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/UML%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB.png"></p>
+<blockquote>
+<p>组合的图形是在聚合的基础上，空心棱形变为实心棱形</p>
+<p>关联上的字符是重复度：0..1 指 0个或者一个，0..* 指 0个或者多个</p>
+</blockquote>
+</li>
+<li><p>泛化关系</p>
+<blockquote>
+<p>泛化是一种特殊&#x2F;一般关系，特殊元素(子元素)的对象可替代一般元素(父元素)d的对象。用这种方法，子元素共享了父元素的结构和行为。在图形上，把一个泛化关系画成一条带有空心箭头的实线，它指向父元素</p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/UML%E6%B3%9B%E5%8C%96%E5%85%B3%E7%B3%BB.png"></p>
+</li>
+<li><p>实现关系</p>
+<blockquote>
+<p>实现是类元之间的语义关系，其中一个类元指定了由另一个类元保证执行的契约。在图形上，把一个实现关系画成一条带有空心箭头的虚线</p>
+<p>在两种情况下会使用实现关系：</p>
+<ol>
+<li><p>在接口和实现它们的类或构件之间</p>
+</li>
+<li><p>在用例和实现它们的协作之间</p>
+</li>
+</ol>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/UML%E5%AE%9E%E7%8E%B0%E5%85%B3%E7%B3%BB.png"></p>
+</li>
+</ol>
+<h4 id="UML-中的图"><a href="#UML-中的图" class="headerlink" title="UML 中的图"></a>UML 中的图</h4><blockquote>
+<p>顶点代表事物，弧代表关系</p>
+</blockquote>
+<ol>
+<li><p>类图</p>
+<blockquote>
+<p>类图展现了一组对象，接口，协作和他们之间的关系。在面向对象系统的建模中所建立的最常见的图就是类图。类图给出系统的静态设计视图。包含主动类的类图给出了系统的静态进程视图</p>
+</blockquote>
+<p>类图中通常包括下述内容：</p>
+<ul>
+<li><p>类</p>
+</li>
+<li><p>接口</p>
+</li>
+<li><p>协作</p>
+</li>
+<li><p>依赖，泛化和关联关系</p>
+</li>
+</ul>
+<p><img lazyload src="/images/loading.svg" data-src="/images/UML%E7%B1%BB%E5%9B%BE%E4%B8%AD%E7%9A%84%E7%B1%BB.png"></p>
+</li>
+</ol>
 
             </div>
 
@@ -475,7 +549,7 @@
         <li><strong>创建于:</strong> 2023-04-21 16:35:10</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-23 00:13:38
+                <strong>更新于:</strong> 2023-04-23 14:40:03
             </li>
         
         <li>
@@ -534,7 +608,7 @@
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">软件设计师</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E5%8D%88%E9%A2%98"><span class="nav-text">下午题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE"><span class="nav-text">数据流图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1"><span class="nav-text">数据库设计</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E5%8D%88%E9%A2%98"><span class="nav-text">下午题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE"><span class="nav-text">数据流图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1"><span class="nav-text">数据库设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UML"><span class="nav-text">UML</span></a></li></ol></li></ol>
 
     </div>
 </div>
