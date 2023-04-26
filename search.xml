@@ -1,6 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>3月7日学习记录</title>
+    <url>/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
+<h4 id="路由的两种写法"><a href="#路由的两种写法" class="headerlink" title="路由的两种写法"></a>路由的两种写法</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">app.add_url_rule(<span class="string">&#x27;/index&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, index)</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/inddex&#x27;</span></span>)</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="路由加载源码的流程"><a href="#路由加载源码的流程" class="headerlink" title="路由加载源码的流程"></a>路由加载源码的流程</h4><ul>
+<li><p>将URL和函数打包成为Rule对象</p>
+</li>
+<li><p>将Rule对象添加到map对象中</p>
+</li>
+<li><p>app_url_map &#x3D; map对象</p>
+</li>
+</ul>
+<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&lt;string:name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;name&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>uuid类型 类似于xxxxx-xxxxxxx-xxxxxx-xxxxxx</p>
+<h5 id="自定义路由"><a href="#自定义路由" class="headerlink" title="自定义路由"></a>自定义路由</h5><p>必须继承BaseConverter</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, regex</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>)</span><br><span class="line">        self.regex = regex</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_python</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.url_map.converters[<span class="string">&#x27;regex&#x27;</span>] = RegexConverter</span><br></pre></td></tr></table></figure></div>
+
+<h3 id><a href="#" class="headerlink" title></a></h3><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><hr>
+<h4 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span>, method=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="CBV"><a href="#CBV" class="headerlink" title="CBV"></a>CBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(views, MethodView):</span><br><span class="line">    method = [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span><br><span class="line">    decorators = [test1, test2] //CBV添加装饰器</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/user&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;user&#x27;</span>))</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="模板-jinja2"><a href="#模板-jinja2" class="headerlink" title="模板(jinja2)"></a>模板(jinja2)</h3><hr>
+<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>模板可继承</p>
+<ol>
+<li><p>被继承:</p>
+<p><code>&#123;% block content %&#125; ? &#123;% endbloack %&#125;</code>  </p>
+</li>
+<li><p>继承:</p>
+<p><code>&#123;% extends 'layout.html' %&#125;  &#123;% block content %&#125; ? &#123;% endbloack %&#125;</code></p>
+</li>
+<li><p>引入:</p>
+<p><code>&#123;% include 'from.html' %&#125;</code></p>
+</li>
+</ol>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dunc</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line">render_template(<span class="string">&#x27;md.html&#x27;</span>, nums=nums, f=func) //可以传递函数名</span><br></pre></td></tr></table></figure></div>
+
+<p>定义全局模板方法</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.template_glabol() //模板中全局使用 &#123;&#123; func(<span class="params"><span class="string">&#x27;haha&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.template_filter() //模板全局使用 &#123;&#123; <span class="string">&#x27;haha&#x27;</span>|f(<span class="params"><span class="string">&#x27;e&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">arg,h</span>):</span><br><span class="line">    <span class="keyword">return</span> arg + h</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/md/hg&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;md_hg.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>如果想要将一个方法限制为一个蓝图域中使用，只需将app修改即可</p>
+<h3 id="特殊装饰器"><a href="#特殊装饰器" class="headerlink" title="特殊装饰器"></a>特殊装饰器</h3><hr>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.before_request //视图函数运行前运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f1</span>():// 一旦返回值为真，则停止行为向下传播(判断用户登录等), 反之空，则继续</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request //视图函数运行结束后运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">response</span>): //视图函数有返回值，就必须返回一个Responce</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f2&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>或</p>
+<p><code>app.before_request(func)</code>不加装饰器使用</p>
+]]></content>
+      <tags>
+        <tag>Flask Study</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>3月5日 学习记录</title>
+    <url>/2023/03/05/3%E6%9C%885%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h4 id="flask中函数app-route-嵌套装饰器可能错误"><a href="#flask中函数app-route-嵌套装饰器可能错误" class="headerlink" title="flask中函数app.route()嵌套装饰器可能错误"></a>flask中函数app.route()嵌套装饰器可能错误</h4><hr>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">atuh1</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">atuh2</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner    </span><br><span class="line"></span><br><span class="line"><span class="meta">@auth1</span></span><br><span class="line"><span class="meta">@auth2</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;index&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>单装饰器装饰: 装饰器在装饰一个函数时，此函数将被装饰器内部函数替代，如果想暴露原本函数，可以使用装饰器@functools.wraps(func)</p>
+<p>多装饰器装饰: 优先使用内部装饰器，逐层向上</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/index&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;h&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/login&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;g&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>@app.route() endpoint默认为函数名  </p>
+<p>两个函数使用相同函数装饰auth, 在不使用@functools.warps(func)的情况下，两个初始函数被装饰后，都将变为inner的属性，形成别名重复错误:<br><code>AssertionError: View function mapping is ovwewriting an existing endpoint function: inner</code></p>
+<h4 id="flask蓝图"><a href="#flask蓝图" class="headerlink" title="flask蓝图"></a>flask蓝图</h4><hr>
+<p>flask蓝图主要功能就是分类(Blueprint)，不同功能函数放在不同文件中实现: </p>
+<ol>
+<li><p>创建蓝图</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">xxx = Blueprint(<span class="string">&#x27;xxx&#x27;</span>, __name__)</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>在主进程中引用蓝图</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> <span class="string">&#x27;/path&#x27;</span> <span class="keyword">import</span> xxx</span><br><span class="line">app.register_blueprint(xxx, url_prefix=<span class="string">&#x27;/x&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>url_prefix 添加前缀 使用: &#x2F;x&#x2F;xxx</p>
+</li>
+</ol>
+<h4 id="Django的路由映射和Flask的蓝图有什么区别"><a href="#Django的路由映射和Flask的蓝图有什么区别" class="headerlink" title="Django的路由映射和Flask的蓝图有什么区别"></a>Django的路由映射和Flask的蓝图有什么区别</h4><hr>
+<p>flask:</p>
+<ol>
+<li><p>flask是利用蓝图进行模块划分的，通过app装饰器注册模块蓝图，在主模块统一调用;</p>
+</li>
+<li><p>在flask中，路由是通过装饰器给每个视图函数提供的, 而且根据请求方式的不同可以一个url用于不同的作用。功能相似，但是底层实现不一样</p>
+</li>
+</ol>
+<p>Django:</p>
+<ol>
+<li>Django路由映射是通过路由正则匹配映射到每一个模块的</li>
+<li>在django中，路由是浏览器访问服务器时，先访问的项目中的url，再由项目中的url找到应用中url，这些url是放在一个列表里，遵从从前往后匹配的规则。</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Flask Study</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>3月6日 学习记录</title>
     <url>/2023/03/06/3%E6%9C%886%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h3 id="唯一的URL-x2F-重定向行为"><a href="#唯一的URL-x2F-重定向行为" class="headerlink" title="唯一的URL&#x2F;重定向行为"></a>唯一的URL&#x2F;重定向行为</h3><hr>
@@ -56,104 +154,6 @@
 <li><p>抽象类和抽象方法<br>java :<br>抽象类中可以有抽象方法也可以有普通方法。<br>抽象类被继承后需要实现抽象方法</p>
 </li>
 </ol>
-]]></content>
-      <tags>
-        <tag>Flask Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>3月5日 学习记录</title>
-    <url>/2023/03/05/3%E6%9C%885%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h4 id="flask中函数app-route-嵌套装饰器可能错误"><a href="#flask中函数app-route-嵌套装饰器可能错误" class="headerlink" title="flask中函数app.route()嵌套装饰器可能错误"></a>flask中函数app.route()嵌套装饰器可能错误</h4><hr>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">atuh1</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">atuh2</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @functools.wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*arg, **kwarg</span>):</span><br><span class="line">        <span class="keyword">return</span> func(*arg, **kwarg)</span><br><span class="line">    <span class="keyword">return</span> inner    </span><br><span class="line"></span><br><span class="line"><span class="meta">@auth1</span></span><br><span class="line"><span class="meta">@auth2</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;index&quot;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>单装饰器装饰: 装饰器在装饰一个函数时，此函数将被装饰器内部函数替代，如果想暴露原本函数，可以使用装饰器@functools.wraps(func)</p>
-<p>多装饰器装饰: 优先使用内部装饰器，逐层向上</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/index&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;h&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/login&quot;</span></span>)</span></span><br><span class="line"><span class="meta">@auth</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;g&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>@app.route() endpoint默认为函数名  </p>
-<p>两个函数使用相同函数装饰auth, 在不使用@functools.warps(func)的情况下，两个初始函数被装饰后，都将变为inner的属性，形成别名重复错误:<br><code>AssertionError: View function mapping is ovwewriting an existing endpoint function: inner</code></p>
-<h4 id="flask蓝图"><a href="#flask蓝图" class="headerlink" title="flask蓝图"></a>flask蓝图</h4><hr>
-<p>flask蓝图主要功能就是分类(Blueprint)，不同功能函数放在不同文件中实现: </p>
-<ol>
-<li><p>创建蓝图</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">xxx = Blueprint(<span class="string">&#x27;xxx&#x27;</span>, __name__)</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>在主进程中引用蓝图</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> <span class="string">&#x27;/path&#x27;</span> <span class="keyword">import</span> xxx</span><br><span class="line">app.register_blueprint(xxx, url_prefix=<span class="string">&#x27;/x&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>url_prefix 添加前缀 使用: &#x2F;x&#x2F;xxx</p>
-</li>
-</ol>
-<h4 id="Django的路由映射和Flask的蓝图有什么区别"><a href="#Django的路由映射和Flask的蓝图有什么区别" class="headerlink" title="Django的路由映射和Flask的蓝图有什么区别"></a>Django的路由映射和Flask的蓝图有什么区别</h4><hr>
-<p>flask:</p>
-<ol>
-<li><p>flask是利用蓝图进行模块划分的，通过app装饰器注册模块蓝图，在主模块统一调用;</p>
-</li>
-<li><p>在flask中，路由是通过装饰器给每个视图函数提供的, 而且根据请求方式的不同可以一个url用于不同的作用。功能相似，但是底层实现不一样</p>
-</li>
-</ol>
-<p>Django:</p>
-<ol>
-<li>Django路由映射是通过路由正则匹配映射到每一个模块的</li>
-<li>在django中，路由是浏览器访问服务器时，先访问的项目中的url，再由项目中的url找到应用中url，这些url是放在一个列表里，遵从从前往后匹配的规则。</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Flask Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>3月7日学习记录</title>
-    <url>/2023/03/07/3%E6%9C%887%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h3 id="路由系统"><a href="#路由系统" class="headerlink" title="路由系统"></a>路由系统</h3><hr>
-<h4 id="路由的两种写法"><a href="#路由的两种写法" class="headerlink" title="路由的两种写法"></a>路由的两种写法</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">app.add_url_rule(<span class="string">&#x27;/index&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, index)</span><br></pre></td></tr></table></figure></div>
-
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/inddex&#x27;</span></span>)</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="路由加载源码的流程"><a href="#路由加载源码的流程" class="headerlink" title="路由加载源码的流程"></a>路由加载源码的流程</h4><ul>
-<li><p>将URL和函数打包成为Rule对象</p>
-</li>
-<li><p>将Rule对象添加到map对象中</p>
-</li>
-<li><p>app_url_map &#x3D; map对象</p>
-</li>
-</ul>
-<h4 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&lt;string:name&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;name&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>uuid类型 类似于xxxxx-xxxxxxx-xxxxxx-xxxxxx</p>
-<h5 id="自定义路由"><a href="#自定义路由" class="headerlink" title="自定义路由"></a>自定义路由</h5><p>必须继承BaseConverter</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.routing <span class="keyword">import</span> BaseConverter</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RegexConverter</span>(<span class="title class_ inherited__">BaseConverter</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>, regex</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="built_in">map</span>)</span><br><span class="line">        self.regex = regex</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_python</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.url_map.converters[<span class="string">&#x27;regex&#x27;</span>] = RegexConverter</span><br></pre></td></tr></table></figure></div>
-
-<h3 id><a href="#" class="headerlink" title></a></h3><h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><hr>
-<h4 id="FBV"><a href="#FBV" class="headerlink" title="FBV"></a>FBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/user&#x27;</span>, method=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="CBV"><a href="#CBV" class="headerlink" title="CBV"></a>CBV</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UserView</span>(views, MethodView):</span><br><span class="line">    method = [<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span><br><span class="line">    decorators = [test1, test2] //CBV添加装饰器</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;get&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;post&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.add_url_rule(<span class="string">&#x27;/user&#x27;</span>, view_func=UserView.as_view(<span class="string">&#x27;user&#x27;</span>))</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="模板-jinja2"><a href="#模板-jinja2" class="headerlink" title="模板(jinja2)"></a>模板(jinja2)</h3><hr>
-<h4 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h4><p>模板可继承</p>
-<ol>
-<li><p>被继承:</p>
-<p><code>&#123;% block content %&#125; ? &#123;% endbloack %&#125;</code>  </p>
-</li>
-<li><p>继承:</p>
-<p><code>&#123;% extends 'layout.html' %&#125;  &#123;% block content %&#125; ? &#123;% endbloack %&#125;</code></p>
-</li>
-<li><p>引入:</p>
-<p><code>&#123;% include 'from.html' %&#125;</code></p>
-</li>
-</ol>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dunc</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line">render_template(<span class="string">&#x27;md.html&#x27;</span>, nums=nums, f=func) //可以传递函数名</span><br></pre></td></tr></table></figure></div>
-
-<p>定义全局模板方法</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.template_glabol() //模板中全局使用 &#123;&#123; func(<span class="params"><span class="string">&#x27;haha&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func</span>(<span class="params">arg</span>):</span><br><span class="line">    <span class="keyword">return</span> arg</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.template_filter() //模板全局使用 &#123;&#123; <span class="string">&#x27;haha&#x27;</span>|f(<span class="params"><span class="string">&#x27;e&#x27;</span></span>) &#125;&#125;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">arg,h</span>):</span><br><span class="line">    <span class="keyword">return</span> arg + h</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/md/hg&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;md_hg.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>如果想要将一个方法限制为一个蓝图域中使用，只需将app修改即可</p>
-<h3 id="特殊装饰器"><a href="#特殊装饰器" class="headerlink" title="特殊装饰器"></a>特殊装饰器</h3><hr>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.before_request //视图函数运行前运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f1</span>():// 一旦返回值为真，则停止行为向下传播(判断用户登录等), 反之空，则继续</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request //视图函数运行结束后运行</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f2</span>(<span class="params">response</span>): //视图函数有返回值，就必须返回一个Responce</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;f2&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>或</p>
-<p><code>app.before_request(func)</code>不加装饰器使用</p>
 ]]></content>
       <tags>
         <tag>Flask Study</tag>
@@ -827,6 +827,488 @@
 ]]></content>
       <tags>
         <tag>React Study</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript-React-3</title>
+    <url>/2023/03/09/JavaScript-React-3/</url>
+    <content><![CDATA[<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><hr>
+<p>父组件传递属性，需要在子组件获取才能使用:</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;div className=&#123;<span class="string">`card <span class="subst">$&#123;props.className&#125;</span>`</span>&#125;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>props.children 表示组件的标签体</p>
+<p>useRef().current 表示当前的DOM</p>
+<p>事件对象:</p>
+<ul>
+<li><p>event包含所有触发事件对象信息</p>
+<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">descChangeHandler</span> = (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">target</span>.<span class="property">value</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>Linux</title>
+    <url>/2023/03/20/Linux/</url>
+    <content><![CDATA[<h3 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h3><p>当前目录下的所有内容(文件或文件夹)</p>
+<p>默认目录home-家目录&#x2F;home&#x2F;‘username’</p>
+<ol>
+<li><p>命令参数[-a -l -h]</p>
+<p>ls 目录 -查找目录下所有内容</p>
+<p>-a-all 显示所有当前目录下所有内容(包括隐藏内容.)</p>
+<p>-l-list 以列表方式加创建时间和权限组显示所有当前目录下所有内容</p>
+<p>选项可以复合-al同时应用两类功能</p>
+<p>-h 和-l混合使用 将内容容量以可读方式显示1KB,1MB等</p>
+</li>
+</ol>
+<h3 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h3><p>切换工作目录Change Directory</p>
+<p>cd [Linux路径] 无参数直接切换</p>
+<p>不指定路径，直接回到home目录</p>
+<h3 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h3><p>Print Work Directory</p>
+<p>直接使用pwd打印当前工作目录路径 显示&#x2F;home&#x2F;xxx</p>
+<h3 id="绝对路径"><a href="#绝对路径" class="headerlink" title="绝对路径"></a>绝对路径</h3><p>以根目录为起点，写出一个路径，以&#x2F;为起点</p>
+<h3 id="相对路径"><a href="#相对路径" class="headerlink" title="相对路径"></a>相对路径</h3><p>以当前目录为起点，写一个路径，不需要写&#x2F;</p>
+<h4 id="特殊路径符"><a href="#特殊路径符" class="headerlink" title="特殊路径符"></a>特殊路径符</h4><p>.  表示当前目录，比如 cd .&#x2F;Desktop表示切换到当前目录下的Desktop目录内</p>
+<p>.. 表示切换到上一级的某个目录</p>
+<p>~ 表示HOME目录,比如cd ~即可退回HOME</p>
+<h3 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h3><p>Make Directroy</p>
+<p>创建目录，可以使用相对路径和绝对路径</p>
+<p>makdir [-p] 路径</p>
+<p>-p表示自动创建不存在的父目录</p>
+<h3 id="ctrl-l-and-clear"><a href="#ctrl-l-and-clear" class="headerlink" title="ctrl+l and clear"></a>ctrl+l and clear</h3><p>清空屏幕</p>
+<h3 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h3><p>创建文件</p>
+<p>touch 路径</p>
+<h3 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h3><p>查看文件内内容(全部打印)</p>
+<p>cat 路径</p>
+<h3 id="more"><a href="#more" class="headerlink" title="more"></a>more</h3><p>查看文件内内容(可翻页–more–)</p>
+<p>more 路径</p>
+<p>退出翻页查看(键盘q)</p>
+<h3 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h3><p>copy</p>
+<p>复制文件和文件夹</p>
+<p>cp [-r] 参数1 参数2</p>
+<p>-r 用于复制文件夹用，不输入即复制文件</p>
+<p>参数1 表示被复制文件路径</p>
+<p>参数2 表示要复制去的路径</p>
+<h3 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h3><p>服务器之间传递文件</p>
+<p>scp [-r] 参数1 参数2</p>
+<ul>
+<li><p>-r 用于复制文件夹</p>
+</li>
+<li><p>参数 本机路径或远程目标路径</p>
+</li>
+</ul>
+<p>scp -r &#x2F;export&#x2F;server&#x2F;jdk root@node2:&#x2F;export&#x2F;server&#x2F;</p>
+<p>将本机上的jdk文件夹，以root身份复制到node2的指定路径中</p>
+<h3 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h3><p>move</p>
+<p>移动文件夹和文件，改名</p>
+<p>mv 参数1 参数2</p>
+<p>参数与cp同</p>
+<h3 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h3><p>remove</p>
+<p>rm [-r -f] 参数1——n</p>
+<p>删除文件和文件夹</p>
+<p>-r 用于删除文件夹</p>
+<p>-f 表示force 强制删除(不会弹出提示确认信息)</p>
+<ul>
+<li>普通用户不会弹出，root用户会弹出</li>
+</ul>
+<p>参数表示要删除的文件或文件夹路径空格隔开，可一起删除</p>
+<h4 id="通配符"><a href="#通配符" class="headerlink" title="通配符*"></a>通配符*</h4><p>匹配任意内容</p>
+<p>test* 匹配任何test开头的内容</p>
+<p>*test * 匹配任何包含test的内容</p>
+<p>*test 匹配test结尾的内容</p>
+<p>rm -rf &#x2F;* 强制删除根目录下所有内容</p>
+<h3 id="which"><a href="#which" class="headerlink" title="which"></a>which</h3><p>查看命令的程序文件的路径</p>
+<p>which [命令]</p>
+<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>搜索指定文件</p>
+<p>find 起始路径 -name ‘查找文件名’</p>
+<p>root用户全盘搜索</p>
+<p>find 起始路径 -size +|-n [kMG]</p>
+<ul>
+<li><p>+,-表示大于和小于</p>
+</li>
+<li><p>n表示大小数字</p>
+</li>
+<li><p>kMG表示大小单位</p>
+</li>
+</ul>
+<p>find &#x2F; -size -10k</p>
+<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>从文件中通过关键字过滤文件行</p>
+<p>grep [-n] ’关键字‘ 文件路径</p>
+<h3 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h3><p>统计文件的行数</p>
+<p>wc [-c  -m -l -w] 文件路径(不加参数，显示行数，单词数，字节数，文件名)</p>
+<p>-c 统计bytes数</p>
+<p>-m 统计字符数</p>
+<p>-l 统计行数</p>
+<p>-w 统计单词数</p>
+<h3 id="管道符"><a href="#管道符" class="headerlink" title="管道符(|)"></a>管道符(|)</h3><p>将管道符左边的结果，作为右边的输入</p>
+<ul>
+<li><p>cat test.txt | grep x</p>
+</li>
+<li><p>ls -lh &#x2F;usr | wc -l</p>
+</li>
+<li><p>cat test.txt | grep x | grep xx</p>
+</li>
+</ul>
+<h3 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h3><p>在命令行中输出指定内容</p>
+<p>echo ‘输出的内容’</p>
+<p>echo &#96;&#96;(反引号内输入命令) 输出命令结果 </p>
+<h3 id="重定向符"><a href="#重定向符" class="headerlink" title="重定向符"></a>重定向符</h3><p>[&gt;] 将左侧命令的结果，覆盖写入到符号右侧</p>
+<ul>
+<li>echo ‘hello’ &gt; test.txt</li>
+</ul>
+<p>[&gt;&gt;] 将左侧命令的结果，追加写入符号右侧</p>
+<ul>
+<li>ls &#x2F; &gt; test.txt</li>
+</ul>
+<h3 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h3><p>可以查看文件尾部内容，跟踪文件最新更改</p>
+<p>tail [-f -num] 路径</p>
+<p>-f 表示持续跟踪</p>
+<p>-num 表示查看尾部多少行，不填默认10行</p>
+<ul>
+<li>tail -5 test.txt</li>
+</ul>
+<h3 id="vi-x2F-vim"><a href="#vi-x2F-vim" class="headerlink" title="vi&#x2F;vim"></a>vi&#x2F;vim</h3><p>Linux中最经典的文本编辑器</p>
+<p>vim是vi的加强版本，兼容vi的所有指令，不仅能编辑文本，还具有shell程序编辑的功能，可以不同颜色的字体来辨别语法的正确性</p>
+<ol>
+<li><p>命令模式 (Command mode)</p>
+<p>所敲的按键编辑器都理解成命令,此模式下,不能自由进行文本编辑</p>
+</li>
+<li><p>输入模式(Insert mode)</p>
+<p>此模式下，可以对文件内容进行自由编辑</p>
+</li>
+<li><p>底线命令模式(Last line mode)</p>
+<p>以:开始，通常用于文件的保存和退出</p>
+</li>
+</ol>
+<p>vim 文件路径</p>
+<ul>
+<li><p>如果文件存在打开，不存在则创建</p>
+</li>
+<li><p>从命令模式点击i进入输入模式</p>
+</li>
+<li><p>从输入模式使用esc退回命令模式</p>
+</li>
+<li><p>命令模式下按:进入底线命令模式</p>
+<ul>
+<li>wq w保存 q退出</li>
+</ul>
+</li>
+</ul>
+<p>命令模式命令</p>
+<blockquote>
+<p>$移动到行结尾</p>
+<p>0移动到行开头</p>
+<p>&#x2F;进入搜索模式</p>
+<p>n向下搜索</p>
+<p>N向上搜索</p>
+<p>yy复制当前行</p>
+<p>p粘贴</p>
+<p>dd删除当前行</p>
+<p>ndd删除当前行和下面的n行</p>
+<p>u撤销修改</p>
+<p>ctrl+r反向撤销修改</p>
+<p>gg跳到首行</p>
+<p>G跳到最后一行</p>
+<p>dG从当前行向下全部删除</p>
+<p>dgg向上全部删除</p>
+<p>d$从光标开始删除到本行行尾</p>
+<p>d0从光标开始删除到本行行首</p>
+</blockquote>
+<p>底线命令模式命令</p>
+<blockquote>
+<p>:wq 保存退出</p>
+<p>:q! 强制退出</p>
+<p>:set nu 显示行号</p>
+<p>:set paste设置粘贴模式</p>
+</blockquote>
+<h3 id="root-超级管理员"><a href="#root-超级管理员" class="headerlink" title="root(超级管理员)"></a>root(超级管理员)</h3><p>拥有最大的系统操作权限</p>
+<h4 id="su"><a href="#su" class="headerlink" title="su"></a>su</h4><p>su -  默认切换root</p>
+<p>su-root 密码 切换root管理员(-是为了在登录时加载环境变量)</p>
+<p>exit 回退</p>
+<p>root管理员切换其他账号不要密码</p>
+<h4 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h4><p>临时以root身份执行命令</p>
+<p>sudo 其他命令</p>
+<p>只有认证的用户才能使用</p>
+<ul>
+<li><p>为普通用户配置认证</p>
+<ul>
+<li><p>切换到root用户，执行visudo命令打开&#x2F;etc&#x2F;sudoers</p>
+</li>
+<li><p>在文件最后添加:</p>
+<p><code>intyou ALL=(ALL)     NOPASSWD:ALL</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="用户，用户组"><a href="#用户，用户组" class="headerlink" title="用户，用户组"></a>用户，用户组</h3><p>以下命令使用root用户执行</p>
+<h4 id="用户组管理"><a href="#用户组管理" class="headerlink" title="用户组管理"></a>用户组管理</h4><p>groupadd 用户组名 创建用户组</p>
+<p>groupdel 用户组名 删除用户组</p>
+<h4 id="用户管理-Ubuntu"><a href="#用户管理-Ubuntu" class="headerlink" title="用户管理(Ubuntu)"></a>用户管理(Ubuntu)</h4><p>useradd [-g -d] 用户名</p>
+<ul>
+<li><p>-g 指定用户的组，不指定，会创建同名组并自动加入，指定组需要已存在， 如已知存在同名组，必须使用-g</p>
+</li>
+<li><p>-d指定用户HOME路径， 不指定， HOME目录默认在: &#x2F;home&#x2F;用户名</p>
+</li>
+<li><p>-m创建家目录</p>
+</li>
+</ul>
+<p>userdel [-r] 用户名</p>
+<ul>
+<li>-r 删除用户的HOME目录，不使用, HOME目录保留</li>
+</ul>
+<p>id 用户名</p>
+<ul>
+<li>查看用户的用户组</li>
+</ul>
+<p>usermod -aG</p>
+<p>将指定用户加入指定用户组</p>
+<p>getent</p>
+<p>getent passwd 查看当前系统中有哪些用户</p>
+<p>getent group 查看当前系统中有哪些用户组</p>
+<h3 id="认知权限信息"><a href="#认知权限信息" class="headerlink" title="认知权限信息"></a>认知权限信息</h3><p>ls -l 输出的信息分析</p>
+<p>drwxr-xr-x  intyou intyou</p>
+<p>drwxr-xr-x - 表示权限管控细节</p>
+<p>-代表无</p>
+<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-21-18-03-51-image.png"></p>
+<p>第一块 ‘-‘表示文件 ‘d’表示文件夹 ‘l’表示软链接</p>
+<p>除去第一块:</p>
+<ul>
+<li><p>前三块代表所属用户权限</p>
+</li>
+<li><p>中三块代表所属用户组权限</p>
+</li>
+<li><p>后三块代表其他用户权限</p>
+</li>
+</ul>
+<p>r 读权限</p>
+<p>w写权限</p>
+<p>x执行权限</p>
+<h3 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h3><p>修改文件，文件夹的权限信息</p>
+<p>只有文件文件夹的所属用户或root用户可以修改</p>
+<p>chmod [-R] 权限 文件和文件夹</p>
+<ul>
+<li>-R 对文件夹内的全部内容应用同样的操作</li>
+</ul>
+<p><code>chomd u=rwx,g=rx,o=x hello.txt</code>将文件权限修改为rwxr-x–x</p>
+<p>u表示所属用户权限，g表示group组权限，o表示other其他用户权限</p>
+<h4 id="快捷方式"><a href="#快捷方式" class="headerlink" title="快捷方式"></a>快捷方式</h4><p>权限的数字序号</p>
+<p>权限可以用三位数字来代表，第一位数字表示用户权限，第二位表示用户组权限，第三位表示其他用户权限</p>
+<p>命令从右到左依次增加</p>
+<p>0：— 1：–x 2：-w-3：-wx 4：r– 5：r-x 6：rw- 7：rwx</p>
+<h3 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h3><p>只能root用户执行</p>
+<p>修改文件和文件夹的所属用户和用户组</p>
+<p>chown [-R] [用户] [:] [用户组] 文件或文件夹</p>
+<p>chown root hello.txt 将hello.txt所属用户修改为root</p>
+<p>chown :root hello.txt 将hello.txt所属用户组修改为root</p>
+<h3 id="小技巧"><a href="#小技巧" class="headerlink" title="小技巧"></a>小技巧</h3><h4 id="ctrl-c-强制停止"><a href="#ctrl-c-强制停止" class="headerlink" title="ctrl+c 强制停止"></a>ctrl+c 强制停止</h4><h4 id="ctrl-d-退出或登录"><a href="#ctrl-d-退出或登录" class="headerlink" title="ctrl+d 退出或登录"></a>ctrl+d 退出或登录</h4><ul>
+<li>不能用于退出vi&#x2F;vim</li>
+</ul>
+<h4 id="历史命令搜索"><a href="#历史命令搜索" class="headerlink" title="历史命令搜索"></a>历史命令搜索</h4><ul>
+<li><p>history</p>
+<p>history | grep ‘xxx’</p>
+</li>
+<li><p>!命令前缀 自动执行上一次匹配前缀的命令</p>
+<p>python</p>
+<p>!p</p>
+</li>
+<li><p>ctrl+r 输入内容去匹配历史命令</p>
+</li>
+</ul>
+<h3 id="centos-下载包"><a href="#centos-下载包" class="headerlink" title="centos 下载包"></a>centos 下载包</h3><h4 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h4><p>yum [-y] [install | remove | search] 软件名称</p>
+<ul>
+<li><p>-y 自动确定， 无需手动确认安装或卸载过程</p>
+</li>
+<li><p>install 安装</p>
+</li>
+<li><p>remove 卸载</p>
+</li>
+<li><p>search 搜索</p>
+</li>
+</ul>
+<p>yum命令需要root指令</p>
+<h3 id="ubuntu下载包"><a href="#ubuntu下载包" class="headerlink" title="ubuntu下载包"></a>ubuntu下载包</h3><h4 id="apt"><a href="#apt" class="headerlink" title="apt"></a>apt</h4><p>apt [-y] [install | remove | search] 软件名称</p>
+<p>与centos相同</p>
+<h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><p>控制软件(内置或第三方)启动，停止，开机自启</p>
+<p>systemctl start | stop | status | enable | disable 服务名</p>
+<p>enable&#x2F;disable 打开、关闭开机自启</p>
+<h3 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h3><h4 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h4><p>在系统中创建软链接，可以将文件和文件夹链接到其他位置(快捷方式)</p>
+<p>ln -s 参数1 参数2</p>
+<p>-s 创建软链接</p>
+<p>参数1 被链接的文件或文件夹</p>
+<p>参数2 要链接去的目的地</p>
+<p><code>ln -s /etc/yum.conf ~/yum.conf</code></p>
+<h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>date [-d] [+格式化字符串]</p>
+<ul>
+<li><p>-d 按照给定的字符串显示日期，一般用于日期计算</p>
+<p>支持 year month day hour minute second</p>
+<p>date -d ‘+1 day’ ‘+%Y-%m-%d’</p>
+</li>
+<li><p>格式化字符串</p>
+<ul>
+<li><p>%Y 年</p>
+</li>
+<li><p>%y 年份后两位数字(00,99)</p>
+</li>
+<li><p>%m 月份</p>
+</li>
+<li><p>%d 日</p>
+</li>
+<li><p>%H 小时</p>
+</li>
+<li><p>%M 分钟</p>
+</li>
+<li><p>%S 秒</p>
+</li>
+<li><p>%s 自1970-01-01 00:00:00 到现在的秒数</p>
+</li>
+</ul>
+<p>date ‘+%Y-%m-%d %H:%M:%S’</p>
+</li>
+</ul>
+<h4 id="修改linux时区-东八区"><a href="#修改linux时区-东八区" class="headerlink" title="修改linux时区(东八区)"></a>修改linux时区(东八区)</h4><p>root权限</p>
+<p>rm -f &#x2F;etc&#x2F;localtime</p>
+<p>sudo ln -s &#x2F;user&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtime</p>
+<h4 id="ntp程序"><a href="#ntp程序" class="headerlink" title="ntp程序"></a>ntp程序</h4><p>联网自动校准系统时间</p>
+<p>需要使用apt下载</p>
+<p>使用systemctl enable ntp 开机自启</p>
+<p>手动校准 ntpdate -u ntp.aliyun.com</p>
+<h3 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h3><p>查看ip信息</p>
+<h3 id="hostname"><a href="#hostname" class="headerlink" title="hostname"></a>hostname</h3><p>查看主机名</p>
+<ul>
+<li>hostname set-hostname 名字 修改主机名</li>
+</ul>
+<h3 id="在linux中固定ip地址"><a href="#在linux中固定ip地址" class="headerlink" title="在linux中固定ip地址"></a>在linux中固定ip地址</h3><p>在ubuntu22.04中应找到&#x2F;etc&#x2F;netplan中的yaml文件修改</p>
+<blockquote>
+<p><a class="link" href="https://www.cnblogs.com/liujiaxin2018/p/16287463.html">ubuntu 22.04如何配置静态IP、网关、DNS - 小鲨鱼2018 - 博客园 (cnblogs.com) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>&#96;</p>
+</blockquote>
+<h3 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h3><p>检测指定网络服务器是否可联通状态</p>
+<p>ping [-c num] ip或主机名</p>
+<p>-c 检查的次数 不使用，将无限次</p>
+<h3 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h3><p>可以在命令行内下载网络文件</p>
+<p>wget [-b] url</p>
+<p>-b 后台下载</p>
+<p>参数: url 下载链接</p>
+<p>不管成功下载或者不成功，都会创建文件</p>
+<h3 id="curl"><a href="#curl" class="headerlink" title="curl"></a>curl</h3><p>可以发送网络请求 下载文件 获取网站状态</p>
+<p>curl [-O] url</p>
+<p>-O 用于下载文件，当url是下载链接时，可以使用此选项保存文件</p>
+<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h3><h4 id="查看端口占用"><a href="#查看端口占用" class="headerlink" title="查看端口占用"></a>查看端口占用</h4><ul>
+<li><p>netstat</p>
+<p>需要apt安装</p>
+<p>netstat -anp|grep 端口号</p>
+</li>
+<li><p>nmap</p>
+<p>需要apt安装</p>
+<p>nmap 端口</p>
+</li>
+</ul>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><h4 id="查看进程"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程</h4><p>ps [-e -f]</p>
+<ul>
+<li><p>-e 显示全部的进程</p>
+</li>
+<li><p>-f 已完全格式化的形式展示信息</p>
+</li>
+</ul>
+<p>固定用法ps -ef 列出全部进程的全部信息</p>
+<p>例: ps -ef | grep tail</p>
+<h4 id="关闭进程"><a href="#关闭进程" class="headerlink" title="关闭进程"></a>关闭进程</h4><p>kill [-9] 进程ID</p>
+<p>-9 表示强制关闭进程</p>
+<h3 id="查看系统占用"><a href="#查看系统占用" class="headerlink" title="查看系统占用"></a>查看系统占用</h3><p>top 查看cpu占用</p>
+<ul>
+<li><p>第一行: 命令名称 当前系统时间 up 6 min: 启动了6分钟 2users: 2个用户登录 load average: 0.06 0.17 0.13   1 5 15分钟负载</p>
+</li>
+<li><p>第二行: Task 进程数  running: 正在运行进程数 sleeping: 进程睡眠数 stopped停止进程数  zombie 僵尸进程数</p>
+</li>
+<li><p>第三行: %cpu cpu使用率 us 用户cpu使用率 sy 系统cpu使用率  ni高优先级进程占用cpu时间百分比 id空闲cpu率  wa IO等待cpu占用率  hi  cpu硬件中断率  si CPU软件中断率   st 强制等待占用cpu率</p>
+</li>
+<li><p>第四行: kib Mem 物理内存  total总量  free空闲  used 使用  buff&#x2F;cache buff和cache占用 kibSwap  虚拟内存(交换空间)</p>
+</li>
+</ul>
+<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-26-29-image.png"></p>
+<p>选项:</p>
+<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-28-00-image.png"></p>
+<p>交互式选项:</p>
+<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-31-28-image.png"></p>
+<h3 id="磁盘信息监控"><a href="#磁盘信息监控" class="headerlink" title="磁盘信息监控"></a>磁盘信息监控</h3><p>查看硬盘使用情况</p>
+<p>df [-h]</p>
+<ul>
+<li>-h 以更加人性化的单位显示</li>
+</ul>
+<p>iostat [-x] [num1][num2]</p>
+<p>需要下载包</p>
+<ul>
+<li><p>-x 显示更多信息</p>
+</li>
+<li><p>num1 数字 刷新时间，num2 数字 刷新几次</p>
+</li>
+<li><p>tps 该设备每秒的传输次数，’一次传输’&#x3D;’一次I&#x2F;O请求’。多个逻辑请求可能会被合并为”一次I&#x2F;O请求”</p>
+</li>
+<li><p>rKB&#x2F;s 每秒发送到设备的读取请求数  wKB&#x2F;s 每秒发送到设备的写入请求数 %util 磁盘利用率</p>
+</li>
+</ul>
+<h3 id="网络状态监控"><a href="#网络状态监控" class="headerlink" title="网络状态监控"></a>网络状态监控</h3><p>sar -n DEV num1 num2</p>
+<p>需要下载包</p>
+<ul>
+<li><p>-n 查看网络</p>
+</li>
+<li><p>DEV 查看网络接口</p>
+</li>
+</ul>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p>简化程序执行路径</p>
+<p>env 查看当前系统中记录的环境变量</p>
+<h4 id="符号"><a href="#符号" class="headerlink" title="$符号"></a>$符号</h4><p>$获取变量的值</p>
+<blockquote>
+<p>echo $PATH</p>
+<p>echo ${PATH}ABC</p>
+</blockquote>
+<h4 id="自行设置环境变量"><a href="#自行设置环境变量" class="headerlink" title="自行设置环境变量"></a>自行设置环境变量</h4><ul>
+<li><p>临时设置 export 变量名 &#x3D; 变量值</p>
+</li>
+<li><p>永久生效</p>
+<ul>
+<li><p>针对当前用户生效，配置在当前用户的: ~&#x2F;.bashrc文件中</p>
+</li>
+<li><p>针对所有用户生效， 配置在系统的: &#x2F;etc&#x2F;profile文件中</p>
+</li>
+<li><p>并通过语法: source 配置文件, 进行立刻生效</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="自定义环境变量PATH"><a href="#自定义环境变量PATH" class="headerlink" title="自定义环境变量PATH"></a>自定义环境变量PATH</h4><p>export PATH&#x3D;$PATH: 路径</p>
+<h3 id="压缩、解压"><a href="#压缩、解压" class="headerlink" title="压缩、解压"></a>压缩、解压</h3><h5 id="tar-gz"><a href="#tar-gz" class="headerlink" title=".tar  .gz"></a>.tar  .gz</h5><p>gzip体积压缩格式.tar.gz</p>
+<p>tar [-c -v -x -f -z -C] 参数1—n</p>
+<ul>
+<li><p>-c 创建压缩文件</p>
+</li>
+<li><p>-v 显示压缩，解压过程</p>
+</li>
+<li><p>-x 解压模式</p>
+</li>
+<li><p>-f 要创建的文件，或要解压的文件，必须在所有选项中处于最后一个</p>
+</li>
+<li><p>-z gzip模式 不使用就是普通tarball格式 一般处于第一个</p>
+</li>
+<li><p>-C 选择解压的目的地, 单独使用</p>
+</li>
+</ul>
+<p>压缩:</p>
+<p>tar -cvf test.tar 1.txt 2.txt</p>
+<p>将1.txt 2.txt压缩到test.tar</p>
+<p>解压:</p>
+<p>tar -xvf test.tar -C 解压路径</p>
+<p>将test.tar 解压到解压路径</p>
+<h5 id="zip"><a href="#zip" class="headerlink" title=".zip"></a>.zip</h5><p>压缩:</p>
+<p>zip [-r] 参数1—n</p>
+<ul>
+<li>被压缩的包含文件夹的时候</li>
+</ul>
+<p>解压:</p>
+<p>unzip [-d] 参数</p>
+<ul>
+<li>-d 指定解压路径</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Linux Study</tag>
       </tags>
   </entry>
   <entry>
@@ -2027,488 +2509,6 @@
       <tags>
         <tag>MySQL Study</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Linux</title>
-    <url>/2023/03/20/Linux/</url>
-    <content><![CDATA[<h3 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h3><p>当前目录下的所有内容(文件或文件夹)</p>
-<p>默认目录home-家目录&#x2F;home&#x2F;‘username’</p>
-<ol>
-<li><p>命令参数[-a -l -h]</p>
-<p>ls 目录 -查找目录下所有内容</p>
-<p>-a-all 显示所有当前目录下所有内容(包括隐藏内容.)</p>
-<p>-l-list 以列表方式加创建时间和权限组显示所有当前目录下所有内容</p>
-<p>选项可以复合-al同时应用两类功能</p>
-<p>-h 和-l混合使用 将内容容量以可读方式显示1KB,1MB等</p>
-</li>
-</ol>
-<h3 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h3><p>切换工作目录Change Directory</p>
-<p>cd [Linux路径] 无参数直接切换</p>
-<p>不指定路径，直接回到home目录</p>
-<h3 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h3><p>Print Work Directory</p>
-<p>直接使用pwd打印当前工作目录路径 显示&#x2F;home&#x2F;xxx</p>
-<h3 id="绝对路径"><a href="#绝对路径" class="headerlink" title="绝对路径"></a>绝对路径</h3><p>以根目录为起点，写出一个路径，以&#x2F;为起点</p>
-<h3 id="相对路径"><a href="#相对路径" class="headerlink" title="相对路径"></a>相对路径</h3><p>以当前目录为起点，写一个路径，不需要写&#x2F;</p>
-<h4 id="特殊路径符"><a href="#特殊路径符" class="headerlink" title="特殊路径符"></a>特殊路径符</h4><p>.  表示当前目录，比如 cd .&#x2F;Desktop表示切换到当前目录下的Desktop目录内</p>
-<p>.. 表示切换到上一级的某个目录</p>
-<p>~ 表示HOME目录,比如cd ~即可退回HOME</p>
-<h3 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h3><p>Make Directroy</p>
-<p>创建目录，可以使用相对路径和绝对路径</p>
-<p>makdir [-p] 路径</p>
-<p>-p表示自动创建不存在的父目录</p>
-<h3 id="ctrl-l-and-clear"><a href="#ctrl-l-and-clear" class="headerlink" title="ctrl+l and clear"></a>ctrl+l and clear</h3><p>清空屏幕</p>
-<h3 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h3><p>创建文件</p>
-<p>touch 路径</p>
-<h3 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h3><p>查看文件内内容(全部打印)</p>
-<p>cat 路径</p>
-<h3 id="more"><a href="#more" class="headerlink" title="more"></a>more</h3><p>查看文件内内容(可翻页–more–)</p>
-<p>more 路径</p>
-<p>退出翻页查看(键盘q)</p>
-<h3 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h3><p>copy</p>
-<p>复制文件和文件夹</p>
-<p>cp [-r] 参数1 参数2</p>
-<p>-r 用于复制文件夹用，不输入即复制文件</p>
-<p>参数1 表示被复制文件路径</p>
-<p>参数2 表示要复制去的路径</p>
-<h3 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h3><p>服务器之间传递文件</p>
-<p>scp [-r] 参数1 参数2</p>
-<ul>
-<li><p>-r 用于复制文件夹</p>
-</li>
-<li><p>参数 本机路径或远程目标路径</p>
-</li>
-</ul>
-<p>scp -r &#x2F;export&#x2F;server&#x2F;jdk root@node2:&#x2F;export&#x2F;server&#x2F;</p>
-<p>将本机上的jdk文件夹，以root身份复制到node2的指定路径中</p>
-<h3 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h3><p>move</p>
-<p>移动文件夹和文件，改名</p>
-<p>mv 参数1 参数2</p>
-<p>参数与cp同</p>
-<h3 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h3><p>remove</p>
-<p>rm [-r -f] 参数1——n</p>
-<p>删除文件和文件夹</p>
-<p>-r 用于删除文件夹</p>
-<p>-f 表示force 强制删除(不会弹出提示确认信息)</p>
-<ul>
-<li>普通用户不会弹出，root用户会弹出</li>
-</ul>
-<p>参数表示要删除的文件或文件夹路径空格隔开，可一起删除</p>
-<h4 id="通配符"><a href="#通配符" class="headerlink" title="通配符*"></a>通配符*</h4><p>匹配任意内容</p>
-<p>test* 匹配任何test开头的内容</p>
-<p>*test * 匹配任何包含test的内容</p>
-<p>*test 匹配test结尾的内容</p>
-<p>rm -rf &#x2F;* 强制删除根目录下所有内容</p>
-<h3 id="which"><a href="#which" class="headerlink" title="which"></a>which</h3><p>查看命令的程序文件的路径</p>
-<p>which [命令]</p>
-<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>搜索指定文件</p>
-<p>find 起始路径 -name ‘查找文件名’</p>
-<p>root用户全盘搜索</p>
-<p>find 起始路径 -size +|-n [kMG]</p>
-<ul>
-<li><p>+,-表示大于和小于</p>
-</li>
-<li><p>n表示大小数字</p>
-</li>
-<li><p>kMG表示大小单位</p>
-</li>
-</ul>
-<p>find &#x2F; -size -10k</p>
-<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>从文件中通过关键字过滤文件行</p>
-<p>grep [-n] ’关键字‘ 文件路径</p>
-<h3 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h3><p>统计文件的行数</p>
-<p>wc [-c  -m -l -w] 文件路径(不加参数，显示行数，单词数，字节数，文件名)</p>
-<p>-c 统计bytes数</p>
-<p>-m 统计字符数</p>
-<p>-l 统计行数</p>
-<p>-w 统计单词数</p>
-<h3 id="管道符"><a href="#管道符" class="headerlink" title="管道符(|)"></a>管道符(|)</h3><p>将管道符左边的结果，作为右边的输入</p>
-<ul>
-<li><p>cat test.txt | grep x</p>
-</li>
-<li><p>ls -lh &#x2F;usr | wc -l</p>
-</li>
-<li><p>cat test.txt | grep x | grep xx</p>
-</li>
-</ul>
-<h3 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h3><p>在命令行中输出指定内容</p>
-<p>echo ‘输出的内容’</p>
-<p>echo &#96;&#96;(反引号内输入命令) 输出命令结果 </p>
-<h3 id="重定向符"><a href="#重定向符" class="headerlink" title="重定向符"></a>重定向符</h3><p>[&gt;] 将左侧命令的结果，覆盖写入到符号右侧</p>
-<ul>
-<li>echo ‘hello’ &gt; test.txt</li>
-</ul>
-<p>[&gt;&gt;] 将左侧命令的结果，追加写入符号右侧</p>
-<ul>
-<li>ls &#x2F; &gt; test.txt</li>
-</ul>
-<h3 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h3><p>可以查看文件尾部内容，跟踪文件最新更改</p>
-<p>tail [-f -num] 路径</p>
-<p>-f 表示持续跟踪</p>
-<p>-num 表示查看尾部多少行，不填默认10行</p>
-<ul>
-<li>tail -5 test.txt</li>
-</ul>
-<h3 id="vi-x2F-vim"><a href="#vi-x2F-vim" class="headerlink" title="vi&#x2F;vim"></a>vi&#x2F;vim</h3><p>Linux中最经典的文本编辑器</p>
-<p>vim是vi的加强版本，兼容vi的所有指令，不仅能编辑文本，还具有shell程序编辑的功能，可以不同颜色的字体来辨别语法的正确性</p>
-<ol>
-<li><p>命令模式 (Command mode)</p>
-<p>所敲的按键编辑器都理解成命令,此模式下,不能自由进行文本编辑</p>
-</li>
-<li><p>输入模式(Insert mode)</p>
-<p>此模式下，可以对文件内容进行自由编辑</p>
-</li>
-<li><p>底线命令模式(Last line mode)</p>
-<p>以:开始，通常用于文件的保存和退出</p>
-</li>
-</ol>
-<p>vim 文件路径</p>
-<ul>
-<li><p>如果文件存在打开，不存在则创建</p>
-</li>
-<li><p>从命令模式点击i进入输入模式</p>
-</li>
-<li><p>从输入模式使用esc退回命令模式</p>
-</li>
-<li><p>命令模式下按:进入底线命令模式</p>
-<ul>
-<li>wq w保存 q退出</li>
-</ul>
-</li>
-</ul>
-<p>命令模式命令</p>
-<blockquote>
-<p>$移动到行结尾</p>
-<p>0移动到行开头</p>
-<p>&#x2F;进入搜索模式</p>
-<p>n向下搜索</p>
-<p>N向上搜索</p>
-<p>yy复制当前行</p>
-<p>p粘贴</p>
-<p>dd删除当前行</p>
-<p>ndd删除当前行和下面的n行</p>
-<p>u撤销修改</p>
-<p>ctrl+r反向撤销修改</p>
-<p>gg跳到首行</p>
-<p>G跳到最后一行</p>
-<p>dG从当前行向下全部删除</p>
-<p>dgg向上全部删除</p>
-<p>d$从光标开始删除到本行行尾</p>
-<p>d0从光标开始删除到本行行首</p>
-</blockquote>
-<p>底线命令模式命令</p>
-<blockquote>
-<p>:wq 保存退出</p>
-<p>:q! 强制退出</p>
-<p>:set nu 显示行号</p>
-<p>:set paste设置粘贴模式</p>
-</blockquote>
-<h3 id="root-超级管理员"><a href="#root-超级管理员" class="headerlink" title="root(超级管理员)"></a>root(超级管理员)</h3><p>拥有最大的系统操作权限</p>
-<h4 id="su"><a href="#su" class="headerlink" title="su"></a>su</h4><p>su -  默认切换root</p>
-<p>su-root 密码 切换root管理员(-是为了在登录时加载环境变量)</p>
-<p>exit 回退</p>
-<p>root管理员切换其他账号不要密码</p>
-<h4 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h4><p>临时以root身份执行命令</p>
-<p>sudo 其他命令</p>
-<p>只有认证的用户才能使用</p>
-<ul>
-<li><p>为普通用户配置认证</p>
-<ul>
-<li><p>切换到root用户，执行visudo命令打开&#x2F;etc&#x2F;sudoers</p>
-</li>
-<li><p>在文件最后添加:</p>
-<p><code>intyou ALL=(ALL)     NOPASSWD:ALL</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="用户，用户组"><a href="#用户，用户组" class="headerlink" title="用户，用户组"></a>用户，用户组</h3><p>以下命令使用root用户执行</p>
-<h4 id="用户组管理"><a href="#用户组管理" class="headerlink" title="用户组管理"></a>用户组管理</h4><p>groupadd 用户组名 创建用户组</p>
-<p>groupdel 用户组名 删除用户组</p>
-<h4 id="用户管理-Ubuntu"><a href="#用户管理-Ubuntu" class="headerlink" title="用户管理(Ubuntu)"></a>用户管理(Ubuntu)</h4><p>useradd [-g -d] 用户名</p>
-<ul>
-<li><p>-g 指定用户的组，不指定，会创建同名组并自动加入，指定组需要已存在， 如已知存在同名组，必须使用-g</p>
-</li>
-<li><p>-d指定用户HOME路径， 不指定， HOME目录默认在: &#x2F;home&#x2F;用户名</p>
-</li>
-<li><p>-m创建家目录</p>
-</li>
-</ul>
-<p>userdel [-r] 用户名</p>
-<ul>
-<li>-r 删除用户的HOME目录，不使用, HOME目录保留</li>
-</ul>
-<p>id 用户名</p>
-<ul>
-<li>查看用户的用户组</li>
-</ul>
-<p>usermod -aG</p>
-<p>将指定用户加入指定用户组</p>
-<p>getent</p>
-<p>getent passwd 查看当前系统中有哪些用户</p>
-<p>getent group 查看当前系统中有哪些用户组</p>
-<h3 id="认知权限信息"><a href="#认知权限信息" class="headerlink" title="认知权限信息"></a>认知权限信息</h3><p>ls -l 输出的信息分析</p>
-<p>drwxr-xr-x  intyou intyou</p>
-<p>drwxr-xr-x - 表示权限管控细节</p>
-<p>-代表无</p>
-<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-21-18-03-51-image.png"></p>
-<p>第一块 ‘-‘表示文件 ‘d’表示文件夹 ‘l’表示软链接</p>
-<p>除去第一块:</p>
-<ul>
-<li><p>前三块代表所属用户权限</p>
-</li>
-<li><p>中三块代表所属用户组权限</p>
-</li>
-<li><p>后三块代表其他用户权限</p>
-</li>
-</ul>
-<p>r 读权限</p>
-<p>w写权限</p>
-<p>x执行权限</p>
-<h3 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h3><p>修改文件，文件夹的权限信息</p>
-<p>只有文件文件夹的所属用户或root用户可以修改</p>
-<p>chmod [-R] 权限 文件和文件夹</p>
-<ul>
-<li>-R 对文件夹内的全部内容应用同样的操作</li>
-</ul>
-<p><code>chomd u=rwx,g=rx,o=x hello.txt</code>将文件权限修改为rwxr-x–x</p>
-<p>u表示所属用户权限，g表示group组权限，o表示other其他用户权限</p>
-<h4 id="快捷方式"><a href="#快捷方式" class="headerlink" title="快捷方式"></a>快捷方式</h4><p>权限的数字序号</p>
-<p>权限可以用三位数字来代表，第一位数字表示用户权限，第二位表示用户组权限，第三位表示其他用户权限</p>
-<p>命令从右到左依次增加</p>
-<p>0：— 1：–x 2：-w-3：-wx 4：r– 5：r-x 6：rw- 7：rwx</p>
-<h3 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h3><p>只能root用户执行</p>
-<p>修改文件和文件夹的所属用户和用户组</p>
-<p>chown [-R] [用户] [:] [用户组] 文件或文件夹</p>
-<p>chown root hello.txt 将hello.txt所属用户修改为root</p>
-<p>chown :root hello.txt 将hello.txt所属用户组修改为root</p>
-<h3 id="小技巧"><a href="#小技巧" class="headerlink" title="小技巧"></a>小技巧</h3><h4 id="ctrl-c-强制停止"><a href="#ctrl-c-强制停止" class="headerlink" title="ctrl+c 强制停止"></a>ctrl+c 强制停止</h4><h4 id="ctrl-d-退出或登录"><a href="#ctrl-d-退出或登录" class="headerlink" title="ctrl+d 退出或登录"></a>ctrl+d 退出或登录</h4><ul>
-<li>不能用于退出vi&#x2F;vim</li>
-</ul>
-<h4 id="历史命令搜索"><a href="#历史命令搜索" class="headerlink" title="历史命令搜索"></a>历史命令搜索</h4><ul>
-<li><p>history</p>
-<p>history | grep ‘xxx’</p>
-</li>
-<li><p>!命令前缀 自动执行上一次匹配前缀的命令</p>
-<p>python</p>
-<p>!p</p>
-</li>
-<li><p>ctrl+r 输入内容去匹配历史命令</p>
-</li>
-</ul>
-<h3 id="centos-下载包"><a href="#centos-下载包" class="headerlink" title="centos 下载包"></a>centos 下载包</h3><h4 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h4><p>yum [-y] [install | remove | search] 软件名称</p>
-<ul>
-<li><p>-y 自动确定， 无需手动确认安装或卸载过程</p>
-</li>
-<li><p>install 安装</p>
-</li>
-<li><p>remove 卸载</p>
-</li>
-<li><p>search 搜索</p>
-</li>
-</ul>
-<p>yum命令需要root指令</p>
-<h3 id="ubuntu下载包"><a href="#ubuntu下载包" class="headerlink" title="ubuntu下载包"></a>ubuntu下载包</h3><h4 id="apt"><a href="#apt" class="headerlink" title="apt"></a>apt</h4><p>apt [-y] [install | remove | search] 软件名称</p>
-<p>与centos相同</p>
-<h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><p>控制软件(内置或第三方)启动，停止，开机自启</p>
-<p>systemctl start | stop | status | enable | disable 服务名</p>
-<p>enable&#x2F;disable 打开、关闭开机自启</p>
-<h3 id="软链接"><a href="#软链接" class="headerlink" title="软链接"></a>软链接</h3><h4 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h4><p>在系统中创建软链接，可以将文件和文件夹链接到其他位置(快捷方式)</p>
-<p>ln -s 参数1 参数2</p>
-<p>-s 创建软链接</p>
-<p>参数1 被链接的文件或文件夹</p>
-<p>参数2 要链接去的目的地</p>
-<p><code>ln -s /etc/yum.conf ~/yum.conf</code></p>
-<h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>date [-d] [+格式化字符串]</p>
-<ul>
-<li><p>-d 按照给定的字符串显示日期，一般用于日期计算</p>
-<p>支持 year month day hour minute second</p>
-<p>date -d ‘+1 day’ ‘+%Y-%m-%d’</p>
-</li>
-<li><p>格式化字符串</p>
-<ul>
-<li><p>%Y 年</p>
-</li>
-<li><p>%y 年份后两位数字(00,99)</p>
-</li>
-<li><p>%m 月份</p>
-</li>
-<li><p>%d 日</p>
-</li>
-<li><p>%H 小时</p>
-</li>
-<li><p>%M 分钟</p>
-</li>
-<li><p>%S 秒</p>
-</li>
-<li><p>%s 自1970-01-01 00:00:00 到现在的秒数</p>
-</li>
-</ul>
-<p>date ‘+%Y-%m-%d %H:%M:%S’</p>
-</li>
-</ul>
-<h4 id="修改linux时区-东八区"><a href="#修改linux时区-东八区" class="headerlink" title="修改linux时区(东八区)"></a>修改linux时区(东八区)</h4><p>root权限</p>
-<p>rm -f &#x2F;etc&#x2F;localtime</p>
-<p>sudo ln -s &#x2F;user&#x2F;share&#x2F;zoneinfo&#x2F;Asia&#x2F;Shanghai &#x2F;etc&#x2F;localtime</p>
-<h4 id="ntp程序"><a href="#ntp程序" class="headerlink" title="ntp程序"></a>ntp程序</h4><p>联网自动校准系统时间</p>
-<p>需要使用apt下载</p>
-<p>使用systemctl enable ntp 开机自启</p>
-<p>手动校准 ntpdate -u ntp.aliyun.com</p>
-<h3 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h3><p>查看ip信息</p>
-<h3 id="hostname"><a href="#hostname" class="headerlink" title="hostname"></a>hostname</h3><p>查看主机名</p>
-<ul>
-<li>hostname set-hostname 名字 修改主机名</li>
-</ul>
-<h3 id="在linux中固定ip地址"><a href="#在linux中固定ip地址" class="headerlink" title="在linux中固定ip地址"></a>在linux中固定ip地址</h3><p>在ubuntu22.04中应找到&#x2F;etc&#x2F;netplan中的yaml文件修改</p>
-<blockquote>
-<p><a class="link" href="https://www.cnblogs.com/liujiaxin2018/p/16287463.html">ubuntu 22.04如何配置静态IP、网关、DNS - 小鲨鱼2018 - 博客园 (cnblogs.com) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>&#96;</p>
-</blockquote>
-<h3 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h3><p>检测指定网络服务器是否可联通状态</p>
-<p>ping [-c num] ip或主机名</p>
-<p>-c 检查的次数 不使用，将无限次</p>
-<h3 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h3><p>可以在命令行内下载网络文件</p>
-<p>wget [-b] url</p>
-<p>-b 后台下载</p>
-<p>参数: url 下载链接</p>
-<p>不管成功下载或者不成功，都会创建文件</p>
-<h3 id="curl"><a href="#curl" class="headerlink" title="curl"></a>curl</h3><p>可以发送网络请求 下载文件 获取网站状态</p>
-<p>curl [-O] url</p>
-<p>-O 用于下载文件，当url是下载链接时，可以使用此选项保存文件</p>
-<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h3><h4 id="查看端口占用"><a href="#查看端口占用" class="headerlink" title="查看端口占用"></a>查看端口占用</h4><ul>
-<li><p>netstat</p>
-<p>需要apt安装</p>
-<p>netstat -anp|grep 端口号</p>
-</li>
-<li><p>nmap</p>
-<p>需要apt安装</p>
-<p>nmap 端口</p>
-</li>
-</ul>
-<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><h4 id="查看进程"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程</h4><p>ps [-e -f]</p>
-<ul>
-<li><p>-e 显示全部的进程</p>
-</li>
-<li><p>-f 已完全格式化的形式展示信息</p>
-</li>
-</ul>
-<p>固定用法ps -ef 列出全部进程的全部信息</p>
-<p>例: ps -ef | grep tail</p>
-<h4 id="关闭进程"><a href="#关闭进程" class="headerlink" title="关闭进程"></a>关闭进程</h4><p>kill [-9] 进程ID</p>
-<p>-9 表示强制关闭进程</p>
-<h3 id="查看系统占用"><a href="#查看系统占用" class="headerlink" title="查看系统占用"></a>查看系统占用</h3><p>top 查看cpu占用</p>
-<ul>
-<li><p>第一行: 命令名称 当前系统时间 up 6 min: 启动了6分钟 2users: 2个用户登录 load average: 0.06 0.17 0.13   1 5 15分钟负载</p>
-</li>
-<li><p>第二行: Task 进程数  running: 正在运行进程数 sleeping: 进程睡眠数 stopped停止进程数  zombie 僵尸进程数</p>
-</li>
-<li><p>第三行: %cpu cpu使用率 us 用户cpu使用率 sy 系统cpu使用率  ni高优先级进程占用cpu时间百分比 id空闲cpu率  wa IO等待cpu占用率  hi  cpu硬件中断率  si CPU软件中断率   st 强制等待占用cpu率</p>
-</li>
-<li><p>第四行: kib Mem 物理内存  total总量  free空闲  used 使用  buff&#x2F;cache buff和cache占用 kibSwap  虚拟内存(交换空间)</p>
-</li>
-</ul>
-<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-26-29-image.png"></p>
-<p>选项:</p>
-<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-28-00-image.png"></p>
-<p>交互式选项:</p>
-<p><img lazyload src="/images/loading.svg" data-src="C:\Users\Lenovo\AppData\Roaming\marktext\images\2023-03-22-19-31-28-image.png"></p>
-<h3 id="磁盘信息监控"><a href="#磁盘信息监控" class="headerlink" title="磁盘信息监控"></a>磁盘信息监控</h3><p>查看硬盘使用情况</p>
-<p>df [-h]</p>
-<ul>
-<li>-h 以更加人性化的单位显示</li>
-</ul>
-<p>iostat [-x] [num1][num2]</p>
-<p>需要下载包</p>
-<ul>
-<li><p>-x 显示更多信息</p>
-</li>
-<li><p>num1 数字 刷新时间，num2 数字 刷新几次</p>
-</li>
-<li><p>tps 该设备每秒的传输次数，’一次传输’&#x3D;’一次I&#x2F;O请求’。多个逻辑请求可能会被合并为”一次I&#x2F;O请求”</p>
-</li>
-<li><p>rKB&#x2F;s 每秒发送到设备的读取请求数  wKB&#x2F;s 每秒发送到设备的写入请求数 %util 磁盘利用率</p>
-</li>
-</ul>
-<h3 id="网络状态监控"><a href="#网络状态监控" class="headerlink" title="网络状态监控"></a>网络状态监控</h3><p>sar -n DEV num1 num2</p>
-<p>需要下载包</p>
-<ul>
-<li><p>-n 查看网络</p>
-</li>
-<li><p>DEV 查看网络接口</p>
-</li>
-</ul>
-<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p>简化程序执行路径</p>
-<p>env 查看当前系统中记录的环境变量</p>
-<h4 id="符号"><a href="#符号" class="headerlink" title="$符号"></a>$符号</h4><p>$获取变量的值</p>
-<blockquote>
-<p>echo $PATH</p>
-<p>echo ${PATH}ABC</p>
-</blockquote>
-<h4 id="自行设置环境变量"><a href="#自行设置环境变量" class="headerlink" title="自行设置环境变量"></a>自行设置环境变量</h4><ul>
-<li><p>临时设置 export 变量名 &#x3D; 变量值</p>
-</li>
-<li><p>永久生效</p>
-<ul>
-<li><p>针对当前用户生效，配置在当前用户的: ~&#x2F;.bashrc文件中</p>
-</li>
-<li><p>针对所有用户生效， 配置在系统的: &#x2F;etc&#x2F;profile文件中</p>
-</li>
-<li><p>并通过语法: source 配置文件, 进行立刻生效</p>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="自定义环境变量PATH"><a href="#自定义环境变量PATH" class="headerlink" title="自定义环境变量PATH"></a>自定义环境变量PATH</h4><p>export PATH&#x3D;$PATH: 路径</p>
-<h3 id="压缩、解压"><a href="#压缩、解压" class="headerlink" title="压缩、解压"></a>压缩、解压</h3><h5 id="tar-gz"><a href="#tar-gz" class="headerlink" title=".tar  .gz"></a>.tar  .gz</h5><p>gzip体积压缩格式.tar.gz</p>
-<p>tar [-c -v -x -f -z -C] 参数1—n</p>
-<ul>
-<li><p>-c 创建压缩文件</p>
-</li>
-<li><p>-v 显示压缩，解压过程</p>
-</li>
-<li><p>-x 解压模式</p>
-</li>
-<li><p>-f 要创建的文件，或要解压的文件，必须在所有选项中处于最后一个</p>
-</li>
-<li><p>-z gzip模式 不使用就是普通tarball格式 一般处于第一个</p>
-</li>
-<li><p>-C 选择解压的目的地, 单独使用</p>
-</li>
-</ul>
-<p>压缩:</p>
-<p>tar -cvf test.tar 1.txt 2.txt</p>
-<p>将1.txt 2.txt压缩到test.tar</p>
-<p>解压:</p>
-<p>tar -xvf test.tar -C 解压路径</p>
-<p>将test.tar 解压到解压路径</p>
-<h5 id="zip"><a href="#zip" class="headerlink" title=".zip"></a>.zip</h5><p>压缩:</p>
-<p>zip [-r] 参数1—n</p>
-<ul>
-<li>被压缩的包含文件夹的时候</li>
-</ul>
-<p>解压:</p>
-<p>unzip [-d] 参数</p>
-<ul>
-<li>-d 指定解压路径</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Linux Study</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript-React-3</title>
-    <url>/2023/03/09/JavaScript-React-3/</url>
-    <content><![CDATA[<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><hr>
-<p>父组件传递属性，需要在子组件获取才能使用:</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;div className=&#123;<span class="string">`card <span class="subst">$&#123;props.className&#125;</span>`</span>&#125;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></div>
-
-<p>props.children 表示组件的标签体</p>
-<p>useRef().current 表示当前的DOM</p>
-<p>事件对象:</p>
-<ul>
-<li><p>event包含所有触发事件对象信息</p>
-<div class="highlight-container" data-rel="Jsx"><figure class="iseeu highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">descChangeHandler</span> = (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(event.<span class="property">target</span>.<span class="property">value</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-]]></content>
   </entry>
   <entry>
     <title>Redis</title>
@@ -4163,267 +4163,6 @@
       </tags>
   </entry>
   <entry>
-    <title>操作系统</title>
-    <url>/2023/04/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
-    <content><![CDATA[<ol>
-<li><p>进程和线程之间有什么区别？</p>
-<blockquote>
-<p>进程是运行中的程序，线程是进程的内部的一个执行序列<br>进程是资源分配单元，线程是执行单元<br>进程间切换代价大，线程间切换代价小<br>进程拥有资源多，线程拥有资源少<br>多个线程共享进程资源</p>
-<p>进程为啥切换代价比线程要大？</p>
-<blockquote>
-<p>物理地址就是真实的地址，这种寻址方式很容易破坏操作系统，而且使得操作系统中同时运行两个或以上的程序几乎是不可能的（第一个程序给物理内存地址赋值 10，第二个程序也同样给这个地址赋值为 100，那么第二个程序的赋值会覆盖掉第一个程序所赋的值，这会造成两个程序同时崩溃）。</p>
-<p>当然，也不是完全不可能，有一种方式可以实现比较粗糙的并发。就是说，我们将空闲的进程存储在磁盘上，这样当它们不运行时就不会占用内存，当进程需要运行的时候再从磁盘上转到内存上来，不过很显然这种方式比较浪费时间。</p>
-<p>于是，我们考虑，把所有进程对应的内存一直留在物理内存中，给每个进程分别划分各自的区域，这样，发生上下文切换的时候就切换到特定的区域<br>那问题还是很明显的，就是仍然没法避免破坏操作系统，因为各个进程之间可以随意读取、写入内容。</p>
-<p>所以，我们需要一种机制对每个进程使用的地址进行保护，因此操作系统创造了一个新的内存模型，那就是虚拟地址空间, 就是说，每个进程都拥有一个自己的虚拟地址空间，并且独立于其他进程的地址空间，然后每个进程包含的栈、堆、代码段这些都会从这个地址空间中被分配一个地址，这个地址就被称为虚拟地址。底层指令写入的地址也是虚拟地址。</p>
-<p>有了虚拟地址空间后，CPU 就可以通过虚拟地址转换成物理地址这样一个过程，来间接访问物理内存了。</p>
-<p>地址转换需要两个东西，一个是 CPU 上的内存管理单元 MMU，另一个是内存中的页表，页表中存的虚拟地址到物理地址的映射。</p>
-<p>但是呢，每次访问内存，都需要进行虚拟地址到物理地址的转换，对吧，这样的话，页表就会被频繁地访问，而页表又是存在于内存中的。所以说，访问页表（内存）次数太多导致其成为了操作系统地一个性能瓶颈。</p>
-<p>于是，引入了转换检测缓冲区 TLB，也就是快表，其实就是一个缓存，把经常访问到的内存地址映射存在 TLB 中，因为 TLB 是在 CPU 的 MMU 中的嘛，所以访问起来非常快。</p>
-<p>然后，正是因为 TLB 这个东西，导致了进程切换比线程切换慢。</p>
-<p>由于进程切换会涉及到虚拟地址空间的切换，这就导致内存中的页表也需要进行切换，一个进程对应一个页表是不假，但是 CPU 中的 TLB 只有一个，页表切换后这个 TLB 就失效了。这样，TLB 在一段时间内肯定是无法被命中的，操作系统就必须去访问内存，那么虚拟地址转换为物理地址就会变慢，表现出来的就是程序运行会变慢。</p>
-<p>而线程切换呢，由于不涉及虚拟地址空间的切换，所以也就不存在这个问题了。</p>
-</blockquote>
-</blockquote>
-</li>
-<li><p>进程间有哪些通信方式？</p>
-<ol>
-<li><p>管道:</p>
-<blockquote>
-<p>管道是一种半双工的通信方式，数据只能单向流动，而且只能在具有关联的进程间使用，进程的关系通常是指父子进程关系。</p>
-</blockquote>
-</li>
-<li><p>消息队列通信:</p>
-<blockquote>
-<p>消息队列是由消息的链表存放在内核中并由消息队列标识符标识。消息队列克服了信号传递信息少，管道只能承载无格式字节流以及缓冲区大小受限等缺点。</p>
-</blockquote>
-</li>
-<li><p>信号量:</p>
-<blockquote>
-<p>信号量是一个计数器，可以用来控制多个进程对共享资源的访问。它常作为一种锁机制，防止某进程正在访问共享资源时，其他进程也访问该资源。因此，主要作为进程间以及同一进程内不同线程之间的同步手段。</p>
-</blockquote>
-</li>
-<li><p>信号:</p>
-<blockquote>
-<p>信号是一种比较复杂的通信方式，用于通知接收进程某个事件以及发生。</p>
-</blockquote>
-</li>
-<li><p>共享内存通信:</p>
-<blockquote>
-<p>共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个远程创建，但多个进程都可以访问。共享内存是最快的IPC方式，它是针对其他进程间简单通信方式运行效率低而专门设计的。它往往与其他通信机制，如信号量，配合使用，来实现进程间的同步和通信。</p>
-</blockquote>
-</li>
-<li><p>socket:</p>
-<blockquote>
-<p>套接字机制与其他机制不同的是，它可用于不同机器间的进程通信。</p>
-</blockquote>
-</li>
-</ol>
-</li>
-<li><p>简述 socket 中 select 与 epoll 的使用场景以及区别?</p>
-<blockquote>
-<p>两个网络模型本质上都是IO多路复用的</p>
-<p>select 需要不断的去轮询数据，时间复杂度为O(n)，性能比较低，并且它的文件描述符也是有限制的。像常见的服务器软件 apache 用的就是这种网络类型。</p>
-<p>而 epoll 则不一样，他不会去轮询，而是会注册一个监听事件，每当数据有变化的时候，就会通知，像 nginx 底层的网络模型就是用的 epoll ，这个也是为啥nginx 能处理高并发的主要原因。</p>
-<p>表面上看 epoll 的性能最好，但是在连接数少并且连接都十分活跃的情况下，select 和 poll 的性能可能比 epoll 好，毕竟 epoll 的通知机制需要很多函数回调。</p>
-<p>select 低效是因为每次它都需要轮询，但低效也是相对的，是情况而定，也可以通过良好的设计改善。</p>
-</blockquote>
-</li>
-<li><p>epoll 中水平触发以及边缘触发有什么不同?</p>
-<ul>
-<li><p>Level_triggered(水平触发):</p>
-<blockquote>
-<p>当被监控的文件描述符上有可读写事件发生时，epoll_wait() 会通知处理程序去读写，如果这次没有把数据一次性全部读写完(如读写缓冲区太小)，那么下次调用 epoll_wait() 时，它还会通知你在没读写完的文件描述符上继续读写，当然如果你一直不去读写，它会一直通知你！！！如果系统中有大量的你不需要读写的就绪文件描述符，而他们每次都会返回，这样会大大降低处理程序检索自己关心的就绪文件描述符的效率！！！</p>
-</blockquote>
-</li>
-<li><p>Edge_triggered(边缘触发):</p>
-<blockquote>
-<p>当被监控的文件描述符上有可读写事件发生时，epoll_wait() 会通知程序去读写。如果这次没有把数据全部读写完(如读写缓冲区太小)，那么下次调用 epoll_wait() 时，它不会通知你，也就是它只会通知一次，知道该文件描述符上出现第二次可读写事件才会通知你！！！这种模式比水平触发效率高，系统不会充斥大量你不关心的就绪文件描述符！！！</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>Linux 进程调度中有哪些常见算法以及策略?</p>
-<blockquote>
-<ol>
-<li><p>先来先服务和短作业(进程)优先调度算法</p>
-</li>
-<li><p>高优先权优先调度算法</p>
-<ul>
-<li><p>非抢占式优先权算法</p>
-</li>
-<li><p>抢占式优先权调度算法</p>
-</li>
-</ul>
-</li>
-</ol>
-</blockquote>
-</li>
-</ol>
-<blockquote>
-<p>进程的状态有哪几种?</p>
-<ol>
-<li><p>运行态:</p>
-<blockquote>
-<p>该状态表明进程在实际占用CPU。</p>
-</blockquote>
-</li>
-<li><p>就绪态:</p>
-<blockquote>
-<p>该状态下进程可以运行，但因为其他进程正在运行而暂时停止。</p>
-</blockquote>
-</li>
-<li><p>阻塞态:</p>
-<blockquote>
-<p>该状态下进程不能运行，除非某种外部事件的发送。</p>
-</blockquote>
-</li>
-</ol>
-<p>运行态 –&gt; 等待态</p>
-<blockquote>
-<p>往往是由于等待外设，等待主存等资源分配或等待人工干预而引起的</p>
-</blockquote>
-<p>等待态 –&gt; 就绪态</p>
-<blockquote>
-<p>则是等待的条件已满足，只需分配到处理器后就能运行</p>
-</blockquote>
-<p>运行态 –&gt; 就绪态</p>
-<blockquote>
-<p>不是由于自身原因，而是由外界原因使运行状态的进程让出处理器，这时候就变成就绪态。例如时间片用完，或有更高优先级的进程来抢占处理器等</p>
-</blockquote>
-<p>就绪态 –&gt; 运行态</p>
-<blockquote>
-<p>系统按某种策略选中就绪队列中的一个进程占用处理器，此时就变成了运行态</p>
-</blockquote>
-</blockquote>
-<ol start="6">
-<li><p>操作系统如何申请以及管理内存的?</p>
-<blockquote>
-<p>虚拟内存是现代操作系统普遍使用的一项技术，很多情况下，现有内存无法满足仅仅一个大进程的内存要求(比如很多游戏都是10G+的级别)。在早期的操作系统曾使用覆盖(overlays)来解决这个问题，将一个程序分为多个块，基本思想是先将块0加入内存，块0执行完成后，将块1加入内存。以此往复，这个解决方案最大的问题是需要程序员去程序进行分块，这是一个费时费力的过程。后来这个解决方案的修正版就是虚拟内存。</p>
-<p>虚拟内存的基本思想是，每个进程有独立的逻辑地址空间，内存被分为大小相等的多个快，称为页。每个页都是一段连续的地址。对于进程来看，逻辑上貌似有很多内存空间，其中一部分对应物理内存的一块(称为页框，通常页和页框大小相等)，还有一些没加载在内存中的对应在硬盘上。</p>
-</blockquote>
-</li>
-<li><p>简述 Linux 系统态与用户态，什么时候会进入系统态？</p>
-<blockquote>
-<ol>
-<li><p>系统调用</p>
-</li>
-<li><p>发生异常，当 cpu 正在执行运行在用户的程序的时候，突然发生某些预先不可知的异常事件，这个时候就会触发从当前用户态执行的进程转向内核执行相关的异常事件，典型的如缺页异常。</p>
-</li>
-<li><p>外围设备的中断，当外围设备完成用户的请求操作后，会像CPU发出中断信号，此时，CPU 就会暂停执行下一条即将要执行的指令，转而去执行中断信号对应的处理程序，如果先前执行的指令是在用户态下，则自然就发生从用户态到内核态的转换。</p>
-</li>
-</ol>
-</blockquote>
-</li>
-<li><p>简述 LRU 算法及其实现方式</p>
-<blockquote>
-<p>Least Recently Used，最近最久未使用法，它是按照一个非常著名的计算机操作系统基础理论得来的：最近使用的页面数据会在未来一段时期内仍然被使用，已经很久没有使用的页面很有可能在未来较长的一段时间内仍然不会被使用。基于这个思想，会存在一种缓存淘汰机制，每次从内存中找到最久未使用的数据然后置换出来，从而存入新的数据！它的主要衡量指标是使用的时间，附加指标是使用的次数。在计算机中大量使用了这个机制，它的合理性在于优先筛选热点数据，所谓热点数据，就是最近最多使用的数据！因为，利用 LRU 我们可以解决很多实际开发中的问题，并且很符合业务。利用双向链表实现</p>
-</blockquote>
-</li>
-<li><p>线程间有哪些通信方式</p>
-<blockquote>
-<p>共享变量，共享内存，共享数据库，消息队列</p>
-</blockquote>
-</li>
-<li><p>简述同步与异步的区别，阻塞与非阻塞的区别</p>
-<blockquote>
-<ol>
-<li><p>同步和异步</p>
-<blockquote>
-<p>同步和异步通常用来描述消息传递或通信的方式。</p>
-<p>在同步通信中，发送方会等待接收方的响应，然后才继续发送下一条消息。相反，在异步通信中，发送方不会等待接收方的响应，而是继续发送下一条消息。</p>
-</blockquote>
-</li>
-<li><p>阻塞与非阻塞</p>
-<blockquote>
-<p>阻塞与非阻塞通常用来描述系统调用的行为。系统调用是应用程序请求操作系统内核提供服务的一种机制，例如读写文件，创建进程等。</p>
-<p>当一个应用程序发起一个阻塞的系统调用时，他会一直等待，直到该调用完成。相反，当一个应用程序发起一个非阻塞的系统调用时，如果该调用不能立即完成，他会立即返回。</p>
-</blockquote>
-</li>
-</ol>
-<p>总结</p>
-<blockquote>
-<p>同步：</p>
-<blockquote>
-<p>执行一个操作之后，等待结果，然后才继续执行后续的操作</p>
-</blockquote>
-<p>异步：</p>
-<blockquote>
-<p>执行一个操作之后，可以去执行其他的操作，然后等待通知再回来执行完的操作</p>
-</blockquote>
-<p>阻塞：</p>
-<blockquote>
-<p>进程给CPU传达一个任务之后，一直等待CPU处理完成，然后才执行后面的操作</p>
-</blockquote>
-<p>非阻塞：</p>
-<blockquote>
-<p>进程给CPU传达任务后，继续处理后续的操作，隔段时间再来询问之前的操作是否完成，这样的过程也叫轮询</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</li>
-<li><p>简述操作系统中的缺页中断</p>
-<blockquote>
-<p>虚拟内存实际上可以比物理内存大，当访问虚拟内存时，会访问MMU(内存管理单元)去匹配对应的物理地址，而如果虚拟内存的页并不存在于物理内存中，会产生缺页中断，从磁盘中取得缺的页放入内存中，如果内存已满，还会根据页的置换算法将磁盘中的页换出。</p>
-</blockquote>
-</li>
-<li><p>简述操作系统中 malloc 的实现原理</p>
-<blockquote>
-<p>malloc 基本的实现原理就是维护一个内存空闲链表，当申请内存空间时，搜索内存空闲链表，找到适配的空闲内存空间，然后将空间分割成两个内存块，一个变成分配块，一个变成新的空闲块。如果没有搜索到，那么就会用sbrk()推进brk指针来申请内存空间。</p>
-<p>搜索空闲块最常见的算法有：首次适配，下一次适配，最佳适配。</p>
-<p>首次适配：</p>
-<blockquote>
-<p>第一次找到足够大的内存块就分配，这种方法会产生很多内存碎片</p>
-</blockquote>
-<p>下一次适配：</p>
-<blockquote>
-<p>等第二次找到足够大的内存块就分配，这样会产生比较少的内存碎片</p>
-</blockquote>
-<p>最佳适配：</p>
-<blockquote>
-<p>对堆进行彻底的搜索，重投开始，遍历所有块，使用数据区大小大于size且差值最小的块作为此次分配的块</p>
-</blockquote>
-</blockquote>
-</li>
-<li><p>简述 Linux 的 IO模型</p>
-<blockquote>
-<p>在linux操作系统中，共有五种IO模型</p>
-<ul>
-<li><p>阻塞IO</p>
-<blockquote>
-<p>应用程序在进行系统调用时会被阻塞，直到数据准备好并复制到用户空间后才返回</p>
-</blockquote>
-</li>
-<li><p>非阻塞IO</p>
-<blockquote>
-<p>应用程序在进行系统调用时不会被阻塞，而是立即返回一个状态值。应用程序需要不断轮询内核以检查数据是否准备好</p>
-</blockquote>
-</li>
-<li><p>多路复用IO</p>
-<blockquote>
-<p>应用程序可以同时监视多个文件描述符，当某个文件描述符就绪时，对其进行处理</p>
-</blockquote>
-</li>
-<li><p>信号驱动IO</p>
-<blockquote>
-<p>应用程序向内核注册一个信号处理函数，当数据报准备好时，内核会向应用程序发送一个信号，应用程序对信号进行捕捉，并调用信号处理函数来获取数据报</p>
-</blockquote>
-</li>
-<li><p>异步IO</p>
-<blockquote>
-<p>应用程序发起系统调用后立即返回，当内核将数据准备好并复制完成后会给应用程序发送通知</p>
-</blockquote>
-</li>
-</ul>
-<p>这些模型区别在于应用程序和内核之间的交互方式以及数据准备和拷贝的过程</p>
-</blockquote>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>计算机网络</title>
     <url>/2023/04/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
     <content><![CDATA[<h1 id><a href="#" class="headerlink" title></a></h1><ol>
@@ -4692,6 +4431,267 @@
 </li>
 </ol>
 </blockquote>
+</blockquote>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统</title>
+    <url>/2023/04/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<ol>
+<li><p>进程和线程之间有什么区别？</p>
+<blockquote>
+<p>进程是运行中的程序，线程是进程的内部的一个执行序列<br>进程是资源分配单元，线程是执行单元<br>进程间切换代价大，线程间切换代价小<br>进程拥有资源多，线程拥有资源少<br>多个线程共享进程资源</p>
+<p>进程为啥切换代价比线程要大？</p>
+<blockquote>
+<p>物理地址就是真实的地址，这种寻址方式很容易破坏操作系统，而且使得操作系统中同时运行两个或以上的程序几乎是不可能的（第一个程序给物理内存地址赋值 10，第二个程序也同样给这个地址赋值为 100，那么第二个程序的赋值会覆盖掉第一个程序所赋的值，这会造成两个程序同时崩溃）。</p>
+<p>当然，也不是完全不可能，有一种方式可以实现比较粗糙的并发。就是说，我们将空闲的进程存储在磁盘上，这样当它们不运行时就不会占用内存，当进程需要运行的时候再从磁盘上转到内存上来，不过很显然这种方式比较浪费时间。</p>
+<p>于是，我们考虑，把所有进程对应的内存一直留在物理内存中，给每个进程分别划分各自的区域，这样，发生上下文切换的时候就切换到特定的区域<br>那问题还是很明显的，就是仍然没法避免破坏操作系统，因为各个进程之间可以随意读取、写入内容。</p>
+<p>所以，我们需要一种机制对每个进程使用的地址进行保护，因此操作系统创造了一个新的内存模型，那就是虚拟地址空间, 就是说，每个进程都拥有一个自己的虚拟地址空间，并且独立于其他进程的地址空间，然后每个进程包含的栈、堆、代码段这些都会从这个地址空间中被分配一个地址，这个地址就被称为虚拟地址。底层指令写入的地址也是虚拟地址。</p>
+<p>有了虚拟地址空间后，CPU 就可以通过虚拟地址转换成物理地址这样一个过程，来间接访问物理内存了。</p>
+<p>地址转换需要两个东西，一个是 CPU 上的内存管理单元 MMU，另一个是内存中的页表，页表中存的虚拟地址到物理地址的映射。</p>
+<p>但是呢，每次访问内存，都需要进行虚拟地址到物理地址的转换，对吧，这样的话，页表就会被频繁地访问，而页表又是存在于内存中的。所以说，访问页表（内存）次数太多导致其成为了操作系统地一个性能瓶颈。</p>
+<p>于是，引入了转换检测缓冲区 TLB，也就是快表，其实就是一个缓存，把经常访问到的内存地址映射存在 TLB 中，因为 TLB 是在 CPU 的 MMU 中的嘛，所以访问起来非常快。</p>
+<p>然后，正是因为 TLB 这个东西，导致了进程切换比线程切换慢。</p>
+<p>由于进程切换会涉及到虚拟地址空间的切换，这就导致内存中的页表也需要进行切换，一个进程对应一个页表是不假，但是 CPU 中的 TLB 只有一个，页表切换后这个 TLB 就失效了。这样，TLB 在一段时间内肯定是无法被命中的，操作系统就必须去访问内存，那么虚拟地址转换为物理地址就会变慢，表现出来的就是程序运行会变慢。</p>
+<p>而线程切换呢，由于不涉及虚拟地址空间的切换，所以也就不存在这个问题了。</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>进程间有哪些通信方式？</p>
+<ol>
+<li><p>管道:</p>
+<blockquote>
+<p>管道是一种半双工的通信方式，数据只能单向流动，而且只能在具有关联的进程间使用，进程的关系通常是指父子进程关系。</p>
+</blockquote>
+</li>
+<li><p>消息队列通信:</p>
+<blockquote>
+<p>消息队列是由消息的链表存放在内核中并由消息队列标识符标识。消息队列克服了信号传递信息少，管道只能承载无格式字节流以及缓冲区大小受限等缺点。</p>
+</blockquote>
+</li>
+<li><p>信号量:</p>
+<blockquote>
+<p>信号量是一个计数器，可以用来控制多个进程对共享资源的访问。它常作为一种锁机制，防止某进程正在访问共享资源时，其他进程也访问该资源。因此，主要作为进程间以及同一进程内不同线程之间的同步手段。</p>
+</blockquote>
+</li>
+<li><p>信号:</p>
+<blockquote>
+<p>信号是一种比较复杂的通信方式，用于通知接收进程某个事件以及发生。</p>
+</blockquote>
+</li>
+<li><p>共享内存通信:</p>
+<blockquote>
+<p>共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个远程创建，但多个进程都可以访问。共享内存是最快的IPC方式，它是针对其他进程间简单通信方式运行效率低而专门设计的。它往往与其他通信机制，如信号量，配合使用，来实现进程间的同步和通信。</p>
+</blockquote>
+</li>
+<li><p>socket:</p>
+<blockquote>
+<p>套接字机制与其他机制不同的是，它可用于不同机器间的进程通信。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p>简述 socket 中 select 与 epoll 的使用场景以及区别?</p>
+<blockquote>
+<p>两个网络模型本质上都是IO多路复用的</p>
+<p>select 需要不断的去轮询数据，时间复杂度为O(n)，性能比较低，并且它的文件描述符也是有限制的。像常见的服务器软件 apache 用的就是这种网络类型。</p>
+<p>而 epoll 则不一样，他不会去轮询，而是会注册一个监听事件，每当数据有变化的时候，就会通知，像 nginx 底层的网络模型就是用的 epoll ，这个也是为啥nginx 能处理高并发的主要原因。</p>
+<p>表面上看 epoll 的性能最好，但是在连接数少并且连接都十分活跃的情况下，select 和 poll 的性能可能比 epoll 好，毕竟 epoll 的通知机制需要很多函数回调。</p>
+<p>select 低效是因为每次它都需要轮询，但低效也是相对的，是情况而定，也可以通过良好的设计改善。</p>
+</blockquote>
+</li>
+<li><p>epoll 中水平触发以及边缘触发有什么不同?</p>
+<ul>
+<li><p>Level_triggered(水平触发):</p>
+<blockquote>
+<p>当被监控的文件描述符上有可读写事件发生时，epoll_wait() 会通知处理程序去读写，如果这次没有把数据一次性全部读写完(如读写缓冲区太小)，那么下次调用 epoll_wait() 时，它还会通知你在没读写完的文件描述符上继续读写，当然如果你一直不去读写，它会一直通知你！！！如果系统中有大量的你不需要读写的就绪文件描述符，而他们每次都会返回，这样会大大降低处理程序检索自己关心的就绪文件描述符的效率！！！</p>
+</blockquote>
+</li>
+<li><p>Edge_triggered(边缘触发):</p>
+<blockquote>
+<p>当被监控的文件描述符上有可读写事件发生时，epoll_wait() 会通知程序去读写。如果这次没有把数据全部读写完(如读写缓冲区太小)，那么下次调用 epoll_wait() 时，它不会通知你，也就是它只会通知一次，知道该文件描述符上出现第二次可读写事件才会通知你！！！这种模式比水平触发效率高，系统不会充斥大量你不关心的就绪文件描述符！！！</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Linux 进程调度中有哪些常见算法以及策略?</p>
+<blockquote>
+<ol>
+<li><p>先来先服务和短作业(进程)优先调度算法</p>
+</li>
+<li><p>高优先权优先调度算法</p>
+<ul>
+<li><p>非抢占式优先权算法</p>
+</li>
+<li><p>抢占式优先权调度算法</p>
+</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>进程的状态有哪几种?</p>
+<ol>
+<li><p>运行态:</p>
+<blockquote>
+<p>该状态表明进程在实际占用CPU。</p>
+</blockquote>
+</li>
+<li><p>就绪态:</p>
+<blockquote>
+<p>该状态下进程可以运行，但因为其他进程正在运行而暂时停止。</p>
+</blockquote>
+</li>
+<li><p>阻塞态:</p>
+<blockquote>
+<p>该状态下进程不能运行，除非某种外部事件的发送。</p>
+</blockquote>
+</li>
+</ol>
+<p>运行态 –&gt; 等待态</p>
+<blockquote>
+<p>往往是由于等待外设，等待主存等资源分配或等待人工干预而引起的</p>
+</blockquote>
+<p>等待态 –&gt; 就绪态</p>
+<blockquote>
+<p>则是等待的条件已满足，只需分配到处理器后就能运行</p>
+</blockquote>
+<p>运行态 –&gt; 就绪态</p>
+<blockquote>
+<p>不是由于自身原因，而是由外界原因使运行状态的进程让出处理器，这时候就变成就绪态。例如时间片用完，或有更高优先级的进程来抢占处理器等</p>
+</blockquote>
+<p>就绪态 –&gt; 运行态</p>
+<blockquote>
+<p>系统按某种策略选中就绪队列中的一个进程占用处理器，此时就变成了运行态</p>
+</blockquote>
+</blockquote>
+<ol start="6">
+<li><p>操作系统如何申请以及管理内存的?</p>
+<blockquote>
+<p>虚拟内存是现代操作系统普遍使用的一项技术，很多情况下，现有内存无法满足仅仅一个大进程的内存要求(比如很多游戏都是10G+的级别)。在早期的操作系统曾使用覆盖(overlays)来解决这个问题，将一个程序分为多个块，基本思想是先将块0加入内存，块0执行完成后，将块1加入内存。以此往复，这个解决方案最大的问题是需要程序员去程序进行分块，这是一个费时费力的过程。后来这个解决方案的修正版就是虚拟内存。</p>
+<p>虚拟内存的基本思想是，每个进程有独立的逻辑地址空间，内存被分为大小相等的多个快，称为页。每个页都是一段连续的地址。对于进程来看，逻辑上貌似有很多内存空间，其中一部分对应物理内存的一块(称为页框，通常页和页框大小相等)，还有一些没加载在内存中的对应在硬盘上。</p>
+</blockquote>
+</li>
+<li><p>简述 Linux 系统态与用户态，什么时候会进入系统态？</p>
+<blockquote>
+<ol>
+<li><p>系统调用</p>
+</li>
+<li><p>发生异常，当 cpu 正在执行运行在用户的程序的时候，突然发生某些预先不可知的异常事件，这个时候就会触发从当前用户态执行的进程转向内核执行相关的异常事件，典型的如缺页异常。</p>
+</li>
+<li><p>外围设备的中断，当外围设备完成用户的请求操作后，会像CPU发出中断信号，此时，CPU 就会暂停执行下一条即将要执行的指令，转而去执行中断信号对应的处理程序，如果先前执行的指令是在用户态下，则自然就发生从用户态到内核态的转换。</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>简述 LRU 算法及其实现方式</p>
+<blockquote>
+<p>Least Recently Used，最近最久未使用法，它是按照一个非常著名的计算机操作系统基础理论得来的：最近使用的页面数据会在未来一段时期内仍然被使用，已经很久没有使用的页面很有可能在未来较长的一段时间内仍然不会被使用。基于这个思想，会存在一种缓存淘汰机制，每次从内存中找到最久未使用的数据然后置换出来，从而存入新的数据！它的主要衡量指标是使用的时间，附加指标是使用的次数。在计算机中大量使用了这个机制，它的合理性在于优先筛选热点数据，所谓热点数据，就是最近最多使用的数据！因为，利用 LRU 我们可以解决很多实际开发中的问题，并且很符合业务。利用双向链表实现</p>
+</blockquote>
+</li>
+<li><p>线程间有哪些通信方式</p>
+<blockquote>
+<p>共享变量，共享内存，共享数据库，消息队列</p>
+</blockquote>
+</li>
+<li><p>简述同步与异步的区别，阻塞与非阻塞的区别</p>
+<blockquote>
+<ol>
+<li><p>同步和异步</p>
+<blockquote>
+<p>同步和异步通常用来描述消息传递或通信的方式。</p>
+<p>在同步通信中，发送方会等待接收方的响应，然后才继续发送下一条消息。相反，在异步通信中，发送方不会等待接收方的响应，而是继续发送下一条消息。</p>
+</blockquote>
+</li>
+<li><p>阻塞与非阻塞</p>
+<blockquote>
+<p>阻塞与非阻塞通常用来描述系统调用的行为。系统调用是应用程序请求操作系统内核提供服务的一种机制，例如读写文件，创建进程等。</p>
+<p>当一个应用程序发起一个阻塞的系统调用时，他会一直等待，直到该调用完成。相反，当一个应用程序发起一个非阻塞的系统调用时，如果该调用不能立即完成，他会立即返回。</p>
+</blockquote>
+</li>
+</ol>
+<p>总结</p>
+<blockquote>
+<p>同步：</p>
+<blockquote>
+<p>执行一个操作之后，等待结果，然后才继续执行后续的操作</p>
+</blockquote>
+<p>异步：</p>
+<blockquote>
+<p>执行一个操作之后，可以去执行其他的操作，然后等待通知再回来执行完的操作</p>
+</blockquote>
+<p>阻塞：</p>
+<blockquote>
+<p>进程给CPU传达一个任务之后，一直等待CPU处理完成，然后才执行后面的操作</p>
+</blockquote>
+<p>非阻塞：</p>
+<blockquote>
+<p>进程给CPU传达任务后，继续处理后续的操作，隔段时间再来询问之前的操作是否完成，这样的过程也叫轮询</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</li>
+<li><p>简述操作系统中的缺页中断</p>
+<blockquote>
+<p>虚拟内存实际上可以比物理内存大，当访问虚拟内存时，会访问MMU(内存管理单元)去匹配对应的物理地址，而如果虚拟内存的页并不存在于物理内存中，会产生缺页中断，从磁盘中取得缺的页放入内存中，如果内存已满，还会根据页的置换算法将磁盘中的页换出。</p>
+</blockquote>
+</li>
+<li><p>简述操作系统中 malloc 的实现原理</p>
+<blockquote>
+<p>malloc 基本的实现原理就是维护一个内存空闲链表，当申请内存空间时，搜索内存空闲链表，找到适配的空闲内存空间，然后将空间分割成两个内存块，一个变成分配块，一个变成新的空闲块。如果没有搜索到，那么就会用sbrk()推进brk指针来申请内存空间。</p>
+<p>搜索空闲块最常见的算法有：首次适配，下一次适配，最佳适配。</p>
+<p>首次适配：</p>
+<blockquote>
+<p>第一次找到足够大的内存块就分配，这种方法会产生很多内存碎片</p>
+</blockquote>
+<p>下一次适配：</p>
+<blockquote>
+<p>等第二次找到足够大的内存块就分配，这样会产生比较少的内存碎片</p>
+</blockquote>
+<p>最佳适配：</p>
+<blockquote>
+<p>对堆进行彻底的搜索，重投开始，遍历所有块，使用数据区大小大于size且差值最小的块作为此次分配的块</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>简述 Linux 的 IO模型</p>
+<blockquote>
+<p>在linux操作系统中，共有五种IO模型</p>
+<ul>
+<li><p>阻塞IO</p>
+<blockquote>
+<p>应用程序在进行系统调用时会被阻塞，直到数据准备好并复制到用户空间后才返回</p>
+</blockquote>
+</li>
+<li><p>非阻塞IO</p>
+<blockquote>
+<p>应用程序在进行系统调用时不会被阻塞，而是立即返回一个状态值。应用程序需要不断轮询内核以检查数据是否准备好</p>
+</blockquote>
+</li>
+<li><p>多路复用IO</p>
+<blockquote>
+<p>应用程序可以同时监视多个文件描述符，当某个文件描述符就绪时，对其进行处理</p>
+</blockquote>
+</li>
+<li><p>信号驱动IO</p>
+<blockquote>
+<p>应用程序向内核注册一个信号处理函数，当数据报准备好时，内核会向应用程序发送一个信号，应用程序对信号进行捕捉，并调用信号处理函数来获取数据报</p>
+</blockquote>
+</li>
+<li><p>异步IO</p>
+<blockquote>
+<p>应用程序发起系统调用后立即返回，当内核将数据准备好并复制完成后会给应用程序发送通知</p>
+</blockquote>
+</li>
+</ul>
+<p>这些模型区别在于应用程序和内核之间的交互方式以及数据准备和拷贝的过程</p>
 </blockquote>
 </li>
 </ol>
@@ -5100,6 +5100,36 @@
 <li><p>想创建一个可以服用的类，该类可以与其他不相关的类或不可预见的类(即那些接口可能不一定兼容的类)协同工作</p>
 </li>
 <li><p>(仅适用于对象适配器)想使用一个已经存在的子类，但是不可能对每一个都进行子类化以匹配他们的接口。对象适配器可以适配它的父类接口</p>
+</li>
+</ul>
+<h4 id="桥接-Bridge"><a href="#桥接-Bridge" class="headerlink" title="桥接(Bridge)"></a>桥接(Bridge)</h4><blockquote>
+<p>将抽象部分与其实现部分分离，使它们都可以独立地变化</p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A1%A5%E6%8E%A5.png"></p>
+<p>适用场景</p>
+<ul>
+<li><p>不希望在抽象和它的实现部分之间有一个固定的绑定关系。</p>
+</li>
+<li><p>类的抽象以及它的实现都应该可以通过生成子类的方法加以扩充。这是 Bridge 模式使得开发者可以对不同得抽象接口和实现部分进行组合，并分别对它们进行扩充</p>
+</li>
+<li><p>对一个抽象得实现部分的修改应对客户不产生影响，即客户代码不必重新编译</p>
+</li>
+<li><p>(C++)想对客户完全隐藏抽象的实现部分</p>
+</li>
+<li><p>有许多类要生产的类层次结构</p>
+</li>
+<li><p>想在多个对象间共享实现(可能使用引用计数)，但同时要求客户并不知道这一点</p>
+</li>
+</ul>
+<h4 id="组合-Composite"><a href="#组合-Composite" class="headerlink" title="组合(Composite)"></a>组合(Composite)</h4><blockquote>
+<p>将对象组合成树型结构以表示”部分-整体”的层次结构。Composite 使得用户对单个对象和组合对象的使用具有一致性</p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%BB%84%E5%90%88.png"></p>
+<p>适用场景</p>
+<ul>
+<li><p>想表示对象的部分-整体层次结构</p>
+</li>
+<li><p>希望用户忽略组合对象与单个对象的不同，用户将统一的使用组合结构中的所有对象</p>
 </li>
 </ul>
 ]]></content>
