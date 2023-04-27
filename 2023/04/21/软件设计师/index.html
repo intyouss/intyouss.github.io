@@ -65,8 +65,10 @@
 <meta property="og:image" content="https://intyouss.github.io/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A1%A5%E6%8E%A5.png">
 <meta property="og:image" content="https://intyouss.github.io/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%BB%84%E5%90%88.png">
 <meta property="og:image" content="https://intyouss.github.io/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%A3%85%E9%A5%B0.png">
+<meta property="og:image" content="https://intyouss.github.io/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%AB%E5%85%83.png">
+<meta property="og:image" content="https://intyouss.github.io/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%91%BD%E4%BB%A4.png">
 <meta property="article:published_time" content="2023-04-21T08:35:10.000Z">
-<meta property="article:modified_time" content="2023-04-26T10:22:35.860Z">
+<meta property="article:modified_time" content="2023-04-27T03:01:11.507Z">
 <meta property="article:author" content="IntYou">
 <meta property="article:tag" content="证书">
 <meta name="twitter:card" content="summary">
@@ -262,8 +264,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-26 18:22:35</span>
-            <span class="mobile">2023-04-26 18:22</span>
+            <span class="desktop">2023-04-27 11:01:11</span>
+            <span class="mobile">2023-04-27 11:01</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -740,6 +742,40 @@
 <li><p>当不能采用生成子类的方式进行扩充时。一种情况是，可能有大量独立的扩展，为支持每一种组合将产生大量的子类，使得子类数目呈爆炸性增长。另一种情况可能是，由于类定义被隐藏，或类定义不能用于生成子类</p>
 </li>
 </ul>
+<h4 id="享元-Flyweight"><a href="#享元-Flyweight" class="headerlink" title="享元(Flyweight)"></a>享元(Flyweight)</h4><blockquote>
+<p>运用共享技术有效的支持大量细粒度的对象</p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BA%AB%E5%85%83.png"></p>
+<p>适用场景</p>
+<ul>
+<li><p>一个应用程序使用了大量的对象</p>
+</li>
+<li><p>完全由于使用大量的对象，造成很大的存储开销</p>
+</li>
+<li><p>对象的大多数状态都可变为外部状态</p>
+</li>
+<li><p>如果删除对象的外部状态，那么可以用相对较少的共享对象取代很多组对象</p>
+</li>
+<li><p>应用程序不依赖于对象标识。由于 Flyweight 对象可以被共享，所以对于概念上明显有别的对象，标识测试将返回真值</p>
+</li>
+</ul>
+<h4 id="命令-Command"><a href="#命令-Command" class="headerlink" title="命令(Command)"></a>命令(Command)</h4><blockquote>
+<p>将一个请求封装为一个对象，从而使得可以用不同的请求对客户进行参数化；对请求排队或记录请求日志，以及支持可撤销的操作</p>
+</blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="/images/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%91%BD%E4%BB%A4.png"></p>
+<p>适用场景</p>
+<ul>
+<li><p>抽象出待执行大的动作以参数化某对象。Command 模式是过程语言中的回调(Callback)机制的一个面向对象的替代品</p>
+</li>
+<li><p>在不同的时刻指定，排列和执行请求。一个 Command 对象可以有一个与初始请求无关的生存期。如果一个请求的接收者可用一种与地址空间无关的方式表达，那么就可以将负责该请求的命令对象传递给另一个不同的进程并在那实现该请求</p>
+</li>
+<li><p>支持取消操作。Command 的 Execute 操作可在实施操作前将状态存储起来，在取消操作时这个状态用来消除该操作的影响。Command 接口必须添加一个 Unexecute 操作，该操作取消上一次 Execute 调用的效果。 执行大的命令被存储在一个历史列表中。可通过向后和向前遍历这一列表并分别调用 Unexecute 和 Execute 来实现重数不限的 “取消” 和 “重做”。</p>
+</li>
+<li><p>支持修改日志。这样当系统崩溃时，这些修改可以被重做一遍。在 Command 接口中添加装载操作和存储操作，可以用来保持变动的一个一致的修改日志。从崩溃中恢复的过程包括从磁盘中重新读入记录下来的命令并用 Execute 操作重新执行它们</p>
+</li>
+<li><p>用构建在原语操作上的高层操作构造一个系统。这样一种结构在支持事务(Transaction)的信息系统中很常见。Command 模式提供了对事务进行建模的方法。Command 有一个公共接口，使得可以用同一种方式调用所有的事务，同时使用该模式也易于添加新事务以扩展系统</p>
+</li>
+</ul>
 
             </div>
 
@@ -752,7 +788,7 @@
         <li><strong>创建于:</strong> 2023-04-21 16:35:10</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-26 18:22:35
+                <strong>更新于:</strong> 2023-04-27 11:01:11
             </li>
         
         <li>
