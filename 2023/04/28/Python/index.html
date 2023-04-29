@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="IntYou">
+    
+    <meta name="author" content="IntYou">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://evan.beee.top" crossorigin>
+    
+        
+            <link rel="preconnect" href="https://unpkg.com" crossorigin>
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://intyouss.github.io/2023/04/28/python/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="列举布尔值为 False 的常见值10，[]，()，&amp;#123;&amp;#125;，&amp;#x27;&amp;#x27;，False，None  is 和 &#x3D;&#x3D; 的区别 is 比较的是两个对象的内存地址，&#x3D;&#x3D; 比较的是两个对象的值  现有字典 dict 请按字典中的 value 值进行排序1sorted(dict.items(), key&#x3D;lambda x:x[1])  请反">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python">
+<meta property="og:url" content="https://intyouss.github.io/2023/04/28/Python/index.html">
+<meta property="og:site_name" content="IntYou&#39;s Blog">
+<meta property="og:description" content="列举布尔值为 False 的常见值10，[]，()，&amp;#123;&amp;#125;，&amp;#x27;&amp;#x27;，False，None  is 和 &#x3D;&#x3D; 的区别 is 比较的是两个对象的内存地址，&#x3D;&#x3D; 比较的是两个对象的值  现有字典 dict 请按字典中的 value 值进行排序1sorted(dict.items(), key&#x3D;lambda x:x[1])  请反">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-28T13:49:29.000Z">
+<meta property="article:modified_time" content="2023-04-29T04:44:32.206Z">
+<meta property="article:author" content="IntYou">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/avatar.jpg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Python -
+        
+        IntYou&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/assets/fonts.css">
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"intyouss.github.io","root":"/","language":"zh-CN","path":"search.xml"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":["(^_^)"]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"page_pv":true},"pjax":true,"open_graph":true},"home_banner":{"enable":true,"image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Change The World As You Know","subtitle":{"text":[],"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/intyouss","email":"intyou@outlook.com"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.1.1","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","announcement":null,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    Global.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="IntYou's Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                IntYou&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        首页
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i></div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                首页
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            
+            
+                <div class="article-title">
+                    <h1 class="article-title-regular">Python</h1>
+                </div>
+            
+                
+            
+
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/avatar.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">IntYou</span>
+                            
+                                <span class="author-label">(^_^)</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-04-28 21:49:29</span>
+        <span class="mobile">2023-04-28 21:49</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-04-29 12:44:32</span>
+            <span class="mobile">2023-04-29 12:44</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h2 id="列举布尔值为-False-的常见值"><a href="#列举布尔值为-False-的常见值" class="headerlink" title="列举布尔值为 False 的常见值"></a>列举布尔值为 False 的常见值</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>，[]，()，&#123;&#125;，<span class="string">&#x27;&#x27;</span>，<span class="literal">False</span>，<span class="literal">None</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="is-和-x3D-x3D-的区别"><a href="#is-和-x3D-x3D-的区别" class="headerlink" title="is 和 &#x3D;&#x3D; 的区别"></a>is 和 &#x3D;&#x3D; 的区别</h2><blockquote>
+<p>is 比较的是两个对象的内存地址，&#x3D;&#x3D; 比较的是两个对象的值</p>
+</blockquote>
+<h2 id="现有字典-dict-请按字典中的-value-值进行排序"><a href="#现有字典-dict-请按字典中的-value-值进行排序" class="headerlink" title="现有字典 dict 请按字典中的 value 值进行排序"></a>现有字典 dict 请按字典中的 value 值进行排序</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sorted</span>(<span class="built_in">dict</span>.items(), key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>])</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="请反转字符串-aStr"><a href="#请反转字符串-aStr" class="headerlink" title="请反转字符串 aStr"></a>请反转字符串 aStr</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;aStr&#x27;</span>[::-<span class="number">1</span>])</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="请按-list1-中元素的-age-由大到小排序"><a href="#请按-list1-中元素的-age-由大到小排序" class="headerlink" title="请按 list1 中元素的 age 由大到小排序"></a>请按 list1 中元素的 age 由大到小排序</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list1 = [&#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;age&#x27;</span>: <span class="number">20</span>&#125;, &#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;age&#x27;</span>: <span class="number">13</span>&#125;]</span><br><span class="line"><span class="built_in">sorted</span>(list1, key=<span class="keyword">lambda</span> x:x[<span class="string">&#x27;age&#x27;</span>], reverse=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="常用的字符串格式化哪几种"><a href="#常用的字符串格式化哪几种" class="headerlink" title="常用的字符串格式化哪几种"></a>常用的字符串格式化哪几种</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s1 = <span class="string">&quot;%s dadada&quot;</span>%name <span class="comment"># 占位符</span></span><br><span class="line">s2 = <span class="string">&quot;&#123;&#125; dadada&quot;</span>.<span class="built_in">format</span>(name) <span class="comment"># format</span></span><br><span class="line">s3 = <span class="string">&quot;&#123;name&#125; dadada&quot;</span> <span class="comment"># f-string</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="下面代码的输出结果将是什么"><a href="#下面代码的输出结果将是什么" class="headerlink" title="下面代码的输出结果将是什么"></a>下面代码的输出结果将是什么</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">list</span> = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">list</span>[<span class="number">10</span>:])</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">上面的代码将输出[]，不会产生 IndexError 错误。如果尝试用超出成员数量的 index 来获</span></span><br><span class="line"><span class="string">取某个列表的成员。例如，尝试获取 list[10] 和之后的成员，会导致 IndexError</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="写一个列表生成式，产生一个公差为11的等差数列"><a href="#写一个列表生成式，产生一个公差为11的等差数列" class="headerlink" title="写一个列表生成式，产生一个公差为11的等差数列"></a>写一个列表生成式，产生一个公差为11的等差数列</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[x*<span class="number">11</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>)]</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="给定两个列表，怎么找出他们相同的元素和不同的元素"><a href="#给定两个列表，怎么找出他们相同的元素和不同的元素" class="headerlink" title="给定两个列表，怎么找出他们相同的元素和不同的元素"></a>给定两个列表，怎么找出他们相同的元素和不同的元素</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">list1 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">list2 = [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">set1 = <span class="built_in">set</span>(list1)</span><br><span class="line">set2 = <span class="built_in">set</span>(list2)</span><br><span class="line"><span class="built_in">print</span>(set1&amp;set2)</span><br><span class="line"><span class="built_in">print</span>(set1^set2)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="请写出一段-Python-代码实现删除一个-list-里面的重复元素"><a href="#请写出一段-Python-代码实现删除一个-list-里面的重复元素" class="headerlink" title="请写出一段 Python 代码实现删除一个 list 里面的重复元素"></a>请写出一段 Python 代码实现删除一个 list 里面的重复元素</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">li = [<span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;f&#x27;</span>, <span class="string">&#x27;f&#x27;</span>, <span class="string">&#x27;k&#x27;</span>, <span class="string">&#x27;b&#x27;</span>]</span><br><span class="line">li1 = <span class="built_in">list</span>(<span class="built_in">set</span>(li))</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="列举字符串，列表，元组，字典每个常用的五种方法"><a href="#列举字符串，列表，元组，字典每个常用的五种方法" class="headerlink" title="列举字符串，列表，元组，字典每个常用的五种方法"></a>列举字符串，列表，元组，字典每个常用的五种方法</h2><blockquote>
+<p>字符串：replace，strip，split，reverse，upper，lower，join …..</p>
+<p>列表：append，remove，pop，insert，index，sort，count …..</p>
+<p>元组：index，count，len()，dir()</p>
+<p>字典：get，key，values，pop，popitems，clear，update，items …..</p>
+</blockquote>
+<h2 id="什么是反射？以及应用场景"><a href="#什么是反射？以及应用场景" class="headerlink" title="什么是反射？以及应用场景"></a>什么是反射？以及应用场景</h2><blockquote>
+<p>反射是指在程序运行时动态的获取一个对象的信息以及操作对象的能力。在python中，反射可以通过内置函数 getattr()，hasattr()，setattr() 和 delattr() 来实现。这些函数可以让我们在运行时获取对象的属性和方法，或者动态的设置对象的属性和方法。它使得我们可以更加灵活的编写代码，动态的创建和操作对象，提高了代码的可扩展性和可维护性</p>
+</blockquote>
+<h2 id="简述-Python-的深浅拷贝"><a href="#简述-Python-的深浅拷贝" class="headerlink" title="简述 Python 的深浅拷贝"></a>简述 Python 的深浅拷贝</h2><blockquote>
+<p>copy()：浅拷贝，指创建一个新的对象，但是这个新对象只是原始对象的一个副本，其中包含了原始对象中的所有元素的引用。这意味着，如果你修改了原始对象的一个元素，那么这个元素也会被修改，因为它们共享同一个引用</p>
+<p>deepcopy()：深拷贝，指创建一个新的对象，这个新对象包含了原始对象中所有元素的副本。这意味着，如果你修改了原始对象中的元素，新对象并不会被修改，因为它们不再共享一个引用</p>
+</blockquote>
+<h2 id="Python-垃圾回收机制"><a href="#Python-垃圾回收机制" class="headerlink" title="Python 垃圾回收机制"></a>Python 垃圾回收机制</h2><blockquote>
+<ol>
+<li><p>引用计数</p>
+<ul>
+<li>每个对象都有一个引用计数器，当对象被引用时，计数器+1，当对象不再被引用时，计数器-1。当计数器为0时，对象被认为是垃圾，将自动回收这些垃圾对象的内存</li>
+</ul>
+<p>优点：简单直观，实时</p>
+<p>缺点：维护引用计数需要消耗一定的资源。循环引用时，无法回收。</p>
+</li>
+<li><p>标记-清除</p>
+<ul>
+<li>不改动真实的引用计数，而是将集合中对象的引用计数复制一份副本，改动该对象引用的副本。对于副本做的任何改动都不会影响到对象生命周期的维护</li>
+</ul>
+</li>
+<li><p>分代回收</p>
+<ul>
+<li>将系统中的所有内存块根据其存活时间划分为不同的集合。没一个集合就成为一个’代’，垃圾收集的频率随着’代’的存活时间的增大而减小。也就是说，活得越长的对象，就越不可能是垃圾，就应该减少对它的垃圾收集频率。</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<h2 id="如何打乱一个排好序的-list-对象-alist"><a href="#如何打乱一个排好序的-list-对象-alist" class="headerlink" title="如何打乱一个排好序的 list 对象 alist"></a>如何打乱一个排好序的 list 对象 alist</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line">random.shuffle(alist)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="从-0-99-这-100-个数中随机取出-10-个，要求不能重复，可以自己设计数据结构"><a href="#从-0-99-这-100-个数中随机取出-10-个，要求不能重复，可以自己设计数据结构" class="headerlink" title="从 0-99 这 100 个数中随机取出 10 个，要求不能重复，可以自己设计数据结构"></a>从 0-99 这 100 个数中随机取出 10 个，要求不能重复，可以自己设计数据结构</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>([x*x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">11</span>)])</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="介绍一下-try-except-的用法和作用"><a href="#介绍一下-try-except-的用法和作用" class="headerlink" title="介绍一下 try except 的用法和作用"></a>介绍一下 try except 的用法和作用</h2><blockquote>
+<p>try except 是 python 中的异常处理机制，用于在程序运行时捕获并处理异常。当程序运行时遇到错误或异常时，如果没有进行异常处理，程序将会崩溃并抛出错误信息。使用 try except 可以使程序在遇到异常时不会崩溃，而是执行指定的异常处理代码</p>
+</blockquote>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="comment"># 可能会出现异常的代码块</span></span><br><span class="line"><span class="keyword">except</span> ExceptionType:</span><br><span class="line">    <span class="comment"># 异常处理代码块</span></span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="comment"># 如果没有异常，执行的代码块</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="在-python-中如何抛出，捕获，处理异常"><a href="#在-python-中如何抛出，捕获，处理异常" class="headerlink" title="在 python 中如何抛出，捕获，处理异常"></a>在 python 中如何抛出，捕获，处理异常</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">raise</span> Exception <span class="comment"># 抛出异常</span></span><br><span class="line"><span class="keyword">try</span> ...<span class="keyword">except</span> <span class="comment"># 捕获异常</span></span><br><span class="line"><span class="keyword">try</span> ... <span class="keyword">except</span> ... <span class="keyword">else</span> ... <span class="keyword">finally</span> ... <span class="keyword">with</span> <span class="comment"># 处理异常</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="python-递归的最大层数"><a href="#python-递归的最大层数" class="headerlink" title="python 递归的最大层数"></a>python 递归的最大层数</h2><blockquote>
+<p>最大层数为 998</p>
+</blockquote>
+<h2 id="列表推导式和生成器表达式的区别"><a href="#列表推导式和生成器表达式的区别" class="headerlink" title="列表推导式和生成器表达式的区别"></a>列表推导式和生成器表达式的区别</h2><blockquote>
+<p>列表推导式和生成器表达式都可以用来生成一个新的列表，但是他们的输出结果不同。</p>
+<p>列表推导式会立即生成一个新的列表，而生成器表达式则是在需要时才生成一个新的元素。这意味着生成器表达式可以更高效的处理大量数据，因为它不需要一次性生成整个列表。</p>
+</blockquote>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>([i % <span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>)]) <span class="comment"># 列表推导式直接输出</span></span><br><span class="line">a = (i % <span class="number">2</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>))</span><br><span class="line">b = a.__next__()</span><br><span class="line">c = a.__next__()</span><br><span class="line"><span class="built_in">print</span>(b, c) <span class="comment"># 生成器推导式，需要时一个一个输出</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="什么是闭包"><a href="#什么是闭包" class="headerlink" title="什么是闭包"></a>什么是闭包</h2><blockquote>
+<p>闭包是指一个函数可以访问并操作其外部函数作用域中的变量，即使该外部函数已经返回。这是通过在内部函数中创建对外部函数作用域中变量的引用来实现的。这种引用使得外部函数的变量在内部函数中仍然可用，即使外部函数已经完成执行并且其作用域已经销毁。</p>
+<p>在 python 中，闭包通常用于创建函数工厂，即返回另一个函数的函数。这种函数可以访问其外部函数的变量，并且每次调用该函数时，它都会创建一个新的闭包，其中包含对外部函数作用域的新引用</p>
+</blockquote>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 函数内参数不会因为外部变量值发生改变而改变</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">outer_function</span>():</span><br><span class="line">    num = <span class="number">1</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner_function</span>():</span><br><span class="line">        <span class="built_in">print</span>(num)</span><br><span class="line">    <span class="keyword">return</span> inner_function</span><br><span class="line"></span><br><span class="line">closure = outer_function()</span><br><span class="line">num = <span class="number">1000</span> <span class="comment"># 不会改变内部 num</span></span><br><span class="line"><span class="built_in">print</span>(closure()) <span class="comment"># Output: 1</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="请实现一个装饰器，限制该函数被调用的频率，如-10-秒一次"><a href="#请实现一个装饰器，限制该函数被调用的频率，如-10-秒一次" class="headerlink" title="请实现一个装饰器，限制该函数被调用的频率，如 10 秒一次"></a>请实现一个装饰器，限制该函数被调用的频率，如 10 秒一次</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">time_pay</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>():</span><br><span class="line">        time.sleep(<span class="number">10</span>)</span><br><span class="line">        <span class="keyword">return</span> func()</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"><span class="meta">@time_pay</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">func1</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line"></span><br><span class="line">func1()</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="python-函数调用的时候参数的传递方式是值传递还是引用传递"><a href="#python-函数调用的时候参数的传递方式是值传递还是引用传递" class="headerlink" title="python 函数调用的时候参数的传递方式是值传递还是引用传递"></a>python 函数调用的时候参数的传递方式是值传递还是引用传递</h2><blockquote>
+<p>python 的参数传递有：位置参数，可变参数，关键字参数</p>
+<p>函数的传值是值传递还是引用传递，要分情况</p>
+<ol>
+<li><p>不可变参数用值传递</p>
+<ul>
+<li>像整数和字符串这样的不可变对象，是通过拷贝进行传递的，因此在函数内部修改这个值并不会影响到原来的值</li>
+</ul>
+</li>
+<li><p>可变参数用引用传递</p>
+<ul>
+<li>可变参数在传递至只是传递了一个指向元对象的引用，因此在函数内部修改这个对象会影响到原来的值</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<h2 id="递归函数停止的条件"><a href="#递归函数停止的条件" class="headerlink" title="递归函数停止的条件"></a>递归函数停止的条件</h2><blockquote>
+<p>一般是定义在递归函数内部，在递归调用前要做一个条件判断，根据条件判断的结果选择是否继续调用自身，还是终止</p>
+</blockquote>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> Python</li>
+        <li><strong>作者:</strong> IntYou</li>
+        <li><strong>创建于:</strong> 2023-04-28 21:49:29</li>
+        
+            <li>
+                <strong>更新于:</strong> 2023-04-29 12:44:32
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://intyou.netlify.app/2023/04/28/Python/
+        </li>
+        <li>
+            <strong>版权声明:</strong> 本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 进行许可。
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/%E9%9D%A2%E8%AF%95/">#面试</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/04/21/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%B8%88/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">软件设计师</span>
+                                    <span class="post-nav-item">下一篇</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">Python</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E4%B8%BE%E5%B8%83%E5%B0%94%E5%80%BC%E4%B8%BA-False-%E7%9A%84%E5%B8%B8%E8%A7%81%E5%80%BC"><span class="nav-text">列举布尔值为 False 的常见值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-%E5%92%8C-x3D-x3D-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">is 和 &#x3D;&#x3D; 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E6%9C%89%E5%AD%97%E5%85%B8-dict-%E8%AF%B7%E6%8C%89%E5%AD%97%E5%85%B8%E4%B8%AD%E7%9A%84-value-%E5%80%BC%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F"><span class="nav-text">现有字典 dict 请按字典中的 value 值进行排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2-aStr"><span class="nav-text">请反转字符串 aStr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%8C%89-list1-%E4%B8%AD%E5%85%83%E7%B4%A0%E7%9A%84-age-%E7%94%B1%E5%A4%A7%E5%88%B0%E5%B0%8F%E6%8E%92%E5%BA%8F"><span class="nav-text">请按 list1 中元素的 age 由大到小排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%93%AA%E5%87%A0%E7%A7%8D"><span class="nav-text">常用的字符串格式化哪几种</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E9%9D%A2%E4%BB%A3%E7%A0%81%E7%9A%84%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%E5%B0%86%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">下面代码的输出结果将是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E4%B8%80%E4%B8%AA%E5%88%97%E8%A1%A8%E7%94%9F%E6%88%90%E5%BC%8F%EF%BC%8C%E4%BA%A7%E7%94%9F%E4%B8%80%E4%B8%AA%E5%85%AC%E5%B7%AE%E4%B8%BA11%E7%9A%84%E7%AD%89%E5%B7%AE%E6%95%B0%E5%88%97"><span class="nav-text">写一个列表生成式，产生一个公差为11的等差数列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%99%E5%AE%9A%E4%B8%A4%E4%B8%AA%E5%88%97%E8%A1%A8%EF%BC%8C%E6%80%8E%E4%B9%88%E6%89%BE%E5%87%BA%E4%BB%96%E4%BB%AC%E7%9B%B8%E5%90%8C%E7%9A%84%E5%85%83%E7%B4%A0%E5%92%8C%E4%B8%8D%E5%90%8C%E7%9A%84%E5%85%83%E7%B4%A0"><span class="nav-text">给定两个列表，怎么找出他们相同的元素和不同的元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E5%86%99%E5%87%BA%E4%B8%80%E6%AE%B5-Python-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA-list-%E9%87%8C%E9%9D%A2%E7%9A%84%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0"><span class="nav-text">请写出一段 Python 代码实现删除一个 list 里面的重复元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E4%B8%BE%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%88%97%E8%A1%A8%EF%BC%8C%E5%85%83%E7%BB%84%EF%BC%8C%E5%AD%97%E5%85%B8%E6%AF%8F%E4%B8%AA%E5%B8%B8%E7%94%A8%E7%9A%84%E4%BA%94%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-text">列举字符串，列表，元组，字典每个常用的五种方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%B0%84%EF%BC%9F%E4%BB%A5%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">什么是反射？以及应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0-Python-%E7%9A%84%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="nav-text">简述 Python 的深浅拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6"><span class="nav-text">Python 垃圾回收机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%89%93%E4%B9%B1%E4%B8%80%E4%B8%AA%E6%8E%92%E5%A5%BD%E5%BA%8F%E7%9A%84-list-%E5%AF%B9%E8%B1%A1-alist"><span class="nav-text">如何打乱一个排好序的 list 对象 alist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E-0-99-%E8%BF%99-100-%E4%B8%AA%E6%95%B0%E4%B8%AD%E9%9A%8F%E6%9C%BA%E5%8F%96%E5%87%BA-10-%E4%B8%AA%EF%BC%8C%E8%A6%81%E6%B1%82%E4%B8%8D%E8%83%BD%E9%87%8D%E5%A4%8D%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%B7%B1%E8%AE%BE%E8%AE%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-text">从 0-99 这 100 个数中随机取出 10 个，要求不能重复，可以自己设计数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B-try-except-%E7%9A%84%E7%94%A8%E6%B3%95%E5%92%8C%E4%BD%9C%E7%94%A8"><span class="nav-text">介绍一下 try except 的用法和作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-python-%E4%B8%AD%E5%A6%82%E4%BD%95%E6%8A%9B%E5%87%BA%EF%BC%8C%E6%8D%95%E8%8E%B7%EF%BC%8C%E5%A4%84%E7%90%86%E5%BC%82%E5%B8%B8"><span class="nav-text">在 python 中如何抛出，捕获，处理异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-%E9%80%92%E5%BD%92%E7%9A%84%E6%9C%80%E5%A4%A7%E5%B1%82%E6%95%B0"><span class="nav-text">python 递归的最大层数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%BC%8F%E5%92%8C%E7%94%9F%E6%88%90%E5%99%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">列表推导式和生成器表达式的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%97%AD%E5%8C%85"><span class="nav-text">什么是闭包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E8%A3%85%E9%A5%B0%E5%99%A8%EF%BC%8C%E9%99%90%E5%88%B6%E8%AF%A5%E5%87%BD%E6%95%B0%E8%A2%AB%E8%B0%83%E7%94%A8%E7%9A%84%E9%A2%91%E7%8E%87%EF%BC%8C%E5%A6%82-10-%E7%A7%92%E4%B8%80%E6%AC%A1"><span class="nav-text">请实现一个装饰器，限制该函数被调用的频率，如 10 秒一次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%9A%84%E6%97%B6%E5%80%99%E5%8F%82%E6%95%B0%E7%9A%84%E4%BC%A0%E9%80%92%E6%96%B9%E5%BC%8F%E6%98%AF%E5%80%BC%E4%BC%A0%E9%80%92%E8%BF%98%E6%98%AF%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92"><span class="nav-text">python 函数调用的时候参数的传递方式是值传递还是引用传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0%E5%81%9C%E6%AD%A2%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-text">递归函数停止的条件</span></a></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>2023</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">IntYou</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a> 驱动</span>
+                <br>
+            <span class="theme-version-container">主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.1.1</a>
+        </div>
+        
+        
+        
+            <div id="start_div" style="display:none">
+                2023/3/1 11:45:14
+            </div>
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+
+</main>
+
+
+
+<script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/utils.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/main.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/layouts/navbarShrink.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/scrollTopBottom.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/lightDarkSwitch.js"></script>
+
+
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/localSearch.js"></script>
+
+
+
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/codeBlock.js"></script>
+
+
+
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/layouts/lazyload.js"></script>
+
+
+
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/runtime.js"></script>
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/layouts/odometer.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/hexo-theme-redefine@2.1.1/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/libs/Typed.min.js"></script>
+  <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/plugins/typed.js"></script>
+
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/tools/tocToggle.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/libs/anime.min.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/layouts/toc.js"></script><script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/plugins/tabs.js"></script>
+    
+</div>
+
+
+    <script src="https://unpkg.com/hexo-theme-redefine@2.1.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>
