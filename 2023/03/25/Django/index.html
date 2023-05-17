@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="c:/Users/Lenovo/AppData/Roaming/marktext/images/2023-03-25-12-39-38-image.png">
 <meta property="article:published_time" content="2023-03-25T04:37:08.000Z">
-<meta property="article:modified_time" content="2023-04-08T14:50:07.837Z">
+<meta property="article:modified_time" content="2023-04-30T11:27:50.773Z">
 <meta property="article:author" content="IntYou">
 <meta property="article:tag" content="Django Study">
 <meta name="twitter:card" content="summary">
@@ -227,8 +227,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-04-08 22:50:07</span>
-            <span class="mobile">2023-04-08 22:50</span>
+            <span class="desktop">2023-04-30 19:27:50</span>
+            <span class="mobile">2023-04-30 19:27</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -569,8 +569,154 @@
 <div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b = BookInfo.objects.get(<span class="built_in">id</span>=<span class="number">1</span>)</span><br><span class="line">b.hero_set.<span class="built_in">all</span>()</span><br></pre></td></tr></table></figure></div>
 
 <p>由多到一的查询:</p>
-<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b = BookInfo.objects.get(<span class="built_in">id</span>=<span class="number">1</span>)</span><br><span class="line">b.book <span class="comment"># 属性名</span></span><br></pre></td></tr></table></figure></div></li>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b = BookInfo.objects.get(<span class="built_in">id</span>=<span class="number">1</span>)</span><br><span class="line">b.book <span class="comment"># 属性名</span></span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>通过模型类进行关联查询</p>
+<p>由一到多的查询：</p>
+<p><code>关联模型类名小写__属性__比较方法 = 值</code></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Book.objects.<span class="built_in">filter</span>(hero__name__contains=<span class="string">&#x27;峰&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>由多到一的查询：</p>
+<p><code>关联字段__属性__条件运算符 = 值</code></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hero.objects.<span class="built_in">filter</span>(book__name=<span class="string">&#x27;天龙八部&#x27;</span>)</span><br></pre></td></tr></table></figure></div></li>
 </ol>
+<h3 id="增删改操作"><a href="#增删改操作" class="headerlink" title="增删改操作"></a>增删改操作</h3><h4 id="添加数据"><a href="#添加数据" class="headerlink" title="添加数据"></a>添加数据</h4><blockquote>
+<p>通过模型类往数据库添加数据</p>
+</blockquote>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Book.objects.create(title=<span class="string">&#x27;新闻001&#x27;</span>) <span class="comment"># 方式一</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式二</span></span><br><span class="line">obj = Book()</span><br><span class="line">obj.title = <span class="string">&#x27;啦啦啦&#x27;</span></span><br><span class="line">obj.save()</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h4><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj = Book.objects.get(title=<span class="string">&#x27;xxx&#x27;</span>)</span><br><span class="line">obj.delete()</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h4><blockquote>
+<p>通过模型类修改数据</p>
+</blockquote>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">obj = Book.objects.get(title=<span class="string">&#x27;xxx&#x27;</span>)</span><br><span class="line">obj.title = <span class="string">&#x27;yyy&#x27;</span></span><br><span class="line">obj.save()</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h3><blockquote>
+<p>项目下的 urls.py 是整个项目路由匹配的入口</p>
+</blockquote>
+<h4 id="添加路由"><a href="#添加路由" class="headerlink" title="添加路由"></a>添加路由</h4><blockquote>
+<p>将应用中的 urls.py 的引入主 urls.py</p>
+</blockquote>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path, include</span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;news/&#x27;</span>, include(<span class="string">&#x27;news.urls&#x27;</span>)),</span><br><span class="line">    path(<span class="string">&#x27;book/&#x27;</span>, include(<span class="string">&#x27;book.urls&#x27;</span>))</span><br><span class="line">]</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="url参数"><a href="#url参数" class="headerlink" title="url参数"></a>url参数</h4><ul>
+<li><p>方式一：位置参数</p>
+<blockquote>
+<p>直接使用小括号，通过位置参数传递给视图</p>
+</blockquote>
+<ol>
+<li><p>参数匹配</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re_path(<span class="string">r&#x27;^index/(\d+)/$&#x27;</span>,views.show)</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>视图中获取参数</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">request, num</span>):</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">f&#x27;aaaaa<span class="subst">&#123;num&#125;</span>&#x27;</span>)</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+<li><p>方式二：关键字参数</p>
+<ol>
+<li><p>参数匹配</p>
+<blockquote>
+<p>其中 <code>?P&lt;name1&gt;</code> 表示为这个参数定义的名称为 name1，可以是其他名称</p>
+</blockquote>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re_path(<span class="string">r&#x27;^index/(?P&lt;name1&gt;\d+)/$&#x27;</span>, show)</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>视图中获取参数</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">request, name1</span>):</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">f&#x27;aaa<span class="subst">&#123;name1&#125;</span>&#x27;</span>)</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+</li>
+</ul>
+<h3 id="错误视图"><a href="#错误视图" class="headerlink" title="错误视图"></a>错误视图</h3><blockquote>
+<p>Django 内置处理 HTTP 错误的视图，主要错误及视图包括：</p>
+<ul>
+<li><p>404错误：url 匹配失败，找不到页面</p>
+</li>
+<li><p>500错误：server error 视图</p>
+</li>
+</ul>
+</blockquote>
+<p>如果想看到错误试图而不是调试信息，需要修改 <code>setting.py</code> 文件的 DEBUG 项</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DEBUG = <span class="literal">False</span></span><br><span class="line">ALLOWED_HOSTS = [<span class="string">&#x27;*&#x27;</span>]</span><br></pre></td></tr></table></figure></div>
+
+<ol>
+<li><p>404错误视图配置</p>
+<blockquote>
+<p>将请求地址进行 url 匹配后，没有找到匹配的正则表达式，则调用 404 视图，这个视图会调用 404.html 的模板进行渲染。视图传递变量 request_path 给模板，表示导致错误的 URL</p>
+</blockquote>
+<ol>
+<li><p>在 templates 中创建 404.html</p>
+</li>
+<li><p>在浏览器中访问没有定义的路由，触发错误</p>
+</li>
+</ol>
+</li>
+<li><p>500错误视图配置</p>
+<blockquote>
+<p>在视图中代码运行报错会发生500错误，调用内置错误视图，使用 <code>templates/500.html</code> 模板渲染</p>
+</blockquote>
+<ol>
+<li><p>定义错误的视图</p>
+</li>
+<li><p>访问错误的视图</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="HttpRequest-对象"><a href="#HttpRequest-对象" class="headerlink" title="HttpRequest 对象"></a>HttpRequest 对象</h3><ol>
+<li><p>request 对象的属性</p>
+<ul>
+<li><p>path：表示请求的页面的完整路径，不包括域名和参数部分</p>
+</li>
+<li><p>method：表示请求使用的 HTTP 方法，常用值包括：’GET’, ‘POST’</p>
+</li>
+<li><p>encoding：表示提交的数据的编码方式</p>
+</li>
+<li><p>FILES：包含所有上传文件</p>
+</li>
+<li><p>COOKIES：包含所有的 cookie，key 和 value 都是字符串</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="HttpResponse-对象"><a href="#HttpResponse-对象" class="headerlink" title="HttpResponse 对象"></a>HttpResponse 对象</h3><ol>
+<li><p>初始化参数</p>
+<ul>
+<li><p>content：表示返回的内容字符串</p>
+</li>
+<li><p>charset：表示 response 采用的编码字符集，默认为 utf-8</p>
+</li>
+<li><p>status_code：返回的是HTTP响应状态码</p>
+</li>
+<li><p>content_type：指定返回数据的MIME类型，默认为’text&#x2F;html’</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><blockquote>
+<p>当一个逻辑处理完成后，不需要向客户端呈现数据，而转到其他页面</p>
+</blockquote>
+<ol>
+<li><p>定义视图</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponseRedirect</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义重定向视图</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">red</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="keyword">return</span> HttpResponseRedirect(redirect_to=<span class="string">&#x27;/&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>配置 url</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url(<span class="string">r&#x27;^red/$&#x27;</span>, views.red)</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>简写redirect</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render,redirect</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">red</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="keyword">return</span> redirect(<span class="string">&#x27;/&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="类视图"><a href="#类视图" class="headerlink" title="类视图"></a>类视图</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.views <span class="keyword">import</span> View</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">view</span>(<span class="title class_ inherited__">View</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self, request</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">post</span>(<span class="params">self, request</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>在urls.py 中配置路由</p>
+</blockquote>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re_path(<span class="string">r&#x27;xxx/$&#x27;</span>, view.as_view())</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">IndexView</span>(<span class="title class_ inherited__">View</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get</span>(<span class="params">self, request</span>):</span><br><span class="line">        context = &#123;</span><br><span class="line">            <span class="string">&#x27;xxx&#x27;</span> = <span class="string">&#x27;xxx&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> render(request, <span class="string">&#x27;tempdemo/index.html&#x27;</span>, context)</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>在urls.py中配置路由</p>
+</blockquote>
 
             </div>
 
@@ -583,7 +729,7 @@
         <li><strong>创建于:</strong> 2023-03-25 12:37:08</li>
         
             <li>
-                <strong>更新于:</strong> 2023-04-08 22:50:07
+                <strong>更新于:</strong> 2023-04-30 19:27:50
             </li>
         
         <li>
@@ -657,7 +803,7 @@
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">Django</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Django-MVT"><span class="nav-text">Django MVT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BADjango%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6"><span class="nav-text">创建Django工程文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8CDjango%E5%B7%A5%E7%A8%8B"><span class="nav-text">运行Django工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%90%E5%BA%94%E7%94%A8"><span class="nav-text">创建子应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setting%E9%85%8D%E7%BD%AE"><span class="nav-text">Setting配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%94%AE%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-text">外键的优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE"><span class="nav-text">视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#admin-Django%E9%BB%98%E8%AE%A4%E5%90%8E%E5%8F%B0"><span class="nav-text">admin Django默认后台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF"><span class="nav-text">模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%BAMySQL"><span class="nav-text">修改数据库为MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%9E%8B"><span class="nav-text">创建模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%A1%A8%E8%BF%81%E7%A7%BB"><span class="nav-text">模型表迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89admin%E5%90%8E%E5%8F%B0"><span class="nav-text">自定义admin后台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%B1%BB%E7%9A%84%E6%9F%A5%E8%AF%A2%E6%96%B9%E6%B3%95"><span class="nav-text">模型类的查询方法</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Django-MVT"><span class="nav-text">Django MVT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BADjango%E5%B7%A5%E7%A8%8B%E6%96%87%E4%BB%B6"><span class="nav-text">创建Django工程文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8CDjango%E5%B7%A5%E7%A8%8B"><span class="nav-text">运行Django工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%90%E5%BA%94%E7%94%A8"><span class="nav-text">创建子应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setting%E9%85%8D%E7%BD%AE"><span class="nav-text">Setting配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%94%AE%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-text">外键的优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE"><span class="nav-text">视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#admin-Django%E9%BB%98%E8%AE%A4%E5%90%8E%E5%8F%B0"><span class="nav-text">admin Django默认后台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF"><span class="nav-text">模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%BAMySQL"><span class="nav-text">修改数据库为MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%A8%A1%E5%9E%8B"><span class="nav-text">创建模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%A1%A8%E8%BF%81%E7%A7%BB"><span class="nav-text">模型表迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89admin%E5%90%8E%E5%8F%B0"><span class="nav-text">自定义admin后台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%B1%BB%E7%9A%84%E6%9F%A5%E8%AF%A2%E6%96%B9%E6%B3%95"><span class="nav-text">模型类的查询方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E5%88%A0%E6%94%B9%E6%93%8D%E4%BD%9C"><span class="nav-text">增删改操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1"><span class="nav-text">路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E8%A7%86%E5%9B%BE"><span class="nav-text">错误视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HttpRequest-%E5%AF%B9%E8%B1%A1"><span class="nav-text">HttpRequest 对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HttpResponse-%E5%AF%B9%E8%B1%A1"><span class="nav-text">HttpResponse 对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-text">重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E8%A7%86%E5%9B%BE"><span class="nav-text">类视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF-1"><span class="nav-text">模板</span></a></li></ol>
 
     </div>
 </div>
